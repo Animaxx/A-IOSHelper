@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E1735E41A1FC5C800BBDAB9 /* A_RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1735E31A1FC5C800BBDAB9 /* A_RESTRequest.m */; };
+		2E1735E81A20106500BBDAB9 /* A_JSONHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1735E71A20106500BBDAB9 /* A_JSONHelper.m */; };
 		2E49403919F873FB00901A6C /* A_IOSHelper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2E49403819F873FB00901A6C /* A_IOSHelper.h */; };
 		2E49403B19F873FB00901A6C /* A_IOSHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E49403A19F873FB00901A6C /* A_IOSHelper.m */; };
 		2E49404119F873FB00901A6C /* libA-IOSHelper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E49403519F873FB00901A6C /* libA-IOSHelper.a */; };
@@ -60,6 +62,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E1735E21A1FC5C800BBDAB9 /* A_RESTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_RESTRequest.h; path = RESTRequest/A_RESTRequest.h; sourceTree = "<group>"; };
+		2E1735E31A1FC5C800BBDAB9 /* A_RESTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_RESTRequest.m; path = RESTRequest/A_RESTRequest.m; sourceTree = "<group>"; };
+		2E1735E61A20106500BBDAB9 /* A_JSONHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_JSONHelper.h; path = JSONHelper/A_JSONHelper.h; sourceTree = "<group>"; };
+		2E1735E71A20106500BBDAB9 /* A_JSONHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_JSONHelper.m; path = JSONHelper/A_JSONHelper.m; sourceTree = "<group>"; };
 		2E49403519F873FB00901A6C /* libA-IOSHelper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libA-IOSHelper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E49403819F873FB00901A6C /* A_IOSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = A_IOSHelper.h; sourceTree = "<group>"; };
 		2E49403A19F873FB00901A6C /* A_IOSHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = A_IOSHelper.m; sourceTree = "<group>"; };
@@ -101,6 +107,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E1735E51A1FC5CF00BBDAB9 /* RESTRequest */ = {
+			isa = PBXGroup;
+			children = (
+				2E1735E21A1FC5C800BBDAB9 /* A_RESTRequest.h */,
+				2E1735E31A1FC5C800BBDAB9 /* A_RESTRequest.m */,
+			);
+			name = RESTRequest;
+			sourceTree = "<group>";
+		};
+		2E1735E91A20106A00BBDAB9 /* JSONHelper */ = {
+			isa = PBXGroup;
+			children = (
+				2E1735E61A20106500BBDAB9 /* A_JSONHelper.h */,
+				2E1735E71A20106500BBDAB9 /* A_JSONHelper.m */,
+			);
+			name = JSONHelper;
+			sourceTree = "<group>";
+		};
 		2E49402C19F873FB00901A6C = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +145,8 @@
 		2E49403719F873FB00901A6C /* A-IOSHelper */ = {
 			isa = PBXGroup;
 			children = (
+				2E1735E91A20106A00BBDAB9 /* JSONHelper */,
+				2E1735E51A1FC5CF00BBDAB9 /* RESTRequest */,
 				2E49412E19F99C5100901A6C /* Collection */,
 				2E49413119F99C5100901A6C /* Color */,
 				2E49413419F99C5100901A6C /* Device */,
@@ -300,8 +326,10 @@
 				2E49414C19F99C5100901A6C /* A_StringHelper.m in Sources */,
 				2E49403B19F873FB00901A6C /* A_IOSHelper.m in Sources */,
 				2E49414619F99C5100901A6C /* A_CollectionHelper.m in Sources */,
+				2E1735E41A1FC5C800BBDAB9 /* A_RESTRequest.m in Sources */,
 				2E49414B19F99C5100901A6C /* A_StoreDatafileHelper.m in Sources */,
 				2E49414D19F99C5100901A6C /* A_ScreenHelper.m in Sources */,
+				2E1735E81A20106500BBDAB9 /* A_JSONHelper.m in Sources */,
 				2E49414719F99C5100901A6C /* A_ColorHelper.m in Sources */,
 				2E49414819F99C5100901A6C /* A_DeviceHelper.m in Sources */,
 			);
