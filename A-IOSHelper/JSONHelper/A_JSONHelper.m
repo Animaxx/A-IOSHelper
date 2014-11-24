@@ -99,4 +99,34 @@
     }
 }
 
++ (NSDictionary*)A_ConvertJSONDataToDictionary: (NSData*)JSONData {
+    NSError *error = nil;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData: JSONData
+                                                        options: NSJSONReadingMutableContainers
+                                                          error: &error];
+    if (!dic) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <JSON Data to Dictionary error>  \r\n %@", error);
+#endif
+        return nil;
+    } else {
+        return dic;
+    }
+}
++ (NSArray*)A_ConvertJSONDataToArray: (NSData*)JSONData {
+    NSError *error = nil;
+    NSArray *arr = [NSJSONSerialization JSONObjectWithData: JSONData
+                                                   options: NSJSONReadingMutableContainers
+                                                     error: &error];
+    if (!arr) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <JSON Data to Array error>  \r\n %@", error);
+#endif
+        return nil;
+    } else {
+        return arr;
+    }
+}
+
+
 @end

@@ -24,8 +24,6 @@
     for (int i=0; i<[Keys count]; i++) {
         if ([values count] < i)
             [_dic setObject:[values objectAtIndex:i] forKey:[Keys objectAtIndex:i]];
-        else
-            [_dic setObject:nil forKey:[Keys objectAtIndex:i]];
     }
     
     return  _dic;

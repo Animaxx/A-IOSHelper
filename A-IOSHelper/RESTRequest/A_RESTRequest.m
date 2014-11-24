@@ -5,15 +5,17 @@
 //  Created by Animax on 11/21/14.
 //  Copyright (c) 2014 AnimaxStudio. All rights reserved.
 //
+#import <UIKit/UIKit.h>
 
 #import "A_RESTRequest.h"
 #import "A_JSONHelper.h"
 
 @implementation A_RESTRequest
 
-+ (NSData*) A_Request: (NSDictionary*)_parameters
-                  URL: (NSString*)_URL
-               Header: (NSDictionary*)_headers
+#pragma mark - Methods For Construct
++ (NSData*) A_Request: (NSString*)_URL
+           Parameters: (NSDictionary*)_parameters
+              Headers: (NSDictionary*)_headers
                Method: (A_NetworkRequestMethod)_method
           ParamFormat: (A_NetworkParameterFormat)_format {
     
@@ -52,7 +54,7 @@
     NSMutableURLRequest *theRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString: urlStr]];
     
     // Set Parameters for POST PUT DELETE
-    if (_method != A_Network_GET) {
+    if (_method != A_Network_GET && _parameters != nil && [_parameters count] > 0) {
         if (_format == A_Network_SendAsJSON)
             [theRequest setHTTPBody:[A_JSONHelper A_ConvertDictionaryToData:_parameters]];
         else
@@ -96,9 +98,281 @@
     return result;
 }
 
-//Upload Image and file
++ (NSMutableURLRequest*) A_UploadRequestConstructor: (NSString*)_URL
+                                    QueryParameters: (NSDictionary*)_parameters
+                                     FormParameters: (NSDictionary*)_formparameters
+                                            Headers: (NSDictionary*)_headers
+                                               File: (NSData*)_filedata
+                                           FileName: (NSString*)_filename
+                                            FileKey: (NSString*)_filekey {
+    NSString *boundary = @"A_iOS_Helper";
+    
+    // Perpare Parameters
+    NSString *myRequestString = [[NSString alloc] init] ;
+    NSString *urlStr = _URL;
+    
+    if (_parameters != nil && [_parameters count] > 0)
+    {
+        NSArray *reqestdDataKeys = [_parameters allKeys];
+        for (NSString *itemKey in reqestdDataKeys) {
+            NSString* itemObj = [_parameters objectForKey:itemKey];
+            
+            if (itemObj != nil)
+            {
+                if (myRequestString.length > 0){
+                    myRequestString = [myRequestString stringByAppendingString:@"&"];
+                }else{
+                    //                    myRequestString = [myRequestString stringByAppendingString:@"?"];
+                }
+                
+                if ([itemObj isKindOfClass:NSClassFromString(@"NSString")])
+                {
+                    myRequestString = [myRequestString stringByAppendingFormat:@"%@=%@", itemKey, itemObj];
+                }
+            }
+        }
+        
+        urlStr = [[_URL stringByAppendingFormat:@"?%@", myRequestString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    
+    // Set header
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: urlStr]];
+    [request setHTTPMethod:@"POST"];
+    [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
+    
+    // Set Image data
+    NSMutableData *body = [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", _filekey, _filename] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:_filedata];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // Set form data
+    if (_formparameters) {
+        for (NSString*key in [_formparameters allKeys]) {
+            NSString *value = [_formparameters objectForKey:key];
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n%@",key, value] dataUsingEncoding:NSUTF8StringEncoding]];
+            [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+    }
+    
+    [request setHTTPBody:body];
+    
+    return request;
+}
 
-//Content-Disposition: form-data;
-//Content-Type:application/octet-stream ||multipart/form-data
++ (NSData*) A_UploadImage: (NSString*)_URL
+          QueryParameters: (NSDictionary*)_parameters
+                  Headers: (NSDictionary*)_headers
+                    Image: (UIImage*)_image
+                 FileName: (NSString*)_filename
+                  FileKey: (NSString*)_filekey {
+    // Set request
+    NSMutableURLRequest *theRequest = [self A_UploadRequestConstructor:_URL QueryParameters:_parameters FormParameters:nil Headers:_headers File:[NSData dataWithData:UIImagePNGRepresentation(_image)] FileName:_filename FileKey:_filekey];
+    
+    // Send Request
+    NSError *error = nil;
+    NSData* result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
+    
+    if (error){
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http upload image error> \r\n %@", error);
+#endif
+        return nil;
+    }
+#ifndef NDEBUG
+    NSString* _str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
+    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http upload image result> \r\n %@", _str);
+#endif
+    
+    return result;
+}
+
++ (NSData*) A_UploadImageWithForm: (NSString*)_URL
+                  QueryParameters: (NSDictionary*)_parameters
+                   FormParameters: (NSDictionary*)_formparameters
+                          Headers: (NSDictionary*)_headers
+                            Image: (UIImage*)_image
+                         FileName: (NSString*)_filename
+                          FileKey: (NSString*)_filekey {
+    // Set request
+    NSMutableURLRequest *theRequest = [self A_UploadRequestConstructor:_URL QueryParameters:_parameters FormParameters:_formparameters Headers:_headers File:[NSData dataWithData:UIImagePNGRepresentation(_image)] FileName:_filename FileKey:_filekey];
+    
+    // Send Request
+    NSError *error = nil;
+    NSData* result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
+    
+    if (error){
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http upload image error> \r\n %@", error);
+#endif
+        return nil;
+    }
+#ifndef NDEBUG
+    NSString* _str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
+    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http upload image result> \r\n %@", _str);
+#endif
+    
+    return result;
+}
+
+#pragma mark - Methods For Applicate
+
++ (NSDictionary*) A_GetJson_Dictionary: (NSString*)_URL
+                            Parameters: (NSDictionary*)_parameters
+                               Headers: (NSDictionary*)_headers {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
+    
+    NSDictionary* theDataDictionary = nil;
+    @try {
+        theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
+    } @catch (NSException *e) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@", e);
+#endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theDataDictionary;
+}
++ (NSArray*) A_GetJson_Array: (NSString*)_URL
+                  Parameters: (NSDictionary*)_parameters
+                     Headers: (NSDictionary*)_headers {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
+    
+    NSArray* theDataArray = nil;
+    @try {
+        theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
+    } @catch (NSException *e) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get array error>  \r\n %@", e);
+#endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theDataArray;
+}
+
++ (NSDictionary*) A_PostForm_Dictionary: (NSString*)_URL
+                             Parameters: (NSDictionary*)_parameters
+                                 Header: (NSDictionary*)_headers{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
+    
+    NSDictionary* theDataDictionary = nil;
+    @try {
+        theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
+    } @catch (NSException *e) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post form and get dictionary error>  \r\n %@", e);
+#endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theDataDictionary;
+}
++ (NSArray*) A_PostForm_Array: (NSString*)_URL
+                   Parameters: (NSDictionary*)_parameters
+                       Header: (NSDictionary*)_headers{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
+    
+    NSArray* theDataArray = nil;
+    @try {
+        theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
+    } @catch (NSException *e) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post form and get array error>  \r\n %@", e);
+#endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theDataArray;
+}
+
++ (NSDictionary*) A_PostJSON_Dictionary: (NSString*)_URL
+                             Parameters: (NSDictionary*)_parameters
+                                 Header: (NSDictionary*)_headers{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
+    
+    NSDictionary* theDataDictionary = nil;
+    @try {
+        theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
+    } @catch (NSException *e) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post json and get dictionary error>  \r\n %@", e);
+#endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theDataDictionary;
+}
++ (NSArray*) A_PostJSON_Array: (NSString*)_URL
+                   Parameters: (NSDictionary*)_parameters
+                       Header: (NSDictionary*)_headers{
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
+    
+    NSArray* theArray = nil;
+    @try {
+        theArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
+    } @catch (NSException *e) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post json and get dictionary error>  \r\n %@", e);
+#endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theArray;
+}
+
++ (NSDictionary*) A_UploadImage_Dictionary: (NSString*)_URL
+                           QueryParameters: (NSDictionary*)_parameters
+                                   Headers: (NSDictionary*)_headers
+                                     Image: (UIImage*)_image
+                                  FileName: (NSString*)_filename
+                                   FileKey: (NSString*)_filekey {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSData* _result = [self A_UploadImage:_URL QueryParameters:_parameters Headers:_headers Image:_image FileName:_filename FileKey:_filekey];
+    NSDictionary* theDataDictionary = nil;
+    @try {
+        theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
+    } @catch (NSException *e) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Upload image and get dictionary error>  \r\n %@", e);
+#endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theDataDictionary;
+}
+
+
 
 @end

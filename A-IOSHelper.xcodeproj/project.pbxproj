@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2E1735E41A1FC5C800BBDAB9 /* A_RESTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1735E31A1FC5C800BBDAB9 /* A_RESTRequest.m */; };
 		2E1735E81A20106500BBDAB9 /* A_JSONHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1735E71A20106500BBDAB9 /* A_JSONHelper.m */; };
+		2E1735EA1A23131200BBDAB9 /* A_JSONHelper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2E1735E61A20106500BBDAB9 /* A_JSONHelper.h */; };
+		2E1735EB1A23131500BBDAB9 /* A_RESTRequest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2E1735E21A1FC5C800BBDAB9 /* A_RESTRequest.h */; };
 		2E49403919F873FB00901A6C /* A_IOSHelper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2E49403819F873FB00901A6C /* A_IOSHelper.h */; };
 		2E49403B19F873FB00901A6C /* A_IOSHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E49403A19F873FB00901A6C /* A_IOSHelper.m */; };
 		2E49404119F873FB00901A6C /* libA-IOSHelper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E49403519F873FB00901A6C /* libA-IOSHelper.a */; };
@@ -47,6 +49,8 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				2E1735EB1A23131500BBDAB9 /* A_RESTRequest.h in CopyFiles */,
+				2E1735EA1A23131200BBDAB9 /* A_JSONHelper.h in CopyFiles */,
 				2E49415519F99D8600901A6C /* A_StoreDatafileHelper.h in CopyFiles */,
 				2E49415419F99D8300901A6C /* A_ImageHelper.h in CopyFiles */,
 				2E49415319F99D8000901A6C /* A_HtmlHelper.h in CopyFiles */,
