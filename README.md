@@ -6,6 +6,7 @@ The purpose of this project is providing a scaffold for iOS developer to build t
 
 ## How to use
 In A-IOSHelper, all functions have `A_` prefix, so you can easy to find the function by smart tips.
+For import this framework, please copy whole framework into your project and add the framework in to Project -> General tab -> Embedded Binaries section.
 
 Please see an Obecrive-C example below
 
@@ -22,10 +23,13 @@ Example for Swfit
 `A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")`
 
 
-## Building 
+## How to build 
 Please use `build.sh` file to build this project.
 > sh ./build.sh
 
 and you may use following code to check the building result 
 > cd Product/A_IOSHelper.framework
+
 > lipo -info A_IOSHelper
+
+
