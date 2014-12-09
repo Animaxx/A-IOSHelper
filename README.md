@@ -5,17 +5,27 @@ A-IOSHelper
 The purpose of this project is providing a scaffold for iOS developer to build their IOS applications. This static library is using Objective-c, and you can also import into Swift project, and it also can be combine with other third-party frameworks safety.
 
 ## How to use
-In A-IOSHelper, all classes and functions have `A_` prefix, so you can easy to find the function by smart tips.
+In A-IOSHelper, all functions have `A_` prefix, so you can easy to find the function by smart tips.
 
-Please see an example below #Obecrive-C
+Please see an Obecrive-C example below
 
-`#import "A_IOSHelper.h"` // the only head file you need to import is A_IOSHelper.h 
+`#import <A_IOSHelper/A_IOSHelper.h>` // the only head file you need to import is A_IOSHelper.h 
 
-`[A_ImageHelper A_DownloadImageAndCache:@"http://xxxx.png"];` // This simple code is going to download the image and cache it. When next time call this function, it will get the image from cache and not have to download again.
+// Upload a image to server
+`[A_RESTRequest A_UploadImage:@"http://animaxapps.appspot.com/Upload/" QueryParameters:@{@"key1":@"value"} Headers:@{@"header1":@"value"} Image:image FileName:@"pic.png" FileKey:@"pic.png"]`
+
+Example for Swfit
+
+`import A_IOSHelper` // Also, you only have to import the A_IOSHelper
+
+// Download the image and cache it; when next time call this function, it will get the image from cache instead of download it again.
+`A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")`
+
 
 ## Building 
-Please use `build_lib.sh` file to build this project and get static library that support armv7 armv7s i386 x86_64 arm64.
-> sh ./build_lib.sh
+Please use `build.sh` file to build this project.
+> sh ./build.sh
 
 and you may use following code to check the building result 
-> lipo -info libA-IOSHelper.a 
+> cd Product/A_IOSHelper.framework
+> lipo -info A_IOSHelper
