@@ -14,24 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E49403419F873FB00901A6C"
-               BuildableName = "libA-IOSHelper.a"
-               BlueprintName = "A-IOSHelper"
-               ReferencedContainer = "container:A-IOSHelper.xcodeproj">
+               BlueprintIdentifier = "2E1187861A3750770080FFB9"
+               BuildableName = "A_IOSHelper.framework"
+               BlueprintName = "A_IOSHelper"
+               ReferencedContainer = "container:A_IOSHelper.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
+            buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E49403F19F873FB00901A6C"
-               BuildableName = "A-IOSHelperTests.xctest"
-               BlueprintName = "A-IOSHelperTests"
-               ReferencedContainer = "container:A-IOSHelper.xcodeproj">
+               BlueprintIdentifier = "2E1187911A3750770080FFB9"
+               BuildableName = "A_IOSHelperTests.xctest"
+               BlueprintName = "A_IOSHelperTests"
+               ReferencedContainer = "container:A_IOSHelper.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -43,23 +43,23 @@
       buildConfiguration = "Debug">
       <Testables>
          <TestableReference
-            skipped = "YES">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E49403F19F873FB00901A6C"
-               BuildableName = "A-IOSHelperTests.xctest"
-               BlueprintName = "A-IOSHelperTests"
-               ReferencedContainer = "container:A-IOSHelper.xcodeproj">
+               BlueprintIdentifier = "2E1187911A3750770080FFB9"
+               BuildableName = "A_IOSHelperTests.xctest"
+               BlueprintName = "A_IOSHelperTests"
+               ReferencedContainer = "container:A_IOSHelper.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E49403419F873FB00901A6C"
-            BuildableName = "libA-IOSHelper.a"
-            BlueprintName = "A-IOSHelper"
-            ReferencedContainer = "container:A-IOSHelper.xcodeproj">
+            BlueprintIdentifier = "2E1187861A3750770080FFB9"
+            BuildableName = "A_IOSHelper.framework"
+            BlueprintName = "A_IOSHelper"
+            ReferencedContainer = "container:A_IOSHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -75,10 +75,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E49403419F873FB00901A6C"
-            BuildableName = "libA-IOSHelper.a"
-            BlueprintName = "A-IOSHelper"
-            ReferencedContainer = "container:A-IOSHelper.xcodeproj">
+            BlueprintIdentifier = "2E1187861A3750770080FFB9"
+            BuildableName = "A_IOSHelper.framework"
+            BlueprintName = "A_IOSHelper"
+            ReferencedContainer = "container:A_IOSHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -93,10 +93,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E49403419F873FB00901A6C"
-            BuildableName = "libA-IOSHelper.a"
-            BlueprintName = "A-IOSHelper"
-            ReferencedContainer = "container:A-IOSHelper.xcodeproj">
+            BlueprintIdentifier = "2E1187861A3750770080FFB9"
+            BuildableName = "A_IOSHelper.framework"
+            BlueprintName = "A_IOSHelper"
+            ReferencedContainer = "container:A_IOSHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

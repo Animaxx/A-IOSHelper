@@ -2,7 +2,7 @@
 //  A_JSONHelper.m
 //  A-IOSHelper
 //
-//  Created by Animax on 11/21/14.
+//  Created by Animax
 //  Copyright (c) 2014 AnimaxStudio. All rights reserved.
 //
 
