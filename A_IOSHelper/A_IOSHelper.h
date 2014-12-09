@@ -14,3 +14,5 @@
 #import <A_IOSHelper/A_HtmlHelper.h>
 #import <A_IOSHelper/A_ImageHelper.h>
 #import <A_IOSHelper/A_StringHelper.h>
+#import <A_IOSHelper/A_JSONHelper.h>
+#import <A_IOSHelper/A_RESTRequest.h>
