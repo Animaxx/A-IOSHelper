@@ -28,6 +28,11 @@
 		2E1187D21A37518F0080FFB9 /* A_StoreDatafileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187BD1A37518F0080FFB9 /* A_StoreDatafileHelper.m */; };
 		2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187C01A37518F0080FFB9 /* A_StringHelper.m */; };
+		2EB2EAC01A38D69000946C51 /* A_SqliteWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EABF1A38D69000946C51 /* A_SqliteWrapper.m */; };
+		2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EAC31A38DAB500946C51 /* A_Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EAC41A38DAB500946C51 /* A_Animation.m */; };
+		2EB2EACA1A38E37800946C51 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +59,11 @@
 		2E1187BD1A37518F0080FFB9 /* A_StoreDatafileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_StoreDatafileHelper.m; sourceTree = "<group>"; };
 		2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_StringHelper.h; sourceTree = "<group>"; };
 		2E1187C01A37518F0080FFB9 /* A_StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_StringHelper.m; sourceTree = "<group>"; };
+		2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_SqliteWrapper.h; path = SqliteWrapper/A_SqliteWrapper.h; sourceTree = "<group>"; };
+		2EB2EABF1A38D69000946C51 /* A_SqliteWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_SqliteWrapper.m; path = SqliteWrapper/A_SqliteWrapper.m; sourceTree = "<group>"; };
+		2EB2EAC31A38DAB500946C51 /* A_Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Animation.h; path = Animation/A_Animation.h; sourceTree = "<group>"; };
+		2EB2EAC41A38DAB500946C51 /* A_Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Animation.m; path = Animation/A_Animation.m; sourceTree = "<group>"; };
+		2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EB2EACA1A38E37800946C51 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				2E1187891A3750770080FFB9 /* A_IOSHelper */,
+				2EB2EACB1A38E38100946C51 /* Frameworks */,
 				2E1187881A3750770080FFB9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,6 +98,8 @@
 		2E1187891A3750770080FFB9 /* A_IOSHelper */ = {
 			isa = PBXGroup;
 			children = (
+				2EB2EAC71A38DABD00946C51 /* Animation */,
+				2EB2EAC21A38D69400946C51 /* SqliteWrapper */,
 				2E1187A31A37518F0080FFB9 /* Collection */,
 				2E1187A61A37518F0080FFB9 /* JSONHelper */,
 				2E1187A91A37518F0080FFB9 /* RESTRequest */,
@@ -200,6 +214,32 @@
 			path = String;
 			sourceTree = "<group>";
 		};
+		2EB2EAC21A38D69400946C51 /* SqliteWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */,
+				2EB2EABF1A38D69000946C51 /* A_SqliteWrapper.m */,
+			);
+			name = SqliteWrapper;
+			sourceTree = "<group>";
+		};
+		2EB2EAC71A38DABD00946C51 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				2EB2EAC31A38DAB500946C51 /* A_Animation.h */,
+				2EB2EAC41A38DAB500946C51 /* A_Animation.m */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
+		2EB2EACB1A38E38100946C51 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -215,6 +255,8 @@
 				2E1187D11A37518F0080FFB9 /* A_StoreDatafileHelper.h in Headers */,
 				2E1187CB1A37518F0080FFB9 /* A_HtmlHelper.h in Headers */,
 				2E1187C11A37518F0080FFB9 /* A_CollectionHelper.h in Headers */,
+				2EB2EAC01A38D69000946C51 /* A_SqliteWrapper.h in Headers */,
+				2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */,
 				2E1187C71A37518F0080FFB9 /* A_ColorHelper.h in Headers */,
 				2E11878D1A3750770080FFB9 /* A_IOSHelper.h in Headers */,
 				2E1187C31A37518F0080FFB9 /* A_JSONHelper.h in Headers */,
@@ -293,8 +335,10 @@
 				2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */,
 				2E1187CA1A37518F0080FFB9 /* A_DeviceHelper.m in Sources */,
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,
+				2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */,
 				2E1187D01A37518F0080FFB9 /* A_ScreenHelper.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
+				2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */,
 				2E1187C81A37518F0080FFB9 /* A_ColorHelper.m in Sources */,
 				2E1187C21A37518F0080FFB9 /* A_CollectionHelper.m in Sources */,
 				2E1187C41A37518F0080FFB9 /* A_JSONHelper.m in Sources */,

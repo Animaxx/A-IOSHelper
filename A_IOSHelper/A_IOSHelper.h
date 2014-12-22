@@ -16,3 +16,5 @@
 #import <A_IOSHelper/A_StringHelper.h>
 #import <A_IOSHelper/A_JSONHelper.h>
 #import <A_IOSHelper/A_RESTRequest.h>
+#import <A_IOSHelper/A_SqliteWrapper.h>
+#import <A_IOSHelper/A_Animation.h>

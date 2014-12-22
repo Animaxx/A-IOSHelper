@@ -36,4 +36,9 @@
     return str;
 }
 
++(NSString *)A_TrimString:(NSString*)str {
+    return [str stringByTrimmingCharactersInSet:
+            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
 @end
