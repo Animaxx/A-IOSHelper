@@ -31,7 +31,7 @@
     }
     return dict;
 }
-+ (NSObject*)A_Seserialize: (NSDictionary*)Array {
++ (NSObject*)A_Deserialize: (NSDictionary*)Array {
     id obj = [[[self class] alloc] init];
     
     for (NSString *key in [Array allKeys]) {
