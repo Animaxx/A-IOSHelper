@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E02F9A01A4B6D4C00F4EBDE /* A_Datetime.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E02F99E1A4B6D4C00F4EBDE /* A_Datetime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E02F9A11A4B6D4C00F4EBDE /* A_Datetime.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E02F99F1A4B6D4C00F4EBDE /* A_Datetime.m */; };
 		2E11878D1A3750770080FFB9 /* A_IOSHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E11878C1A3750770080FFB9 /* A_IOSHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1187C11A37518F0080FFB9 /* A_CollectionHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187A41A37518F0080FFB9 /* A_CollectionHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1187C21A37518F0080FFB9 /* A_CollectionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187A51A37518F0080FFB9 /* A_CollectionHelper.m */; };
@@ -28,14 +30,22 @@
 		2E1187D21A37518F0080FFB9 /* A_StoreDatafileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187BD1A37518F0080FFB9 /* A_StoreDatafileHelper.m */; };
 		2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187C01A37518F0080FFB9 /* A_StringHelper.m */; };
+		2E58DA571A489E2100CA10B6 /* A_AlertBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E58DA551A489E2100CA10B6 /* A_AlertBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E58DA561A489E2100CA10B6 /* A_AlertBox.m */; };
 		2EB2EAC01A38D69000946C51 /* A_SqliteWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EABF1A38D69000946C51 /* A_SqliteWrapper.m */; };
 		2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EAC31A38DAB500946C51 /* A_Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EAC41A38DAB500946C51 /* A_Animation.m */; };
 		2EB2EACA1A38E37800946C51 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */; };
+		2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */; };
+		2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875EB1A9AA1C400D0D62E /* A_Reflection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E02F99E1A4B6D4C00F4EBDE /* A_Datetime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Datetime.h; path = Datetime/A_Datetime.h; sourceTree = "<group>"; };
+		2E02F99F1A4B6D4C00F4EBDE /* A_Datetime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Datetime.m; path = Datetime/A_Datetime.m; sourceTree = "<group>"; };
 		2E1187871A3750770080FFB9 /* A_IOSHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = A_IOSHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E11878B1A3750770080FFB9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E11878C1A3750770080FFB9 /* A_IOSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = A_IOSHelper.h; sourceTree = "<group>"; };
@@ -59,11 +69,17 @@
 		2E1187BD1A37518F0080FFB9 /* A_StoreDatafileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_StoreDatafileHelper.m; sourceTree = "<group>"; };
 		2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_StringHelper.h; sourceTree = "<group>"; };
 		2E1187C01A37518F0080FFB9 /* A_StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_StringHelper.m; sourceTree = "<group>"; };
+		2E58DA551A489E2100CA10B6 /* A_AlertBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AlertBox.h; path = AlertBox/A_AlertBox.h; sourceTree = "<group>"; };
+		2E58DA561A489E2100CA10B6 /* A_AlertBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AlertBox.m; path = AlertBox/A_AlertBox.m; sourceTree = "<group>"; };
 		2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_SqliteWrapper.h; path = SqliteWrapper/A_SqliteWrapper.h; sourceTree = "<group>"; };
 		2EB2EABF1A38D69000946C51 /* A_SqliteWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_SqliteWrapper.m; path = SqliteWrapper/A_SqliteWrapper.m; sourceTree = "<group>"; };
 		2EB2EAC31A38DAB500946C51 /* A_Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Animation.h; path = Animation/A_Animation.h; sourceTree = "<group>"; };
 		2EB2EAC41A38DAB500946C51 /* A_Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Animation.m; path = Animation/A_Animation.m; sourceTree = "<group>"; };
 		2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_DataModel.h; path = DataModel/A_DataModel.h; sourceTree = "<group>"; };
+		2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_DataModel.m; path = DataModel/A_DataModel.m; sourceTree = "<group>"; };
+		2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Reflection.h; path = Reflection/A_Reflection.h; sourceTree = "<group>"; };
+		2ED875EB1A9AA1C400D0D62E /* A_Reflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Reflection.m; path = Reflection/A_Reflection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E02F99B1A4B6AA400F4EBDE /* Datatime */ = {
+			isa = PBXGroup;
+			children = (
+				2E02F99E1A4B6D4C00F4EBDE /* A_Datetime.h */,
+				2E02F99F1A4B6D4C00F4EBDE /* A_Datetime.m */,
+			);
+			name = Datatime;
+			sourceTree = "<group>";
+		};
 		2E11877D1A3750770080FFB9 = {
 			isa = PBXGroup;
 			children = (
@@ -98,8 +123,12 @@
 		2E1187891A3750770080FFB9 /* A_IOSHelper */ = {
 			isa = PBXGroup;
 			children = (
+				2ED875E81A9AA18500D0D62E /* Reflection */,
+				2ED875E31A9A9CD500D0D62E /* DataModel */,
+				2E02F99B1A4B6AA400F4EBDE /* Datatime */,
 				2EB2EAC71A38DABD00946C51 /* Animation */,
 				2EB2EAC21A38D69400946C51 /* SqliteWrapper */,
+				2E58DA591A489E2600CA10B6 /* AlertBox */,
 				2E1187A31A37518F0080FFB9 /* Collection */,
 				2E1187A61A37518F0080FFB9 /* JSONHelper */,
 				2E1187A91A37518F0080FFB9 /* RESTRequest */,
@@ -214,6 +243,15 @@
 			path = String;
 			sourceTree = "<group>";
 		};
+		2E58DA591A489E2600CA10B6 /* AlertBox */ = {
+			isa = PBXGroup;
+			children = (
+				2E58DA551A489E2100CA10B6 /* A_AlertBox.h */,
+				2E58DA561A489E2100CA10B6 /* A_AlertBox.m */,
+			);
+			name = AlertBox;
+			sourceTree = "<group>";
+		};
 		2EB2EAC21A38D69400946C51 /* SqliteWrapper */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +278,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2ED875E31A9A9CD500D0D62E /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */,
+				2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */,
+			);
+			name = DataModel;
+			sourceTree = "<group>";
+		};
+		2ED875E81A9AA18500D0D62E /* Reflection */ = {
+			isa = PBXGroup;
+			children = (
+				2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */,
+				2ED875EB1A9AA1C400D0D62E /* A_Reflection.m */,
+			);
+			name = Reflection;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -258,8 +314,12 @@
 				2EB2EAC01A38D69000946C51 /* A_SqliteWrapper.h in Headers */,
 				2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */,
 				2E1187C71A37518F0080FFB9 /* A_ColorHelper.h in Headers */,
+				2E58DA571A489E2100CA10B6 /* A_AlertBox.h in Headers */,
 				2E11878D1A3750770080FFB9 /* A_IOSHelper.h in Headers */,
+				2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */,
+				2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */,
 				2E1187C31A37518F0080FFB9 /* A_JSONHelper.h in Headers */,
+				2E02F9A01A4B6D4C00F4EBDE /* A_Datetime.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,14 +394,18 @@
 				2E1187CE1A37518F0080FFB9 /* A_ImageHelper.m in Sources */,
 				2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */,
 				2E1187CA1A37518F0080FFB9 /* A_DeviceHelper.m in Sources */,
+				2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */,
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,
 				2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */,
 				2E1187D01A37518F0080FFB9 /* A_ScreenHelper.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
 				2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */,
+				2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */,
 				2E1187C81A37518F0080FFB9 /* A_ColorHelper.m in Sources */,
 				2E1187C21A37518F0080FFB9 /* A_CollectionHelper.m in Sources */,
 				2E1187C41A37518F0080FFB9 /* A_JSONHelper.m in Sources */,
+				2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */,
+				2E02F9A11A4B6D4C00F4EBDE /* A_Datetime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +499,7 @@
 		2E11879E1A3750770080FFB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -444,12 +509,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		2E11879F1A3750770080FFB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

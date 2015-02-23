@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>A_IOSBundle.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>A_IOSHelper.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>2E1187911A3750770080FFB9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2EC225331A49DCB5000B62D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -11,8 +11,8 @@
 @interface A_SqliteWrapper : NSObject
 
 - (A_SqliteWrapper *) initWithDBFilename: (NSString *)file;
-- (void) openDB;
-- (void) closeDB;
+- (void) A_OpenConnetion;
+- (void) A_CloseConnetion;
 - (void) dealloc;
 
 - (NSString *) A_DBPath;
@@ -27,11 +27,9 @@
 - (id) A_GetValueFromQuery:(NSString *) query;
 - (id) A_GetValueFromQuery:(NSString *) query withParams:(NSArray*) params;
 
-- (void) bindSQL:(const char *) cQuery withArray:(NSArray *) params;
 - (Boolean) A_TableExist:(NSString*) tableName;
 
 // Utilities
-- (id) columnValue:(int) columnIndex;
-- (NSNumber *) lastInsertId;
+- (NSNumber *) A_lastInsertId;
 
 @end

@@ -10,7 +10,7 @@
 
 @implementation A_StringHelper
 
-+ (Boolean) A_IsEmpty:(NSString*) Str {
++ (BOOL) A_IsEmpty:(NSString*) Str {
     return (!(Str && ![Str isKindOfClass:[NSNull class]] && ![Str isEqual:[NSNull null]] && [Str isKindOfClass:[NSString class]] && Str.length));
 }
 
@@ -25,7 +25,6 @@
     NSTimeInterval _interval = [secondDate timeIntervalSinceDate:firstDate];
     return _interval;
 }
-
 
 +(NSString *)A_StripHTMLTag:(NSString*)str {
     NSRange r;
