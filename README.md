@@ -1,4 +1,4 @@
-A-IOSHelper
+A-IOSHelper [![Stories in Ready](https://badge.waffle.io/animaxx/a-ioshelper.svg?label=ready&title=Ready)](http://waffle.io/animaxx/a-ioshelper)
 ===========
 
 ## Objective
