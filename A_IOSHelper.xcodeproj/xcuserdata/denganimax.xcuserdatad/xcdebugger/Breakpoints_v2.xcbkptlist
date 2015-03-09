@@ -2,4 +2,80 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "A_IOSHelperTests/A_DataModelTests.m"
+            timestampString = "447611290.276323"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "-testConvertJSON"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[A_DataModelTests testConvertJSON]"
+                  moduleName = "A_IOSHelperTests"
+                  urlString = "file:///Volumes/Macintosh%20HD/Projects/My%20Projects/A-IOSHelper/A_IOSHelperTests/A_DataModelTests.m"
+                  timestampString = "447614101.863671"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "423">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[A_DataModelTests testConvertJSON]"
+                  moduleName = "A_IOSHelperTests"
+                  urlString = "file:///Volumes/Macintosh%20HD/Projects/My%20Projects/A-IOSHelper/A_IOSHelperTests/A_DataModelTests.m"
+                  timestampString = "447614101.863991"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "856">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[A_DataModelTests testConvertJSON]"
+                  moduleName = "A_IOSHelperTests"
+                  urlString = "file:///Volumes/Macintosh%20HD/Projects/My%20Projects/A-IOSHelper/A_IOSHelperTests/A_DataModelTests.m"
+                  timestampString = "447614101.864225"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "962">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[A_DataModelTests testConvertJSON]"
+                  moduleName = "A_IOSHelperTests"
+                  urlString = "file:///Volumes/Macintosh%20HD/Projects/My%20Projects/A-IOSHelper/A_IOSHelperTests/A_DataModelTests.m"
+                  timestampString = "447614101.864492"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "1379">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

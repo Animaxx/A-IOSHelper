@@ -10,6 +10,18 @@
 
 @implementation A_JSONHelper
 
++ (NSDictionary*)_tidyDict: (NSDictionary*) _dict {
+    NSMutableDictionary* _tidyDict = [[NSMutableDictionary alloc] init];
+    for (NSString* _key in [_dict allKeys]) {
+        if ([[_dict valueForKey:_key] isKindOfClass:[NSDate class]]) {
+            [_tidyDict setValue:[NSString stringWithFormat:@"%@", [_dict valueForKey:_key]] forKey:_key];
+        }else {
+            [_tidyDict setValue:[_dict valueForKey:_key] forKey:_key];
+        }
+    }
+    return _tidyDict;
+}
+
 + (NSDictionary*)A_ConvertJSONToDictionary: (NSString*)JSONStr{
     NSError *error = nil;
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData: [JSONStr dataUsingEncoding:NSUTF8StringEncoding]
@@ -41,7 +53,8 @@
 
 + (NSString*)A_ConvertDictionaryToJSON: (NSDictionary*)Dict{
     NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject: Dict
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject: [self _tidyDict: Dict]
                                                        options: 0
                                                          error: &error];
     if (!jsonData) {
@@ -72,7 +85,7 @@
 
 + (NSData*)A_ConvertDictionaryToData: (NSDictionary*)Dict{
     NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject: Dict
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject: [self _tidyDict: Dict]
                                                        options: 0
                                                          error: &error];
     if (!jsonData) {

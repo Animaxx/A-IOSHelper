@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E1187911A3750770080FFB9"
+               BlueprintIdentifier = "2E3A8D4D1AADEF4B00D3A833"
                BuildableName = "A_IOSHelperTests.xctest"
                BlueprintName = "A_IOSHelperTests"
                ReferencedContainer = "container:A_IOSHelper.xcodeproj">
@@ -46,11 +46,19 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E1187911A3750770080FFB9"
+               BlueprintIdentifier = "2E3A8D4D1AADEF4B00D3A833"
                BuildableName = "A_IOSHelperTests.xctest"
                BlueprintName = "A_IOSHelperTests"
                ReferencedContainer = "container:A_IOSHelper.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "A_DataModelTests/testPerformanceExample">
+               </Test>
+               <Test
+                  Identifier = "A_IOSHelperTests/testPerformanceExample">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

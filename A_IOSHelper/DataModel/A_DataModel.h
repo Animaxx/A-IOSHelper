@@ -13,4 +13,7 @@
 - (NSDictionary*)A_Serialize;
 + (NSObject*)A_Deserialize: (NSDictionary*)Array;
 
+- (NSString*)A_ConvertToJSON;
++ (NSObject*)A_ConvertFromJSON: (NSString*)JSON;
+
 @end

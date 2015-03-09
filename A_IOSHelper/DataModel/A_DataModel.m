@@ -8,6 +8,7 @@
 
 #import "A_DataModel.h"
 #import "A_Reflection.h"
+#import "A_JSONHelper.h"
 
 @implementation A_DataModel
 
@@ -17,12 +18,7 @@
     
     NSArray *propertyList = [A_Reflection A_Properties:self];
     for (NSString *key in propertyList) {
-        SEL selector = NSSelectorFromString(key);
-        
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        id value = [self performSelector:selector];
-#pragma clang diagnostic pop
+        id value = [self valueForKey:key];
         
         if (value == nil) {
             value = [NSNull null];
@@ -41,6 +37,16 @@
     return obj;
 }
 
+
+- (NSString*)A_ConvertToJSON {
+    NSDictionary* _dic = [self A_Serialize];
+    
+    return [A_JSONHelper A_ConvertDictionaryToJSON:_dic];
+}
++ (NSObject*)A_ConvertFromJSON: (NSString*)JSON {
+    NSDictionary* _dic = [A_JSONHelper A_ConvertJSONToDictionary:JSON];
+    return [self A_Deserialize:_dic];
+}
 
 
 @end
