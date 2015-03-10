@@ -18,4 +18,7 @@
 + (NSDate*) A_ThisMonth;
 + (NSDate*) A_LastMonth;
 
++ (NSDate*) A_StringToDate:(NSString*)dateStr Format:(NSString*)format;
++ (NSTimeInterval) A_DateDiffer:(NSDate*)firstDate Second:(NSDate*)secondDate;
+
 @end

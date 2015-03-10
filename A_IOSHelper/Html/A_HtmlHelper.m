@@ -29,7 +29,6 @@
     return [A_HtmlHelper A_HtmlTemplate:htmlUrl Folder:@"www"];
 }
 
-
 + (NSString*)A_HtmlFillContent:(NSString*)htmlTemplate Content:(NSDictionary*)content {
     for (id key in [content allKeys]) {
         
@@ -41,7 +40,6 @@
     
     return htmlTemplate;
 }
-
 
 + (NSString*)A_HtmlWithContent:(NSString*)htmlUrl Folder:(NSString*)folder Content:(NSDictionary*)content {
     NSString* _htmlTemplate = [A_HtmlHelper A_HtmlTemplate:htmlUrl Folder:folder];

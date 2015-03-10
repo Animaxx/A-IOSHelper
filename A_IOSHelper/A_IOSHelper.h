@@ -3,7 +3,7 @@
 //  A_IOSHelper
 //
 //  Created by Animax
-//  Copyright (c) 2014 AnimaxDeng. All rights reserved.
+//  Copyright (c) 2015 AnimaxDeng. All rights reserved.
 //
 
 #import <A_IOSHelper/A_ScreenHelper.h>
@@ -22,3 +22,4 @@
 #import <A_IOSHelper/A_Datetime.h>
 #import <A_IOSHelper/A_Reflection.h>
 #import <A_IOSHelper/A_DataModel.h>
+#import <A_IOSHelper/A_AsyncHelper.h>

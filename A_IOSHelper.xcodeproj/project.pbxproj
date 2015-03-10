@@ -34,6 +34,9 @@
 		2E3A8D5E1AADF05F00D3A833 /* A_IOSHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D5D1AADF05F00D3A833 /* A_IOSHelperTests.m */; };
 		2E3A8D601AADF0BB00D3A833 /* A_DataModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D5F1AADF0BB00D3A833 /* A_DataModelTests.m */; };
 		2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D621AADF19C00D3A833 /* TestDataModel.m */; };
+		2E3A8D671AAE556600D3A833 /* A_AsyncHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E3A8D651AAE556600D3A833 /* A_AsyncHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E3A8D681AAE556600D3A833 /* A_AsyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D661AAE556600D3A833 /* A_AsyncHelper.m */; };
+		2E3A8D6B1AAE58D100D3A833 /* A_AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */; };
 		2E58DA571A489E2100CA10B6 /* A_AlertBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E58DA551A489E2100CA10B6 /* A_AlertBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E58DA561A489E2100CA10B6 /* A_AlertBox.m */; };
 		2EB2EAC01A38D69000946C51 /* A_SqliteWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -89,6 +92,9 @@
 		2E3A8D5F1AADF0BB00D3A833 /* A_DataModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_DataModelTests.m; sourceTree = "<group>"; };
 		2E3A8D611AADF19C00D3A833 /* TestDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDataModel.h; sourceTree = "<group>"; };
 		2E3A8D621AADF19C00D3A833 /* TestDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDataModel.m; sourceTree = "<group>"; };
+		2E3A8D651AAE556600D3A833 /* A_AsyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AsyncHelper.h; path = Async/A_AsyncHelper.h; sourceTree = "<group>"; };
+		2E3A8D661AAE556600D3A833 /* A_AsyncHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AsyncHelper.m; path = Async/A_AsyncHelper.m; sourceTree = "<group>"; };
+		2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_AsyncTests.m; sourceTree = "<group>"; };
 		2E58DA551A489E2100CA10B6 /* A_AlertBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AlertBox.h; path = AlertBox/A_AlertBox.h; sourceTree = "<group>"; };
 		2E58DA561A489E2100CA10B6 /* A_AlertBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AlertBox.m; path = AlertBox/A_AlertBox.m; sourceTree = "<group>"; };
 		2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_SqliteWrapper.h; path = SqliteWrapper/A_SqliteWrapper.h; sourceTree = "<group>"; };
@@ -153,6 +159,7 @@
 		2E1187891A3750770080FFB9 /* A_IOSHelper */ = {
 			isa = PBXGroup;
 			children = (
+				2E3A8D691AAE557200D3A833 /* Async */,
 				2ED875E81A9AA18500D0D62E /* Reflection */,
 				2ED875E31A9A9CD500D0D62E /* DataModel */,
 				2E02F99B1A4B6AA400F4EBDE /* Datatime */,
@@ -276,6 +283,7 @@
 		2E3A8D4F1AADEF4B00D3A833 /* A_IOSHelperTests */ = {
 			isa = PBXGroup;
 			children = (
+				2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */,
 				2E3A8D611AADF19C00D3A833 /* TestDataModel.h */,
 				2E3A8D621AADF19C00D3A833 /* TestDataModel.m */,
 				2E3A8D5F1AADF0BB00D3A833 /* A_DataModelTests.m */,
@@ -291,6 +299,15 @@
 				2E3A8D511AADEF4B00D3A833 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2E3A8D691AAE557200D3A833 /* Async */ = {
+			isa = PBXGroup;
+			children = (
+				2E3A8D651AAE556600D3A833 /* A_AsyncHelper.h */,
+				2E3A8D661AAE556600D3A833 /* A_AsyncHelper.m */,
+			);
+			name = Async;
 			sourceTree = "<group>";
 		};
 		2E58DA591A489E2600CA10B6 /* AlertBox */ = {
@@ -369,6 +386,7 @@
 				2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */,
 				2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */,
 				2E1187C31A37518F0080FFB9 /* A_JSONHelper.h in Headers */,
+				2E3A8D671AAE556600D3A833 /* A_AsyncHelper.h in Headers */,
 				2E02F9A01A4B6D4C00F4EBDE /* A_Datetime.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,6 +493,7 @@
 				2E1187CA1A37518F0080FFB9 /* A_DeviceHelper.m in Sources */,
 				2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */,
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,
+				2E3A8D681AAE556600D3A833 /* A_AsyncHelper.m in Sources */,
 				2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */,
 				2E1187D01A37518F0080FFB9 /* A_ScreenHelper.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
@@ -494,6 +513,7 @@
 			files = (
 				2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */,
 				2E3A8D5E1AADF05F00D3A833 /* A_IOSHelperTests.m in Sources */,
+				2E3A8D6B1AAE58D100D3A833 /* A_AsyncTests.m in Sources */,
 				2E3A8D601AADF0BB00D3A833 /* A_DataModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -686,6 +706,7 @@
 				2E3A8D581AADEF4B00D3A833 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

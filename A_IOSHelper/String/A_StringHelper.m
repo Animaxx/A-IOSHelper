@@ -14,19 +14,7 @@
     return (!(Str && ![Str isKindOfClass:[NSNull class]] && ![Str isEqual:[NSNull null]] && [Str isKindOfClass:[NSString class]] && Str.length));
 }
 
-+ (NSDate*) A_StringToDate:(NSString*)dateStr Format:(NSString*)format {
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:format]; //@"EE, d LLLL yyyy HH:mm:ss Z"
-    NSDate *date = [dateFormat dateFromString:dateStr];
-    
-    return date;
-}
-+ (NSTimeInterval) A_DateDiffer:(NSDate*)firstDate Second:(NSDate*)secondDate {
-    NSTimeInterval _interval = [secondDate timeIntervalSinceDate:firstDate];
-    return _interval;
-}
-
-+(NSString *)A_StripHTMLTag:(NSString*)str {
++ (NSString *)A_StripHTMLTag:(NSString*)str {
     NSRange r;
     while ((r = [str rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
     {
@@ -35,9 +23,19 @@
     return str;
 }
 
-+(NSString *)A_TrimString:(NSString*)str {
++ (NSString *)A_TrimString:(NSString*)str {
     return [str stringByTrimmingCharactersInSet:
             [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
++ (BOOL) A_ValidateEmail:(NSString*)str {
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    return [self A_Matche:str WithRegex:emailRegex];
+}
+
++ (BOOL)A_Matche:(NSString*)str WithRegex:(NSString *)regex{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    return [predicate evaluateWithObject:str];
 }
 
 @end

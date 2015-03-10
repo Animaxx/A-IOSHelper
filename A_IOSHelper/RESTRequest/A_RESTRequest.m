@@ -221,50 +221,51 @@
 
 #pragma mark - Methods For Applicate
 
-+ (NSDictionary*) A_GetJson_Dictionary: (NSString*)_URL
-                            Parameters: (NSDictionary*)_parameters
-                               Headers: (NSDictionary*)_headers {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
-    
-    NSDictionary* theDataDictionary = nil;
-    @try {
-        theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
-    } @catch (NSException *e) {
-#ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@", e);
-#endif
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        return nil;
-    }
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    return theDataDictionary;
-}
-+ (NSArray*) A_GetJson_Array: (NSString*)_URL
-                  Parameters: (NSDictionary*)_parameters
-                     Headers: (NSDictionary*)_headers {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
-    
-    NSArray* theDataArray = nil;
-    @try {
-        theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
-    } @catch (NSException *e) {
-#ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get array error>  \r\n %@", e);
-#endif
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        return nil;
-    }
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    return theDataArray;
-}
++ (NSDictionary*) A_GetDictionary: (NSString*)_URL
+                       Parameters: (NSDictionary*)_parameters
+                          Headers: (NSDictionary*)_headers {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            
+            NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
+            
+            NSDictionary* theDataDictionary = nil;
+            @try {
+                theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
+            } @catch (NSException *e) {
+        #ifndef NDEBUG
+                NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@", e);
+        #endif
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                return nil;
+            }
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            return theDataDictionary;
+        }
++ (NSArray*) A_GetArray: (NSString*)_URL
+             Parameters: (NSDictionary*)_parameters
+                Headers: (NSDictionary*)_headers {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+            NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
+            
+            NSArray* theDataArray = nil;
+            @try {
+                theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
+            } @catch (NSException *e) {
+        #ifndef NDEBUG
+                NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get array error>  \r\n %@", e);
+        #endif
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                return nil;
+            }
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            return theDataArray;
+        }
 
-+ (NSDictionary*) A_PostForm_Dictionary: (NSString*)_URL
-                             Parameters: (NSDictionary*)_parameters
-                                 Header: (NSDictionary*)_headers{
+
++ (NSDictionary*) A_PostQueryReturnDictionary: (NSString*)_URL
+                                   Parameters: (NSDictionary*)_parameters
+                                       Header: (NSDictionary*)_headers{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
@@ -283,12 +284,55 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     return theDataDictionary;
 }
-+ (NSArray*) A_PostForm_Array: (NSString*)_URL
-                   Parameters: (NSDictionary*)_parameters
-                       Header: (NSDictionary*)_headers{
++ (NSArray*) A_PostQueryReturnArray: (NSString*)_URL
+                         Parameters: (NSDictionary*)_parameters
+                             Header: (NSDictionary*)_headers{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
+
+    NSArray* theDataArray = nil;
+    @try {
+        theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
+    } @catch (NSException *e) {
+    #ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post form and get array error>  \r\n %@", e);
+    #endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theDataArray;
+}
+
++ (NSDictionary*) A_PostJSONReturnDictionary: (NSString*)_URL
+                                  Parameters: (NSDictionary*)_parameters
+                                      Header: (NSDictionary*)_headers {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
+    
+    NSDictionary* theDataDictionary = nil;
+    @try {
+        theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
+    } @catch (NSException *e) {
+#ifndef NDEBUG
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post form and get dictionary error>  \r\n %@", e);
+#endif
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        return nil;
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    return theDataDictionary;
+}
++ (NSArray*) A_PostJSONReturnArray: (NSString*)_URL
+                        Parameters: (NSDictionary*)_parameters
+                            Header: (NSDictionary*)_headers {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
     
     NSArray* theDataArray = nil;
     @try {
@@ -305,49 +349,7 @@
     return theDataArray;
 }
 
-+ (NSDictionary*) A_PostJSON_Dictionary: (NSString*)_URL
-                             Parameters: (NSDictionary*)_parameters
-                                 Header: (NSDictionary*)_headers{
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
-    
-    NSDictionary* theDataDictionary = nil;
-    @try {
-        theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
-    } @catch (NSException *e) {
-#ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post json and get dictionary error>  \r\n %@", e);
-#endif
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        return nil;
-    }
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    return theDataDictionary;
-}
-+ (NSArray*) A_PostJSON_Array: (NSString*)_URL
-                   Parameters: (NSDictionary*)_parameters
-                       Header: (NSDictionary*)_headers{
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
-    
-    NSArray* theArray = nil;
-    @try {
-        theArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
-    } @catch (NSException *e) {
-#ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post json and get dictionary error>  \r\n %@", e);
-#endif
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        return nil;
-    }
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    return theArray;
-}
+
 
 + (NSDictionary*) A_UploadImage_Dictionary: (NSString*)_URL
                            QueryParameters: (NSDictionary*)_parameters

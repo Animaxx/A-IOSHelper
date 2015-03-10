@@ -55,26 +55,28 @@ enum {
 
 #pragma mark - Methods For Applicate
 
-+ (NSDictionary*) A_GetJson_Dictionary: (NSString*)_URL
-                            Parameters: (NSDictionary*)_parameters
-                               Headers: (NSDictionary*)_headers;
-+ (NSArray*) A_GetJson_Array: (NSString*)_URL
-                  Parameters: (NSDictionary*)_parameters
-                     Headers: (NSDictionary*)_headers ;
++ (NSDictionary*) A_GetDictionary: (NSString*)_URL
+                       Parameters: (NSDictionary*)_parameters
+                          Headers: (NSDictionary*)_headers;
++ (NSArray*) A_GetArray: (NSString*)_URL
+             Parameters: (NSDictionary*)_parameters
+                Headers: (NSDictionary*)_headers;
 
-+ (NSDictionary*) A_PostForm_Dictionary: (NSString*)_URL
-                             Parameters: (NSDictionary*)_parameters
-                                 Header: (NSDictionary*)_headers;
-+ (NSArray*) A_PostForm_Array: (NSString*)_URL
-                   Parameters: (NSDictionary*)_parameters
-                       Header: (NSDictionary*)_headers;
++ (NSDictionary*) A_PostQueryReturnDictionary: (NSString*)_URL
+                                     Parameters: (NSDictionary*)_parameters
+                                       Header: (NSDictionary*)_headers;
++ (NSArray*) A_PostQueryReturnArray: (NSString*)_URL
+                         Parameters: (NSDictionary*)_parameters
+                             Header: (NSDictionary*)_headers;
 
-+ (NSDictionary*) A_PostJSON_Dictionary: (NSString*)_URL
-                             Parameters: (NSDictionary*)_parameters
-                                 Header: (NSDictionary*)_headers;
-+ (NSArray*) A_PostJSON_Array: (NSString*)_URL
-                   Parameters: (NSDictionary*)_parameters
-                       Header: (NSDictionary*)_headers;
++ (NSDictionary*) A_PostJSONReturnDictionary: (NSString*)_URL
+                                  Parameters: (NSDictionary*)_parameters
+                                      Header: (NSDictionary*)_headers;
++ (NSArray*) A_PostJSONReturnArray: (NSString*)_URL
+                        Parameters: (NSDictionary*)_parameters
+                            Header: (NSDictionary*)_headers;
+
+
 
 + (NSDictionary*) A_UploadImage_Dictionary: (NSString*)_URL
                            QueryParameters: (NSDictionary*)_parameters

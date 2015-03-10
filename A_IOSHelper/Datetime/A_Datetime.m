@@ -79,4 +79,18 @@
     return lastMonth;
 }
 
++ (NSDate*) A_StringToDate:(NSString*)dateStr Format:(NSString*)format {
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:format]; //@"EE, d LLLL yyyy HH:mm:ss Z"
+    NSDate *date = [dateFormat dateFromString:dateStr];
+    
+    return date;
+}
+
++ (NSTimeInterval) A_DateDiffer:(NSDate*)firstDate Second:(NSDate*)secondDate {
+    NSTimeInterval _interval = [secondDate timeIntervalSinceDate:firstDate];
+    return _interval;
+}
+
+
 @end

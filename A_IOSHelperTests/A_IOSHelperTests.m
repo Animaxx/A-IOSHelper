@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+#import "A_StringHelper.h"
+
 @interface A_IOSHelperTests : XCTestCase
 
 @end
@@ -27,6 +29,9 @@
 
 - (void)testExample {
     // All Passed
+
+    BOOL _a = [A_StringHelper A_ValidateEmail:@"abc@123"];
+    
     XCTAssert(YES, @"Pass");
 }
 

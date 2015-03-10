@@ -11,6 +11,9 @@
 @interface A_DataModel : NSObject
 
 - (NSDictionary*)A_Serialize;
-+ (NSObject*)A_Seserialize: (NSDictionary*)Array;
++ (NSObject*)A_Deserialize: (NSDictionary*)Array;
+
+- (NSString*)A_ConvertToJSON;
++ (NSObject*)A_ConvertFromJSON: (NSString*)JSON;
 
 @end
