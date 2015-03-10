@@ -1,4 +1,4 @@
 language: objective-c
-xcode_project: A_IOSHelper.xcodeproj
-xcode_scheme: A_IOSHelper
-xcode_sdk: iphonesimulator
+script:
+  - xctool -project A_IOSHelper.xcodeproj -scheme A_IOSHelper -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xctool test -project A_IOSHelper.xcodeproj -scheme A_IOSHelperTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
