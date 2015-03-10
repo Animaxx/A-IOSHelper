@@ -1,4 +1,4 @@
 language: objective-c
 xcode_project: A_IOSHelper.xcodeproj
-xcode_scheme: A_IOSHelperTests 
+xcode_scheme: A_IOSHelper
 xcode_sdk: iphonesimulator
