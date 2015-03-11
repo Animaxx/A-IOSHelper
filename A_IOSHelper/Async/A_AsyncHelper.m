@@ -13,6 +13,13 @@
 + (void) A_RunInBackground: (dispatch_block_t) block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 }
++ (void) A_RunInBackground: (dispatch_block_t) block WhenDone: (dispatch_block_t) finishBlock{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        [block invoke];
+        dispatch_async(dispatch_get_main_queue(), finishBlock);
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), finishBlock);
+    });
+}
 
 + (void) A_DelayExecute: (double) delaySec Method: (dispatch_block_t) method {
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySec * NSEC_PER_SEC));
