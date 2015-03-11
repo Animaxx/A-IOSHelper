@@ -25,12 +25,12 @@
                   symbolName = "-[A_DataModelTests testConvertJSON]"
                   moduleName = "A_IOSHelperTests"
                   urlString = "file:///Volumes/Macintosh%20HD/Projects/My%20Projects/A-IOSHelper/A_IOSHelperTests/A_DataModelTests.m"
-                  timestampString = "447658394.44987"
+                  timestampString = "447746178.455445"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
                   endingLineNumber = "53"
-                  offsetFromSymbolStart = "423">
+                  offsetFromSymbolStart = "408">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -39,12 +39,12 @@
                   symbolName = "-[A_DataModelTests testConvertJSON]"
                   moduleName = "A_IOSHelperTests"
                   urlString = "file:///Volumes/Macintosh%20HD/Projects/My%20Projects/A-IOSHelper/A_IOSHelperTests/A_DataModelTests.m"
-                  timestampString = "447658394.450271"
+                  timestampString = "447746178.455783"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
                   endingLineNumber = "53"
-                  offsetFromSymbolStart = "856">
+                  offsetFromSymbolStart = "912">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -53,12 +53,12 @@
                   symbolName = "-[A_DataModelTests testConvertJSON]"
                   moduleName = "A_IOSHelperTests"
                   urlString = "file:///Volumes/Macintosh%20HD/Projects/My%20Projects/A-IOSHelper/A_IOSHelperTests/A_DataModelTests.m"
-                  timestampString = "447658394.450595"
+                  timestampString = "447746178.45615"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
                   endingLineNumber = "53"
-                  offsetFromSymbolStart = "962">
+                  offsetFromSymbolStart = "1040">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -67,12 +67,12 @@
                   symbolName = "-[A_DataModelTests testConvertJSON]"
                   moduleName = "A_IOSHelperTests"
                   urlString = "file:///Volumes/Macintosh%20HD/Projects/My%20Projects/A-IOSHelper/A_IOSHelperTests/A_DataModelTests.m"
-                  timestampString = "447658394.450928"
+                  timestampString = "447746178.456515"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "53"
                   endingLineNumber = "53"
-                  offsetFromSymbolStart = "1379">
+                  offsetFromSymbolStart = "1519">
                </Location>
             </Locations>
          </BreakpointContent>

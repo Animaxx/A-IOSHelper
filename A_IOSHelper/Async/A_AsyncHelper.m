@@ -15,7 +15,8 @@
 }
 + (void) A_RunInBackground: (dispatch_block_t) block WhenDone: (dispatch_block_t) finishBlock{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        [block invoke];
+//        [block invoke];
+        block();
         dispatch_async(dispatch_get_main_queue(), finishBlock);
 //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), finishBlock);
     });

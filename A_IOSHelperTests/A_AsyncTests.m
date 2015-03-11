@@ -39,6 +39,21 @@ int _testInt = 0;
     XCTAssert(_testInt==1);
 }
 
+- (void)testRunInBackgroundWithDone {
+    _testInt = 0;
+    
+    [A_AsyncHelper A_RunInBackground:^{
+        _testInt = 1;
+        NSLog(@"Step 1");
+    } WhenDone:^{
+        _testInt = 2;
+        NSLog(@"Step 2");
+    }];
+    
+    XCTAssert(YES);
+}
+
+
 - (void)testDelayExecute {
     _testInt = 0;
     [A_AsyncHelper A_DelayExecute:0.1 Method: ^(void) {

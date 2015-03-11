@@ -32,6 +32,7 @@ The Swfit example:
 ## How to build 
 Please use `build.sh` file to build this project.
 > sh ./build.sh
+
 OR
 > sudo sh ./build.sh
 

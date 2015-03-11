@@ -44,6 +44,10 @@
 		2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EAC31A38DAB500946C51 /* A_Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EAC41A38DAB500946C51 /* A_Animation.m */; };
 		2EB2EACA1A38E37800946C51 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */; };
+		2ECD55081AB0CF65000E9802 /* A_BlockWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ECD55061AB0CF65000E9802 /* A_BlockWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ECD55091AB0CF65000E9802 /* A_BlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD55071AB0CF65000E9802 /* A_BlockWrapper.m */; };
+		2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */; };
 		2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */; };
 		2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -102,6 +106,10 @@
 		2EB2EAC31A38DAB500946C51 /* A_Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Animation.h; path = Animation/A_Animation.h; sourceTree = "<group>"; };
 		2EB2EAC41A38DAB500946C51 /* A_Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Animation.m; path = Animation/A_Animation.m; sourceTree = "<group>"; };
 		2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		2ECD55061AB0CF65000E9802 /* A_BlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_BlockWrapper.h; path = BlockWrapper/A_BlockWrapper.h; sourceTree = "<group>"; };
+		2ECD55071AB0CF65000E9802 /* A_BlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_BlockWrapper.m; path = BlockWrapper/A_BlockWrapper.m; sourceTree = "<group>"; };
+		2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIControl+A_Extension.h"; path = "UIKitExtension/UIControl+A_Extension.h"; sourceTree = "<group>"; };
+		2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIControl+A_Extension.m"; path = "UIKitExtension/UIControl+A_Extension.m"; sourceTree = "<group>"; };
 		2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_DataModel.h; path = DataModel/A_DataModel.h; sourceTree = "<group>"; };
 		2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_DataModel.m; path = DataModel/A_DataModel.m; sourceTree = "<group>"; };
 		2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Reflection.h; path = Reflection/A_Reflection.h; sourceTree = "<group>"; };
@@ -159,6 +167,8 @@
 		2E1187891A3750770080FFB9 /* A_IOSHelper */ = {
 			isa = PBXGroup;
 			children = (
+				2ECD550F1AB0D338000E9802 /* UIKItExtension */,
+				2ECD550A1AB0CF6B000E9802 /* BlockWrapper */,
 				2E3A8D691AAE557200D3A833 /* Async */,
 				2ED875E81A9AA18500D0D62E /* Reflection */,
 				2ED875E31A9A9CD500D0D62E /* DataModel */,
@@ -345,6 +355,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2ECD550A1AB0CF6B000E9802 /* BlockWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				2ECD55061AB0CF65000E9802 /* A_BlockWrapper.h */,
+				2ECD55071AB0CF65000E9802 /* A_BlockWrapper.m */,
+			);
+			name = BlockWrapper;
+			sourceTree = "<group>";
+		};
+		2ECD550F1AB0D338000E9802 /* UIKItExtension */ = {
+			isa = PBXGroup;
+			children = (
+				2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */,
+				2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */,
+			);
+			name = UIKItExtension;
+			sourceTree = "<group>";
+		};
 		2ED875E31A9A9CD500D0D62E /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,8 +414,10 @@
 				2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */,
 				2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */,
 				2E1187C31A37518F0080FFB9 /* A_JSONHelper.h in Headers */,
+				2ECD55081AB0CF65000E9802 /* A_BlockWrapper.h in Headers */,
 				2E3A8D671AAE556600D3A833 /* A_AsyncHelper.h in Headers */,
 				2E02F9A01A4B6D4C00F4EBDE /* A_Datetime.h in Headers */,
+				2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +520,7 @@
 				2E1187D21A37518F0080FFB9 /* A_StoreDatafileHelper.m in Sources */,
 				2E1187CE1A37518F0080FFB9 /* A_ImageHelper.m in Sources */,
 				2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */,
+				2ECD55091AB0CF65000E9802 /* A_BlockWrapper.m in Sources */,
 				2E1187CA1A37518F0080FFB9 /* A_DeviceHelper.m in Sources */,
 				2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */,
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,
@@ -497,6 +528,7 @@
 				2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */,
 				2E1187D01A37518F0080FFB9 /* A_ScreenHelper.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
+				2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */,
 				2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */,
 				2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */,
 				2E1187C81A37518F0080FFB9 /* A_ColorHelper.m in Sources */,
