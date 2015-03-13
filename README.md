@@ -1,11 +1,11 @@
 A-IOSHelper [![Stories in Ready](https://badge.waffle.io/animaxx/a-ioshelper.svg?label=ready&title=Ready)](http://waffle.io/animaxx/a-ioshelper)  [![Build Status](https://travis-ci.org/Animaxx/A-IOSHelper.svg?branch=master)](https://travis-ci.org/Animaxx/A-IOSHelper)
 ===========
 
-## Objective
+## Summary
 This is a scaffold framwork to make building iOS app quickly. It's built by Objective-c and you also can use for Swift project. The aid of the project is provide any fundation functions for IOS developer. 
 
-## Rule of the project
-This project will not incould any other libraty. If it needs importing native libraries such as sqlite3.h, import then in .m file.
+## Reference libraries
+If you use A_SqliteWrapper or A_DataMamager, please add `libsqlite3.dylib` to your project.
 
 ## How to use
 In A-IOSHelper, all functions are having the prefix `A_` , so you can easy to find the function.

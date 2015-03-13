@@ -24,8 +24,6 @@
 		2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187B41A37518F0080FFB9 /* A_HtmlHelper.m */; };
 		2E1187CD1A37518F0080FFB9 /* A_ImageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187B61A37518F0080FFB9 /* A_ImageHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1187CE1A37518F0080FFB9 /* A_ImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187B71A37518F0080FFB9 /* A_ImageHelper.m */; };
-		2E1187CF1A37518F0080FFB9 /* A_ScreenHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187B91A37518F0080FFB9 /* A_ScreenHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E1187D01A37518F0080FFB9 /* A_ScreenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187BA1A37518F0080FFB9 /* A_ScreenHelper.m */; };
 		2E1187D11A37518F0080FFB9 /* A_StoreDatafileHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187BC1A37518F0080FFB9 /* A_StoreDatafileHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1187D21A37518F0080FFB9 /* A_StoreDatafileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187BD1A37518F0080FFB9 /* A_StoreDatafileHelper.m */; };
 		2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -84,8 +82,6 @@
 		2E1187B41A37518F0080FFB9 /* A_HtmlHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_HtmlHelper.m; sourceTree = "<group>"; };
 		2E1187B61A37518F0080FFB9 /* A_ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_ImageHelper.h; sourceTree = "<group>"; };
 		2E1187B71A37518F0080FFB9 /* A_ImageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_ImageHelper.m; sourceTree = "<group>"; };
-		2E1187B91A37518F0080FFB9 /* A_ScreenHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_ScreenHelper.h; sourceTree = "<group>"; };
-		2E1187BA1A37518F0080FFB9 /* A_ScreenHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_ScreenHelper.m; sourceTree = "<group>"; };
 		2E1187BC1A37518F0080FFB9 /* A_StoreDatafileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_StoreDatafileHelper.h; sourceTree = "<group>"; };
 		2E1187BD1A37518F0080FFB9 /* A_StoreDatafileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_StoreDatafileHelper.m; sourceTree = "<group>"; };
 		2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_StringHelper.h; sourceTree = "<group>"; };
@@ -101,6 +97,7 @@
 		2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_AsyncTests.m; sourceTree = "<group>"; };
 		2E58DA551A489E2100CA10B6 /* A_AlertBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AlertBox.h; path = AlertBox/A_AlertBox.h; sourceTree = "<group>"; };
 		2E58DA561A489E2100CA10B6 /* A_AlertBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AlertBox.m; path = AlertBox/A_AlertBox.m; sourceTree = "<group>"; };
+		2EB099D71AB2A66D00D6DBDC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_SqliteWrapper.h; path = SqliteWrapper/A_SqliteWrapper.h; sourceTree = "<group>"; };
 		2EB2EABF1A38D69000946C51 /* A_SqliteWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_SqliteWrapper.m; path = SqliteWrapper/A_SqliteWrapper.m; sourceTree = "<group>"; };
 		2EB2EAC31A38DAB500946C51 /* A_Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Animation.h; path = Animation/A_Animation.h; sourceTree = "<group>"; };
@@ -183,7 +180,6 @@
 				2E1187AF1A37518F0080FFB9 /* Device */,
 				2E1187B21A37518F0080FFB9 /* Html */,
 				2E1187B51A37518F0080FFB9 /* Image */,
-				2E1187B81A37518F0080FFB9 /* Screen */,
 				2E1187BB1A37518F0080FFB9 /* StoreDatafile */,
 				2E1187BE1A37518F0080FFB9 /* String */,
 				2E11878C1A3750770080FFB9 /* A_IOSHelper.h */,
@@ -261,15 +257,6 @@
 				2E1187B71A37518F0080FFB9 /* A_ImageHelper.m */,
 			);
 			path = Image;
-			sourceTree = "<group>";
-		};
-		2E1187B81A37518F0080FFB9 /* Screen */ = {
-			isa = PBXGroup;
-			children = (
-				2E1187B91A37518F0080FFB9 /* A_ScreenHelper.h */,
-				2E1187BA1A37518F0080FFB9 /* A_ScreenHelper.m */,
-			);
-			path = Screen;
 			sourceTree = "<group>";
 		};
 		2E1187BB1A37518F0080FFB9 /* StoreDatafile */ = {
@@ -350,6 +337,7 @@
 		2EB2EACB1A38E38100946C51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2EB099D71AB2A66D00D6DBDC /* QuartzCore.framework */,
 				2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
@@ -400,7 +388,6 @@
 			files = (
 				2E1187CD1A37518F0080FFB9 /* A_ImageHelper.h in Headers */,
 				2E1187C91A37518F0080FFB9 /* A_DeviceHelper.h in Headers */,
-				2E1187CF1A37518F0080FFB9 /* A_ScreenHelper.h in Headers */,
 				2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */,
 				2E1187C51A37518F0080FFB9 /* A_RESTRequest.h in Headers */,
 				2E1187D11A37518F0080FFB9 /* A_StoreDatafileHelper.h in Headers */,
@@ -526,7 +513,6 @@
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,
 				2E3A8D681AAE556600D3A833 /* A_AsyncHelper.m in Sources */,
 				2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */,
-				2E1187D01A37518F0080FFB9 /* A_ScreenHelper.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
 				2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */,
 				2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */,

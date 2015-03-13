@@ -10,4 +10,30 @@
 
 @implementation A_Animation
 
++ (CABasicAnimation*) FadeIn: (CALayer*) layer Duration:(double)duration {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.beginTime = 0.0f;
+    animation.duration = duration;
+    animation.fromValue = [NSNumber numberWithFloat:0.0f];
+    animation.toValue = [NSNumber numberWithFloat:1.0f];
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeBoth;
+    animation.additive = NO;
+    return animation;
+}
++ (CABasicAnimation*) FadeOut: (CALayer*) layer Duration:(double)duration {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.beginTime = 0.0f;
+    animation.duration = duration;
+    animation.fromValue = [NSNumber numberWithFloat:1.0f];
+    animation.toValue = [NSNumber numberWithFloat:0.0f];
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeBoth;
+    animation.additive = NO;
+    return animation;
+}
+
+
+
+
 @end

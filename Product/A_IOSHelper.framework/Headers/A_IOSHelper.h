@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 AnimaxDeng. All rights reserved.
 //
 
-#import <A_IOSHelper/A_ScreenHelper.h>
 #import <A_IOSHelper/A_DeviceHelper.h>
 #import <A_IOSHelper/A_StoreDatafileHelper.h>
 #import <A_IOSHelper/A_CollectionHelper.h>

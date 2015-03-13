@@ -33,14 +33,20 @@ enum {
     
     Device_iPad1                = 101,
     Device_iPad2                = 102,
-    Device_iPadMini             = 103,
-    Device_iPad3                = 104,
+    Device_iPad3                = 103,
     Device_iPad4                = 104,
     Device_iPadAir              = 105,
-    Device_iPadMini2            = 106,
+    Device_iPadAir2             = 106,
+    
+    Device_iPadMini             = 201,
+    Device_iPadMini2            = 202,
+    Device_iPadMini3            = 203,
     
 }; typedef NSUInteger A_UIDeviceResolution;
 
-+ (A_UIDeviceResolution) A_GetDeviceVersion;
++ (A_UIDeviceResolution) A_DeviceVersion;
+
++ (NSInteger)A_DeviceWidth;
++ (NSInteger)A_DeviceHeight;
 
 @end

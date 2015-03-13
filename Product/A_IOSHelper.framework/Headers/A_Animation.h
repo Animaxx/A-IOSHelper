@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface A_Animation : NSObject
+
++ (CABasicAnimation*) FadeIn: (CALayer*) layer Duration:(double)duration;
++ (CABasicAnimation*) FadeOut: (CALayer*) layer Duration:(double)duration;
+
 
 @end
