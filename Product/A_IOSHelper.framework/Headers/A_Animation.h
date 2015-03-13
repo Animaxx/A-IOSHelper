@@ -11,8 +11,8 @@
 
 @interface A_Animation : NSObject
 
-+ (CABasicAnimation*) FadeIn: (CALayer*) layer Duration:(double)duration;
-+ (CABasicAnimation*) FadeOut: (CALayer*) layer Duration:(double)duration;
-
++ (CABasicAnimation*) A_FadeIn:(double)duration;
++ (CABasicAnimation*) A_FadeOut:(double)duration;
++ (CABasicAnimation*) A_MoveTo:(double)duration OriginalPosition:(CGPoint)oiginalPosition Destination:(CGPoint)destination;
 
 @end

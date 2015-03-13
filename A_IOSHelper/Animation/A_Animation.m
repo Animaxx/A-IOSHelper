@@ -7,33 +7,44 @@
 //
 
 #import "A_Animation.h"
+#import <UIKit/UIKit.h>
 
 @implementation A_Animation
 
-+ (CABasicAnimation*) FadeIn: (CALayer*) layer Duration:(double)duration {
++ (CABasicAnimation*) A_FadeIn:(double)duration {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     animation.beginTime = 0.0f;
     animation.duration = duration;
     animation.fromValue = [NSNumber numberWithFloat:0.0f];
     animation.toValue = [NSNumber numberWithFloat:1.0f];
-    animation.removedOnCompletion = NO;
+    animation.removedOnCompletion = YES;
     animation.fillMode = kCAFillModeBoth;
     animation.additive = NO;
     return animation;
 }
-+ (CABasicAnimation*) FadeOut: (CALayer*) layer Duration:(double)duration {
++ (CABasicAnimation*) A_FadeOut:(double)duration {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     animation.beginTime = 0.0f;
     animation.duration = duration;
     animation.fromValue = [NSNumber numberWithFloat:1.0f];
     animation.toValue = [NSNumber numberWithFloat:0.0f];
-    animation.removedOnCompletion = NO;
+    animation.removedOnCompletion = YES;
     animation.fillMode = kCAFillModeBoth;
     animation.additive = NO;
     return animation;
 }
 
-
++ (CABasicAnimation*) A_MoveTo:(double)duration OriginalPosition:(CGPoint)oiginalPosition Destination:(CGPoint)destination {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    animation.beginTime = 0.0f;
+    animation.duration = duration;
+    animation.fromValue = [NSValue valueWithCGPoint:oiginalPosition];
+    animation.toValue = [NSValue valueWithCGPoint:destination];
+    animation.removedOnCompletion = YES;
+    animation.fillMode = kCAFillModeBoth;
+    animation.additive = NO;
+    return animation;
+}
 
 
 @end

@@ -10,11 +10,7 @@
 #import "UIControl+A_Extension.h"
 #import "A_BlockWrapper.h"
 
-@interface UIControl (BlocksKit)
-
-@end
-
-@implementation UIControl (BlocksKit)
+@implementation UIControl (A_Extension)
 
 static char _a_associatedObjectKey;
 
