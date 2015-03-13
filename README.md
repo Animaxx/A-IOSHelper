@@ -2,7 +2,7 @@ A-IOSHelper [![Stories in Ready](https://badge.waffle.io/animaxx/a-ioshelper.svg
 ===========
 
 ## Summary
-This is a scaffold framwork to make building iOS app quickly. It's built by Objective-c and you also can use for Swift project. The aid of the project is provide any fundation functions for IOS developer. 
+This is a scaffold framwork to make building iOS app quickly. It's built by Objective-c and you also can use for Swift project. The aid of the project is provide any fundation functions for IOS developer. Please visit document site for more information: http://animaxx.github.io/A-IOSHelper
 
 ## Reference libraries
 If you use A_SqliteWrapper or A_DataMamager, please add `libsqlite3.dylib` to your project.
