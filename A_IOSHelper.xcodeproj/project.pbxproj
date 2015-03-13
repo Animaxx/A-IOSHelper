@@ -39,7 +39,7 @@
 		2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E58DA561A489E2100CA10B6 /* A_AlertBox.m */; };
 		2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB099DC1AB3310800D6DBDC /* UIView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB099DA1AB3310800D6DBDC /* UIView+A_Extension.m */; };
-		2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099DD1AB367D500D6DBDC /* NSDate+A_Extension.h */; };
+		2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099DD1AB367D500D6DBDC /* NSDate+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB099DE1AB367D500D6DBDC /* NSDate+A_Extension.m */; };
 		2EB2EAC01A38D69000946C51 /* A_SqliteWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EABF1A38D69000946C51 /* A_SqliteWrapper.m */; };
@@ -410,7 +410,6 @@
 				2E1187C71A37518F0080FFB9 /* A_ColorHelper.h in Headers */,
 				2E58DA571A489E2100CA10B6 /* A_AlertBox.h in Headers */,
 				2E11878D1A3750770080FFB9 /* A_IOSHelper.h in Headers */,
-				2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */,
 				2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */,
 				2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */,
 				2E1187C31A37518F0080FFB9 /* A_JSONHelper.h in Headers */,
@@ -418,6 +417,7 @@
 				2E3A8D671AAE556600D3A833 /* A_AsyncHelper.h in Headers */,
 				2E02F9A01A4B6D4C00F4EBDE /* A_Datetime.h in Headers */,
 				2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */,
+				2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */,
 				2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
