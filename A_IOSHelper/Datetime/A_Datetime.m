@@ -86,10 +86,20 @@
     
     return date;
 }
-
-+ (NSTimeInterval) A_DateDiffer:(NSDate*)firstDate Second:(NSDate*)secondDate {
-    NSTimeInterval _interval = [secondDate timeIntervalSinceDate:firstDate];
-    return _interval;
++ (BOOL) A_Equal:(NSDate*)firstDate With:(NSDate*)secondDate {
+    return ([firstDate compare:secondDate] == NSOrderedSame);
+}
++ (BOOL) A_Greater:(NSDate*)firstDate Then:(NSDate*)secondDate {
+    return [firstDate compare:secondDate] == NSOrderedDescending;
+}
++ (NSTimeInterval) A_DateDiffer:(NSDate*)firstDate Compare:(NSDate*)secondDate {
+    if ([self A_Greater:firstDate Then:secondDate]) {
+        NSTimeInterval _interval = [firstDate timeIntervalSinceDate:secondDate];
+        return _interval;
+    } else {
+        NSTimeInterval _interval = [secondDate timeIntervalSinceDate:firstDate];
+        return _interval;
+    }
 }
 
 

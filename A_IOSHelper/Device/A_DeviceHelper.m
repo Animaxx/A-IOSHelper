@@ -10,6 +10,8 @@
 #import <sys/utsname.h>
 #import <UIKit/UIKit.h>
 
+#import <MobileCoreServices/MobileCoreServices.h>
+
 @implementation A_DeviceHelper
 
 + (A_UIDeviceResolution) A_DeviceVersion {
@@ -81,5 +83,28 @@
     return (NSInteger)[[UIScreen mainScreen] bounds].size.height * [UIScreen mainScreen].scale;
 }
 
++ (BOOL) A_CheckCameraAvailable {
+    return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+}
++ (BOOL) A_CheckCideoCameraAvailable {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    NSArray *sourceTypes = [UIImagePickerController availableMediaTypesForSourceType:picker.sourceType];
+    
+    if (![sourceTypes containsObject:(NSString *)kUTTypeMovie ]){
+        
+        return NO;
+    }
+    
+    return YES;
+}
++ (BOOL) A_CheckFrontCameraAvailable {
+    return [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront];
+}
++ (BOOL) A_CheckCanSendSMS {
+    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"sms://"]];
+}
++ (BOOL) A_CheckCanCall {
+    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]];
+}
 
 @end

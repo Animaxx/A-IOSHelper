@@ -49,4 +49,10 @@ enum {
 + (NSInteger)A_DeviceWidth;
 + (NSInteger)A_DeviceHeight;
 
++ (BOOL) A_CheckCameraAvailable;
++ (BOOL) A_CheckCideoCameraAvailable;
++ (BOOL) A_CheckFrontCameraAvailable;
++ (BOOL) A_CheckCanSendSMS;
++ (BOOL) A_CheckCanCall;
+
 @end

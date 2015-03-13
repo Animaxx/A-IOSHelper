@@ -43,10 +43,17 @@
         [fileMgr removeItemAtPath:[@"Documents/" stringByAppendingPathComponent:filename] error:nil];
     }
 }
-+ (void) A_CleanAFileFromDocuments: (NSString*)filename {
++ (void) A_RemoveFileFromDocuments: (NSString*)filename {
     [[NSFileManager defaultManager] removeItemAtPath:
-        [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/xyz123.data"]
+        [NSHomeDirectory() stringByAppendingPathComponent: [NSString stringWithFormat:@"Documents/%@",filename]]
                                                error:nil];
+}
+
++ (NSString *)A_GetDocumentsPath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths objectAtIndex:0];
+    return path;
 }
 
 @end
