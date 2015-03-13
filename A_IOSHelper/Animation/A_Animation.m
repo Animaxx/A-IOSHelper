@@ -45,6 +45,45 @@
     animation.additive = NO;
     return animation;
 }
++ (CABasicAnimation*) A_ChangeSize:(double)duration OriginalSize:(CGRect)oiginalBounds To:(CGSize)size {
+    CGRect newBounds = oiginalBounds;
+    newBounds.size = size;
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+    animation.beginTime = 0.0f;
+    animation.duration = duration;
+    animation.fromValue = [NSValue valueWithCGRect:oiginalBounds];
+    animation.toValue = [NSValue valueWithCGRect:newBounds];
+    animation.removedOnCompletion = YES;
+    animation.fillMode = kCAFillModeBoth;
+    animation.additive = NO;
+    return animation;
+}
 
+-(void)resizeLayer:(CALayer*)layer to:(CGSize)size
+{
+    // Prepare the animation from the old size to the new size
+    CGRect oldBounds = layer.bounds;
+    CGRect newBounds = oldBounds;
+    newBounds.size = size;
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+    
+    // NSValue/+valueWithRect:(NSRect)rect is available on Mac OS X
+    // NSValue/+valueWithCGRect:(CGRect)rect is available on iOS
+    // comment/uncomment the corresponding lines depending on which platform you're targeting
+    
+    // Mac OS X
+//    animation.fromValue = [NSValue valueWithRect:NSRectFromCGRect(oldBounds)];
+//    animation.toValue = [NSValue valueWithRect:NSRectFromCGRect(newBounds)];
+    // iOS
+    animation.fromValue = [NSValue valueWithCGRect:oldBounds];
+    animation.toValue = [NSValue valueWithCGRect:newBounds];
+    
+    // Update the layer's bounds so the layer doesn't snap back when the animation completes.
+    layer.bounds = newBounds;
+    
+    // Add the animation, overriding the implicit animation.
+    [layer addAnimation:animation forKey:@"bounds"];
+}
 
 @end
