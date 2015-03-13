@@ -37,7 +37,7 @@
 		2E3A8D6B1AAE58D100D3A833 /* A_AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */; };
 		2E58DA571A489E2100CA10B6 /* A_AlertBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E58DA551A489E2100CA10B6 /* A_AlertBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E58DA561A489E2100CA10B6 /* A_AlertBox.m */; };
-		2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */; };
+		2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB099DC1AB3310800D6DBDC /* UIView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB099DA1AB3310800D6DBDC /* UIView+A_Extension.m */; };
 		2EB2EAC01A38D69000946C51 /* A_SqliteWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EABE1A38D69000946C51 /* A_SqliteWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EABF1A38D69000946C51 /* A_SqliteWrapper.m */; };
