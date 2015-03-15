@@ -10,10 +10,10 @@
 
 @interface A_StringHelper : NSObject
 
-+ (BOOL) A_IsEmpty:(NSString*) Str;
++ (BOOL) A_CheckEmpty:(NSString*) Str;
 + (NSString *)A_StripHTMLTag:(NSString*)str;
 + (NSString *)A_TrimString:(NSString*)str;
 + (BOOL) A_ValidateEmail:(NSString*)str;
-+ (BOOL)A_Matche:(NSString*)str WithRegex:(NSString *)regex;
++ (BOOL)A_Match:(NSString*)str WithRegex:(NSString *)regex;
 
 @end

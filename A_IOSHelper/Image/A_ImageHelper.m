@@ -55,8 +55,11 @@
 
 + (UIImage*) A_ImageFromAllinoneRes: (NSString*) imageName WithRect:(CGRect) rect {
     UIImage* image = [UIImage imageNamed:imageName];
+    
     if (image != nil) {
-        image = [UIImage imageWithCGImage: CGImageCreateWithImageInRect(image.CGImage, rect)];
+        CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, rect);
+        image = [UIImage imageWithCGImage: imageRef];
+        CGImageRelease(imageRef);
     }
     return image;
 }
@@ -144,9 +147,10 @@
 }
 
 + (UIImage*) A_CutImage: (UIImage*)theImage InRect: (CGRect) rect {
-    CGImageRef _CGImage =CGImageCreateWithImageInRect(theImage.CGImage, rect);
-    UIImage* _Image = [UIImage imageWithCGImage:_CGImage];
-    return _Image;
+    CGImageRef imageRef =CGImageCreateWithImageInRect(theImage.CGImage, rect);
+    UIImage* _image = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return _image;
 }
 
 @end
