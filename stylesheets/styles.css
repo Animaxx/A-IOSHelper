@@ -769,6 +769,7 @@ dt {
 #header nav li.fork {
   float: left;
   margin-left: 0px;
+  margin-right: 6px;
 }
 #header nav li.downloads {
   float: right;
@@ -820,6 +821,73 @@ section #title .credits.right {
   float: right;
 }
 
+
+.animation {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-delay: .2s;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-duration: 1s;
+    -moz-animation-delay: .2s;
+    -moz-animation-timing-function: ease;
+    -moz-animation-fill-mode: both;
+    -ms-animation-duration: 1s;
+    -ms-animation-delay: .2s;
+    -ms-animation-timing-function: ease;
+    -ms-animation-fill-mode: both;
+    animation-duration: 1s;
+    animation-delay: .2s;
+    animation-timing-function: ease;
+    animation-fill-mode: both;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    -o-transition: all .2s linear;
+    transition: all .2s linear;
+}
+#sidebar {
+    width: 40px;
+    height: 130px;
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 120px;
+    z-index: 10;
+    text-align: center;
+    background-color: #444;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    cursor: pointer;
+}
+#sidebar .title {
+    font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    margin-top: 20px;
+    -moz-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+    -o-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    font-size: 30px;
+}
+#sidebar_menu {
+    width: 0px;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 60px;
+    z-index: 10;
+    background-color: #444;
+}
+#sidebar_menu p {
+    margin: 20px 0 20px 30px;
+    font-size: 16px;
+}
+
 @media print, screen and (max-width: 720px) {
   #title .credits {
     display: block;
@@ -838,14 +906,12 @@ section #title .credits.right {
 }
 @media print, screen and (max-width: 480px) {
   #header {
-    margin-top: -20px;
   }
+    #header .title {
+        display: none;
+    }
 
   section {
     margin-top: 40px;
-  }
-
-  nav {
-    display: none;
   }
 }
