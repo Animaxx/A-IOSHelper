@@ -845,7 +845,9 @@ section #title .credits.left {
 section #title .credits.right {
   float: right;
 }
-
+section img.demo {
+    margin-left: 20px;
+}
 
 .animation {
     -webkit-backface-visibility: hidden;

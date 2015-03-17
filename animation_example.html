@@ -18,6 +18,9 @@
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    <link rel="stylesheet" href="styles/hybrid.css">
+    <script src="javascripts/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 <div id="header">
@@ -50,6 +53,81 @@
         <h1>
             Animation
         </h1>
+        <p> The functions of animation are in <code>A_Animation</code> and also in extension of UIView. Below is some demos of animations </p>
+        <br />
+        <h2> Animation FadeOut </h2>
+
+        <pre><code class="html">- (IBAction)doClick:(id)sender {
+    [self.theDemoBlock A_Animation_FadeOut:1.0];
+}</code></pre>
+        <img class="demo" src="images/demo/Animation_FadeOut.gif" />
+
+        <br />
+        <br />
+
+        <h2> Animation FadeIn </h2>
+
+        <pre><code class="html">- (IBAction)doClick:(id)sender {
+            [self.theDemoBlock A_Animation_FadeIn:1.0];
+}</code></pre>
+        <img class="demo" src="images/demo/Animation_FadeIn.gif" />
+
+        <br />
+        <br />
+
+        <h2> Animation move out from left </h2>
+        <pre><code class="html">- (IBAction)doClick:(id)sender {
+    [self.theDemoBlock A_Animation_MoveOut_FromLeft:1.0];
+}</code></pre>
+        <img class="demo" src="images/demo/Animation_MoveOutLeft.gif" />
+
+        <br />
+        <br />
+
+        <h2> Animation move out from bottom </h2>
+        <pre><code class="html">- (IBAction)doClick:(id)sender {
+            [self.theDemoBlock A_Animation_MoveOut_FromBottom:1.0];
+}</code></pre>
+        <img class="demo" src="images/demo/Animation_MoveOutBottom.gif" />
+
+        <br />
+        <br />
+
+        <h2> Animation move out from right </h2>
+        <pre><code class="html">- (IBAction)doClick:(id)sender {
+            [self.theDemoBlock A_Animation_MoveOut_FromRight:1.0];
+}</code></pre>
+        <img class="demo" src="images/demo/Animation_MoveOutRight.gif" />
+
+        <br />
+        <br />
+
+        <h2> Animation move out from right </h2>
+        <pre><code class="html">- (IBAction)doClick:(id)sender {
+            [self.theDemoBlock A_Animation_MoveOut_FromTop:1.0];
+}</code></pre>
+        <img class="demo" src="images/demo/Animation_MoveOutTop.gif" />
+
+        <br />
+        <br />
+
+        <h2> Animation move to center </h2>
+        <pre><code class="html">- (IBAction)doClick:(id)sender {
+            [self.theDemoBlock A_Animation_MoveToCenter:1.0];
+}</code></pre>
+        <imcg class="demo" src="images/demo/Animation_MoveToCenter.gif" />
+
+        <br />
+        <br />
+
+        <h2> Animation </h2>
+        <pre><code class="html">- (IBAction)doClick:(id)sender {
+            [self.theDemoBlock A_Animation_ToSize:CGSizeMake(200, 200) Duration:0.5 WhenCompleted:^{
+                [self.theDemoBlock A_Animation_ToBall:0.5];
+                [self.theDemoBlock A_Animation_FadeOut:1.0];
+            }];
+}</code></pre>
+        <img class="demo" src="images/demo/Animation_combine.gif" />
 
     </section>
 
