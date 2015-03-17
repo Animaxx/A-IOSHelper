@@ -60,30 +60,28 @@
     return animation;
 }
 
--(void)resizeLayer:(CALayer*)layer to:(CGSize)size
-{
-    // Prepare the animation from the old size to the new size
-    CGRect oldBounds = layer.bounds;
-    CGRect newBounds = oldBounds;
-    newBounds.size = size;
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-    
-    // NSValue/+valueWithRect:(NSRect)rect is available on Mac OS X
-    // NSValue/+valueWithCGRect:(CGRect)rect is available on iOS
-    // comment/uncomment the corresponding lines depending on which platform you're targeting
-    
-    // Mac OS X
-//    animation.fromValue = [NSValue valueWithRect:NSRectFromCGRect(oldBounds)];
-//    animation.toValue = [NSValue valueWithRect:NSRectFromCGRect(newBounds)];
-    // iOS
-    animation.fromValue = [NSValue valueWithCGRect:oldBounds];
-    animation.toValue = [NSValue valueWithCGRect:newBounds];
-    
-    // Update the layer's bounds so the layer doesn't snap back when the animation completes.
-    layer.bounds = newBounds;
-    
-    // Add the animation, overriding the implicit animation.
-    [layer addAnimation:animation forKey:@"bounds"];
++ (CABasicAnimation*) A_ChangeShapeToBall: (double)duration OriginalRadius:(CGFloat)originalradius To: (CGFloat)radius {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    animation.duration = duration;
+    animation.fromValue = [NSNumber numberWithFloat:originalradius];
+    animation.toValue = [NSNumber numberWithFloat:radius];
+    animation.removedOnCompletion = YES;
+    animation.fillMode = kCAFillModeBoth;
+    animation.additive = NO;
+    return animation;
 }
 
++ (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations {
+    [UIView animateWithDuration:duration animations:animations];
+}
++ (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations WhenCompleted:(void (^)(BOOL finished))block  {
+    [UIView animateWithDuration:duration animations:animations completion:block];
+}
+
+
+
 @end
+
+
+
+

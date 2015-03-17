@@ -13,6 +13,7 @@
 
 @implementation UIView (A_Extension)
 
+#pragma mark - Animation
 - (void) A_Animation_FadeIn: (double)duration {
     self.layer.opacity = 0.0f;
     self.layer.hidden = false;
@@ -172,6 +173,58 @@
     CGSize size = CGSizeMake((CGFloat)[A_DeviceHelper A_DeviceWidth], (CGFloat)[A_DeviceHelper A_DeviceHeight]);
     [self A_Animation_ToSize:duration Size:size WhenCompleted:block];
 }
+
+- (void) A_Animation_ToBall: (double)duration{
+    CGFloat _radius = (self.frame.size.width / 2);
+    if (self.frame.size.width > self.frame.size.height) {
+        _radius = (self.frame.size.height / 2);
+    }
+    
+    [self A_Animation_ChangeCornerRadius:_radius Duration:duration];
+}
+- (void) A_Animation_ToBall: (double)duration WhenCompleted:(void (^)(void))block{
+    CGFloat _radius = (self.frame.size.width / 2);
+    if (self.frame.size.width > self.frame.size.height) {
+        _radius = (self.frame.size.height / 2);
+    }
+    
+    [self A_Animation_ChangeCornerRadius:_radius Duration:duration WhenCompleted:block];
+}
+
+- (void) A_Animation_ChangeCornerRadius: (CGFloat)radius Duration:(double)duration {
+    CABasicAnimation* _animation = [A_Animation A_ChangeShapeToBall:duration
+                                                     OriginalRadius:self.layer.cornerRadius
+                                                                 To:radius];
+    
+    [self.layer addAnimation:_animation forKey:@"animax_changeRadius"];
+    self.layer.cornerRadius = radius;
+}
+- (void) A_Animation_ChangeCornerRadius: (CGFloat)radius Duration:(double)duration WhenCompleted:(void (^)(void))block{
+    [CATransaction begin]; {
+        [CATransaction setCompletionBlock:block];
+        
+        CABasicAnimation* _animation = [A_Animation A_ChangeShapeToBall:duration
+                                                         OriginalRadius:self.layer.cornerRadius
+                                                                     To:radius];
+        
+        [self.layer addAnimation:_animation forKey:@"animax_changeRadius"];
+        self.layer.cornerRadius = radius;
+    } [CATransaction commit];
+}
+
+
+#pragma mark - Shape
+- (void) A_Shape_ToBall {
+    CGFloat _radius = (self.frame.size.width / 2);
+    if (self.frame.size.width > self.frame.size.height) {
+        _radius = (self.frame.size.height / 2);
+    }
+    
+    self.layer.cornerRadius = _radius;
+}
+
+
+
 
 @end
 

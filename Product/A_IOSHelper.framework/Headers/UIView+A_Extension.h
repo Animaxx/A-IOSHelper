@@ -10,6 +10,7 @@
 
 @interface UIView (A_Extension)
 
+#pragma mark - Animation
 - (void) A_Animation_FadeIn: (double)duration;
 - (void) A_Animation_FadeIn: (double)duration WhenCompleted:(void (^)(void))block;
 - (void) A_Animation_FadeOut: (double)duration;
@@ -32,5 +33,15 @@
 
 - (void) A_Animation_ToFullScreenSize: (double)duration;
 - (void) A_Animation_ToFullScreenSize: (double)duration WhenCompleted:(void (^)(void))block;
+
+- (void) A_Animation_ToBall: (double)duration;
+- (void) A_Animation_ToBall: (double)duration WhenCompleted:(void (^)(void))block;
+
+- (void) A_Animation_ChangeCornerRadius: (CGFloat)radius Duration:(double)duration;
+- (void) A_Animation_ChangeCornerRadius: (CGFloat)radius Duration:(double)duration WhenCompleted:(void (^)(void))block;
+
+#pragma mark - Shape
+- (void) A_Shape_ToBall;
+
 
 @end
