@@ -27,9 +27,13 @@
 
 - (void) A_Animation_MoveToCenter: (double)duration;
 - (void) A_Animation_MoveToCenter: (double)duration WhenCompleted:(void (^)(void))block;
+- (void) A_Animation_MoveToPostionX: (float)x Y:(float)y  Duration:(double)duration;
+- (void) A_Animation_MoveToPostionX: (float)x Y:(float)y  Duration:(double)duration WhenCompleted:(void (^)(void))block;
+- (void) A_Animation_MoveToAbsolutePostionX: (float)x Y:(float)y  Duration:(double)duration;
+- (void) A_Animation_MoveToAbsolutePostionX: (float)x Y:(float)y  Duration:(double)duration WhenCompleted:(void (^)(void))block;
 
-- (void) A_Animation_ToSize: (double)duration Size: (CGSize)size;
-- (void) A_Animation_ToSize: (double)duration Size: (CGSize)size WhenCompleted:(void (^)(void))block;
+- (void) A_Animation_ToSize: (CGSize)size Duration:(double)duration;
+- (void) A_Animation_ToSize: (CGSize)size Duration:(double)duration WhenCompleted:(void (^)(void))block;
 
 - (void) A_Animation_ToFullScreenSize: (double)duration;
 - (void) A_Animation_ToFullScreenSize: (double)duration WhenCompleted:(void (^)(void))block;
@@ -39,6 +43,8 @@
 
 - (void) A_Animation_ChangeCornerRadius: (CGFloat)radius Duration:(double)duration;
 - (void) A_Animation_ChangeCornerRadius: (CGFloat)radius Duration:(double)duration WhenCompleted:(void (^)(void))block;
+
+- (void) A_Animation_SubmitTransaction: (NSDictionary*)animations WhenCompleted:(void (^)(void))block;
 
 #pragma mark - Shape
 - (void) A_Shape_ToBall;

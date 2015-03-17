@@ -46,8 +46,11 @@ enum {
 
 + (A_UIDeviceResolution) A_DeviceVersion;
 
-+ (NSInteger)A_DeviceWidth;
-+ (NSInteger)A_DeviceHeight;
++ (float)A_DeviceWidth;
++ (float)A_DeviceHeight;
+
++ (float)A_DeviceExactWidth;
++ (float)A_DeviceExactHeight;
 
 + (BOOL) A_CheckCameraAvailable;
 + (BOOL) A_CheckCideoCameraAvailable;

@@ -76,11 +76,18 @@
     NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Unkonw device type> \r\n %@", deviceString);
     return Device_Unknow;
 }
-+ (NSInteger)A_DeviceWidth {
-    return (NSInteger)[[UIScreen mainScreen] bounds].size.width * [UIScreen mainScreen].scale;
++ (float)A_DeviceWidth {
+    return (NSInteger)[[UIScreen mainScreen] bounds].size.width;
 }
-+ (NSInteger)A_DeviceHeight {
-    return (NSInteger)[[UIScreen mainScreen] bounds].size.height * [UIScreen mainScreen].scale;
++ (float)A_DeviceHeight {
+    return (NSInteger)[[UIScreen mainScreen] bounds].size.height;
+}
+
++ (float)A_DeviceExactWidth {
+    return (NSInteger)[[UIScreen mainScreen] currentMode].size.width;
+}
++ (float)A_DeviceExactHeight {
+    return (NSInteger)[[UIScreen mainScreen] currentMode].size.height;
 }
 
 + (BOOL) A_CheckCameraAvailable {
