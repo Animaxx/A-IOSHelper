@@ -534,24 +534,24 @@ body {
   font: 14px/1.5 "OpenSansRegular", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #f0e7d5;
   font-weight: normal;
-/*  background: #252525;
-  background-attachment: fixed !important;
+  background: #252525;
+/*  background-attachment: fixed !important;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #2a2a29), color-stop(100%, #1c1c1c));
   background: -webkit-linear-gradient(#2a2a29, #1c1c1c);
   background: -moz-linear-gradient(#2a2a29, #1c1c1c);
   background: -o-linear-gradient(#2a2a29, #1c1c1c);
   background: -ms-linear-gradient(#2a2a29, #1c1c1c);
-  background: linear-gradient(#2a2a29, #1c1c1c);*/
-  background: #000;
-  background-image: url("../images/starfield.jpg");
+  background: linear-gradient(#2a2a29, #1c1c1c);
+  /*background: #000;*/
+  /*background-image: url("../images/starfield.jpg");*/
   background-position: 0px 0px;
   background-repeat: repeat;
 
-  -webkit-animation: move 600s linear infinite;
-  -moz-animation: move 600s linear infinite;
-  -ms-animation: move 600s linear infinite;
-  -o-animation: move 600s linear infinite;
-  animation: move 600s linear infinite; 
+  /*-webkit-animation: move 600s linear infinite;*/
+  /*-moz-animation: move 600s linear infinite;*/
+  /*-ms-animation: move 600s linear infinite;*/
+  /*-o-animation: move 600s linear infinite;*/
+  /*animation: move 600s linear infinite; */
 }
     @-webkit-keyframes move {
         from {background-position:0% 0%;}
@@ -677,6 +677,7 @@ pre {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
   overflow: auto;
   overflow-y: hidden;
+  border-left: 3px solid #ffcc00;
 }
 pre code {
   color: #efefef;
@@ -847,6 +848,9 @@ section #title .credits.right {
 }
 section img.demo {
     margin-left: 20px;
+}
+section div.anchor {
+    position:relative; top:-75px;
 }
 
 .animation {

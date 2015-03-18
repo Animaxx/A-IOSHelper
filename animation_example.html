@@ -55,6 +55,22 @@
         </h1>
         <p> The functions of animation are in <code>A_Animation</code> and also in extension of UIView. Below is some demos of animations </p>
         <br />
+
+        <div>
+            <h2> Contents </h2>
+            <ul>
+                <li> <a href="#animationFadeout">Animation FadeOut</a> </li>
+                <li> <a href="#animationFadein">Animation FadeIn</a> </li>
+                <li> <a href="#animationMoveleft">Animation Move Out From Left</a> </li>
+                <li> <a href="#animationMoveBottom">Animation move out from bottom</a> </li>
+                <li> <a href="#animationMoveRight">Animation move out from right</a> </li>
+                <li> <a href="#animationMoveTop">Animation move out from top</a> </li>
+                <li> <a href="#animationMoveCenter">Animation move to center</a> </li>
+                <li> <a href="#animationCompletedEvent">Multi-animation combine</a> </li>
+            </ul>
+        </div>
+
+        <div id='animationFadeout' class="anchor"></div>
         <h2> Animation FadeOut </h2>
 
         <pre><code class="html">- (IBAction)doClick:(id)sender {
@@ -65,6 +81,7 @@
         <br />
         <br />
 
+        <div id='animationFadein' class="anchor"></div>
         <h2> Animation FadeIn </h2>
 
         <pre><code class="html">- (IBAction)doClick:(id)sender {
@@ -75,6 +92,7 @@
         <br />
         <br />
 
+        <div id='animationMoveleft' class="anchor"></div>
         <h2> Animation move out from left </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
     [self.theDemoBlock A_Animation_MoveOut_FromLeft:1.0];
@@ -84,6 +102,7 @@
         <br />
         <br />
 
+        <div id='animationMoveBottom' class="anchor"></div>
         <h2> Animation move out from bottom </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
             [self.theDemoBlock A_Animation_MoveOut_FromBottom:1.0];
@@ -93,6 +112,7 @@
         <br />
         <br />
 
+        <div id='animationMoveRight' class="anchor"></div>
         <h2> Animation move out from right </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
             [self.theDemoBlock A_Animation_MoveOut_FromRight:1.0];
@@ -102,7 +122,8 @@
         <br />
         <br />
 
-        <h2> Animation move out from right </h2>
+        <div id='animationMoveTop' class="anchor"></div>
+        <h2> Animation move out from top </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
             [self.theDemoBlock A_Animation_MoveOut_FromTop:1.0];
 }</code></pre>
@@ -111,6 +132,7 @@
         <br />
         <br />
 
+        <div id='animationMoveCenter' class="anchor"></div>
         <h2> Animation move to center </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
             [self.theDemoBlock A_Animation_MoveToCenter:1.0];
@@ -120,7 +142,8 @@
         <br />
         <br />
 
-        <h2> Animation </h2>
+        <div id='animationCompletedEvent' class="anchor"></div>
+        <h2> Multi-animation combine</h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
             [self.theDemoBlock A_Animation_ToSize:CGSizeMake(200, 200) Duration:0.5 WhenCompleted:^{
                 [self.theDemoBlock A_Animation_ToBall:0.5];
