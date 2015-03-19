@@ -68,6 +68,14 @@
     } [CATransaction commit];
 }
 
+- (void) A_Animation_CardIn: (A_Animation_DirectionType)directionType Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block{
+    [self.layer setHidden:YES];
+    [A_Animation A_CardIn:self.layer Direction:directionType Duration:duration WhenCompleted:block];
+}
+- (void) A_Animation_CardOut: (A_Animation_DirectionType)directionType Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block{
+    [A_Animation A_CardOut:self.layer Direction:directionType Duration:duration WhenCompleted:block];
+}
+
 - (void) A_Animation_MoveToCenter: (double)duration {
     CGPoint _destinationPoint = [A_Animation A_MakeLayerPosition:self.layer PositionX:(([A_DeviceHelper A_DeviceWidth] - self.layer.frame.size.width)/2) Y:(([A_DeviceHelper A_DeviceHeight] - self.layer.frame.size.height)/2)];
     

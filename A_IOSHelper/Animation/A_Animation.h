@@ -11,6 +11,9 @@
 
 @interface A_Animation : NSObject
 
+#define RADIANS_TO_DEGREES(x) ((x)/M_PI*180.0)
+#define DEGREES_TO_RADIANS(x) ((x)/180.0*M_PI)
+
 enum {
     A_Animation_SystemTransition_Reveal     = 101,
     A_Animation_SystemTransition_MoveIn     = 102,
@@ -43,6 +46,9 @@ enum {
 + (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations;
 + (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations WhenCompleted:(void (^)(BOOL finished))block;
 + (void) A_SubmitTransaction: (CALayer*)layer Animations:(NSDictionary*)animations WhenCompleted:(void (^)(void))block;
+
++ (void) A_CardIn:(CALayer*)layer Direction:(A_Animation_DirectionType)direction Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block;
++ (void) A_CardOut:(CALayer*)layer Direction:(A_Animation_DirectionType)direction Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block;
 
 #pragma mark - Calculating helper
 + (CGPoint) A_MakeLayerPosition: (CALayer*)layer PositionX:(float)x Y:(float)y;

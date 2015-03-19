@@ -10,10 +10,12 @@
 
 @interface UIControl (A_Extension)
 
-- (void)A_AddEvent:(void (^)(id sender))handler forControlEvents:(UIControlEvents)controlEvents;
-- (void)A_RemoveEvent:(UIControlEvents)controlEvent;
+- (void)A_Event_Add:(void (^)(id sender))handler WithObj:(id)arg forControlEvents:(UIControlEvents)controlEvents;
+- (void)A_Event_Add:(void (^)(id sender))handler forControlEvents:(UIControlEvents)controlEvents;
+- (void)A_Event_Remove:(UIControlEvents)controlEvent;
 
-- (void)A_OnClick:(void (^)(id sender))event;
-- (void)A_RemoveClick:(void (^)(id sender))event;
+- (void)A_Event_OnClick:(void (^)(id sender))event WithObj:(id)arg;
+- (void)A_Event_OnClick:(void (^)(id sender))event;
+- (void)A_Event_RemoveClick:(void (^)(id sender))event;
 
 @end

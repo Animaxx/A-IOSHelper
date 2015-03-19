@@ -14,8 +14,8 @@
 
 static char _a_associatedObjectKey;
 
-- (void)A_AddEvent:(void (^)(id sender))event forControlEvents:(UIControlEvents)controlEvent {
-    NSParameterAssert(event);
+- (void)A_Event_Add:(void (^)(id sender))handler WithObj:(id)arg forControlEvents:(UIControlEvents)controlEvents {
+    NSParameterAssert(handler);
     
     NSMutableDictionary *events = objc_getAssociatedObject(self, &_a_associatedObjectKey);
     if (!events) {
@@ -23,18 +23,21 @@ static char _a_associatedObjectKey;
         objc_setAssociatedObject(self, &_a_associatedObjectKey, events, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
-    NSNumber *key = @(controlEvent);
+    NSNumber *key = @(controlEvents);
     NSMutableSet *handlers = events[key];
     if (!handlers) {
         handlers = [NSMutableSet set];
         events[key] = handlers;
     }
     
-    A_BlockWrapper* _block = [A_BlockWrapper A_Init:(__bridge void *)(event)];
-	[handlers addObject:_block];
+    A_BlockWrapper* _block = [A_BlockWrapper A_Init:(__bridge void *)(handler) WithObj:arg];
+    [handlers addObject:_block];
     [self addTarget:_block action:@selector(A_Execute:) forControlEvents:UIControlEventTouchUpInside];
 }
-- (void)A_RemoveEvent:(UIControlEvents)controlEvent {
+- (void)A_Event_Add:(void (^)(id sender))handler forControlEvents:(UIControlEvents)controlEvents {
+    [self A_Event_Add:handler WithObj:nil forControlEvents:controlEvents];
+}
+- (void)A_Event_Remove:(UIControlEvents)controlEvent {
     NSMutableDictionary *events = objc_getAssociatedObject(self, &_a_associatedObjectKey);
     if (!events) {
         events = [NSMutableDictionary dictionary];
@@ -54,11 +57,14 @@ static char _a_associatedObjectKey;
     [events removeObjectForKey:key];
 }
 
-- (void)A_OnClick:(void (^)(id sender))event {
-    [self A_AddEvent:event forControlEvents:UIControlEventTouchUpInside];
+- (void)A_Event_OnClick:(void (^)(id sender))event WithObj:(id)arg{
+    [self A_Event_Add:event WithObj:arg forControlEvents:UIControlEventTouchUpInside];
 }
-- (void)A_RemoveClick:(void (^)(id sender))event {
-    [self A_RemoveEvent:UIControlEventTouchUpInside];
+- (void)A_Event_OnClick:(void (^)(id sender))event {
+    [self A_Event_Add:event forControlEvents:UIControlEventTouchUpInside];
+}
+- (void)A_Event_RemoveClick:(void (^)(id sender))event {
+    [self A_Event_Remove:UIControlEventTouchUpInside];
 }
 
 @end

@@ -15,6 +15,9 @@
 - (void) A_Animation_MoveOut: (A_Animation_DirectionType)directionType Duration:(double)duration;
 - (void) A_Animation_MoveOut: (A_Animation_DirectionType)directionType Duration:(double)duration WhenCompleted:(void (^)(void))block;
 
+- (void) A_Animation_CardIn: (A_Animation_DirectionType)directionType Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block;
+- (void) A_Animation_CardOut: (A_Animation_DirectionType)directionType Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block;
+
 - (void) A_Animation_MoveToCenter: (double)duration;
 - (void) A_Animation_MoveToCenter: (double)duration WhenCompleted:(void (^)(void))block;
 - (void) A_Animation_MoveToPostionX: (float)x Y:(float)y  Duration:(double)duration;

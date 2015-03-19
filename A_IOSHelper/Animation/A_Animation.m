@@ -9,6 +9,8 @@
 #import "A_Animation.h"
 #import <UIKit/UIKit.h>
 
+#import "A_DeviceHelper.h"
+
 @implementation A_Animation
 
 #pragma mark - Creating Animation
@@ -81,8 +83,8 @@
     return animation;
 }
 
-#pragma mark - Transition Creator
 
+#pragma mark - Transition Creator
 + (CATransition*) A_CreateSystemTransition:(A_Animation_SystemTransitionType)transitionType Direction:(A_Animation_DirectionType)directionType Duration:(float)duration {
 
     CATransition* transition = [CATransition animation];
@@ -148,11 +150,83 @@
     } [CATransaction commit];
 }
 
+
++ (void) A_CardIn:(CALayer*)layer Direction:(A_Animation_DirectionType)direction Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block{
+    
+    CATransform3D t = CATransform3DIdentity;
+    t = CATransform3DScale(t, 0.85, 0.85, 1);
+    layer.transform = t;
+    
+    CGPoint _originalPoint = layer.position;
+    CGRect _origeinalFrame = layer.frame;
+    
+    switch (direction) {
+        case A_Animation_Direction_Top:
+            layer.position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.origin.x Y:layer.frame.size.height*-1];
+            break;
+        case A_Animation_Direction_Left:
+            layer.position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.size.width*-1 Y:layer.frame.origin.y];
+            break;
+        case A_Animation_Direction_Bottom:
+            layer.position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.origin.x Y:[A_DeviceHelper A_DeviceHeight]];
+            break;
+        case A_Animation_Direction_Right:
+            layer.position = [A_Animation A_MakeLayerPosition:layer PositionX:[A_DeviceHelper A_DeviceWidth] Y:layer.frame.origin.y];
+            break;
+        default:
+            break;
+    }
+    
+    [layer setHidden:NO];
+    
+    [UIView animateKeyframesWithDuration:duration delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.0f relativeDuration:(duration*0.2) animations:^{
+            layer.position = _originalPoint;
+        }];
+        [UIView addKeyframeWithRelativeStartTime:(duration*0.8) relativeDuration:(duration*0.2) animations:^{
+            layer.transform = CATransform3DIdentity;
+        }];
+    } completion:block];
+}
++ (void) A_CardOut:(CALayer*)layer Direction:(A_Animation_DirectionType)direction Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block{
+    
+    CATransform3D t = CATransform3DIdentity;
+    t = CATransform3DScale(t, 0.85, 0.85, 1);
+    
+    CGPoint _position;
+    switch (direction) {
+        case A_Animation_Direction_Top:
+            _position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.origin.x Y:layer.frame.size.height*-1];
+            break;
+        case A_Animation_Direction_Left:
+            _position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.size.width*-1 Y:layer.frame.origin.y];
+            break;
+        case A_Animation_Direction_Bottom:
+            _position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.origin.x Y:[A_DeviceHelper A_DeviceHeight]];
+            break;
+        case A_Animation_Direction_Right:
+            _position = [A_Animation A_MakeLayerPosition:layer PositionX:[A_DeviceHelper A_DeviceWidth] Y:layer.frame.origin.y];
+            break;
+        default:
+            break;
+    }
+    
+    [UIView animateKeyframesWithDuration:duration delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.0f relativeDuration:(duration*0.2) animations:^{
+            layer.transform = t;
+        }];
+        [UIView addKeyframeWithRelativeStartTime:(duration*0.8) relativeDuration:(duration*0.2) animations:^{
+            layer.position = _position;
+        }];
+    } completion:block];
+}
+
 #pragma mark - Calculating helper
 + (CGPoint) A_MakeLayerPosition: (CALayer*)layer PositionX:(float)x Y:(float)y {
     CGPoint _destinationPoint = CGPointMake(x + (layer.frame.size.width * layer.anchorPoint.x), y + (layer.frame.size.height * layer.anchorPoint.y));
     return _destinationPoint;
 }
+
 
 @end
 
