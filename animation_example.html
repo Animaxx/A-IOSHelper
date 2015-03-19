@@ -66,9 +66,42 @@
                 <li> <a href="#animationMoveRight">Animation move out from right</a> </li>
                 <li> <a href="#animationMoveTop">Animation move out from top</a> </li>
                 <li> <a href="#animationMoveCenter">Animation move to center</a> </li>
-                <li> <a href="#animationCompletedEvent">Multi-animation combine</a> </li>
+                <li> <a href="#animationCompletedEvent">Completed event</a> </li>
+                <li> <a href="#systemTransition">Transition animation</a> </li>
             </ul>
         </div>
+
+        <div id='animationCardIn' class="anchor"></div>
+        <h2> Animation Card In </h2>
+
+        <pre><code class="html">[A_Animation A_CardIn:self._viewA.view.layer
+            Direction:A_Animation_Direction_Left
+            Duration:1.0f
+            WhenCompleted:nil];</code></pre>
+        OR
+        <pre><code class="html">[self._viewA.view A_Animation_CardIn:A_Animation_Direction_Left
+            Duration:1.0f
+            WhenCompleted:nil];</code></pre>
+        <img class="demo" src="images/demo/Animation_CardIn.gif" />
+
+        <br />
+        <br />
+
+        <div id='animationCardOut' class="anchor"></div>
+        <h2> Animation Card Out </h2>
+
+        <pre><code class="html">[A_Animation A_CardOut:self._viewA.view.layer
+            Direction:A_Animation_Direction_Left
+            Duration:1.0f
+            WhenCompleted:nil];</code></pre>
+        OR
+        <pre><code class="html">[self._viewA.view A_Animation_CardOut:A_Animation_Direction_Left
+            Duration:1.0f
+            WhenCompleted:nil];</code></pre>
+        <img class="demo" src="images/demo/Animation_CardOut.gif" />
+
+        <br />
+        <br />
 
         <div id='animationFadeout' class="anchor"></div>
         <h2> Animation FadeOut </h2>
@@ -95,7 +128,7 @@
         <div id='animationMoveleft' class="anchor"></div>
         <h2> Animation move out from left </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-    [self.theDemoBlock A_Animation_MoveOut_FromLeft:1.0];
+            [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Left Duration:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveOutLeft.gif" />
 
@@ -105,7 +138,7 @@
         <div id='animationMoveBottom' class="anchor"></div>
         <h2> Animation move out from bottom </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_MoveOut_FromBottom:1.0];
+            [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Bottom Duration:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveOutBottom.gif" />
 
@@ -115,7 +148,7 @@
         <div id='animationMoveRight' class="anchor"></div>
         <h2> Animation move out from right </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_MoveOut_FromRight:1.0];
+            [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Right Duration:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveOutRight.gif" />
 
@@ -125,7 +158,7 @@
         <div id='animationMoveTop' class="anchor"></div>
         <h2> Animation move out from top </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_MoveOut_FromTop:1.0];
+            [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Top Duration:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveOutTop.gif" />
 
@@ -137,20 +170,32 @@
         <pre><code class="html">- (IBAction)doClick:(id)sender {
             [self.theDemoBlock A_Animation_MoveToCenter:1.0];
 }</code></pre>
-        <imcg class="demo" src="images/demo/Animation_MoveToCenter.gif" />
+        <img class="demo" src="images/demo/Animation_MoveToCenter.gif" />
 
         <br />
         <br />
 
         <div id='animationCompletedEvent' class="anchor"></div>
-        <h2> Multi-animation combine</h2>
+        <h2> Completed event</h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_ToSize:CGSizeMake(200, 200) Duration:0.5 WhenCompleted:^{
+            [self.theDemoBlock A_Animation_ToSize:CGSizeMake(200, 200)
+            Duration:0.5 WhenCompleted:^{
                 [self.theDemoBlock A_Animation_ToBall:0.5];
                 [self.theDemoBlock A_Animation_FadeOut:1.0];
             }];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_combine.gif" />
+
+        <br />
+        <br />
+        <div id='systemTransition' class="anchor"></div>
+        <h2> Transition animation</h2>
+        <pre><code class="html">[self A_Animation_TransitionFrom:self._viewA.view
+        ReplaceTo:self._viewB.view
+        Transition:A_Animation_SystemTransition_Push
+        Direction:A_Animation_Direction_Right
+        Duration:1.0f];</code></pre>
+        <img class="demo" src="images/demo/Animation_SystemTransition.gif" />
 
     </section>
 
