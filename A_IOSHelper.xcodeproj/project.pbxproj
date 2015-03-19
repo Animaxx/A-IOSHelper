@@ -56,6 +56,10 @@
 		2ECD55091AB0CF65000E9802 /* A_BlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD55071AB0CF65000E9802 /* A_BlockWrapper.m */; };
 		2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */; };
+		2ED75EA11ABA359700B0FB5F /* UIImage+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ED75EA21ABA359700B0FB5F /* UIImage+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED75EA01ABA359700B0FB5F /* UIImage+A_Extension.m */; };
+		2ED75EA51ABA35E500B0FB5F /* UIViewController+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED75EA31ABA35E500B0FB5F /* UIViewController+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ED75EA61ABA35E500B0FB5F /* UIViewController+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED75EA41ABA35E500B0FB5F /* UIViewController+A_Extension.m */; };
 		2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */; };
 		2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -127,6 +131,10 @@
 		2ECD55071AB0CF65000E9802 /* A_BlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_BlockWrapper.m; path = BlockWrapper/A_BlockWrapper.m; sourceTree = "<group>"; };
 		2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIControl+A_Extension.h"; path = "UIKitExtension/UIControl+A_Extension.h"; sourceTree = "<group>"; };
 		2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIControl+A_Extension.m"; path = "UIKitExtension/UIControl+A_Extension.m"; sourceTree = "<group>"; };
+		2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+A_Extension.h"; path = "UIKitExtension/UIImage+A_Extension.h"; sourceTree = "<group>"; };
+		2ED75EA01ABA359700B0FB5F /* UIImage+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+A_Extension.m"; path = "UIKitExtension/UIImage+A_Extension.m"; sourceTree = "<group>"; };
+		2ED75EA31ABA35E500B0FB5F /* UIViewController+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+A_Extension.h"; path = "UIKitExtension/UIViewController+A_Extension.h"; sourceTree = "<group>"; };
+		2ED75EA41ABA35E500B0FB5F /* UIViewController+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+A_Extension.m"; path = "UIKitExtension/UIViewController+A_Extension.m"; sourceTree = "<group>"; };
 		2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_DataModel.h; path = DataModel/A_DataModel.h; sourceTree = "<group>"; };
 		2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_DataModel.m; path = DataModel/A_DataModel.m; sourceTree = "<group>"; };
 		2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Reflection.h; path = Reflection/A_Reflection.h; sourceTree = "<group>"; };
@@ -387,6 +395,10 @@
 				2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */,
 				2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */,
 				2EB099DA1AB3310800D6DBDC /* UIView+A_Extension.m */,
+				2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */,
+				2ED75EA01ABA359700B0FB5F /* UIImage+A_Extension.m */,
+				2ED75EA31ABA35E500B0FB5F /* UIViewController+A_Extension.h */,
+				2ED75EA41ABA35E500B0FB5F /* UIViewController+A_Extension.m */,
 			);
 			name = UIKItExtension;
 			sourceTree = "<group>";
@@ -438,6 +450,8 @@
 				2E0FD8851AB558FF00C1B828 /* NSString+A_Extension.h in Headers */,
 				2E0FD88D1AB561C700C1B828 /* NSArray+A_Extension.h in Headers */,
 				2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */,
+				2ED75EA51ABA35E500B0FB5F /* UIViewController+A_Extension.h in Headers */,
+				2ED75EA11ABA359700B0FB5F /* UIImage+A_Extension.h in Headers */,
 				2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */,
 				2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */,
 			);
@@ -552,10 +566,12 @@
 				2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
 				2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */,
+				2ED75EA61ABA35E500B0FB5F /* UIViewController+A_Extension.m in Sources */,
 				2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */,
 				2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */,
 				2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */,
 				2EB099DC1AB3310800D6DBDC /* UIView+A_Extension.m in Sources */,
+				2ED75EA21ABA359700B0FB5F /* UIImage+A_Extension.m in Sources */,
 				2E1187C81A37518F0080FFB9 /* A_ColorHelper.m in Sources */,
 				2E1187C21A37518F0080FFB9 /* A_CollectionHelper.m in Sources */,
 				2E1187C41A37518F0080FFB9 /* A_JSONHelper.m in Sources */,

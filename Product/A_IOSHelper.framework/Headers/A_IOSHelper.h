@@ -28,8 +28,10 @@
 #import <A_IOSHelper/UIControl+A_Extension.h>
 #import <A_IOSHelper/UIView+A_Extension.h>
 #import <A_IOSHelper/NSDate+A_Extension.h>
+#import <A_IOSHelper/UIViewController+A_Extension.h>
 
 /**** Foundation Extension ****/
 #import <A_IOSHelper/NSDictionary+A_Extension.h>
 #import <A_IOSHelper/NSArray+A_Extension.h>
 #import <A_IOSHelper/NSString+A_Extension.h>
+#import <A_IOSHelper/UIImage+A_Extension.h>

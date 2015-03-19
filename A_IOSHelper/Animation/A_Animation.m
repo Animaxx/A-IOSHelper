@@ -81,7 +81,56 @@
     return animation;
 }
 
-#pragma mark - Cxecuting Animation
+#pragma mark - Transition Creator
+
++ (CATransition*) A_CreateSystemTransition:(A_Animation_SystemTransitionType)transitionType Direction:(A_Animation_DirectionType)directionType Duration:(float)duration {
+
+    CATransition* transition = [CATransition animation];
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+    transition.duration = duration;
+    
+    switch (transitionType) {
+        case A_Animation_SystemTransition_Reveal:
+            transition.type = kCATransitionReveal;
+            break;
+        case A_Animation_SystemTransition_MoveIn:
+            transition.type = kCATransitionMoveIn;
+            break;
+        case A_Animation_SystemTransition_Push:
+            transition.type = kCATransitionPush;
+            break;
+        case A_Animation_SystemTransition_Fade:
+            transition.type = kCATransitionFade;
+            break;
+        default:
+            transition.type = kCATransitionFade;
+            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Create System Transition> \r\n Unkonw Transition Type");
+            break;
+    }
+    
+    switch (directionType) {
+        case A_Animation_Direction_Top:
+            transition.subtype = kCATransitionFromTop;
+            break;
+        case A_Animation_Direction_Right:
+            transition.subtype = kCATransitionFromRight;
+            break;
+        case A_Animation_Direction_Bottom:
+            transition.subtype = kCATransitionFromBottom;
+            break;
+        case A_Animation_Direction_Left:
+            transition.subtype = kCATransitionFromLeft;
+            break;
+        default:
+            transition.subtype = kCATransitionFromBottom;
+            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Create System Transition> \r\n Unkonw Direction Type");
+            break;
+    }
+    
+    return transition;
+}
+
+#pragma mark - Executing Animation
 + (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations {
     [UIView animateWithDuration:duration animations:animations];
 }

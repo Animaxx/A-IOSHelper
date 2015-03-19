@@ -8,123 +8,62 @@
 
 #import <UIKit/UIKit.h>
 #import "UIView+A_Extension.h"
-#import "A_Animation.h"
 #import "A_DeviceHelper.h"
 
 @implementation UIView (A_Extension)
 
-#pragma mark - Animation
-- (void) A_Animation_FadeIn: (double)duration {
-    CABasicAnimation* _animation = [A_Animation A_FadeIn:duration];
-    [self.layer addAnimation:_animation forKey:@"animax_fadeIn"];
-    
-    self.layer.opacity = 1.0f;
-    self.layer.hidden = false;
-    self.hidden = false;
-}
-- (void) A_Animation_FadeIn: (double)duration WhenCompleted:(void (^)(void))block {
-    
-    [CATransaction begin]; {
-        [CATransaction setCompletionBlock: block];
-        
-        CABasicAnimation* _animation = [A_Animation A_FadeIn:duration];
-        [self.layer addAnimation:_animation forKey:@"animax_fadeIn"];
-        
-        self.layer.opacity = 1.0f;
-        self.layer.hidden = false;
-        self.hidden = false;
-    } [CATransaction commit];
-}
-
-- (void) A_Animation_FadeOut: (double)duration {
-    CABasicAnimation* _animation = [A_Animation A_FadeOut:duration];
-    [self.layer addAnimation:_animation forKey:@"animax_fadeOut"];
-    
-    self.layer.opacity = 0.0f;
-}
-- (void) A_Animation_FadeOut: (double)duration WhenCompleted:(void (^)(void))block{
-    [CATransaction begin]; {
-        [CATransaction setCompletionBlock:block];
-        
-        CABasicAnimation* _animation = [A_Animation A_FadeOut:duration];
-        [self.layer addAnimation:_animation forKey:@"animax_fadeOut"];
-        self.layer.opacity = 0.0f;
-        
-    } [CATransaction commit];
-}
-
-- (void) A_Animation_MoveOut_FromLeft: (double)duration {
-    CGPoint _destinationPoint = CGPointMake(self.layer.frame.size.width * -1, self.layer.position.y);
+#pragma mark - Animation - Movement
+- (void) A_Animation_MoveOut: (A_Animation_DirectionType)directionType Duration:(double)duration {
+    CGPoint _destinationPoint;
+    switch (directionType) {
+        case A_Animation_Direction_Top:
+            _destinationPoint = CGPointMake(self.layer.position.x, self.layer.frame.origin.y * -1 );
+            break;
+        case A_Animation_Direction_Right:
+            _destinationPoint = CGPointMake((CGFloat)[A_DeviceHelper A_DeviceWidth] , self.layer.position.y);
+            break;
+        case A_Animation_Direction_Bottom:
+            _destinationPoint = CGPointMake(self.layer.position.x, (CGFloat)[A_DeviceHelper A_DeviceHeight]);
+            break;
+        case A_Animation_Direction_Left:
+            _destinationPoint = CGPointMake(self.layer.frame.size.width * -1, self.layer.position.y);
+            break;
+        default:
+            _destinationPoint = CGPointMake(self.layer.frame.size.width * -1, self.layer.position.y);
+            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Animation MoveOut> \r\n Unkonw Direction Type");
+            return;
+    }
     
     CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
-    [self.layer addAnimation:_animation forKey:@"animax_moveOutLeft"];
+    [self.layer addAnimation:_animation forKey:@"animax_moveOut"];
     self.layer.position = _destinationPoint;
 }
-- (void) A_Animation_MoveOut_FromLeft: (double)duration WhenCompleted:(void (^)(void))block{
-    CGPoint _destinationPoint = CGPointMake(self.layer.frame.origin.x * -1, self.layer.position.y);
+- (void) A_Animation_MoveOut: (A_Animation_DirectionType)directionType Duration:(double)duration WhenCompleted:(void (^)(void))block{
+    CGPoint _destinationPoint;
+    switch (directionType) {
+        case A_Animation_Direction_Top:
+            _destinationPoint = CGPointMake(self.layer.position.x, self.layer.frame.origin.y * -1 );
+            break;
+        case A_Animation_Direction_Right:
+            _destinationPoint = CGPointMake((CGFloat)[A_DeviceHelper A_DeviceWidth] , self.layer.position.y);
+            break;
+        case A_Animation_Direction_Bottom:
+            _destinationPoint = CGPointMake(self.layer.position.x, (CGFloat)[A_DeviceHelper A_DeviceHeight]);
+            break;
+        case A_Animation_Direction_Left:
+            _destinationPoint = CGPointMake(self.layer.frame.size.width * -1, self.layer.position.y);
+            break;
+        default:
+            _destinationPoint = CGPointMake(self.layer.frame.size.width * -1, self.layer.position.y);
+            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Animation MoveOut> \r\n Unkonw Direction Type");
+            return;
+    }
     
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:block];
         
         CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
-        [self.layer addAnimation:_animation forKey:@"animax_moveOutLeft"];
-        self.layer.position = _destinationPoint;
-    } [CATransaction commit];
-}
-
-- (void) A_Animation_MoveOut_FromRight: (double)duration {
-    CGPoint _destinationPoint = CGPointMake((CGFloat)[A_DeviceHelper A_DeviceWidth] , self.layer.position.y);
-    
-    CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
-    [self.layer addAnimation:_animation forKey:@"animax_moveOutRight"];
-    self.layer.position = _destinationPoint;
-}
-- (void) A_Animation_MoveOut_FromRight: (double)duration WhenCompleted:(void (^)(void))block{
-    CGPoint _destinationPoint = CGPointMake((CGFloat)[A_DeviceHelper A_DeviceWidth], self.layer.position.y);
-    
-    [CATransaction begin]; {
-        [CATransaction setCompletionBlock:block];
-        
-        CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
-        [self.layer addAnimation:_animation forKey:@"animax_moveOutRight"];
-        self.layer.position = _destinationPoint;
-    } [CATransaction commit];
-}
-
-- (void) A_Animation_MoveOut_FromTop: (double)duration {
-    CGPoint _destinationPoint = CGPointMake(self.layer.position.x, self.layer.frame.origin.y * -1 );
-    
-    CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
-    [self.layer addAnimation:_animation forKey:@"animax_moveOutTop"];
-    self.layer.position = _destinationPoint;
-}
-- (void) A_Animation_MoveOut_FromTop: (double)duration WhenCompleted:(void (^)(void))block{
-    CGPoint _destinationPoint = CGPointMake(self.layer.position.x, self.layer.frame.origin.y * -1 );
-    
-    [CATransaction begin]; {
-        [CATransaction setCompletionBlock:block];
-        
-        CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
-        [self.layer addAnimation:_animation forKey:@"animax_moveOutTop"];
-        self.layer.position = _destinationPoint;
-    } [CATransaction commit];
-}
-
-- (void) A_Animation_MoveOut_FromBottom: (double)duration {
-    CGPoint _destinationPoint = CGPointMake(self.layer.position.x, (CGFloat)[A_DeviceHelper A_DeviceHeight]);
-    
-    CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
-    [self.layer addAnimation:_animation forKey:@"animax_moveOutBottom"];
-    self.layer.position = _destinationPoint;
-}
-- (void) A_Animation_MoveOut_FromBottom: (double)duration WhenCompleted:(void (^)(void))block{
-    CGPoint _destinationPoint = CGPointMake(self.layer.position.x, (CGFloat)[A_DeviceHelper A_DeviceHeight]);
-    
-    [CATransaction begin]; {
-        [CATransaction setCompletionBlock:block];
-        
-        CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
-        [self.layer addAnimation:_animation forKey:@"animax_moveOutBottom"];
+        [self.layer addAnimation:_animation forKey:@"animax_moveOut"];
         self.layer.position = _destinationPoint;
     } [CATransaction commit];
 }
@@ -183,6 +122,57 @@
         CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
         [self.layer addAnimation:_animation forKey:@"animax_moveToAbsolutePosition"];
         self.layer.position = _destinationPoint;
+    } [CATransaction commit];
+}
+
+- (void) A_Animation_Transition:(A_Animation_SystemTransitionType)transitionType Direction:(A_Animation_DirectionType)directionType Duration:(float)duration {
+    CATransition* _transition = [A_Animation A_CreateSystemTransition:transitionType Direction:directionType Duration:duration];
+    [self.layer addAnimation:_transition forKey:kCATransition];
+}
+- (void) A_Animation_Transition:(A_Animation_SystemTransitionType)transitionType Direction:(A_Animation_DirectionType)directionType Duration:(float)duration WhenCompleted:(void (^)(void))block{
+    [CATransaction begin]; {
+        [CATransaction setCompletionBlock:block];
+        CATransition* _transition = [A_Animation A_CreateSystemTransition:transitionType Direction:directionType Duration:duration];
+        [self.layer addAnimation:_transition forKey:kCATransition];
+    } [CATransaction commit];
+}
+
+#pragma mark - Animation - Change Shape
+- (void) A_Animation_FadeIn: (double)duration {
+    CABasicAnimation* _animation = [A_Animation A_FadeIn:duration];
+    [self.layer addAnimation:_animation forKey:@"animax_fadeIn"];
+    
+    self.layer.opacity = 1.0f;
+    self.layer.hidden = false;
+    self.hidden = false;
+}
+- (void) A_Animation_FadeIn: (double)duration WhenCompleted:(void (^)(void))block {
+    
+    [CATransaction begin]; {
+        [CATransaction setCompletionBlock: block];
+        
+        CABasicAnimation* _animation = [A_Animation A_FadeIn:duration];
+        [self.layer addAnimation:_animation forKey:@"animax_fadeIn"];
+        
+        self.layer.opacity = 1.0f;
+        self.layer.hidden = false;
+        self.hidden = false;
+    } [CATransaction commit];
+}
+- (void) A_Animation_FadeOut: (double)duration {
+    CABasicAnimation* _animation = [A_Animation A_FadeOut:duration];
+    [self.layer addAnimation:_animation forKey:@"animax_fadeOut"];
+    
+    self.layer.opacity = 0.0f;
+}
+- (void) A_Animation_FadeOut: (double)duration WhenCompleted:(void (^)(void))block{
+    [CATransaction begin]; {
+        [CATransaction setCompletionBlock:block];
+        
+        CABasicAnimation* _animation = [A_Animation A_FadeOut:duration];
+        [self.layer addAnimation:_animation forKey:@"animax_fadeOut"];
+        self.layer.opacity = 0.0f;
+        
     } [CATransaction commit];
 }
 
@@ -256,6 +246,7 @@
     } [CATransaction commit];
 }
 
+#pragma mark - Animation - Execute
 - (void) A_Animation_SubmitTransaction: (NSDictionary*)animations WhenCompleted:(void (^)(void))block {
     [A_Animation A_SubmitTransaction:self.layer Animations:animations WhenCompleted:block];
 }

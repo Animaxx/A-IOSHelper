@@ -28,4 +28,7 @@
 
 + (UIImage*) A_CutImage: (UIImage*)theImage InRect: (CGRect) rect;
 
++ (UIImage*) A_GaussianBlur: (UIImage*)theImage Radius:(float)radius;
++ (UIImage*) A_GaussianBlur: (UIImage*)theImage;
+
 @end
