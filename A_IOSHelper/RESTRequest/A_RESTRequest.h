@@ -10,17 +10,17 @@
 
 @interface A_RESTRequest : NSObject
 
-enum {
+typedef NS_ENUM(NSInteger, A_NetworkRequestMethod) {
     A_Network_POST          = 1,
     A_Network_GET           = 2,
     A_Network_PUT           = 3,
     A_Network_DELETE        = 4
-}; typedef NSUInteger A_NetworkRequestMethod;
+};
 
-enum {
-    A_Network_SendAsQuery   = 1,
-    A_Network_SendAsJSON    = 2,
-}; typedef NSUInteger A_NetworkParameterFormat;
+typedef NS_ENUM(NSInteger, A_NetworkParameterFormat) {
+    A_Network_SendAsQuery   = 11,
+    A_Network_SendAsJSON    = 12,
+};
 
 
 #pragma mark - Methods For Construct

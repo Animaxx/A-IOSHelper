@@ -14,19 +14,26 @@
 #define RADIANS_TO_DEGREES(x) ((x)/M_PI*180.0)
 #define DEGREES_TO_RADIANS(x) ((x)/180.0*M_PI)
 
-enum {
+
+typedef NS_ENUM(NSInteger, A_Animation_SystemTransitionType) {
     A_Animation_SystemTransition_Reveal     = 101,
     A_Animation_SystemTransition_MoveIn     = 102,
     A_Animation_SystemTransition_Push       = 103,
     A_Animation_SystemTransition_Fade       = 104,
-}; typedef NSUInteger A_Animation_SystemTransitionType;
+};
 
-enum {
-    A_Animation_Direction_Top           = 201,
-    A_Animation_Direction_Right         = 202,
-    A_Animation_Direction_Bottom        = 203,
-    A_Animation_Direction_Left          = 204,
-}; typedef NSUInteger A_Animation_DirectionType;
+typedef NS_ENUM(NSInteger, A_Animation_DirectionType) {
+    A_Animation_Direction_Top           = 111,
+    A_Animation_Direction_Right         = 112,
+    A_Animation_Direction_Bottom        = 113,
+    A_Animation_Direction_Left          = 114,
+};
+
+typedef NS_ENUM(NSInteger, A_Animation_MediaTimingType) {
+    A_Animation_MeidaTiming_Spring      = 201,
+};
+
+
 
 #pragma mark - Animation Creator
 + (CABasicAnimation*) A_FadeIn:(double)duration;
@@ -41,6 +48,8 @@ enum {
 #pragma mark - Transition Creator
 + (CATransition*) A_CreateSystemTransition:(A_Animation_SystemTransitionType)transitionType Direction:(A_Animation_DirectionType)directionType Duration:(float)duration;
 
+#pragma mark - Media Timing Creator
++ (CAMediaTimingFunction*) A_CreateMediaTimingFunction: (A_Animation_MediaTimingType)type;
 
 #pragma mark - Animation Executor
 + (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations;
@@ -50,7 +59,11 @@ enum {
 + (void) A_CardIn:(CALayer*)layer Direction:(A_Animation_DirectionType)direction Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block;
 + (void) A_CardOut:(CALayer*)layer Direction:(A_Animation_DirectionType)direction Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block;
 
+
+
 #pragma mark - Calculating helper
 + (CGPoint) A_MakeLayerPosition: (CALayer*)layer PositionX:(float)x Y:(float)y;
 
 @end
+
+

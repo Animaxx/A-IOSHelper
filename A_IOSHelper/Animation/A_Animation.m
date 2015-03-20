@@ -83,7 +83,6 @@
     return animation;
 }
 
-
 #pragma mark - Transition Creator
 + (CATransition*) A_CreateSystemTransition:(A_Animation_SystemTransitionType)transitionType Direction:(A_Animation_DirectionType)directionType Duration:(float)duration {
 
@@ -130,6 +129,17 @@
     }
     
     return transition;
+}
+
++ (CAMediaTimingFunction*) A_CreateMediaTimingFunction: (A_Animation_MediaTimingType)type {
+    switch (type) {
+        case A_Animation_MeidaTiming_Spring:
+            return [CAMediaTimingFunction functionWithControlPoints:0.5 :1.5 :1 :1];
+            break;
+        default:
+            break;
+    }
+    return [CAMediaTimingFunction functionWithControlPoints:0.5 :1.5 :1 :1];
 }
 
 #pragma mark - Executing Animation

@@ -12,6 +12,11 @@
 
 + (void) A_RunInBackground: (dispatch_block_t)block;
 + (void) A_RunInBackground: (dispatch_block_t) block WhenDone: (dispatch_block_t) finishBlock;
-+ (void) A_DelayExecute: (double)delaySec Method: (dispatch_block_t)method;
+
++ (void) A_RunInBackgroundWithObj:(id) obj Block:(void (^)(id arg))block;
++ (void) A_RunInBackgroundWithObj:(id) obj Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock;
+
++ (void) A_DelayExecute:(dispatch_block_t) method Delay:(double) delaySec;
++ (void) A_DelayExecuteWithObj:(id)obj Method: (void (^)(id arg))method Delay:(double) delaySec;
 
 @end

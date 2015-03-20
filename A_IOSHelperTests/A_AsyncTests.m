@@ -53,12 +53,25 @@ int _testInt = 0;
     XCTAssert(YES);
 }
 
+- (void)testRunInBackgroundWithObj {
+    NSString* _message = @"test";
+    
+    [A_AsyncHelper A_RunInBackgroundWithObj:_message Block:^id(id arg) {
+        return [arg stringByAppendingString:@" 123"];
+    } WhenDone:^(id arg, id result) {
+        NSLog(@"%@", result);
+    }];
+    
+    XCTAssert(YES);
+}
+
+
 
 - (void)testDelayExecute {
     _testInt = 0;
-    [A_AsyncHelper A_DelayExecute:0.1 Method: ^(void) {
+    [A_AsyncHelper A_DelayExecute:^(void) {
         _testInt = 1;
-    }];
+    } Delay:0.1];
     
     sleep(500);
     XCTAssert(YES);
