@@ -158,7 +158,6 @@
     layer.transform = t;
     
     CGPoint _originalPoint = layer.position;
-    CGRect _origeinalFrame = layer.frame;
     
     switch (direction) {
         case A_Animation_Direction_Top:

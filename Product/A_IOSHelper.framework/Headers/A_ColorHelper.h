@@ -13,6 +13,6 @@
 
 + (NSNumber*) A_ToNumber: (NSString*) hex;
 + (NSArray *) A_SpliteColor:(NSString*) colorString;
-+ (UIColor*) A_GetColorByString:(NSString*) str;
++ (UIColor*) A_ColorMakeFormString:(NSString*) str;
 
 @end

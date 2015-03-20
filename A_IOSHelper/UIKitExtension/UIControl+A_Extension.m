@@ -14,7 +14,7 @@
 
 static char _a_associatedObjectKey;
 
-- (void)A_Event_Add:(void (^)(id sender))handler WithObj:(id)arg forControlEvents:(UIControlEvents)controlEvents {
+- (void)A_Event_Add:(void (^)(id sender, id argument))handler WithObj:(id)arg forControlEvents:(UIControlEvents)controlEvents {
     NSParameterAssert(handler);
     
     NSMutableDictionary *events = objc_getAssociatedObject(self, &_a_associatedObjectKey);
@@ -34,7 +34,7 @@ static char _a_associatedObjectKey;
     [handlers addObject:_block];
     [self addTarget:_block action:@selector(A_Execute:) forControlEvents:UIControlEventTouchUpInside];
 }
-- (void)A_Event_Add:(void (^)(id sender))handler forControlEvents:(UIControlEvents)controlEvents {
+- (void)A_Event_Add:(void (^)(id sender, id argument))handler forControlEvents:(UIControlEvents)controlEvents {
     [self A_Event_Add:handler WithObj:nil forControlEvents:controlEvents];
 }
 - (void)A_Event_Remove:(UIControlEvents)controlEvent {
@@ -57,13 +57,13 @@ static char _a_associatedObjectKey;
     [events removeObjectForKey:key];
 }
 
-- (void)A_Event_OnClick:(void (^)(id sender))event WithObj:(id)arg{
+- (void)A_Event_OnClick:(void (^)(id sender, id argument))event WithObj:(id)arg{
     [self A_Event_Add:event WithObj:arg forControlEvents:UIControlEventTouchUpInside];
 }
-- (void)A_Event_OnClick:(void (^)(id sender))event {
+- (void)A_Event_OnClick:(void (^)(id sender, id argument))event {
     [self A_Event_Add:event forControlEvents:UIControlEventTouchUpInside];
 }
-- (void)A_Event_RemoveClick:(void (^)(id sender))event {
+- (void)A_Event_RemoveClick {
     [self A_Event_Remove:UIControlEventTouchUpInside];
 }
 

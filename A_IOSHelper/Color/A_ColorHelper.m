@@ -67,7 +67,11 @@
     
     return colors;
 }
-+ (UIColor*) A_GetColorByString:(NSString*) str {
++ (UIColor*) A_ColorMakeFormString:(NSString*) str {
+    if ([str hasPrefix:@"#"]) {
+        str = [str substringFromIndex:1];
+    }
+    
     NSArray* colors = [self A_SpliteColor: str];
     
     NSNumber* red = [colors objectAtIndex:0];

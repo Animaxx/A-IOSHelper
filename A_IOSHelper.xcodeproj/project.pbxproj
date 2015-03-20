@@ -60,6 +60,8 @@
 		2ED75EA21ABA359700B0FB5F /* UIImage+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED75EA01ABA359700B0FB5F /* UIImage+A_Extension.m */; };
 		2ED75EA51ABA35E500B0FB5F /* UIViewController+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED75EA31ABA35E500B0FB5F /* UIViewController+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ED75EA61ABA35E500B0FB5F /* UIViewController+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED75EA41ABA35E500B0FB5F /* UIViewController+A_Extension.m */; };
+		2ED75EA91ABB69DE00B0FB5F /* UIColor+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED75EA71ABB69DE00B0FB5F /* UIColor+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ED75EAA1ABB69DE00B0FB5F /* UIColor+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED75EA81ABB69DE00B0FB5F /* UIColor+A_Extension.m */; };
 		2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */; };
 		2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -135,6 +137,8 @@
 		2ED75EA01ABA359700B0FB5F /* UIImage+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+A_Extension.m"; path = "UIKitExtension/UIImage+A_Extension.m"; sourceTree = "<group>"; };
 		2ED75EA31ABA35E500B0FB5F /* UIViewController+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+A_Extension.h"; path = "UIKitExtension/UIViewController+A_Extension.h"; sourceTree = "<group>"; };
 		2ED75EA41ABA35E500B0FB5F /* UIViewController+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+A_Extension.m"; path = "UIKitExtension/UIViewController+A_Extension.m"; sourceTree = "<group>"; };
+		2ED75EA71ABB69DE00B0FB5F /* UIColor+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+A_Extension.h"; path = "UIKitExtension/UIColor+A_Extension.h"; sourceTree = "<group>"; };
+		2ED75EA81ABB69DE00B0FB5F /* UIColor+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+A_Extension.m"; path = "UIKitExtension/UIColor+A_Extension.m"; sourceTree = "<group>"; };
 		2ED875E41A9A9CFE00D0D62E /* A_DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_DataModel.h; path = DataModel/A_DataModel.h; sourceTree = "<group>"; };
 		2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_DataModel.m; path = DataModel/A_DataModel.m; sourceTree = "<group>"; };
 		2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Reflection.h; path = Reflection/A_Reflection.h; sourceTree = "<group>"; };
@@ -399,6 +403,8 @@
 				2ED75EA01ABA359700B0FB5F /* UIImage+A_Extension.m */,
 				2ED75EA31ABA35E500B0FB5F /* UIViewController+A_Extension.h */,
 				2ED75EA41ABA35E500B0FB5F /* UIViewController+A_Extension.m */,
+				2ED75EA71ABB69DE00B0FB5F /* UIColor+A_Extension.h */,
+				2ED75EA81ABB69DE00B0FB5F /* UIColor+A_Extension.m */,
 			);
 			name = UIKItExtension;
 			sourceTree = "<group>";
@@ -453,6 +459,7 @@
 				2ED75EA51ABA35E500B0FB5F /* UIViewController+A_Extension.h in Headers */,
 				2ED75EA11ABA359700B0FB5F /* UIImage+A_Extension.h in Headers */,
 				2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */,
+				2ED75EA91ABB69DE00B0FB5F /* UIColor+A_Extension.h in Headers */,
 				2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -564,6 +571,7 @@
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,
 				2E3A8D681AAE556600D3A833 /* A_AsyncHelper.m in Sources */,
 				2EB2EAC11A38D69000946C51 /* A_SqliteWrapper.m in Sources */,
+				2ED75EAA1ABB69DE00B0FB5F /* UIColor+A_Extension.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
 				2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */,
 				2ED75EA61ABA35E500B0FB5F /* UIViewController+A_Extension.m in Sources */,
