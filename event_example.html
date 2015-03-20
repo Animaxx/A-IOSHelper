@@ -51,8 +51,58 @@
         </div>
 
         <h1>
-            Data Model
+            Event and Asynchronization
         </h1>
+        <br/><br/>
+        <div>
+            <h2> Contents </h2>
+            <ul>
+                <li> <a href="#addOnClick">Add On Click Event</a> </li>
+                <li> <a href="#removeOnClick">Remove On Click Event</a> </li>
+                <li> <a href="#addEvent">Add an event</a> </li>
+                <li> <a href="#removeEvent">Remove an event</a> </li>
+            </ul>
+        </div>
+
+        <div id='addOnClick' class="anchor"></div>
+        <h2> Add On Click Event </h2>
+
+        <pre><code class="html">[self.theButton A_Event_OnClick:^(id sender, id argument) {
+            [((UIViewController*)argument).view
+                setBackgroundColor:[UIColor A_ColorMakeFormString:@"ABABAB"]];
+} WithObj:self];</code></pre>
+        <img class="demo" src="images/demo/Event_click.gif" />
+
+        <br />
+        <br />
+
+        <div id='removeOnClick' class="anchor"></div>
+        <h2> Remove On Click Event </h2>
+
+        <pre><code class="html">[self.theButton A_Event_RemoveClick];</code></pre>
+
+        <br />
+        <br />
+
+
+        <div id='addEvent' class="anchor"></div>
+        <h2> Add an event </h2>
+
+        <pre><code class="html">[self.theButton A_Event_Add:^(id sender, id argument) {
+            NSLog(@"Test");
+} forControlEvents:UIControlEventTouchDragEnter];</code></pre>
+
+        <br />
+        <br />
+
+
+        <div id='removeEvent' class="anchor"></div>
+        <h2> Remove an event </h2>
+
+        <pre><code class="html">[self.theButton A_Event_Remove:UIControlEventTouchDragEnter];</code></pre>
+
+        <br />
+        <br />
 
     </section>
 

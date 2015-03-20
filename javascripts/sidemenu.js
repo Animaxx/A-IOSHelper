@@ -5,8 +5,10 @@
 $(document).ready(function() {
     $("#sidebarArea").html("<div id=\"sidebar\" class=\"animation\"><div class=\"title\">MENU</div></div><div id=\"sidebar_menu\" class=\"animation\">");
     addMenuItem("Home", "index.html");
-    addMenuItem("Network", "network_example.html");
     addMenuItem("Animation", "animation_example.html");
+    addMenuItem("Event & asyn", "event_example.html");
+    addMenuItem("Network", "network_example.html");
+
     addMenuItem("Data Model", "network_example.html");
 
 
@@ -26,7 +28,7 @@ $(document).ready(function() {
 });
 
 var addMenuItem = function(title,url) {
-    $("#sidebar_menu").append("<p> <a href=\""+url+"\">&bull; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "+ title +"</a> </p>");
+    $("#sidebar_menu").append("<p> <a href=\""+url+"\">"+ title +"</a> </p>");
 }
 var closeMenu = function() {
     $("#sidebar").css("right","0px");

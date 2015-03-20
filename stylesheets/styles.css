@@ -914,9 +914,18 @@ section div.anchor {
     z-index: 10;
     background-color: #444;
 }
+
+
 #sidebar_menu p {
-    margin: 20px 0 20px 30px;
+    margin: 10px 0 10px 30px;
     font-size: 16px;
+    background-image: url("../images/bullet.png");
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+}
+
+#sidebar_menu p a {
+    padding-left: 30px;
 }
 
 @media print, screen and (max-width: 720px) {
