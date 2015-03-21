@@ -120,7 +120,7 @@
         <h2> Animation FadeIn </h2>
 
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_FadeIn:1.0];
+    [self.theDemoBlock A_Animation_FadeIn:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_FadeIn.gif" />
 
@@ -130,7 +130,7 @@
         <div id='animationMoveleft' class="anchor"></div>
         <h2> Animation move out from left </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Left Duration:1.0];
+    [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Left Duration:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveOutLeft.gif" />
 
@@ -140,7 +140,8 @@
         <div id='animationMoveBottom' class="anchor"></div>
         <h2> Animation move out from bottom </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Bottom Duration:1.0];
+    [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Bottom
+            Duration:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveOutBottom.gif" />
 
@@ -150,7 +151,7 @@
         <div id='animationMoveRight' class="anchor"></div>
         <h2> Animation move out from right </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Right Duration:1.0];
+    [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Right Duration:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveOutRight.gif" />
 
@@ -160,7 +161,7 @@
         <div id='animationMoveTop' class="anchor"></div>
         <h2> Animation move out from top </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Top Duration:1.0];
+    [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Top Duration:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveOutTop.gif" />
 
@@ -170,7 +171,7 @@
         <div id='animationMoveCenter' class="anchor"></div>
         <h2> Animation move to center </h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_MoveToCenter:1.0];
+    [self.theDemoBlock A_Animation_MoveToCenter:1.0];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_MoveToCenter.gif" />
 
@@ -180,11 +181,11 @@
         <div id='animationCompletedEvent' class="anchor"></div>
         <h2> Completed event</h2>
         <pre><code class="html">- (IBAction)doClick:(id)sender {
-            [self.theDemoBlock A_Animation_ToSize:CGSizeMake(200, 200)
-            Duration:0.5 WhenCompleted:^{
-                [self.theDemoBlock A_Animation_ToBall:0.5];
-                [self.theDemoBlock A_Animation_FadeOut:1.0];
-            }];
+    [self.theDemoBlock A_Animation_ToSize:CGSizeMake(200, 200)
+    Duration:0.5 WhenCompleted:^{
+        [self.theDemoBlock A_Animation_ToBall:0.5];
+        [self.theDemoBlock A_Animation_FadeOut:1.0];
+    }];
 }</code></pre>
         <img class="demo" src="images/demo/Animation_combine.gif" />
 

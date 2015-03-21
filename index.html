@@ -18,6 +18,9 @@
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    <link rel="stylesheet" href="styles/hybrid.css">
+    <script src="javascripts/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 <div id="header">
@@ -71,24 +74,26 @@
 
         <p>The Obecrive-C example:</p>
 
-        <p><code>#import &lt;A_IOSHelper/A_IOSHelper.h&gt;</code> // A_IOSHelper.h is only needed. </p>
+
+        <pre><code class="html">#import &lt;A_IOSHelper/A_IOSHelper.h&gt; // A_IOSHelper.h is only needed. </code></pre>
 
         <p>// Examle of uploading a image</p>
 
-        <p><code>[A_RESTRequest A_UploadImage:@"http://animaxapps.appspot.com/Upload/"
-            QueryParameters:@{@"key1":@"value"} Headers:@{@"header1":@"value"} Image:image FileName:@"pic.png"
-            FileKey:@"pic.png"]</code></p>
+        <pre><code class="html">[A_RESTRequest A_UploadImage:@"http://yourwebservice/Upload/"
+            QueryParameters:@{@"key1":@"value"}
+            Headers:@{@"header1":@"value"}
+            Image:image
+            FileName:@"pic.png"
+            FileKey:@"pic.png"]</code></pre>
 
-        <p>The Swfit example:</p>
+        <p>The Swfit example: </p>
 
-        <p><code>import A_IOSHelper</code> // Also, you only need import the A_IOSHelper</p>
+        <pre><code class="html">import A_IOSHelper // Also, you only need import the A_IOSHelper</code></pre>
 
-        <p>// Example of downloading the image and cache it; when next time to get the same image, it will get the image
-            from cache instead of download it again.</p>
+        <p>Download image and cache it, and it can get same image next time from cache instead of download again.</p>
+        <pre><code class="html">A_ImageHelper.A_DownloadImageAndCache("http://yourwebservice/image.jpg")</code></pre>
 
-        <p><code>A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")</code></p>
-
-        <p> More example please check the detail pages. </p>
+        <p> More example please check on the detail pages. </p>
 
         <h2>
             <a id="how-to-build" class="anchor" href="#how-to-build" aria-hidden="true"><span

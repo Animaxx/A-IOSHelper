@@ -53,6 +53,54 @@
         <h1>
             Network
         </h1>
+        <p>Network function usually can work with <a href="event_example.html#AsyncRequestNetwork">AsyncHelper's RunInBackground</a> function together to provide async operation. </p>
+        <br/>
+        <div>
+            <h2> Contents </h2>
+            <ul>
+                <li> <a href="#getExample">Example of getting data from RESTful service</a> </li>
+                <li> <a href="#postExample">Example of posting data to RESTful service</a> </li>
+            </ul>
+        </div>
+        <br />
+        <div id='getExample' class="anchor"></div>
+        <h2> Example of getting data from RESTful service </h2>
+        <p> You can get data with NSDictionary or NSArray format as the example: </p>
+        <pre><code class="html">NSDictionary* _dictionaryResult = [A_RESTRequest A_GetDictionary:@"yoururl"
+            Parameters:@{@"key1":@"value"}
+            Headers:@{@"Accept":@"application/json"}];
+
+NSArray* _arrayResult = [A_RESTRequest A_GetArray:@"yoururl"
+            Parameters:@{@"key1":@"value"}
+            Headers:@{@"Accept":@"application/json"}];</code></pre>
+
+        <br />
+        <br />
+        <div id='postExample' class="anchor"></div>
+        <h2> Example of posting data to RESTful service </h2>
+        <p> RESTRequest provide 4 methods of posting data.
+            You can post data with pure JSON or query way; also, you can get data with NSDictionary or NSArray format as the example: </p>
+        <pre><code class="html">// Post data with query way, such as "key1=value1&key2=value2"
+[A_RESTRequest A_PostQueryReturnArray:@"yoururl"
+            Parameters:@{@"key1":@"value1", @"key2":@"value2"}
+            Header:nil];
+
+[A_RESTRequest A_PostQueryReturnDictionary:@"yoururl"
+            Parameters:@{@"key1":@"value1", @"key2":@"value2"}
+            Header:nil];
+
+// Post data with json way, such as "{key1:value1,key2:value2}"
+[A_RESTRequest A_PostJSONReturnArray:@"yoururl"
+            Parameters:@{@"key1":@"value1", @"key2":@"value2"}
+            Header:@{@"Content-Type":@"application/json; charset=utf-8"}];
+
+[A_RESTRequest A_PostJSONReturnArray:@"yoururl"
+            Parameters:@{@"key1":@"value1", @"key2":@"value2"}
+            Header:@{@"Content-Type":@"application/json; charset=utf-8"}];
+        </code></pre>
+
+        <br />
+        <br />
 
     </section>
 

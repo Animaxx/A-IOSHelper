@@ -886,12 +886,13 @@ section div.anchor {
     position: fixed;
     right: 0;
     top: 120px;
-    z-index: 10;
+    z-index: 15;
     text-align: center;
     background-color: #444;
     border-bottom-left-radius: 10px;
     border-top-left-radius: 10px;
     cursor: pointer;
+    box-shadow: -3px 2px 5px #ffcc00;
 }
 #sidebar .title {
     font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -913,6 +914,7 @@ section div.anchor {
     top: 60px;
     z-index: 10;
     background-color: #444;
+    box-shadow: -2px 0px 12px #ffcc00;
 }
 
 
