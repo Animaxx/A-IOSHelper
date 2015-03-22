@@ -17,15 +17,24 @@
 @implementation A_BlockWrapper
 
 + (A_BlockWrapper*) A_Init: (void *)block {
-    A_BlockWrapper* _blockWrapper = [[A_BlockWrapper alloc] init];
-    _blockWrapper.block = block;
-    return _blockWrapper;
+    return [[A_BlockWrapper alloc] init:block];
 }
 + (A_BlockWrapper*) A_Init: (void *)block WithObj: (id)obj {
-    A_BlockWrapper* _blockWrapper = [[A_BlockWrapper alloc] init];
-    _blockWrapper.block = block;
-    _blockWrapper.arg = obj;
-    return _blockWrapper;
+    return [[A_BlockWrapper alloc] init:block WithObj:obj];
+}
+
+- (A_BlockWrapper*) init: (void *)block {
+    if ((self = [super init])) {
+        self.block = block;
+    }
+    return self;
+}
+- (A_BlockWrapper*) init: (void *)block WithObj: (id)obj{
+    if ((self = [super init])) {
+        self.block = block;
+        self.arg = obj;
+    }
+    return self;
 }
 
 - (void) A_Execute {

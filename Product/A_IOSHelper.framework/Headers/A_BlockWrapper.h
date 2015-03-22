@@ -13,6 +13,9 @@
 + (A_BlockWrapper*) A_Init: (void *)block;
 + (A_BlockWrapper*) A_Init: (void *)block WithObj: (id)obj;
 
+- (A_BlockWrapper*) init: (void *)block;
+- (A_BlockWrapper*) init: (void *)block WithObj: (id)obj;
+
 - (void) A_Execute;
 - (void) A_Execute: (id)obj;
 - (void) A_Execute: (id)obj WithObj:(id)obj2;

@@ -10,7 +10,12 @@
 
 @interface A_SqliteWrapper : NSObject
 
-- (A_SqliteWrapper *) initWithDBFilename: (NSString *)file;
++ (A_SqliteWrapper *) A_Init;
++ (A_SqliteWrapper *) A_Init: (NSString *)file;
+
+- (id) init;
+- (id) init: (NSString *)file;
+
 - (void) A_OpenConnetion;
 - (void) A_CloseConnetion;
 - (void) dealloc;

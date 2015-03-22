@@ -30,7 +30,7 @@
 - (void)testExample {
     // All Passed
 
-    BOOL _a = [A_StringHelper A_ValidateEmail:@"abc@123"];
+//    BOOL _a = [A_StringHelper A_ValidateEmail:@"abc@123"];
     
     XCTAssert(YES, @"Pass");
 }

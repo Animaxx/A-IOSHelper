@@ -49,8 +49,7 @@
                                                error:nil];
 }
 
-+ (NSString *)A_GetDocumentsPath
-{
++ (NSString *)A_GetDocumentsPath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *path = [paths objectAtIndex:0];
     return path;

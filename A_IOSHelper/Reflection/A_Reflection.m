@@ -15,14 +15,16 @@
     return object_getClass(obj);
 }
 
-+ (NSArray *)A_Properties: (id)obj{
-    Class _class = [A_Reflection A_GetClass:obj];
-    if (!_class) {
-        return [[NSArray alloc] init];
-    }
-    
++ (NSString*)A_GetClassName: (Class)cls {
+    return NSStringFromClass(cls);
+}
++ (NSString*)A_GetClassNameFromObject: (id)obj {
+    return NSStringFromClass([self A_GetClass:obj]);
+}
+
++ (NSArray *)A_PropertiesFromClass: (Class)class{
     u_int count;
-    objc_property_t *properties = class_copyPropertyList(_class, &count);
+    objc_property_t *properties = class_copyPropertyList(class, &count);
     NSMutableArray *propertyArray = [NSMutableArray arrayWithCapacity:count];
     
     for (int i = 0; i < count ; i++)
@@ -30,22 +32,20 @@
         const char* propertyName = property_getName(properties[i]);
         [propertyArray addObject: [NSString stringWithUTF8String: propertyName]];
     }
-    free(properties); 
+    free(properties);
     return propertyArray;
+}
++ (NSArray *)A_Properties: (id)obj{
+    Class _class = [A_Reflection A_GetClass:obj];
+    if (!_class) {
+        return [[NSArray alloc] init];
+    }
+    
+    return [self A_PropertiesFromClass:_class];
 }
 
 + (NSObject*)A_CreateObject: (NSString*) className {
     return [[NSClassFromString(className) alloc] init];
-}
-
-
-
-
-+ (void)A_Methods: (id)obj {
-//    class_copyMethodList
-    
-    
-    
 }
 
 @end

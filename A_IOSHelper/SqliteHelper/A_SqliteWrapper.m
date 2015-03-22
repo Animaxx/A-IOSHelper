@@ -5,6 +5,7 @@
 //  Created by Animax on 12/10/14.
 //  Copyright (c) 2014 AnimaxDeng. All rights reserved.
 //
+#define DEFAULT_SQLITE_NAME @"A_SQLITE_FILE"
 
 #import "A_SqliteWrapper.h"
 #import <sqlite3.h>
@@ -18,7 +19,17 @@ NSFileManager *filemanager;
 
 #pragma mark - Database Operation
 
-- (A_SqliteWrapper *) initWithDBFilename: (NSString *)file {
++ (A_SqliteWrapper *) A_Init {
+    return [[A_SqliteWrapper alloc] init];
+}
++ (A_SqliteWrapper *) A_Init: (NSString *)file {
+    return [[A_SqliteWrapper alloc] init: file];
+}
+
+- (id) init{
+    return [self init:DEFAULT_SQLITE_NAME];
+}
+- (id) init: (NSString *)file {
     if ((self = [super init])) {
         databaseFileName = file;
         [self A_OpenConnetion];
