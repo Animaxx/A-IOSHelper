@@ -60,6 +60,8 @@
             <ul>
                 <li> <a href="#getExample">Example of getting data from RESTful service</a> </li>
                 <li> <a href="#postExample">Example of posting data to RESTful service</a> </li>
+                <li> <a href="#uploadImage">Example of uploading image to web service</a> </li>
+                <li> <a href="#customizeRequest">Example of customizing http request</a> </li>
             </ul>
         </div>
         <br />
@@ -99,6 +101,29 @@ NSArray* _arrayResult = [A_RESTRequest A_GetArray:@"yoururl"
             Header:@{@"Content-Type":@"application/json; charset=utf-8"}];
         </code></pre>
 
+        <br />
+        <br />
+
+        <div id='uploadImage' class="anchor"></div>
+        <h2> Example of uploading image to web service </h2>
+        <pre><code class="html">UIImage* _image = [A_ImageHelper A_GetImageByNamed:@"example.png"];
+[A_RESTRequest A_UploadImage:@"yoururl"
+            QueryParameters:@{@"key1":@"value1"}
+            Headers:nil Image:_image
+            FileName:@"example.png"
+            FileKey:@""];</code></pre>
+        <br />
+        <br />
+
+        <div id='customizeRequest' class="anchor"></div>
+        <h2> Example of customizing http request </h2>
+        <p> You can customize your request with request method (GET,POST,PUT,DELETE) and format (JSON,QUERY). Moreover, you can use JSONHelper to convert NSData to NSArray or NSDictionary.</p>
+        <pre><code class="html">NSData* _result = [A_RESTRequest A_Request:@"yoururl"
+            Parameters:@{@"key1":@"value1", @"key2":@"value2"}
+            Headers:@{@"Content-Type":@"application/json; charset=utf-8"}
+            Method:A_Network_PUT //GET,POST,PUT,DELETE
+            ParamFormat:A_Network_SendAsJSON];  //JSON,QUERY
+NSDictionary* _dictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];</code></pre>
         <br />
         <br />
 
