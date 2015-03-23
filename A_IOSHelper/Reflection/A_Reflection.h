@@ -15,8 +15,11 @@
 + (NSString*)A_GetClassName: (Class)cls;
 + (NSString*)A_GetClassNameFromObject: (id)obj;
 
-+ (NSArray *)A_PropertiesFromClass: (Class)class;
-+ (NSArray *)A_Properties: (id)obj;
++ (NSDictionary*) A_PropertiesFromClass: (Class)class;
++ (NSDictionary*) A_PropertiesFromObject: (id)obj;
+
++ (NSArray *)A_PropertieNamesFromClass: (Class)class;
++ (NSArray *)A_PropertieNamesFromObject: (id)obj;
 
 + (NSObject*)A_CreateObject: (NSString*) className;
 

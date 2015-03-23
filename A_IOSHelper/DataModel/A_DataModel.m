@@ -15,8 +15,7 @@
 - (NSDictionary*)A_Serialize {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     
-    
-    NSArray *propertyList = [A_Reflection A_Properties:self];
+    NSArray *propertyList = [A_Reflection A_PropertieNamesFromObject:self];
     for (NSString *key in propertyList) {
         id value = [self valueForKey:key];
         

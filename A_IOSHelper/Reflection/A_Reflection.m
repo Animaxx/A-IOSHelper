@@ -22,27 +22,63 @@
     return NSStringFromClass([self A_GetClass:obj]);
 }
 
-+ (NSArray *)A_PropertiesFromClass: (Class)class{
+
++ (NSDictionary*) A_PropertiesFromClass: (Class)class{
     u_int count;
     objc_property_t *properties = class_copyPropertyList(class, &count);
-    NSMutableArray *propertyArray = [NSMutableArray arrayWithCapacity:count];
+    NSMutableDictionary *propertyDictionary = [[NSMutableDictionary alloc] initWithCapacity:count];
     
     for (int i = 0; i < count ; i++)
     {
-        const char* propertyName = property_getName(properties[i]);
-        [propertyArray addObject: [NSString stringWithUTF8String: propertyName]];
+        NSString* propertyName = [NSString stringWithUTF8String:property_getName(properties[i])];
+        
+        const char * type = property_getAttributes(properties[i]);
+        NSArray * propertyAttributes = [[NSString stringWithUTF8String:type] componentsSeparatedByString:@","];
+        NSString * typeAttribute = [propertyAttributes objectAtIndex:0];
+        NSString * propertyType = [typeAttribute substringFromIndex:1];
+        
+        if ([typeAttribute hasPrefix:@"T@"]) { // Class type
+            [propertyDictionary setObject:propertyType forKey:propertyName];
+        } else { // value type
+            const char * rawPropertyType = [propertyType UTF8String];
+            if (strcmp(rawPropertyType, @encode(BOOL)) == 0) {
+                [propertyDictionary setObject:@"BOOL" forKey:propertyName];
+            } else if (strcmp(rawPropertyType, @encode(bool)) == 0) {
+                [propertyDictionary setObject:@"bool" forKey:propertyName];
+            } else if (strcmp(rawPropertyType, @encode(char)) == 0) {
+                [propertyDictionary setObject:@"char" forKey:propertyName];
+            } else if (strcmp(rawPropertyType, @encode(short)) == 0) {
+                [propertyDictionary setObject:@"short" forKey:propertyName];
+            } else if (strcmp(rawPropertyType, @encode(long)) == 0) {
+                [propertyDictionary setObject:@"long" forKey:propertyName];
+            } else if (strcmp(rawPropertyType, @encode(float)) == 0) {
+                [propertyDictionary setObject:@"float" forKey:propertyName];
+            } else if (strcmp(rawPropertyType, @encode(double)) == 0) {
+                [propertyDictionary setObject:@"double" forKey:propertyName];
+            } else if (strcmp(rawPropertyType, @encode(int)) == 0) {
+                [propertyDictionary setObject:@"int" forKey:propertyName];
+            } else if (strcmp(rawPropertyType, @encode(id)) == 0) {
+                [propertyDictionary setObject:@"id" forKey:propertyName];
+            } else {
+                [propertyDictionary setObject:@"unknow" forKey:propertyName];
+                NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Reflection get property type> \r\n Cannot get the type");
+            }
+        }
     }
     free(properties);
-    return propertyArray;
+    return propertyDictionary;
 }
-+ (NSArray *)A_Properties: (id)obj{
-    Class _class = [A_Reflection A_GetClass:obj];
-    if (!_class) {
-        return [[NSArray alloc] init];
-    }
-    
-    return [self A_PropertiesFromClass:_class];
++ (NSDictionary*) A_PropertiesFromObject: (id)obj {
+    return [self A_PropertiesFromClass:[self A_GetClass:obj]];
 }
+
++ (NSArray *)A_PropertieNamesFromClass: (Class)class{
+    return [[self A_PropertiesFromClass:class] allKeys];
+}
++ (NSArray *)A_PropertieNamesFromObject: (id)obj{
+    return [[self A_PropertiesFromObject:obj] allKeys];
+}
+
 
 + (NSObject*)A_CreateObject: (NSString*) className {
     return [[NSClassFromString(className) alloc] init];
