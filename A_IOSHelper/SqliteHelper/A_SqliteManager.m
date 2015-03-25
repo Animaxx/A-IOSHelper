@@ -5,12 +5,13 @@
 //  Created by Animax on 12/10/14.
 //  Copyright (c) 2014 AnimaxDeng. All rights reserved.
 //
-#define DEFAULT_SQLITE_NAME @"A_SQLITE_FILE"
+#define DEFAULT_SQLITE_NAME @"A_SQLITE_FILE.DB"
 
-#import "A_SqliteWrapper.h"
+#import "A_SqliteManager.h"
 #import <sqlite3.h>
+#import "A_Reflection.h"
 
-@implementation A_SqliteWrapper
+@implementation A_SqliteManager
 
 sqlite3 *database;
 sqlite3_stmt *statement;
@@ -19,11 +20,11 @@ NSFileManager *filemanager;
 
 #pragma mark - Database Operation
 
-+ (A_SqliteWrapper *) A_Init {
-    return [[A_SqliteWrapper alloc] init];
++ (A_SqliteManager *) A_Init {
+    return [[A_SqliteManager alloc] init];
 }
-+ (A_SqliteWrapper *) A_Init: (NSString *)file {
-    return [[A_SqliteWrapper alloc] init: file];
++ (A_SqliteManager *) A_Init: (NSString *)file {
+    return [[A_SqliteManager alloc] init: file];
 }
 
 - (id) init{
@@ -37,8 +38,12 @@ NSFileManager *filemanager;
     return self;
 }
 
+- (BOOL) A_IsOpened {
+    return database!=nil;
+}
 - (void) A_OpenConnetion {
     if (database) return;
+    
     filemanager = [[NSFileManager alloc] init];
     NSString * dbpath = [self A_DBPath];
     
@@ -55,7 +60,7 @@ NSFileManager *filemanager;
 }
 - (void) A_CloseConnetion {
     if (database) sqlite3_close(database);
-    database = NULL;
+    database = nil;
     filemanager = nil;
 }
 - (void) dealloc {
@@ -94,14 +99,14 @@ NSFileManager *filemanager;
     
     NSMutableArray* dataset = [[NSMutableArray alloc] init];
     NSDictionary * row = nil;
-    while ((row = [self _GetRow])) {
+    while ((row = [self _getRow])) {
         [dataset addObject:row];
     }
     
     return dataset;
 }
 
-- (NSDictionary*) _GetRow {
+- (NSDictionary*) _getRow {
     int rc = sqlite3_step(statement);
     if (rc == SQLITE_DONE) {
         sqlite3_finalize(statement);
@@ -198,6 +203,111 @@ NSFileManager *filemanager;
     id _result = [self A_GetValueFromQuery:@"SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = '?'" withParams:@[tableName]];
     return (NSInteger)_result > 0;
 }
+
+#pragma mark - Data Model Methods
+- (NSString*) _nameOfType:(NSString*)type {
+    if ([type isEqualToString:@"BOOL"] ||
+        [type isEqualToString:@"bool"]) {
+        return @"BOOLEAN";
+    } else if ([type isEqualToString:@"char"] ||
+               [type isEqualToString:@"NSString"]) {
+        return @"TEXT";
+    } else if ([type isEqualToString:@"short"] ||
+               [type isEqualToString:@"long"] ||
+               [type isEqualToString:@"int"] ||
+               [type isEqualToString:@"NSInteger"]) {
+        return @"INTEGER";
+    } else if ([type isEqualToString:@"float"] ||
+               [type isEqualToString:@"double"] ||
+               [type isEqualToString:@"NSNumber"]) {
+        return @"REAL";
+    } else if ([type isEqualToString:@"NSDate"]) {
+        return @"DATETIME";
+    } else if ([type isEqualToString:@"id"] ||
+               [type isEqualToString:@"NSData"]) {
+        return @"REAL";
+    }
+    
+    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQLite Manager> \r\n Unknow Type: %@", type);
+    return @"REAL";
+}
+
+- (Boolean) A_TableColumnMarch:(A_DataModel*) model {
+    NSLog(@"TODO");
+    return YES;
+}
+- (NSString*) A_GenerateTableName: (A_DataModel*) model {
+    NSString* _className = [A_Reflection A_GetClassNameFromObject:model];
+    return [NSString stringWithFormat:@"A_%@_table",_className];
+}
+
+- (NSString*) A_CreateTableScript:(A_DataModel*) model AndKey:(NSString*)key{
+    return [self A_CreateTableScript:model WithTableName:[self A_GenerateTableName:model] AndKey:key];
+}
+- (NSString*) A_CreateTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key{
+    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
+    
+    NSString* _createTableSql = [NSString stringWithFormat:@"CREATE TABLE \"%@\" (", tableName];
+    
+    BOOL _first = YES;
+    NSString* _format;
+    NSString* _type;
+    for (NSString* propertyName in properties) {
+        if (_first) {
+            _format = @"\"%@\" %@";
+        } else {
+            _format = @", \"%@\" %@";
+        }
+        
+        _type = [self _nameOfType:[properties objectForKey:propertyName]];
+        
+        if (tableName && tableName.length > 0 && [[propertyName lowercaseString] isEqualToString:[tableName lowercaseString]]) {
+            _format = [_format stringByAppendingString:@" NOT NULL PRIMARY KEY"];
+            if ([_type isEqualToString:@"INTEGER"]) {
+                _format = [_format stringByAppendingString:@" AUTOINCREMENT"];
+            }
+        }
+        
+        _createTableSql = [_createTableSql stringByAppendingFormat:_format, propertyName, _type];
+        
+        _first = NO;
+    }
+    _createTableSql = [_createTableSql stringByAppendingString:@")"];
+    return _createTableSql;
+}
+
+- (NSString*) A_CreateInsertScript:(A_DataModel*) model {
+    return [self A_CreateInsertScript:model WithIgnore:nil AndTable:[self A_GenerateTableName:model]];
+}
+- (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys {
+    return [self A_CreateInsertScript:model WithIgnore:keys AndTable:[self A_GenerateTableName:model]];
+}
+- (NSString*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName {
+    return [self A_CreateInsertScript:model WithIgnore:nil AndTable:tableName];
+}
+- (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName {
+    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray* _keys = [properties allKeys];
+    NSString* _createTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (\"", tableName];
+    _createTableSql = [_createTableSql stringByAppendingString: [_keys componentsJoinedByString:@"\",\""]];
+    _createTableSql = [_createTableSql stringByAppendingString: @") values ("];
+    
+    BOOL _firstVal = YES;
+    for (NSString* item in _keys) {        
+//        [ignoreKeys indexOfObject:<#(id)#>]
+        
+        if (_firstVal) {
+            _createTableSql = [_createTableSql stringByAppendingFormat: @"'%@'", [model valueForKey:item]];
+        } else {
+            _createTableSql = [_createTableSql stringByAppendingFormat: @",'%@'", [model valueForKey:item]];
+        }
+        _firstVal = NO;
+    }
+    
+    _createTableSql = [_createTableSql stringByAppendingString: @")"];
+    return _createTableSql;
+}
+
 
 #pragma mark - Utility Methods
 

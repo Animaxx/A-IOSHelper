@@ -36,7 +36,6 @@
     return obj;
 }
 
-
 - (NSString*)A_ConvertToJSON {
     NSDictionary* _dic = [self A_Serialize];
     

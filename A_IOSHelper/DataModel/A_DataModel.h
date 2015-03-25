@@ -10,6 +10,8 @@
 
 @interface A_DataModel : NSObject
 
+//@property (strong, nonatomic) NSNumber* ID;
+
 - (NSDictionary*)A_Serialize;
 + (NSObject*)A_Deserialize: (NSDictionary*)Array;
 
