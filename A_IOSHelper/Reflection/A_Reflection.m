@@ -38,7 +38,8 @@
         NSString * propertyType = [typeAttribute substringFromIndex:1];
         
         if ([typeAttribute hasPrefix:@"T@"]) { // Class type
-            [propertyDictionary setObject:propertyType forKey:propertyName];
+            NSRange stringRange = {2, [propertyType length]-3};
+            [propertyDictionary setObject:[propertyType substringWithRange:stringRange] forKey:propertyName];
         } else { // value type
             const char * rawPropertyType = [propertyType UTF8String];
             if (strcmp(rawPropertyType, @encode(BOOL)) == 0) {

@@ -20,11 +20,21 @@ NSFileManager *filemanager;
 
 #pragma mark - Database Operation
 
-+ (A_SqliteManager *) A_Init {
-    return [[A_SqliteManager alloc] init];
+
++ (A_SqliteManager *) A_Instance {
+    return [A_SqliteManager A_Instance:DEFAULT_SQLITE_NAME];
 }
-+ (A_SqliteManager *) A_Init: (NSString *)file {
-    return [[A_SqliteManager alloc] init: file];
++ (A_SqliteManager *) A_Instance: (NSString *)file {
+    static dispatch_once_t pred = 0;
+    __strong static NSMutableDictionary* _storage = nil;
+    dispatch_once(&pred, ^{
+        _storage = [[NSMutableDictionary alloc] init];
+    });
+    if (![_storage objectForKey:file] || [_storage objectForKey:file] == nil) {
+        [_storage setObject:[[A_SqliteManager alloc] init:file] forKey:file];
+    }
+    
+    return [_storage objectForKey:file];
 }
 
 - (id) init{
@@ -200,8 +210,12 @@ NSFileManager *filemanager;
 }
 
 - (Boolean) A_TableExist:(NSString*) tableName {
-    id _result = [self A_GetValueFromQuery:@"SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = '?'" withParams:@[tableName]];
-    return (NSInteger)_result > 0;
+    id _result = [self A_GetValueFromQuery:@"SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = ?" withParams:@[tableName]];
+    if (_result && [[_result class] isSubclassOfClass:[NSNumber class]]) {
+        return [((NSNumber*)_result) intValue] > 0;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - Data Model Methods
@@ -288,26 +302,36 @@ NSFileManager *filemanager;
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName {
     NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray* _keys = [properties allKeys];
-    NSString* _createTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (\"", tableName];
-    _createTableSql = [_createTableSql stringByAppendingString: [_keys componentsJoinedByString:@"\",\""]];
-    _createTableSql = [_createTableSql stringByAppendingString: @") values ("];
     
     BOOL _firstVal = YES;
-    for (NSString* item in _keys) {        
-//        [ignoreKeys indexOfObject:<#(id)#>]
+    BOOL _ignore = NO;
+    NSString* _valuesStr = [[NSString alloc] init];
+    NSString* _keysStr = [[NSString alloc] init];
+    
+    for (NSString* item in _keys) {
+        _ignore = NO;
+        for (NSString* _ignoreKey in ignoreKeys) {
+            if ([[item lowercaseString] isEqualToString:[_ignoreKey lowercaseString]]) {
+                _ignore = YES;
+                break;
+            }
+        }
+        if (_ignore) continue;
         
         if (_firstVal) {
-            _createTableSql = [_createTableSql stringByAppendingFormat: @"'%@'", [model valueForKey:item]];
+            _keysStr = [_valuesStr stringByAppendingFormat: @"`%@`", [model valueForKey:item]];
+            _valuesStr = [_valuesStr stringByAppendingFormat: @"'%@'", [model valueForKey:item]];
         } else {
-            _createTableSql = [_createTableSql stringByAppendingFormat: @",'%@'", [model valueForKey:item]];
+            _keysStr = [_valuesStr stringByAppendingFormat: @",`%@`", [model valueForKey:item]];
+            _valuesStr = [_valuesStr stringByAppendingFormat: @",'%@'", [model valueForKey:item]];
         }
         _firstVal = NO;
     }
     
-    _createTableSql = [_createTableSql stringByAppendingString: @")"];
+    NSString* _createTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (%@) VALUES (%@)", tableName, _keysStr, _valuesStr];
+    
     return _createTableSql;
 }
-
 
 #pragma mark - Utility Methods
 
