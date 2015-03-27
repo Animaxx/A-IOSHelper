@@ -46,4 +46,45 @@
     });
 }
 
++ (dispatch_source_t) A_StartTimer:(double)interval Block:(dispatch_block_t) block {
+    return [self A_StartTimer:interval Block:block Priority:A_Async_Priority_Default];
+}
++ (dispatch_source_t) A_StartTimer:(double)interval Block:(dispatch_block_t) block Priority:(A_Async_PriorityType)PriorityType {
+    dispatch_queue_t queue;
+    switch (PriorityType) {
+        case A_Async_Priority_UI:
+            queue = dispatch_get_main_queue();
+            break;
+        case A_Async_Priority_Hight:
+            queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+            break;
+        case A_Async_Priority_Default:
+            queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            break;
+        case A_Async_Priority_Low:
+            queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+            break;
+        case A_Async_Priority_Background:
+            queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+            break;
+        default:
+            queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            break;
+    }
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    if (timer)
+    {
+        dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, interval * NSEC_PER_SEC), interval * NSEC_PER_SEC, (1ull * NSEC_PER_SEC) / 10);
+        dispatch_source_set_event_handler(timer, block);
+        dispatch_resume(timer);
+    }
+    return timer;
+}
++ (void) A_CancelTimer:(dispatch_source_t)timer{
+    if (timer) {
+        dispatch_source_cancel(timer);
+        timer = nil;
+    }
+}
+
 @end
