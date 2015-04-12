@@ -100,10 +100,10 @@ NSFileManager *filemanager;
     }
 }
 
-- (NSArray*) A_SearchForDataset:(NSString *) query {
-    return [self A_SearchForDataset:query withParams:nil];
+- (NSArray*) A_SearchDataset:(NSString *) query {
+    return [self A_SearchDataset:query withParams:nil];
 }
-- (NSArray*) A_SearchForDataset:(NSString *) query withParams:(NSArray*) params {
+- (NSArray*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params {
     [self _bindSQL:[query UTF8String] withArray:params];
     if (statement == NULL) return [[NSArray alloc] init];
     
@@ -290,6 +290,15 @@ NSFileManager *filemanager;
     return _createTableSql;
 }
 
+- (NSNumber*) A_ExecuteTableScript:(A_DataModel*) model AndKey:(NSString*)key {
+    NSString* _sql = [self A_CreateTableScript:model AndKey:key];
+    return [self A_ExecuteQuery:_sql];
+}
+- (NSNumber*) A_ExecuteTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key {
+    NSString* _sql = [self A_CreateTableScript:model WithTableName:tableName AndKey:key];
+    return [self A_ExecuteQuery:_sql];
+}
+
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model {
     return [self A_CreateInsertScript:model WithIgnore:nil AndTable:[self A_GenerateTableName:model]];
 }
@@ -319,10 +328,10 @@ NSFileManager *filemanager;
         if (_ignore) continue;
         
         if (_firstVal) {
-            _keysStr = [_valuesStr stringByAppendingFormat: @"`%@`", [model valueForKey:item]];
+            _keysStr = [_keysStr stringByAppendingFormat: @"`%@`", [model valueForKey:item]];
             _valuesStr = [_valuesStr stringByAppendingFormat: @"'%@'", [model valueForKey:item]];
         } else {
-            _keysStr = [_valuesStr stringByAppendingFormat: @",`%@`", [model valueForKey:item]];
+            _keysStr = [_keysStr stringByAppendingFormat: @",`%@`", [model valueForKey:item]];
             _valuesStr = [_valuesStr stringByAppendingFormat: @",'%@'", [model valueForKey:item]];
         }
         _firstVal = NO;
@@ -331,6 +340,69 @@ NSFileManager *filemanager;
     NSString* _createTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (%@) VALUES (%@)", tableName, _keysStr, _valuesStr];
     
     return _createTableSql;
+}
+
+- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName{
+    NSString* _sql = [self A_CreateInsertScript:model WithIgnore:ignoreKeys AndTable:tableName];
+    return [self A_ExecuteQuery:_sql];
+}
+- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithTable:(NSString*)tableName{
+    NSString* _sql = [self A_CreateInsertScript:model WithTable:tableName];
+    return [self A_ExecuteQuery:_sql];
+}
+- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys{
+    NSString* _sql = [self A_CreateInsertScript:model WithIgnore:ignoreKeys];
+    return [self A_ExecuteQuery:_sql];
+}
+- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model{
+    NSString* _sql = [self A_CreateInsertScript:model];
+    return [self A_ExecuteQuery:_sql];
+}
+
+- (NSString*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
+    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray* _keys = [properties allKeys];
+    
+    NSString* _valuesStr = [[NSString alloc] init];
+    NSString* _keysStr = [[NSString alloc] init];
+    
+    BOOL _isKey = NO;
+    for (NSString* item in _keys) {
+        _isKey = NO;
+        for (NSString* _keys in keys) {
+            if ([[item lowercaseString] isEqualToString:[_keys lowercaseString]]) {
+                if (_keysStr.length == 0) {
+                    _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+                } else {
+                    _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+                }
+                _isKey = YES;
+            }
+        }
+        
+        if (_isKey) {
+            if (_valuesStr.length == 0) {
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+            } else {
+                _valuesStr = [_valuesStr stringByAppendingFormat: @", `%@` = '%@'", item, [model valueForKey:item]];
+            }
+        }
+    }
+    
+    NSString* _sql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@",tableName,_valuesStr, _keysStr];
+    return _sql;
+}
+- (NSString*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
+    return [self A_CreateUpdateScript:model WithTable:[self A_GenerateTableName:model] AndKeys:keys];
+}
+
+- (NSNumber*) A_ExecuteUpdate:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
+    NSString* _sql = [self A_CreateUpdateScript:model WithTable:tableName AndKeys:keys];
+    return [self A_ExecuteQuery:_sql];
+}
+- (NSNumber*) A_ExecuteUpdate:(A_DataModel*) model AndKeys:(NSArray*)keys {
+    NSString* _sql = [self A_CreateUpdateScript:model AndKeys:keys];
+    return [self A_ExecuteQuery:_sql];
 }
 
 #pragma mark - Utility Methods

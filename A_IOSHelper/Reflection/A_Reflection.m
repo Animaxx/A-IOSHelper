@@ -22,7 +22,6 @@
     return NSStringFromClass([self A_GetClass:obj]);
 }
 
-
 + (NSDictionary*) A_PropertiesFromClass: (Class)class{
     u_int count;
     objc_property_t *properties = class_copyPropertyList(class, &count);
@@ -79,7 +78,6 @@
 + (NSArray *)A_PropertieNamesFromObject: (id)obj{
     return [[self A_PropertiesFromObject:obj] allKeys];
 }
-
 
 + (NSObject*)A_CreateObject: (NSString*) className {
     return [[NSClassFromString(className) alloc] init];
