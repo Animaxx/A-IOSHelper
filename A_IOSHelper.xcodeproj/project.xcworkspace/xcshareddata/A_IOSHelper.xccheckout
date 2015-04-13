@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>3A060C4A-EDB6-4E00-A7D5-3769714E795A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>A_IOSHelper</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>9BBD048C3A84376F8015BFC088D7FC1D02A58728</key>
 		<string>https://github.com/Animaxx/A-IOSHelper.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>A_IOSHelper.xcodeproj/project.xcworkspace</string>
+	<string>A_IOSHelper.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>9BBD048C3A84376F8015BFC088D7FC1D02A58728</key>

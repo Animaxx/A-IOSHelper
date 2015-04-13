@@ -46,5 +46,24 @@
     return [self A_Deserialize:_dic];
 }
 
+#pragma mark - NSCoding
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    NSDictionary* _dic = [self A_Serialize];
+    
+    for (NSString *key in _dic) {
+        [encoder encodeObject:[_dic objectForKey:key] forKey:key];
+    }
+}
+- (id)initWithCoder:(NSCoder *)decoder {
+	if (self = [self init]) {
+        NSArray* _keys = [A_Reflection A_PropertieNamesFromObject:self];
+        
+        for (NSString *key in _keys) {
+            [self setValue:[decoder decodeObjectForKey:key] forKey:key];
+        }
+    }
+	return self;
+}
+#pragma mark -
 
 @end
