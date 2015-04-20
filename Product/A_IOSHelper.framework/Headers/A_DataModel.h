@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface A_DataModel : NSObject
+@interface A_DataModel : NSObject<NSCoding>
 
 //@property (strong, nonatomic) NSNumber* ID;
 
@@ -17,5 +17,10 @@
 
 - (NSString*)A_ConvertToJSON;
 + (NSObject*)A_ConvertFromJSON: (NSString*)JSON;
+
+#pragma mark - NSCoding
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+- (id)initWithCoder:(NSCoder *)aDecoder;
+#pragma mark -
 
 @end

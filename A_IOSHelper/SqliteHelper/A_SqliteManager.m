@@ -275,7 +275,7 @@ NSFileManager *filemanager;
         
         _type = [self _nameOfType:[properties objectForKey:propertyName]];
         
-        if (tableName && tableName.length > 0 && [[propertyName lowercaseString] isEqualToString:[tableName lowercaseString]]) {
+        if (key && key.length > 0 && [[propertyName lowercaseString] isEqualToString:[key lowercaseString]]) {
             _format = [_format stringByAppendingString:@" NOT NULL PRIMARY KEY"];
             if ([_type isEqualToString:@"INTEGER"]) {
                 _format = [_format stringByAppendingString:@" AUTOINCREMENT"];
@@ -290,11 +290,11 @@ NSFileManager *filemanager;
     return _createTableSql;
 }
 
-- (NSNumber*) A_ExecuteTableScript:(A_DataModel*) model AndKey:(NSString*)key {
+- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model AndKey:(NSString*)key {
     NSString* _sql = [self A_CreateTableScript:model AndKey:key];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key {
+- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key {
     NSString* _sql = [self A_CreateTableScript:model WithTableName:tableName AndKey:key];
     return [self A_ExecuteQuery:_sql];
 }
@@ -377,6 +377,7 @@ NSFileManager *filemanager;
                     _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
                 }
                 _isKey = YES;
+                break;
             }
         }
         
@@ -404,6 +405,67 @@ NSFileManager *filemanager;
     NSString* _sql = [self A_CreateUpdateScript:model AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
+
+- (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
+    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray* _keys = [properties allKeys];
+    
+    NSString* _valuesStr = [[NSString alloc] init];
+    
+    BOOL _isKey = NO;
+    for (NSString* item in _keys) {
+        if (keys) {
+        _isKey = NO;
+            for (NSString* _keys in keys) {
+                if ([[item lowercaseString] isEqualToString:[_keys lowercaseString]]) {
+                    _isKey = YES;
+                }
+            }
+        } else {
+            _isKey = YES;
+        }
+        
+        if (_isKey) {
+            if (_valuesStr.length == 0) {
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+            } else {
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+            }
+        }
+
+    }
+    
+    NSString* _sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@",tableName,_valuesStr];
+    
+    return _sql;
+}
+- (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName {
+    return [self A_CreateDeleteScript:model WithTable:tableName AndKeys:nil];
+}
+- (NSString*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
+    return [self A_CreateDeleteScript:model WithTable:[self A_GenerateTableName:model] AndKeys:keys];
+}
+- (NSString*) A_CreateDeleteScript:(A_DataModel*) model {
+    return [self A_CreateDeleteScript:model WithTable:[self A_GenerateTableName:model] AndKeys:nil];
+}
+
+- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
+    NSString* _sql = [self A_CreateDeleteScript:model WithTable:tableName AndKeys:keys];
+    return [self A_ExecuteQuery:_sql];
+}
+- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model WithTable:(NSString*)tableName {
+    NSString* _sql = [self A_CreateDeleteScript:model WithTable:tableName];
+    return [self A_ExecuteQuery:_sql];
+}
+- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model AndKeys:(NSArray*)keys {
+    NSString* _sql = [self A_CreateDeleteScript:model AndKeys:keys];
+    return [self A_ExecuteQuery:_sql];
+}
+- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model {
+    NSString* _sql = [self A_CreateDeleteScript:model];
+    return [self A_ExecuteQuery:_sql];
+}
+
 
 #pragma mark - Utility Methods
 

@@ -28,8 +28,8 @@
 - (NSNumber *) A_ExecuteQuery:(NSString *) query;
 - (NSNumber *) A_ExecuteQuery:(NSString *) query withArgs:(NSArray*) args;
 
-- (NSArray*) A_SearchForDataset:(NSString *) query;
-- (NSArray*) A_SearchForDataset:(NSString *) query withParams:(NSArray*) params;
+- (NSArray*) A_SearchDataset:(NSString *) query;
+- (NSArray*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params;
 
 - (id) A_GetValueFromQuery:(NSString *) query;
 - (id) A_GetValueFromQuery:(NSString *) query withParams:(NSArray*) params;
@@ -43,10 +43,34 @@
 - (NSString*) A_CreateTableScript:(A_DataModel*) model AndKey:(NSString*)key;
 - (NSString*) A_CreateTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
 
+- (NSNumber*) A_ExecuteTableScript:(A_DataModel*) model AndKey:(NSString*)key;
+- (NSNumber*) A_ExecuteTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
+
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model;
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys;
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName;
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys AndTable:(NSString*)tableName;
+
+- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName;
+- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithTable:(NSString*)tableName;
+- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys;
+- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model;
+
+- (NSString*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
+- (NSString*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
+
+- (NSNumber*) A_ExecuteUpdate:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
+- (NSNumber*) A_ExecuteUpdate:(A_DataModel*) model AndKeys:(NSArray*)keys;
+
+- (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
+- (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName;
+- (NSString*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
+- (NSString*) A_CreateDeleteScript:(A_DataModel*) model;
+
+- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
+- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model WithTable:(NSString*)tableName;
+- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model AndKeys:(NSArray*)keys;
+- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model;
 
 
 #pragma mark - Utility Methods
