@@ -51,8 +51,127 @@
         </div>
 
         <h1>
-            Data Model
+            SQlite data operations
         </h1>
+        <br/><br/>
+        <div>
+            <h2> Contents </h2>
+            <ul>
+                <li> <a href="#openConnection">Open connection</a> </li>
+                <li> <a href="#executeQuery">Execute a query</a> </li>
+                <li> <a href="#searchDataset">Search data set</a> </li>
+                <li> <a href="#searchUniqueData">search for single data</a> </li>
+                <li> <a href="#dataModelExample">Data model example</a> </li>
+                <li> <a href="#dataModelCRUD">Data model CRUD operation</a> </li>
+            </ul>
+        </div>
+
+        <div id='openConnection' class="anchor"></div>
+        <h2> Open connection </h2>
+        <pre><code class="html">    // Open default Sqlite file
+    [A_SqliteManager A_Instance];
+    // Open the Sqlite file which the name is "sqlite.db"
+    [A_SqliteManager A_Instance:@"sqlite.db"];</code></pre>
+
+        <div id='executeQuery' class="anchor"></div>
+        <h2> Execute a query </h2>
+        <pre><code class="html">    [[A_SqliteManager2 A_Instance]
+            A_ExecuteQuery:@"UPDATE `Table` SET `Key`='value' WHERE ID=1"];</code></pre>
+
+        <div id='searchDataset' class="anchor"></div>
+        <h2> Search data set </h2>
+        <pre><code class="html">    NSArray* Dataset = [[A_SqliteManager2 A_Instance]
+            A_SearchDataset:@"SELECT * FROM `Table`"];
+
+    // Using query with params
+    NSArray* Dataset = [[A_SqliteManager2 A_Instance]
+            A_SearchDataset:@"SELECT * FROM `Table` WHERE ID=?"
+            withParams:@[@1]];
+        </code></pre>
+
+        <div id='searchUniqueData' class="anchor"></div>
+        <h2> Search for single data </h2>
+        <pre><code class="html">    id createDate = [[A_SqliteManager2 A_Instance]
+            A_GetValueFromQuery:@"SELECT CreateDate FROM `Table` WHERE ID=1"];</code></pre>
+
+        <div id='dataModelExample' class="anchor"></div>
+        <h2> Data model example </h2>
+        <pre><code class="html">    // ModelTest.h file
+    #import &lt;A_IOSHelper/A_IOSHelper.h&gt;
+    @interface ModelTest : A_DataModel
+
+    @property (retain, nonatomic) NSString* Name;
+    @property (retain, nonatomic) NSDate* Day;
+    @property (nonatomic) BOOL Passed;
+    @property (nonatomic) NSInteger ID;
+
+    @end</code></pre>
+
+        <div id='dataModelCRUD' class="anchor"></div>
+        <h2> Data model CRUD operation </h2>
+
+        <pre><code class="html">
+    ModelTest* _model = [[ModelTest alloc] init];
+    [_model setDay:[NSDate date]];
+    [_model setName:@"Name"];
+    [_model setPassed:YES];
+
+    // Create Table
+    Boolean _exist = [[A_SqliteManager A_Instance]
+                                A_TableExist:[[A_SqliteManager A_Instance]
+                                        A_GenerateTableName:_model]];
+    if (!_exist) {
+        [[A_SqliteManager A_Instance] A_ExecuteTableCreate:_model AndKey:@"id"];
+    }
+
+    // Insert new record
+    [[A_SqliteManager A_Instance] A_ExecuteInsert:_model WithIgnore:@[@"id"]];
+    // Set giving ID
+    [_model setID: [[[A_SqliteManager A_Instance] A_lastInsertId] integerValue]];
+
+    // Search Table
+    NSArray* _values = [[A_SqliteManager A_Instance] A_SearchDataset:
+    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
+            A_GenerateTableName:_model]]];
+    NSLog(@"%@", _values);
+    /*
+    The result in here is: [NSArray [NSDictionary]]
+        {
+            Day = "2015-03-16 18:51:10 +0000";
+            ID = 1;
+            Name = Name;
+            Passed = 1;
+        }
+    */
+
+    // Update data
+    [_model setName:@"Name2"];
+    [[A_SqliteManager A_Instance] A_ExecuteUpdate:_model AndKeys:@[@"id"]];
+
+    // Search Table
+    _values = [[A_SqliteManager A_Instance] A_SearchDataset:
+    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
+            A_GenerateTableName:_model]]];
+    NSLog(@"%@", _values);
+    /*
+    The result in here is: [NSArray [NSDictionary]]
+        {
+            Day = "2015-03-16 18:51:10 +0000";
+            ID = 1;
+            Name = Name2;
+            Passed = 1;
+        }
+    */
+
+    // Delete Data
+    [[A_SqliteManager A_Instance] A_ExecuteDelete:_model AndKeys:@[@"id"]];
+
+    // Search Table
+    _values = [[A_SqliteManager A_Instance] A_SearchDataset:
+    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
+            A_GenerateTableName:_model]]];
+    NSLog(@"%@", _values); // The result is empty </code></pre>
+
 
     </section>
 
