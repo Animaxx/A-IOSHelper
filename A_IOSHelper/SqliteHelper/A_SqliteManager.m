@@ -466,6 +466,38 @@ NSFileManager *filemanager;
     return [self A_ExecuteQuery:_sql];
 }
 
+- (NSArray*) A_SearchSimilarModel:(A_DataModel*) model {
+    return [self A_SearchSimilarModel:model WithTable:[self A_GenerateTableName:model]];
+}
+- (NSArray*) A_SearchSimilarModel:(A_DataModel*) model WithTable:(NSString*)tableName {
+    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray* _keys = [properties allKeys];
+    
+    NSString* _valuesStr = [[NSString alloc] init];
+    for (NSString* item in _keys) {
+        id _value = [model valueForKey:item];
+        
+        if (_value && _value != nil && _value != NULL && _value != [NSNull null] &&
+            ([_value isMemberOfClass:[NSNumber class]] && [NSNumber numberWithBool:0] != _value && [NSNumber numberWithChar:0] != _value &&[NSNumber numberWithDouble:0] != _value &&[NSNumber numberWithFloat:0] != _value &&[NSNumber numberWithInt:0] != _value &&[NSNumber numberWithInteger:0] != _value &&[NSNumber numberWithLong:0] != _value &&[NSNumber numberWithLongLong:0] != _value &&[NSNumber numberWithShort:0] != _value) &&
+            ([_value isMemberOfClass:[NSString class]] && ![_value isEqualToString:@""])) {
+            
+            if (_valuesStr.length == 0) {
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+            } else {
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+            }
+        }
+    }
+    
+    NSString* _sql;
+    if (_valuesStr.length == 0)
+        _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
+    else
+        _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,_valuesStr];
+    
+    NSArray* _result = [self A_SearchDataset:_sql];
+    return [self A_Mapping:_result ToClass:[A_Reflection A_GetClass:model]];
+}
 
 #pragma mark - Utility Methods
 
@@ -495,5 +527,23 @@ NSFileManager *filemanager;
     return [NSNumber numberWithLongLong:sqlite3_last_insert_rowid(database)];
 }
 
+- (NSArray*) A_Mapping:(NSArray*) data ToClass:(Class)class{
+    NSMutableArray* _array = [[NSMutableArray alloc] init];
+    
+    @try {
+        for (NSDictionary* dic in data) {
+            id obj = [[class alloc] init];
+            for (NSString *key in dic) {
+                [obj setValue:[dic objectForKey:key] forKey:key];
+            }
+            [_array addObject:obj];
+        }
+    }
+    @catch (NSException* e) {
+        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Mapping ERROR (%@)", e.reason);
+    }
+    
+    return _array;
+}
 
 @end

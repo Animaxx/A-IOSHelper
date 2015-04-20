@@ -43,8 +43,8 @@
 - (NSString*) A_CreateTableScript:(A_DataModel*) model AndKey:(NSString*)key;
 - (NSString*) A_CreateTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
 
-- (NSNumber*) A_ExecuteTableScript:(A_DataModel*) model AndKey:(NSString*)key;
-- (NSNumber*) A_ExecuteTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
+- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model AndKey:(NSString*)key;
+- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
 
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model;
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys;
@@ -72,8 +72,12 @@
 - (NSNumber*) A_ExecuteDelete:(A_DataModel*) model AndKeys:(NSArray*)keys;
 - (NSNumber*) A_ExecuteDelete:(A_DataModel*) model;
 
+- (NSArray*) A_SearchSimilarModel:(A_DataModel*) model;
+- (NSArray*) A_SearchSimilarModel:(A_DataModel*) model WithTable:(NSString*)tableName;
 
 #pragma mark - Utility Methods
 - (NSNumber *) A_lastInsertId;
+- (NSArray*) A_Mapping:(NSArray*) data ToClass:(Class)class;
+
 
 @end

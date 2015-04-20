@@ -72,8 +72,12 @@
 - (NSNumber*) A_ExecuteDelete:(A_DataModel*) model AndKeys:(NSArray*)keys;
 - (NSNumber*) A_ExecuteDelete:(A_DataModel*) model;
 
+- (NSArray*) A_SearchSimilarModel:(A_DataModel*) model;
+- (NSArray*) A_SearchSimilarModel:(A_DataModel*) model WithTable:(NSString*)tableName;
 
 #pragma mark - Utility Methods
 - (NSNumber *) A_lastInsertId;
+- (NSArray*) A_Mapping:(NSArray*) data ToClass:(Class)class;
+
 
 @end
