@@ -328,18 +328,18 @@ NSFileManager *filemanager;
         if (_ignore) continue;
         
         if (_firstVal) {
-            _keysStr = [_keysStr stringByAppendingFormat: @"`%@`", [model valueForKey:item]];
+            _keysStr = [_keysStr stringByAppendingFormat: @"`%@`", item];
             _valuesStr = [_valuesStr stringByAppendingFormat: @"'%@'", [model valueForKey:item]];
         } else {
-            _keysStr = [_keysStr stringByAppendingFormat: @",`%@`", [model valueForKey:item]];
+            _keysStr = [_keysStr stringByAppendingFormat: @",`%@`", item];
             _valuesStr = [_valuesStr stringByAppendingFormat: @",'%@'", [model valueForKey:item]];
         }
         _firstVal = NO;
     }
     
-    NSString* _createTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (%@) VALUES (%@)", tableName, _keysStr, _valuesStr];
+    NSString* _insterTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (%@) VALUES (%@)", tableName, _keysStr, _valuesStr];
     
-    return _createTableSql;
+    return _insterTableSql;
 }
 
 - (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName{
@@ -381,7 +381,7 @@ NSFileManager *filemanager;
             }
         }
         
-        if (_isKey) {
+        if (!_isKey) {
             if (_valuesStr.length == 0) {
                 _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
             } else {
