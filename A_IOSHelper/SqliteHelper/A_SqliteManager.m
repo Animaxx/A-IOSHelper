@@ -498,6 +498,21 @@ NSFileManager *filemanager;
     NSArray* _result = [self A_SearchDataset:_sql];
     return [self A_Mapping:_result ToClass:[A_Reflection A_GetClass:model]];
 }
+- (NSArray*) A_SearchModel:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
+    NSString* _sql;
+    if (query.length == 0)
+        _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
+    else
+        _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
+    
+    NSArray* _result = [self A_SearchDataset:_sql];
+    return [self A_Mapping:_result ToClass:class];
+}
+- (NSArray*) A_SearchModel:(Class)class Where:(NSString*)query{
+    NSString* _tableName = [NSString stringWithFormat:@"A_%@_table",NSStringFromClass(class)];
+    return [self A_SearchModel:class Where:query WithTable:_tableName];
+}
+
 
 #pragma mark - Utility Methods
 

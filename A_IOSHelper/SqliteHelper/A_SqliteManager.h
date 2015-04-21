@@ -74,6 +74,8 @@
 
 - (NSArray*) A_SearchSimilarModel:(A_DataModel*) model;
 - (NSArray*) A_SearchSimilarModel:(A_DataModel*) model WithTable:(NSString*)tableName;
+- (NSArray*) A_SearchModel:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName;
+- (NSArray*) A_SearchModel:(Class)class Where:(NSString*)query;
 
 #pragma mark - Utility Methods
 - (NSNumber *) A_lastInsertId;
