@@ -63,6 +63,8 @@
                 <li> <a href="#searchUniqueData">search for single data</a> </li>
                 <li> <a href="#dataModelExample">Data model example</a> </li>
                 <li> <a href="#dataModelCRUD">Data model CRUD operation</a> </li>
+                <li> <a href="#searchSimilarModel">Search similar models</a> </li>
+                <li> <a href="#searchModel">Search models with query</a> </li>
             </ul>
         </div>
 
@@ -75,23 +77,23 @@
 
         <div id='executeQuery' class="anchor"></div>
         <h2> Execute a query </h2>
-        <pre><code class="html">    [[A_SqliteManager2 A_Instance]
+        <pre><code class="html">    [[A_SqliteManager A_Instance]
             A_ExecuteQuery:@"UPDATE `Table` SET `Key`='value' WHERE ID=1"];</code></pre>
 
         <div id='searchDataset' class="anchor"></div>
         <h2> Search data set </h2>
-        <pre><code class="html">    NSArray* Dataset = [[A_SqliteManager2 A_Instance]
+        <pre><code class="html">    NSArray* Dataset = [[A_SqliteManager A_Instance]
             A_SearchDataset:@"SELECT * FROM `Table`"];
 
     // Using query with params
-    NSArray* Dataset = [[A_SqliteManager2 A_Instance]
+    NSArray* Dataset = [[A_SqliteManager A_Instance]
             A_SearchDataset:@"SELECT * FROM `Table` WHERE ID=?"
             withParams:@[@1]];
         </code></pre>
 
         <div id='searchUniqueData' class="anchor"></div>
         <h2> Search for single data </h2>
-        <pre><code class="html">    id createDate = [[A_SqliteManager2 A_Instance]
+        <pre><code class="html">    id createDate = [[A_SqliteManager A_Instance]
             A_GetValueFromQuery:@"SELECT CreateDate FROM `Table` WHERE ID=1"];</code></pre>
 
         <div id='dataModelExample' class="anchor"></div>
@@ -173,8 +175,30 @@
     NSLog(@"%@", _values); // The result is empty </code></pre>
 
 
-    </section>
+        <div id='searchSimilarModel' class="anchor"></div>
+        <h2> Search similar models </h2>
+        <p>This function can found the models which the value of attributes are same as example model,
+            and it will ignore the default value of attributes. <br>
+            The result in this function is NSArray with the data model objects.
+        </p>
+        <pre><code class="html">    // Get all ModelTest objects.
+    ModelTest* _searchExample = [[ModelTest alloc] init];
+    NSArray* _result = [[A_SqliteManager A_Instance] A_SearchSimilarModel:_searchExample];</code></pre>
 
+        <pre><code class="html">    // Get all ModelTest objects that Name is @"Animax"
+    ModelTest* _searchExample = [[ModelTest alloc] init];
+    [_searchExample setName:@"Animax"];
+    NSArray* _result = [[A_SqliteManager A_Instance] A_SearchSimilarModel:_searchExample];</code></pre>
+
+        <div id='searchModel' class="anchor"></div>
+        <h2> Search models with query </h2>
+        <p>The result in this function is NSArray with the data model objects. </p>
+
+        <pre><code class="html">    // Get all ModelTest objects that Name like "%name%"
+    NSArray* _result = [[A_SqliteManager A_Instance] A_SearchModel:[ModelTest class]
+            Where:@"Name like '%name%'"];</code></pre>
+
+    </section>
 </div>
 
 <div id="sidebarArea"></div>
