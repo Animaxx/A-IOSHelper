@@ -2,24 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SchemeUserState</key>
-	<dict>
-		<key>A_IOSBundle.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>A_IOSHelper.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
-		<key>A_IOSHelperTests.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>2E1187861A3750770080FFB9</key>
@@ -27,17 +9,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2E1187911A3750770080FFB9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>2E3A8D4D1AADEF4B00D3A833</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>2EC225331A49DCB5000B62D4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
