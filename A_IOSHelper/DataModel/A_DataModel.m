@@ -61,6 +61,23 @@
     [_list addObject:self];
     [A_UserDatafileHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
 }
++ (NSArray*)A_GetFromUserfile {
+    NSString* _className = [A_Reflection A_GetClassNameFromObject:self];
+    NSString* _objKey = [NSString stringWithFormat:@"A_%@_key",_className];
+    
+    NSMutableArray* _list = [A_UserDatafileHelper A_GetByGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
+    if (!_list || ![_list isKindOfClass:[NSMutableArray class]]) {
+        _list = [[NSMutableArray alloc] init];
+    }
+    return _list;
+}
++ (void)A_ClearFromUserfile {
+    NSString* _className = [A_Reflection A_GetClassNameFromObject:self];
+    NSString* _objKey = [NSString stringWithFormat:@"A_%@_key",_className];
+    
+    NSMutableArray* _list = _list = [[NSMutableArray alloc] init];
+    [A_UserDatafileHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
+}
 
 #pragma mark - NSCoding
 

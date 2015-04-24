@@ -67,7 +67,24 @@
 }
 
 - (void)testHandleDatamodel {
-    TestDataModel* _model = [[TestDataModel alloc] init];
+    [TestDataModel A_ClearFromUserfile];
+    
+    TestDataModel* _model1 = [[TestDataModel alloc] init];
+    [_model1 setName:@"Object_1"];
+    [_model1 setCreateDate: [NSDate date]];
+    [_model1 setID:@0];
+    [_model1 A_SaveToUserfile];
+    XCTAssertTrue([TestDataModel A_GetFromUserfile].count == 1);
+    XCTAssertTrue([((TestDataModel*)[TestDataModel A_GetFromUserfile].firstObject).Name isEqualToString:@"Object_1"]);
+    
+    TestDataModel* _model2 = [[TestDataModel alloc] init];
+    [_model2 setIndex:1];
+    [_model2 setName:@"Object_2"];
+    [_model2 setCreateDate: [NSDate date]];
+    [_model2 setID:@1];
+    [_model2 A_SaveToUserfile];
+    XCTAssertTrue([TestDataModel A_GetFromUserfile].count == 2);
+    XCTAssertTrue([((TestDataModel*)[TestDataModel A_GetFromUserfile].lastObject).Name isEqualToString:@"Object_2"]);
 }
 
 @end
