@@ -806,6 +806,14 @@ dt {
   margin-right: 10px;
   font-size: 11px;
 }
+#backToHome {
+    font-size: 11px;
+    margin-top: -45px;
+    margin-bottom: 30px;
+}
+#backToHome a {
+    font-weight: bold;
+}
 
 section {
   max-width: 650px;
