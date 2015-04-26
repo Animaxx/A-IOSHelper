@@ -54,12 +54,13 @@
             <h2> Contents </h2>
             <ul>
                 <li> <a href="#demomodel">Demo model</a> </li>
-                <li> <a href="#saveModelPlist">Save mobel to Plist file</a> </li>
+                <li> <a href="#saveModelPlist">Save model to Plist file</a> </li>
                 <li> <a href="#getModelPlist">Get models in plist</a> </li>
                 <li> <a href="#delModelPlist">Delete model in plist</a> </li>
                 <li> <a href="#clearModelPlist">Clear models in plist</a> </li>
                 <li> <a href="#saveModelSqlite">Save models to Sqlite</a> </li>
                 <li> <a href="#searchModelSqlite">Search models from Sqlite</a> </li>
+                <li> <a href="#searchSimilarModelsSqlite">Search similar models from Sqlite</a> </li>
             </ul>
         </div>
 
@@ -78,7 +79,7 @@
     @end</code></pre>
 
         <div id='saveModelPlist' class="anchor"></div>
-        <h2> Save mobel to Plist file </h2>
+        <h2> Save model to Plist file </h2>
         <pre><code class="html">    TestDataModel* _model1 = [[TestDataModel alloc] init];
     [_model1 setName:@"Object_1"];
     [_model1 setCreateDate: [NSDate date]];
@@ -117,13 +118,27 @@
 
         <div id='searchModelSqlite' class="anchor"></div>
         <h2> Search models from Sqlite </h2>
-        <p> Searching certain type of mobles in Sqlite </p>
-        <pre><code class="html">    [TestDataModel A_SearchSqlite:@"`name` like '%object%'"];</code></pre>
+        <p> Searching certain type of models in Sqlite </p>
+        <pre><code class="html">    NSArray* _ models = [TestDataModel A_SearchSqlite:@"`name` like '%object%'"];</code></pre>
         <p>OR</p>
         <pre><code class="html">    [TestDataModel A_SearchSqlite:@"" withBlock:^(id obj, NSArray *result) {
         // TODO: Other operations with data result
         //obj is self.view
     } andArg:self.view];</code></pre>
+
+        <div id='searchSimilarModelsSqlite' class="anchor"></div>
+        <h2> Search similar models from Sqlite </h2>
+        <p> Searching certain type of models with demo model. </p>
+        <pre><code class="html">    TestDataModel* _model = [[TestDataModel alloc] init];
+    [_model setIndex:0];
+
+    // Searching models with index == 0
+    NSArray* _models =[_model A_SearchSimilarModelsInSqlite];
+    // OR
+    [_model1 A_SearchSimilarModelsInSqliteWithBlock:^(id obj, NSArray *result) {
+        XCTAssertTrue(result.count >= 1);
+    } andArg:nil];
+        </code></pre>
 
 
     </section>
