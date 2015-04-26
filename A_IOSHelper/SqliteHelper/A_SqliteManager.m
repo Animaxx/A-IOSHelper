@@ -10,6 +10,7 @@
 #import "A_SqliteManager.h"
 #import <sqlite3.h>
 #import "A_Reflection.h"
+#import "A_AsyncHelper.h"
 
 @implementation A_SqliteManager
 
@@ -101,6 +102,21 @@ NSMutableArray *ExistingTables;
     }
 }
 
+- (void) A_ExecuteQuery :(NSString *) query withBlock:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj{
+    [A_AsyncHelper A_RunInBackgroundWithObj:@[query,obj] Block:^id(id arg) {
+        return [self A_ExecuteQuery:[arg objectAtIndex:0] withArgs:nil];
+    } WhenDone:^(id arg, id result) {
+        finishBlock([arg objectAtIndex:1], (NSNumber*)result);
+    }];
+}
+- (void) A_ExecuteQuery :(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj{
+    [A_AsyncHelper A_RunInBackgroundWithObj:@[query,params,obj] Block:^id(id arg) {
+        return [self A_ExecuteQuery:[arg objectAtIndex:0] withArgs:[arg objectAtIndex:1]];
+    } WhenDone:^(id arg, id result) {
+        finishBlock([arg objectAtIndex:2], (NSNumber*)result);
+    }];
+}
+
 - (NSArray*) A_SearchDataset:(NSString *) query {
     return [self A_SearchDataset:query withParams:nil];
 }
@@ -116,6 +132,22 @@ NSMutableArray *ExistingTables;
     
     return dataset;
 }
+
+- (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
+    [A_AsyncHelper A_RunInBackgroundWithObj:@[query,obj] Block:^id(id arg) {
+        return [self A_SearchDataset:[arg objectAtIndex:0] withParams:nil];
+    } WhenDone:^(id arg, id result) {
+        finishBlock([arg objectAtIndex:1], (NSArray*)result);
+    }];
+}
+- (void) A_SearchDataset:(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
+    [A_AsyncHelper A_RunInBackgroundWithObj:@[query,params,obj] Block:^id(id arg) {
+        return [self A_SearchDataset:[arg objectAtIndex:0] withParams:[arg objectAtIndex:1]];
+    } WhenDone:^(id arg, id result) {
+        finishBlock([arg objectAtIndex:2], (NSArray*)result);
+    }];
+}
+
 
 - (NSDictionary*) _getRow {
     int rc = sqlite3_step(statement);
@@ -228,49 +260,14 @@ NSMutableArray *ExistingTables;
 }
 
 #pragma mark - Data Model Methods
-- (NSString*) _nameOfType:(NSString*)type {
-    if ([type isEqualToString:@"BOOL"] ||
-        [type isEqualToString:@"bool"]) {
-        return @"BOOLEAN";
-    } else if ([type isEqualToString:@"char"] ||
-               [type isEqualToString:@"NSString"]) {
-        return @"TEXT";
-    } else if ([type isEqualToString:@"short"] ||
-               [type isEqualToString:@"long"] ||
-               [type isEqualToString:@"int"] ||
-               [type isEqualToString:@"NSInteger"]) {
-        return @"INTEGER";
-    } else if ([type isEqualToString:@"float"] ||
-               [type isEqualToString:@"double"] ||
-               [type isEqualToString:@"NSNumber"]) {
-        return @"REAL";
-    } else if ([type isEqualToString:@"NSDate"]) {
-        return @"DATETIME";
-    } else if ([type isEqualToString:@"id"] ||
-               [type isEqualToString:@"NSData"]) {
-        return @"REAL";
-    }
-    
-    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQLite Manager> \r\n Unknow Type: %@", type);
-    return @"REAL";
-}
 
-- (Boolean) A_TableColumnMarch:(A_DataModel*) model {
-    NSLog(@"TODO");
-    return YES;
++ (NSString*) A_CreateTableScript:(A_DataModel*) model {
+    return [self A_CreateTableScript:model WithTableName:[A_SqliteManager A_GenerateTableName:model] AndKey:nil];
 }
-- (NSString*) A_GenerateTableName: (A_DataModel*) model {
-    NSString* _className = [A_Reflection A_GetClassNameFromObject:model];
-    return [NSString stringWithFormat:@"A_%@_table",_className];
++ (NSString*) A_CreateTableScript:(A_DataModel*) model AndKey:(NSString*)key{
+    return [self A_CreateTableScript:model WithTableName:[A_SqliteManager A_GenerateTableName:model] AndKey:key];
 }
-
-- (NSString*) A_CreateTableScript:(A_DataModel*) model {
-    return [self A_CreateTableScript:model WithTableName:[self A_GenerateTableName:model] AndKey:nil];
-}
-- (NSString*) A_CreateTableScript:(A_DataModel*) model AndKey:(NSString*)key{
-    return [self A_CreateTableScript:model WithTableName:[self A_GenerateTableName:model] AndKey:key];
-}
-- (NSString*) A_CreateTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key{
++ (NSString*) A_CreateTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key{
     NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
     
     NSString* _createTableSql = [NSString stringWithFormat:@"CREATE TABLE \"%@\" (", tableName];
@@ -285,7 +282,7 @@ NSMutableArray *ExistingTables;
             _format = @", \"%@\" %@";
         }
         
-        _type = [self _nameOfType:[properties objectForKey:propertyName]];
+        _type = [A_SqliteManager _nameOfType:[properties objectForKey:propertyName]];
         
         if (key && key.length > 0 && [[propertyName lowercaseString] isEqualToString:[key lowercaseString]]) {
             _format = [_format stringByAppendingString:@" NOT NULL PRIMARY KEY"];
@@ -303,28 +300,28 @@ NSMutableArray *ExistingTables;
 }
 
 - (NSNumber*) A_CreateTable:(A_DataModel*) model {
-    NSString* _sql = [self A_CreateTableScript:model];
+    NSString* _sql = [A_SqliteManager A_CreateTableScript:model];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_CreateTable:(A_DataModel*) model AndKey:(NSString*)key {
-    NSString* _sql = [self A_CreateTableScript:model AndKey:key];
+    NSString* _sql = [A_SqliteManager A_CreateTableScript:model AndKey:key];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_CreateTable:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key {
-    NSString* _sql = [self A_CreateTableScript:model WithTableName:tableName AndKey:key];
+    NSString* _sql = [A_SqliteManager A_CreateTableScript:model WithTableName:tableName AndKey:key];
     return [self A_ExecuteQuery:_sql];
 }
 
-- (NSString*) A_CreateInsertScript:(A_DataModel*) model {
-    return [self A_CreateInsertScript:model WithIgnore:nil AndTable:[self A_GenerateTableName:model]];
++ (NSString*) A_CreateInsertScript:(A_DataModel*) model {
+    return [self A_CreateInsertScript:model WithIgnore:nil AndTable:[A_SqliteManager A_GenerateTableName:model]];
 }
-- (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys {
-    return [self A_CreateInsertScript:model WithIgnore:keys AndTable:[self A_GenerateTableName:model]];
++ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys {
+    return [self A_CreateInsertScript:model WithIgnore:keys AndTable:[A_SqliteManager A_GenerateTableName:model]];
 }
-- (NSString*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName {
++ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName {
     return [self A_CreateInsertScript:model WithIgnore:nil AndTable:tableName];
 }
-- (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName {
++ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName {
     NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray* _keys = [properties allKeys];
     
@@ -359,23 +356,23 @@ NSMutableArray *ExistingTables;
 }
 
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName{
-    NSString* _sql = [self A_CreateInsertScript:model WithIgnore:ignoreKeys AndTable:tableName];
+    NSString* _sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys AndTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model WithTable:(NSString*)tableName{
-    NSString* _sql = [self A_CreateInsertScript:model WithTable:tableName];
+    NSString* _sql = [A_SqliteManager A_CreateInsertScript:model WithTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys{
-    NSString* _sql = [self A_CreateInsertScript:model WithIgnore:ignoreKeys];
+    NSString* _sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model{
-    NSString* _sql = [self A_CreateInsertScript:model];
+    NSString* _sql = [A_SqliteManager A_CreateInsertScript:model];
     return [self A_ExecuteQuery:_sql];
 }
 
-- (NSString*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
++ (NSString*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
     NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray* _keys = [properties allKeys];
     
@@ -409,20 +406,20 @@ NSMutableArray *ExistingTables;
     NSString* _sql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@",tableName,_valuesStr, _keysStr];
     return _sql;
 }
-- (NSString*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
-    return [self A_CreateUpdateScript:model WithTable:[self A_GenerateTableName:model] AndKeys:keys];
++ (NSString*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
+    return [self A_CreateUpdateScript:model WithTable:[A_SqliteManager A_GenerateTableName:model] AndKeys:keys];
 }
 
 - (NSNumber*) A_Update:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSString* _sql = [self A_CreateUpdateScript:model WithTable:tableName AndKeys:keys];
+    NSString* _sql = [A_SqliteManager A_CreateUpdateScript:model WithTable:tableName AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Update:(A_DataModel*) model AndKeys:(NSArray*)keys {
-    NSString* _sql = [self A_CreateUpdateScript:model AndKeys:keys];
+    NSString* _sql = [A_SqliteManager A_CreateUpdateScript:model AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
 
-- (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
++ (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
     NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray* _keys = [properties allKeys];
     
@@ -455,35 +452,35 @@ NSMutableArray *ExistingTables;
     
     return _sql;
 }
-- (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName {
++ (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName {
     return [self A_CreateDeleteScript:model WithTable:tableName AndKeys:nil];
 }
-- (NSString*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
-    return [self A_CreateDeleteScript:model WithTable:[self A_GenerateTableName:model] AndKeys:keys];
++ (NSString*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
+    return [self A_CreateDeleteScript:model WithTable:[A_SqliteManager A_GenerateTableName:model] AndKeys:keys];
 }
-- (NSString*) A_CreateDeleteScript:(A_DataModel*) model {
-    return [self A_CreateDeleteScript:model WithTable:[self A_GenerateTableName:model] AndKeys:nil];
++ (NSString*) A_CreateDeleteScript:(A_DataModel*) model {
+    return [self A_CreateDeleteScript:model WithTable:[A_SqliteManager A_GenerateTableName:model] AndKeys:nil];
 }
 
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSString* _sql = [self A_CreateDeleteScript:model WithTable:tableName AndKeys:keys];
+    NSString* _sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName {
-    NSString* _sql = [self A_CreateDeleteScript:model WithTable:tableName];
+    NSString* _sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model AndKeys:(NSArray*)keys {
-    NSString* _sql = [self A_CreateDeleteScript:model AndKeys:keys];
+    NSString* _sql = [A_SqliteManager A_CreateDeleteScript:model AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model {
-    NSString* _sql = [self A_CreateDeleteScript:model];
+    NSString* _sql = [A_SqliteManager A_CreateDeleteScript:model];
     return [self A_ExecuteQuery:_sql];
 }
 
 - (NSArray*) A_SearchSimilarModels:(A_DataModel*) model {
-    return [self A_SearchSimilarModels:model WithTable:[self A_GenerateTableName:model]];
+    return [self A_SearchSimilarModels:model WithTable:[A_SqliteManager A_GenerateTableName:model]];
 }
 - (NSArray*) A_SearchSimilarModels:(A_DataModel*) model WithTable:(NSString*)tableName {
     NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
@@ -512,7 +509,7 @@ NSMutableArray *ExistingTables;
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,_valuesStr];
     
     NSArray* _result = [self A_SearchDataset:_sql];
-    return [self A_Mapping:_result ToClass:[A_Reflection A_GetClass:model]];
+    return [A_SqliteManager A_Mapping:_result ToClass:[A_Reflection A_GetClass:model]];
 }
 
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
@@ -523,13 +520,12 @@ NSMutableArray *ExistingTables;
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
     
     NSArray* _result = [self A_SearchDataset:_sql];
-    return [self A_Mapping:_result ToClass:class];
+    return [A_SqliteManager A_Mapping:_result ToClass:class];
 }
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query{
     NSString* _tableName = [NSString stringWithFormat:@"A_%@_table",NSStringFromClass(class)];
     return [self A_SearchModels:class Where:query WithTable:_tableName];
 }
-
 
 #pragma mark - Utility Methods
 
@@ -554,12 +550,11 @@ NSMutableArray *ExistingTables;
     }
     return o;
 }
-
 - (NSNumber *) A_lastInsertId {
     return [NSNumber numberWithLongLong:sqlite3_last_insert_rowid(database)];
 }
 
-- (NSArray*) A_Mapping:(NSArray*) data ToClass:(Class)class{
++ (NSArray*) A_Mapping:(NSArray*) data ToClass:(Class)class{
     NSMutableArray* _array = [[NSMutableArray alloc] init];
     
     @try {
@@ -577,5 +572,40 @@ NSMutableArray *ExistingTables;
     
     return _array;
 }
++ (NSString*) _nameOfType:(NSString*)type {
+    if ([type isEqualToString:@"BOOL"] ||
+        [type isEqualToString:@"bool"]) {
+        return @"BOOLEAN";
+    } else if ([type isEqualToString:@"char"] ||
+               [type isEqualToString:@"NSString"]) {
+        return @"TEXT";
+    } else if ([type isEqualToString:@"short"] ||
+               [type isEqualToString:@"long"] ||
+               [type isEqualToString:@"int"] ||
+               [type isEqualToString:@"NSInteger"]) {
+        return @"INTEGER";
+    } else if ([type isEqualToString:@"float"] ||
+               [type isEqualToString:@"double"] ||
+               [type isEqualToString:@"NSNumber"]) {
+        return @"REAL";
+    } else if ([type isEqualToString:@"NSDate"]) {
+        return @"DATETIME";
+    } else if ([type isEqualToString:@"id"] ||
+               [type isEqualToString:@"NSData"]) {
+        return @"REAL";
+    }
+    
+    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQLite Manager> \r\n Unknow Type: %@", type);
+    return @"REAL";
+}
++ (Boolean) A_TableColumnMarch:(A_DataModel*) model {
+    NSLog(@"TODO");
+    return YES;
+}
++ (NSString*) A_GenerateTableName: (A_DataModel*) model {
+    NSString* _className = [A_Reflection A_GetClassNameFromObject:model];
+    return [NSString stringWithFormat:@"A_%@_table",_className];
+}
+
 
 @end

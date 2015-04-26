@@ -100,7 +100,7 @@
 }
 
 - (void)A_SaveToSqlite {
-    if (![[A_SqliteManager A_Instance] A_TableExist:[[A_SqliteManager A_Instance] A_GenerateTableName:self]]) {
+    if (![[A_SqliteManager A_Instance] A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
         [[A_SqliteManager A_Instance] A_CreateTable:self];
     }
     [[A_SqliteManager A_Instance] A_Insert:self];
@@ -112,23 +112,39 @@
     return [[A_SqliteManager A_Instance] A_SearchSimilarModels:self];
 }
 + (NSArray*)A_SearchSqlite: (NSString*)where {
-    return [[A_SqliteManager A_Instance] A_SearchModels:[A_Reflection A_GetClass:self] Where:where];
+    return [[A_SqliteManager A_Instance] A_SearchModels:[self class] Where:where];
 }
 
 - (void)A_SearchSimilarModelsInSqliteWithBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
+    if (!obj) {
+        obj = [NSNull null];
+    }
+    
     [A_AsyncHelper A_RunInBackgroundWithObj:@[self,obj] Block:^id(id arg) {
         return [[A_SqliteManager A_Instance] A_SearchSimilarModels:[arg objectAtIndex:0]];
     } WhenDone:^(id arg, id result) {
-        finishBlock([arg objectAtIndex:1], (NSArray*)result);
+        id _arg = [arg objectAtIndex:1];
+        if (_arg == [NSNull null]) {
+            _arg = nil;
+        }
+        finishBlock(_arg, (NSArray*)result);
     }];
 }
 + (void)A_SearchSqlite: (NSString*)where withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
+    if (!obj) {
+        obj = [NSNull null];
+    }
+    
     [A_AsyncHelper A_RunInBackgroundWithObj:@[self,where,obj] Block:^id(id arg) {
         return [[A_SqliteManager A_Instance]
                 A_SearchModels:[A_Reflection A_GetClass:[arg objectAtIndex:0]]
                 Where:[arg objectAtIndex:1]];
     } WhenDone:^(id arg, id result) {
-        finishBlock([arg objectAtIndex:2], (NSArray*)result);
+        id _arg = [arg objectAtIndex:2];
+        if (_arg == [NSNull null]) {
+            _arg = nil;
+        }
+        finishBlock(_arg, (NSArray*)result);
     }];
 }
 

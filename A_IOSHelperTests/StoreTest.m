@@ -10,6 +10,7 @@
 #import <XCTest/XCTest.h>
 #import "A_PlistHelper.h"
 #import "TestDataModel.h"
+#import "A_SqliteManager.h"
 
 @interface StoreTest : XCTestCase
 
@@ -74,6 +75,7 @@
     [_model1 setCreateDate: [NSDate date]];
     [_model1 setID:@0];
     [_model1 A_SaveToPlist];
+    
     XCTAssertTrue([TestDataModel A_GetFromPliste].count == 1);
     XCTAssertTrue([((TestDataModel*)[TestDataModel A_GetFromPliste].firstObject).Name isEqualToString:@"Object_1"]);
     
@@ -89,6 +91,30 @@
     [_model2 A_DeleteInPlist];
     XCTAssertTrue([TestDataModel A_GetFromPliste].count == 1);
     XCTAssertTrue([((TestDataModel*)[TestDataModel A_GetFromPliste].lastObject).Name isEqualToString:@"Object_1"]);
+}
+
+- (void)testDatamodelWithSql {
+    
+    TestDataModel* _model1 = [[TestDataModel alloc] init];
+    [_model1 setIndex:0];
+    [_model1 setName:@"Object_1"];
+    [_model1 setCreateDate: [NSDate date]];
+    [_model1 setID:@0];
+    
+    [[A_SqliteManager A_Instance] A_ExecuteQuery:[NSString stringWithFormat:@"DROP TABLE %@", [A_SqliteManager A_GenerateTableName:_model1]]];
+    
+    [_model1 A_SaveToSqlite];
+    
+    [_model1 A_SearchSimilarModelsInSqliteWithBlock:^(id obj, NSArray *result) {
+        XCTAssertTrue(result.count == 1);
+    } andArg:nil];
+    
+    [TestDataModel A_SearchSqlite:@"" withBlock:^(id obj, NSArray *result) {
+        
+    } andArg:nil];
+    
+    XCTAssertTrue([TestDataModel A_SearchSqlite:@""].count == 1);
+    XCTAssertTrue([_model1 A_SearchSimilarModelsInSqlite].count == 1);
 }
 
 @end
