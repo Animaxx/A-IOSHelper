@@ -18,9 +18,11 @@
 - (NSString*)A_ConvertToJSON;
 + (NSObject*)A_ConvertFromJSON: (NSString*)JSON;
 
-- (void)A_SaveToUserfile;
-+ (NSArray*)A_GetFromUserfile;
-+ (void)A_ClearFromUserfile;
+- (void)A_SaveToPlist;
++ (NSArray*)A_GetFromPliste;
++ (void)A_ClearFromPlist;
+
+- (void)A_SaveToSqlite;
 
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder;

@@ -9,7 +9,9 @@
 #import "A_DataModel.h"
 #import "A_Reflection.h"
 #import "A_JSONHelper.h"
-#import "A_UserDatafileHelper.h"
+#import "A_PlistHelper.h"
+#import "A_SqliteManager.h"
+#import "A_AsyncHelper.h"
 
 #define DATAMODEL_STORE_GROUP @"A_DATAMODEL_GROUP"
 
@@ -49,35 +51,49 @@
     return [self A_Deserialize:_dic];
 }
 
-- (void)A_SaveToUserfile {
+- (void)A_SaveToPlist {
     NSString* _className = [A_Reflection A_GetClassNameFromObject:self];
     NSString* _objKey = [NSString stringWithFormat:@"A_%@_key",_className];
     
-    NSMutableArray* _list = [A_UserDatafileHelper A_GetByGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
+    NSMutableArray* _list = [A_PlistHelper A_GetByGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
     if (!_list || ![_list isKindOfClass:[NSMutableArray class]]) {
         _list = [[NSMutableArray alloc] init];
     }
     
     [_list addObject:self];
-    [A_UserDatafileHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
+    [A_PlistHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
 }
-+ (NSArray*)A_GetFromUserfile {
++ (NSArray*)A_GetFromPliste {
     NSString* _className = [A_Reflection A_GetClassNameFromObject:self];
     NSString* _objKey = [NSString stringWithFormat:@"A_%@_key",_className];
     
-    NSMutableArray* _list = [A_UserDatafileHelper A_GetByGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
+    NSMutableArray* _list = [A_PlistHelper A_GetByGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
     if (!_list || ![_list isKindOfClass:[NSMutableArray class]]) {
         _list = [[NSMutableArray alloc] init];
     }
     return _list;
 }
-+ (void)A_ClearFromUserfile {
++ (void)A_ClearFromPlist {
     NSString* _className = [A_Reflection A_GetClassNameFromObject:self];
     NSString* _objKey = [NSString stringWithFormat:@"A_%@_key",_className];
     
     NSMutableArray* _list = _list = [[NSMutableArray alloc] init];
-    [A_UserDatafileHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
+    [A_PlistHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
 }
+
+- (void)A_SaveToSqlite {
+    if (![[A_SqliteManager A_Instance] A_TableExist:[[A_SqliteManager A_Instance] A_GenerateTableName:self]]) {
+        [[A_SqliteManager A_Instance] A_ExecuteTableCreate:self];
+    }
+    [[A_SqliteManager A_Instance] A_ExecuteInsert:self];
+}
+- (NSArray*)A_GetSimilar {
+    return [[A_SqliteManager A_Instance] A_SearchSimilarModels:self];
+}
++ (NSArray*)A_SearchSqlite: (NSString*)where {
+    return [[A_SqliteManager A_Instance] A_SearchModels:[A_Reflection A_GetClass:self] Where:where];
+}
+
 
 #pragma mark - NSCoding
 

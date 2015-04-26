@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface A_UserDatafileHelper : NSObject
+@interface A_PlistHelper : NSObject
 
 + (void) A_Save:(id)dataObject byKey:(NSString*)key;
 + (id) A_GetByKey:(NSString*)key;

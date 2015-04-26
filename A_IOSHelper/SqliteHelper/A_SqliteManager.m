@@ -17,6 +17,7 @@ sqlite3 *database;
 sqlite3_stmt *statement;
 NSString *databaseFileName;
 NSFileManager *filemanager;
+NSMutableArray *ExistingTables;
 
 #pragma mark - Database Operation
 
@@ -210,11 +211,19 @@ NSFileManager *filemanager;
 }
 
 - (Boolean) A_TableExist:(NSString*) tableName {
-    id _result = [self A_GetValueFromQuery:@"SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = ?" withParams:@[tableName]];
-    if (_result && [[_result class] isSubclassOfClass:[NSNumber class]]) {
-        return [((NSNumber*)_result) intValue] > 0;
+    if (ExistingTables && [ExistingTables containsObject:tableName]) {
+        return YES;
     } else {
-        return NO;
+        id _result = [self A_GetValueFromQuery:@"SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = ?" withParams:@[tableName]];
+        if (_result && [[_result class] isSubclassOfClass:[NSNumber class]]) {
+            if (!ExistingTables) {
+                ExistingTables = [[NSMutableArray alloc] init];
+            }
+            [ExistingTables addObject:tableName];
+            return [((NSNumber*)_result) intValue] > 0;
+        } else {
+            return NO;
+        }
     }
 }
 
@@ -255,6 +264,9 @@ NSFileManager *filemanager;
     return [NSString stringWithFormat:@"A_%@_table",_className];
 }
 
+- (NSString*) A_CreateTableScript:(A_DataModel*) model {
+    return [self A_CreateTableScript:model WithTableName:[self A_GenerateTableName:model] AndKey:nil];
+}
 - (NSString*) A_CreateTableScript:(A_DataModel*) model AndKey:(NSString*)key{
     return [self A_CreateTableScript:model WithTableName:[self A_GenerateTableName:model] AndKey:key];
 }
@@ -290,6 +302,10 @@ NSFileManager *filemanager;
     return _createTableSql;
 }
 
+- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model {
+    NSString* _sql = [self A_CreateTableScript:model];
+    return [self A_ExecuteQuery:_sql];
+}
 - (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model AndKey:(NSString*)key {
     NSString* _sql = [self A_CreateTableScript:model AndKey:key];
     return [self A_ExecuteQuery:_sql];
@@ -466,10 +482,10 @@ NSFileManager *filemanager;
     return [self A_ExecuteQuery:_sql];
 }
 
-- (NSArray*) A_SearchSimilarModel:(A_DataModel*) model {
-    return [self A_SearchSimilarModel:model WithTable:[self A_GenerateTableName:model]];
+- (NSArray*) A_SearchSimilarModels:(A_DataModel*) model {
+    return [self A_SearchSimilarModels:model WithTable:[self A_GenerateTableName:model]];
 }
-- (NSArray*) A_SearchSimilarModel:(A_DataModel*) model WithTable:(NSString*)tableName {
+- (NSArray*) A_SearchSimilarModels:(A_DataModel*) model WithTable:(NSString*)tableName {
     NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray* _keys = [properties allKeys];
     
@@ -498,7 +514,7 @@ NSFileManager *filemanager;
     NSArray* _result = [self A_SearchDataset:_sql];
     return [self A_Mapping:_result ToClass:[A_Reflection A_GetClass:model]];
 }
-- (NSArray*) A_SearchModel:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
+- (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
     NSString* _sql;
     if (query.length == 0)
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
@@ -508,10 +524,12 @@ NSFileManager *filemanager;
     NSArray* _result = [self A_SearchDataset:_sql];
     return [self A_Mapping:_result ToClass:class];
 }
-- (NSArray*) A_SearchModel:(Class)class Where:(NSString*)query{
+- (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query{
     NSString* _tableName = [NSString stringWithFormat:@"A_%@_table",NSStringFromClass(class)];
-    return [self A_SearchModel:class Where:query WithTable:_tableName];
+    return [self A_SearchModels:class Where:query WithTable:_tableName];
 }
+
+
 
 
 #pragma mark - Utility Methods

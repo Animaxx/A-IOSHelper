@@ -30,8 +30,8 @@
 		2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187B41A37518F0080FFB9 /* A_HtmlHelper.m */; };
 		2E1187CD1A37518F0080FFB9 /* A_ImageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187B61A37518F0080FFB9 /* A_ImageHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1187CE1A37518F0080FFB9 /* A_ImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187B71A37518F0080FFB9 /* A_ImageHelper.m */; };
-		2E1187D11A37518F0080FFB9 /* A_UserDatafileHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187BC1A37518F0080FFB9 /* A_UserDatafileHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E1187D21A37518F0080FFB9 /* A_UserDatafileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187BD1A37518F0080FFB9 /* A_UserDatafileHelper.m */; };
+		2E1187D11A37518F0080FFB9 /* A_PlistHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187BC1A37518F0080FFB9 /* A_PlistHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E1187D21A37518F0080FFB9 /* A_PlistHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187BD1A37518F0080FFB9 /* A_PlistHelper.m */; };
 		2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187C01A37518F0080FFB9 /* A_StringHelper.m */; };
 		2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1C1B0A1ABDE429008E30B2 /* A_SqliteManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -105,8 +105,8 @@
 		2E1187B41A37518F0080FFB9 /* A_HtmlHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_HtmlHelper.m; sourceTree = "<group>"; };
 		2E1187B61A37518F0080FFB9 /* A_ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_ImageHelper.h; sourceTree = "<group>"; };
 		2E1187B71A37518F0080FFB9 /* A_ImageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_ImageHelper.m; sourceTree = "<group>"; };
-		2E1187BC1A37518F0080FFB9 /* A_UserDatafileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_UserDatafileHelper.h; sourceTree = "<group>"; };
-		2E1187BD1A37518F0080FFB9 /* A_UserDatafileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_UserDatafileHelper.m; sourceTree = "<group>"; };
+		2E1187BC1A37518F0080FFB9 /* A_PlistHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_PlistHelper.h; sourceTree = "<group>"; };
+		2E1187BD1A37518F0080FFB9 /* A_PlistHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_PlistHelper.m; sourceTree = "<group>"; };
 		2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_StringHelper.h; sourceTree = "<group>"; };
 		2E1187C01A37518F0080FFB9 /* A_StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_StringHelper.m; sourceTree = "<group>"; };
 		2E1C1B0A1ABDE429008E30B2 /* A_SqliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_SqliteManager.h; sourceTree = "<group>"; };
@@ -302,8 +302,8 @@
 		2E1187BB1A37518F0080FFB9 /* StoreDatafile */ = {
 			isa = PBXGroup;
 			children = (
-				2E1187BC1A37518F0080FFB9 /* A_UserDatafileHelper.h */,
-				2E1187BD1A37518F0080FFB9 /* A_UserDatafileHelper.m */,
+				2E1187BC1A37518F0080FFB9 /* A_PlistHelper.h */,
+				2E1187BD1A37518F0080FFB9 /* A_PlistHelper.m */,
 			);
 			path = StoreDatafile;
 			sourceTree = "<group>";
@@ -441,7 +441,7 @@
 				2E1187C91A37518F0080FFB9 /* A_DeviceHelper.h in Headers */,
 				2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */,
 				2E1187C51A37518F0080FFB9 /* A_RESTRequest.h in Headers */,
-				2E1187D11A37518F0080FFB9 /* A_UserDatafileHelper.h in Headers */,
+				2E1187D11A37518F0080FFB9 /* A_PlistHelper.h in Headers */,
 				2E1187CB1A37518F0080FFB9 /* A_HtmlHelper.h in Headers */,
 				2E1187C11A37518F0080FFB9 /* A_CollectionHelper.h in Headers */,
 				2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */,
@@ -564,7 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E0FD88A1AB561AC00C1B828 /* NSDictionary+A_Extension.m in Sources */,
-				2E1187D21A37518F0080FFB9 /* A_UserDatafileHelper.m in Sources */,
+				2E1187D21A37518F0080FFB9 /* A_PlistHelper.m in Sources */,
 				2E1187CE1A37518F0080FFB9 /* A_ImageHelper.m in Sources */,
 				2E1C1B0D1ABDE429008E30B2 /* A_SqliteManager.m in Sources */,
 				2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */,

@@ -28,8 +28,9 @@ The Swfit example:
 
 `A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")`
 
+For more examples, please visit http://animaxx.github.io/A-IOSHelper/ 
 
-## How to build 
+## How to compile this project
 Please use `build.sh` file to build this project.
 > sh ./build.sh
 

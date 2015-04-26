@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Animax Deng. All rights reserved.
 //
 
-#import "A_UserDatafileHelper.h"
+#import "A_PlistHelper.h"
 
-@implementation A_UserDatafileHelper
+@implementation A_PlistHelper
 
 + (void) A_Save:(id)dataObject byKey:(NSString*)key {
     if (!key || !dataObject) return;
