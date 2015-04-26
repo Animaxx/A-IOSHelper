@@ -8,9 +8,8 @@ $(document).ready(function() {
     addMenuItem("Animation", "animation_example.html");
     addMenuItem("Event & asyn", "event_example.html");
     addMenuItem("Network", "network_example.html");
-
-    addMenuItem("Data Model", "network_example.html");
-
+    addMenuItem("Sqlite Manager", "sqliteManager_example.html");
+    addMenuItem("Data Model", "datamodel_example.html");
 
     $("#sidebar").click(function() {
         if (parseInt($("#sidebar").css("right")) > 0) {
