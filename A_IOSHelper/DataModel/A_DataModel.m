@@ -63,6 +63,24 @@
     [_list addObject:self];
     [A_PlistHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
 }
+- (void)A_DeleteInPlist {
+    NSString* _className = [A_Reflection A_GetClassNameFromObject:self];
+    NSString* _objKey = [NSString stringWithFormat:@"A_%@_key",_className];
+    
+    NSMutableArray* _list = [A_PlistHelper A_GetByGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
+    if (!_list || ![_list isKindOfClass:[NSMutableArray class]]) {
+        return;
+    }
+    
+    for (int i=0; i<[_list count]; i++) {
+        if ([[[_list objectAtIndex:i] A_ConvertToJSON] isEqualToString:[self A_ConvertToJSON]]) {
+            [_list removeObjectAtIndex:i];
+            break;
+        }
+    }
+    
+    [A_PlistHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
+}
 + (NSArray*)A_GetFromPliste {
     NSString* _className = [A_Reflection A_GetClassNameFromObject:self];
     NSString* _objKey = [NSString stringWithFormat:@"A_%@_key",_className];
@@ -83,17 +101,36 @@
 
 - (void)A_SaveToSqlite {
     if (![[A_SqliteManager A_Instance] A_TableExist:[[A_SqliteManager A_Instance] A_GenerateTableName:self]]) {
-        [[A_SqliteManager A_Instance] A_ExecuteTableCreate:self];
+        [[A_SqliteManager A_Instance] A_CreateTable:self];
     }
-    [[A_SqliteManager A_Instance] A_ExecuteInsert:self];
+    [[A_SqliteManager A_Instance] A_Insert:self];
 }
-- (NSArray*)A_GetSimilar {
+- (void)A_DeleteModelInSqlite {
+    [[A_SqliteManager A_Instance] A_Delete:self];
+}
+- (NSArray*)A_SearchSimilarModelsInSqlite {
     return [[A_SqliteManager A_Instance] A_SearchSimilarModels:self];
 }
 + (NSArray*)A_SearchSqlite: (NSString*)where {
     return [[A_SqliteManager A_Instance] A_SearchModels:[A_Reflection A_GetClass:self] Where:where];
 }
 
+- (void)A_SearchSimilarModelsInSqliteWithBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
+    [A_AsyncHelper A_RunInBackgroundWithObj:@[self,obj] Block:^id(id arg) {
+        return [[A_SqliteManager A_Instance] A_SearchSimilarModels:[arg objectAtIndex:0]];
+    } WhenDone:^(id arg, id result) {
+        finishBlock([arg objectAtIndex:1], (NSArray*)result);
+    }];
+}
++ (void)A_SearchSqlite: (NSString*)where withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
+    [A_AsyncHelper A_RunInBackgroundWithObj:@[self,where,obj] Block:^id(id arg) {
+        return [[A_SqliteManager A_Instance]
+                A_SearchModels:[A_Reflection A_GetClass:[arg objectAtIndex:0]]
+                Where:[arg objectAtIndex:1]];
+    } WhenDone:^(id arg, id result) {
+        finishBlock([arg objectAtIndex:2], (NSArray*)result);
+    }];
+}
 
 #pragma mark - NSCoding
 

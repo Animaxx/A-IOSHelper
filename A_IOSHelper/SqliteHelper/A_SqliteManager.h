@@ -43,35 +43,35 @@
 - (NSString*) A_CreateTableScript:(A_DataModel*) model AndKey:(NSString*)key;
 - (NSString*) A_CreateTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
 
-- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model;
-- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model AndKey:(NSString*)key;
-- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
+- (NSNumber*) A_CreateTable:(A_DataModel*) model;
+- (NSNumber*) A_CreateTable:(A_DataModel*) model AndKey:(NSString*)key;
+- (NSNumber*) A_CreateTable:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
 
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model;
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys;
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName;
 - (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys AndTable:(NSString*)tableName;
 
-- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName;
-- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithTable:(NSString*)tableName;
-- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys;
-- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model;
+- (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName;
+- (NSNumber*) A_Insert: (A_DataModel*) model WithTable:(NSString*)tableName;
+- (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys;
+- (NSNumber*) A_Insert: (A_DataModel*) model;
 
 - (NSString*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
 - (NSString*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
 
-- (NSNumber*) A_ExecuteUpdate:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
-- (NSNumber*) A_ExecuteUpdate:(A_DataModel*) model AndKeys:(NSArray*)keys;
+- (NSNumber*) A_Update:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
+- (NSNumber*) A_Update:(A_DataModel*) model AndKeys:(NSArray*)keys;
 
 - (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
 - (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName;
 - (NSString*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
 - (NSString*) A_CreateDeleteScript:(A_DataModel*) model;
 
-- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
-- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model WithTable:(NSString*)tableName;
-- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model AndKeys:(NSArray*)keys;
-- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model;
+- (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
+- (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName;
+- (NSNumber*) A_Delete:(A_DataModel*) model AndKeys:(NSArray*)keys;
+- (NSNumber*) A_Delete:(A_DataModel*) model;
 
 - (NSArray*) A_SearchSimilarModels:(A_DataModel*) model;
 - (NSArray*) A_SearchSimilarModels:(A_DataModel*) model WithTable:(NSString*)tableName;

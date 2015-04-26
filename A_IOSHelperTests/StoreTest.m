@@ -85,6 +85,10 @@
     [_model2 A_SaveToPlist];
     XCTAssertTrue([TestDataModel A_GetFromPliste].count == 2);
     XCTAssertTrue([((TestDataModel*)[TestDataModel A_GetFromPliste].lastObject).Name isEqualToString:@"Object_2"]);
+    
+    [_model2 A_DeleteInPlist];
+    XCTAssertTrue([TestDataModel A_GetFromPliste].count == 1);
+    XCTAssertTrue([((TestDataModel*)[TestDataModel A_GetFromPliste].lastObject).Name isEqualToString:@"Object_1"]);
 }
 
 @end

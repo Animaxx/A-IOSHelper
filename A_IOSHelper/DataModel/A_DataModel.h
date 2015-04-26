@@ -19,10 +19,14 @@
 + (NSObject*)A_ConvertFromJSON: (NSString*)JSON;
 
 - (void)A_SaveToPlist;
+- (void)A_DeleteInPlist;
 + (NSArray*)A_GetFromPliste;
 + (void)A_ClearFromPlist;
 
 - (void)A_SaveToSqlite;
+- (void)A_DeleteModelInSqlite;
+- (NSArray*)A_SearchSimilarModelsInSqlite;
++ (NSArray*)A_SearchSqlite: (NSString*)where;
 
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder;

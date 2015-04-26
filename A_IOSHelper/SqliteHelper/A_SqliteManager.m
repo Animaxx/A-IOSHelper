@@ -302,15 +302,15 @@ NSMutableArray *ExistingTables;
     return _createTableSql;
 }
 
-- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model {
+- (NSNumber*) A_CreateTable:(A_DataModel*) model {
     NSString* _sql = [self A_CreateTableScript:model];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model AndKey:(NSString*)key {
+- (NSNumber*) A_CreateTable:(A_DataModel*) model AndKey:(NSString*)key {
     NSString* _sql = [self A_CreateTableScript:model AndKey:key];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteTableCreate:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key {
+- (NSNumber*) A_CreateTable:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key {
     NSString* _sql = [self A_CreateTableScript:model WithTableName:tableName AndKey:key];
     return [self A_ExecuteQuery:_sql];
 }
@@ -358,19 +358,19 @@ NSMutableArray *ExistingTables;
     return _insterTableSql;
 }
 
-- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName{
+- (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName{
     NSString* _sql = [self A_CreateInsertScript:model WithIgnore:ignoreKeys AndTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithTable:(NSString*)tableName{
+- (NSNumber*) A_Insert: (A_DataModel*) model WithTable:(NSString*)tableName{
     NSString* _sql = [self A_CreateInsertScript:model WithTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys{
+- (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys{
     NSString* _sql = [self A_CreateInsertScript:model WithIgnore:ignoreKeys];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteInsert: (A_DataModel*) model{
+- (NSNumber*) A_Insert: (A_DataModel*) model{
     NSString* _sql = [self A_CreateInsertScript:model];
     return [self A_ExecuteQuery:_sql];
 }
@@ -413,11 +413,11 @@ NSMutableArray *ExistingTables;
     return [self A_CreateUpdateScript:model WithTable:[self A_GenerateTableName:model] AndKeys:keys];
 }
 
-- (NSNumber*) A_ExecuteUpdate:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
+- (NSNumber*) A_Update:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
     NSString* _sql = [self A_CreateUpdateScript:model WithTable:tableName AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteUpdate:(A_DataModel*) model AndKeys:(NSArray*)keys {
+- (NSNumber*) A_Update:(A_DataModel*) model AndKeys:(NSArray*)keys {
     NSString* _sql = [self A_CreateUpdateScript:model AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
@@ -465,19 +465,19 @@ NSMutableArray *ExistingTables;
     return [self A_CreateDeleteScript:model WithTable:[self A_GenerateTableName:model] AndKeys:nil];
 }
 
-- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
+- (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
     NSString* _sql = [self A_CreateDeleteScript:model WithTable:tableName AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model WithTable:(NSString*)tableName {
+- (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName {
     NSString* _sql = [self A_CreateDeleteScript:model WithTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model AndKeys:(NSArray*)keys {
+- (NSNumber*) A_Delete:(A_DataModel*) model AndKeys:(NSArray*)keys {
     NSString* _sql = [self A_CreateDeleteScript:model AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
-- (NSNumber*) A_ExecuteDelete:(A_DataModel*) model {
+- (NSNumber*) A_Delete:(A_DataModel*) model {
     NSString* _sql = [self A_CreateDeleteScript:model];
     return [self A_ExecuteQuery:_sql];
 }
@@ -514,6 +514,7 @@ NSMutableArray *ExistingTables;
     NSArray* _result = [self A_SearchDataset:_sql];
     return [self A_Mapping:_result ToClass:[A_Reflection A_GetClass:model]];
 }
+
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
     NSString* _sql;
     if (query.length == 0)
@@ -528,8 +529,6 @@ NSMutableArray *ExistingTables;
     NSString* _tableName = [NSString stringWithFormat:@"A_%@_table",NSStringFromClass(class)];
     return [self A_SearchModels:class Where:query WithTable:_tableName];
 }
-
-
 
 
 #pragma mark - Utility Methods
