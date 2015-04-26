@@ -50,153 +50,81 @@
                     href="https://twitter.com/michigangraham">mattgraham</a> for original Theme </span>
         </div>
 
-        <h1>
-            SQlite data operations
-        </h1>
-        <br/><br/>
         <div>
             <h2> Contents </h2>
             <ul>
-                <li> <a href="#openConnection">Open connection</a> </li>
-                <li> <a href="#executeQuery">Execute a query</a> </li>
-                <li> <a href="#searchDataset">Search data set</a> </li>
-                <li> <a href="#searchUniqueData">search for single data</a> </li>
-                <li> <a href="#dataModelExample">Data model example</a> </li>
-                <li> <a href="#dataModelCRUD">Data model CRUD operation</a> </li>
-                <li> <a href="#searchSimilarModel">Search similar models</a> </li>
-                <li> <a href="#searchModel">Search models with query</a> </li>
+                <li> <a href="#demomodel">Demo model</a> </li>
+                <li> <a href="#saveModelPlist">Save mobel to Plist file</a> </li>
+                <li> <a href="#getModelPlist">Get models in plist</a> </li>
+                <li> <a href="#delModelPlist">Delete model in plist</a> </li>
+                <li> <a href="#clearModelPlist">Clear models in plist</a> </li>
+                <li> <a href="#saveModelSqlite">Save models to Sqlite</a> </li>
+                <li> <a href="#searchModelSqlite">Search models from Sqlite</a> </li>
             </ul>
         </div>
 
-        <div id='openConnection' class="anchor"></div>
-        <h2> Open connection </h2>
-        <pre><code class="html">    // Open default Sqlite file
-    [A_SqliteManager A_Instance];
-    // Open the Sqlite file which the name is "sqlite.db"
-    [A_SqliteManager A_Instance:@"sqlite.db"];</code></pre>
-
-        <div id='executeQuery' class="anchor"></div>
-        <h2> Execute a query </h2>
-        <pre><code class="html">    [[A_SqliteManager A_Instance]
-            A_ExecuteQuery:@"UPDATE `Table` SET `Key`='value' WHERE ID=1"];</code></pre>
-
-        <div id='searchDataset' class="anchor"></div>
-        <h2> Search data set </h2>
-        <pre><code class="html">    NSArray* Dataset = [[A_SqliteManager A_Instance]
-            A_SearchDataset:@"SELECT * FROM `Table`"];
-
-    // Using query with params
-    NSArray* Dataset = [[A_SqliteManager A_Instance]
-            A_SearchDataset:@"SELECT * FROM `Table` WHERE ID=?"
-            withParams:@[@1]];
-        </code></pre>
-
-        <div id='searchUniqueData' class="anchor"></div>
-        <h2> Search for single data </h2>
-        <pre><code class="html">    id createDate = [[A_SqliteManager A_Instance]
-            A_GetValueFromQuery:@"SELECT CreateDate FROM `Table` WHERE ID=1"];</code></pre>
-
-        <div id='dataModelExample' class="anchor"></div>
-        <h2> Data model example </h2>
+        <div id='demomodel' class="anchor"></div>
+        <h2> Demo model </h2>
         <pre><code class="html">    // ModelTest.h file
     #import &lt;A_IOSHelper/A_IOSHelper.h&gt;
-    @interface ModelTest : A_DataModel
+
+    @interface TestDataModel : A_DataModel
 
     @property (retain, nonatomic) NSString* Name;
-    @property (retain, nonatomic) NSDate* Day;
-    @property (nonatomic) BOOL Passed;
-    @property (nonatomic) NSInteger ID;
+    @property (retain, nonatomic) NSDate* CreateDate;
+    @property (nonatomic) NSInteger Index;
+    @property (retain, nonatomic) NSNumber* ID;
 
     @end</code></pre>
 
-        <div id='dataModelCRUD' class="anchor"></div>
-        <h2> Data model CRUD operation </h2>
+        <div id='saveModelPlist' class="anchor"></div>
+        <h2> Save mobel to Plist file </h2>
+        <pre><code class="html">    TestDataModel* _model1 = [[TestDataModel alloc] init];
+    [_model1 setName:@"Object_1"];
+    [_model1 setCreateDate: [NSDate date]];
+    [_model1 setID:@0];
+    [_model1 A_SaveToPlist];</code></pre>
 
-        <pre><code class="html">
-    ModelTest* _model = [[ModelTest alloc] init];
-    [_model setDay:[NSDate date]];
-    [_model setName:@"Name"];
-    [_model setPassed:YES];
+        <div id='getModelPlist' class="anchor"></div>
+        <h2> Get models in plist </h2>
+        <pre><code class="html">    NSArray* models = [TestDataModel A_GetFromPliste]; </code></pre>
 
-    // Create Table
-    Boolean _exist = [[A_SqliteManager A_Instance]
-                                A_TableExist:[[A_SqliteManager A_Instance]
-                                        A_GenerateTableName:_model]];
-    if (!_exist) {
-        [[A_SqliteManager A_Instance] A_ExecuteTableCreate:_model AndKey:@"id"];
-    }
+        <div id='delModelPlist' class="anchor"></div>
+        <h2> Delete model in plist </h2>
+        <pre><code class="html">    TestDataModel* _model = [[TestDataModel alloc] init];
+    [_model setIndex:1];
+    [_model setName:@"Object_1"];
+    [_model setCreateDate: [NSDate date]];
+    [_model setID:@1];
+    [_model A_SaveToPlist]; // The model has been saved.
+    [_model A_DeleteInPlist]; </code></pre>
 
-    // Insert new record
-    [[A_SqliteManager A_Instance] A_ExecuteInsert:_model WithIgnore:@[@"id"]];
-    // Set giving ID
-    [_model setID: [[[A_SqliteManager A_Instance] A_lastInsertId] integerValue]];
+        <div id='clearModelPlist' class="anchor"></div>
+        <h2> Clear models in plist </h2>
+        <p> This function only clear same type of models.
+            For example, using <code class="html">[TestDataModel A_ClearFromPlist];</code> will clear only TestDataModels. </p>
+        <pre><code class="html"> [TestDataModel A_ClearFromPlist]; </code></pre>
 
-    // Search Table
-    NSArray* _values = [[A_SqliteManager A_Instance] A_SearchDataset:
-    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
-            A_GenerateTableName:_model]]];
-    NSLog(@"%@", _values);
-    /*
-    The result in here is: [NSArray [NSDictionary]]
-        {
-            Day = "2015-03-16 18:51:10 +0000";
-            ID = 1;
-            Name = Name;
-            Passed = 1;
-        }
-    */
+        <div id='saveModelSqlite' class="anchor"></div>
+        <h2> Save models to Sqlite </h2>
+        <p> This function will automatically generate Table if the table isn't exist in Sqlite. </p>
+        <pre><code class="html">     TestDataModel* _model = [[TestDataModel alloc] init];
+    [_model setIndex:0];
+    [_model setName:@"Object_1"];
+    [_model setCreateDate: [NSDate date]];
+    [_model setID:@0];
+    [_model A_SaveToSqlite];</code></pre>
 
-    // Update data
-    [_model setName:@"Name2"];
-    [[A_SqliteManager A_Instance] A_ExecuteUpdate:_model AndKeys:@[@"id"]];
+        <div id='searchModelSqlite' class="anchor"></div>
+        <h2> Search models from Sqlite </h2>
+        <p> Searching certain type of mobles in Sqlite </p>
+        <pre><code class="html">    [TestDataModel A_SearchSqlite:@"`name` like '%object%'"];</code></pre>
+        <p>OR</p>
+        <pre><code class="html">    [TestDataModel A_SearchSqlite:@"" withBlock:^(id obj, NSArray *result) {
+        // TODO: Other operations with data result
+        //obj is self.view
+    } andArg:self.view];</code></pre>
 
-    // Search Table
-    _values = [[A_SqliteManager A_Instance] A_SearchDataset:
-    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
-            A_GenerateTableName:_model]]];
-    NSLog(@"%@", _values);
-    /*
-    The result in here is: [NSArray [NSDictionary]]
-        {
-            Day = "2015-03-16 18:51:10 +0000";
-            ID = 1;
-            Name = Name2;
-            Passed = 1;
-        }
-    */
-
-    // Delete Data
-    [[A_SqliteManager A_Instance] A_ExecuteDelete:_model AndKeys:@[@"id"]];
-
-    // Search Table
-    _values = [[A_SqliteManager A_Instance] A_SearchDataset:
-    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
-            A_GenerateTableName:_model]]];
-    NSLog(@"%@", _values); // The result is empty </code></pre>
-
-
-        <div id='searchSimilarModel' class="anchor"></div>
-        <h2> Search similar models </h2>
-        <p>This function can found the models which the value of attributes are same as example model,
-            and it will ignore the default value of attributes. <br>
-            The result in this function is NSArray with the data model objects.
-        </p>
-        <pre><code class="html">    // Get all ModelTest objects.
-    ModelTest* _searchExample = [[ModelTest alloc] init];
-    NSArray* _result = [[A_SqliteManager A_Instance] A_SearchSimilarModel:_searchExample];</code></pre>
-
-        <pre><code class="html">    // Get all ModelTest objects that Name is @"Animax"
-    ModelTest* _searchExample = [[ModelTest alloc] init];
-    [_searchExample setName:@"Animax"];
-    NSArray* _result = [[A_SqliteManager A_Instance] A_SearchSimilarModel:_searchExample];</code></pre>
-
-        <div id='searchModel' class="anchor"></div>
-        <h2> Search models with query </h2>
-        <p>The result in this function is NSArray with the data model objects. </p>
-
-        <pre><code class="html">    // Get all ModelTest objects that Name like "%name%"
-    NSArray* _result = [[A_SqliteManager A_Instance] A_SearchModel:[ModelTest class]
-            Where:@"Name like '%name%'"];</code></pre>
 
     </section>
 </div>

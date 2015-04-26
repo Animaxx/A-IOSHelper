@@ -50,6 +50,13 @@
                     href="https://twitter.com/michigangraham">mattgraham</a> for original Theme </span>
         </div>
 
+        <h1>
+            Sqlite Manager
+        </h1>
+        <p> <code>A_SqliteManager</code>  provides various Sqlite data base operations and asynchronous operations.
+            Combining with <a href="datamodel_example.html">A_DateModel</a>, it's able to implement the minitype OR/M with data model. </p>
+        <br />
+
         <div>
             <h2> Contents </h2>
             <ul>
@@ -116,21 +123,19 @@
 
     // Create Table
     Boolean _exist = [[A_SqliteManager A_Instance]
-                                A_TableExist:[[A_SqliteManager A_Instance]
-                                        A_GenerateTableName:_model]];
+                                A_TableExist:[A_SqliteManager A_GenerateTableName:_model]];
     if (!_exist) {
-        [[A_SqliteManager A_Instance] A_ExecuteTableCreate:_model AndKey:@"id"];
+        [[A_SqliteManager A_Instance] A_CreateTable:_model AndKey:@"id"];
     }
 
     // Insert new record
-    [[A_SqliteManager A_Instance] A_ExecuteInsert:_model WithIgnore:@[@"id"]];
+    [[A_SqliteManager A_Instance] A_Insert:_model WithIgnore:@[@"id"]];
     // Set giving ID
     [_model setID: [[[A_SqliteManager A_Instance] A_lastInsertId] integerValue]];
 
     // Search Table
     NSArray* _values = [[A_SqliteManager A_Instance] A_SearchDataset:
-    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
-            A_GenerateTableName:_model]]];
+    [NSString stringWithFormat:@"SELECT * FROM %@", [A_SqliteManager A_GenerateTableName:_model]]];
     NSLog(@"%@", _values);
     /*
     The result in here is: [NSArray [NSDictionary]]
@@ -144,12 +149,11 @@
 
     // Update data
     [_model setName:@"Name2"];
-    [[A_SqliteManager A_Instance] A_ExecuteUpdate:_model AndKeys:@[@"id"]];
+    [[A_SqliteManager A_Instance] A_Update:_model AndKeys:@[@"id"]];
 
     // Search Table
     _values = [[A_SqliteManager A_Instance] A_SearchDataset:
-    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
-            A_GenerateTableName:_model]]];
+    [NSString stringWithFormat:@"SELECT * FROM %@", [A_SqliteManager A_GenerateTableName:_model]]];
     NSLog(@"%@", _values);
     /*
     The result in here is: [NSArray [NSDictionary]]
@@ -162,12 +166,11 @@
     */
 
     // Delete Data
-    [[A_SqliteManager A_Instance] A_ExecuteDelete:_model AndKeys:@[@"id"]];
+    [[A_SqliteManager A_Instance] A_Delete:_model AndKeys:@[@"id"]];
 
     // Search Table
     _values = [[A_SqliteManager A_Instance] A_SearchDataset:
-    [NSString stringWithFormat:@"SELECT * FROM %@", [[A_SqliteManager A_Instance]
-            A_GenerateTableName:_model]]];
+    [NSString stringWithFormat:@"SELECT * FROM %@", [A_SqliteManager A_GenerateTableName:_model]]];
     NSLog(@"%@", _values); // The result is empty </code></pre>
 
 
