@@ -37,6 +37,8 @@
 		2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1C1B0A1ABDE429008E30B2 /* A_SqliteManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1C1B0D1ABDE429008E30B2 /* A_SqliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1C1B0B1ABDE429008E30B2 /* A_SqliteManager.m */; };
 		2E1C1B121ABE994B008E30B2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */; };
+		2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1E33DE1AF4A32B00BC853D /* UIAlertView+A_Extension.h */; };
+		2E1E33E11AF4A32B00BC853D /* UIAlertView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1E33DF1AF4A32B00BC853D /* UIAlertView+A_Extension.m */; };
 		2E3830301AE8817400DFF0F4 /* StoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E38302F1AE8817400DFF0F4 /* StoreTest.m */; };
 		2E3A8D541AADEF4B00D3A833 /* A_IOSHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1187871A3750770080FFB9 /* A_IOSHelper.framework */; };
 		2E3A8D5E1AADF05F00D3A833 /* A_IOSHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D5D1AADF05F00D3A833 /* A_IOSHelperTests.m */; };
@@ -111,6 +113,8 @@
 		2E1187C01A37518F0080FFB9 /* A_StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_StringHelper.m; sourceTree = "<group>"; };
 		2E1C1B0A1ABDE429008E30B2 /* A_SqliteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_SqliteManager.h; sourceTree = "<group>"; };
 		2E1C1B0B1ABDE429008E30B2 /* A_SqliteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_SqliteManager.m; sourceTree = "<group>"; };
+		2E1E33DE1AF4A32B00BC853D /* UIAlertView+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+A_Extension.h"; path = "AlertBox/UIAlertView+A_Extension.h"; sourceTree = "<group>"; };
+		2E1E33DF1AF4A32B00BC853D /* UIAlertView+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertView+A_Extension.m"; path = "AlertBox/UIAlertView+A_Extension.m"; sourceTree = "<group>"; };
 		2E38302F1AE8817400DFF0F4 /* StoreTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreTest.m; sourceTree = "<group>"; };
 		2E3A8D4E1AADEF4B00D3A833 /* A_IOSHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A_IOSHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E3A8D511AADEF4B00D3A833 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -364,6 +368,8 @@
 			children = (
 				2E58DA551A489E2100CA10B6 /* A_AlertBox.h */,
 				2E58DA561A489E2100CA10B6 /* A_AlertBox.m */,
+				2E1E33DE1AF4A32B00BC853D /* UIAlertView+A_Extension.h */,
+				2E1E33DF1AF4A32B00BC853D /* UIAlertView+A_Extension.m */,
 			);
 			name = AlertBox;
 			sourceTree = "<group>";
@@ -441,6 +447,7 @@
 				2E1187C91A37518F0080FFB9 /* A_DeviceHelper.h in Headers */,
 				2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */,
 				2E1187C51A37518F0080FFB9 /* A_RESTRequest.h in Headers */,
+				2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */,
 				2E1187D11A37518F0080FFB9 /* A_PlistHelper.h in Headers */,
 				2E1187CB1A37518F0080FFB9 /* A_HtmlHelper.h in Headers */,
 				2E1187C11A37518F0080FFB9 /* A_CollectionHelper.h in Headers */,
@@ -579,6 +586,7 @@
 				2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */,
 				2ED75EA61ABA35E500B0FB5F /* UIViewController+A_Extension.m in Sources */,
 				2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */,
+				2E1E33E11AF4A32B00BC853D /* UIAlertView+A_Extension.m in Sources */,
 				2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */,
 				2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */,
 				2EB099DC1AB3310800D6DBDC /* UIView+A_Extension.m in Sources */,

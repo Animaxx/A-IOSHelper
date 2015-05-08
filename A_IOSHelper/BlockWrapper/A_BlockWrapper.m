@@ -11,6 +11,7 @@
 @interface A_BlockWrapper()
 @property (readwrite, nonatomic) void *block;
 @property (weak, nonatomic) id arg;
+@property (nonatomic, strong) NSObject *lock;
 @end
 
 
@@ -38,18 +39,24 @@
 }
 
 - (void) A_Execute {
-    if (self.block) {
-        ((void (^)(id arg))self.block)(self.arg);
+    @synchronized(self) {
+        if (self.block) {
+            ((void (^)(id arg))self.block)(self.arg);
+        }
     }
 }
 - (void) A_Execute: (id)obj {
-    if (self.block) {
-        ((void (^)(id obj,id arg))self.block)(obj,self.arg);
+    @synchronized(self) {
+        if (self.block) {
+            ((void (^)(id obj,id arg))self.block)(obj,self.arg);
+        }
     }
 }
 - (void) A_Execute: (id)obj WithObj:(id)obj2{
-    if (self.block) {
-        ((void (^)(id obj1,id obj2,id arg))self.block)(obj,obj2,self.arg);
+    @synchronized(self) {
+        if (self.block) {
+            ((void (^)(id obj1,id obj2,id arg))self.block)(obj,obj2,self.arg);
+        }
     }
 }
 

@@ -10,8 +10,8 @@
 
 @interface A_AlertBox : NSObject
 
-+ (void)A_SystemAlert:(NSString *) Message AndTitle: (NSString*)Title AndBtnMsg:(NSString*)BtnMessage;
-+ (void)A_SystemAlert:(NSString *) Message AndTitle: (NSString*)Title;
-+ (void)A_SystemAlert:(NSString *) Message;
++ (void)A_SystemAlert:(NSString *) Message AndTitle: (NSString*)Title CancelButton:(NSString*)BtnMessage;
+//+ (void)A_SystemAlert:(NSString *) Message AndTitle: (NSString*)Title;
+//+ (void)A_SystemAlert:(NSString *) Message;
 
 @end
