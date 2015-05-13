@@ -10,7 +10,7 @@
 #import "A_SqliteManager.h"
 #import <sqlite3.h>
 #import "A_Reflection.h"
-#import "A_AsyncHelper.h"
+#import "A_TaskHelper.h"
 
 @implementation A_SqliteManager
 
@@ -103,14 +103,14 @@ NSMutableArray *ExistingTables;
 }
 
 - (void) A_ExecuteQuery :(NSString *) query withBlock:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj{
-    [A_AsyncHelper A_RunInBackgroundWithObj:@[query,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithObj:@[query,obj] Block:^id(id arg) {
         return [self A_ExecuteQuery:[arg objectAtIndex:0] withArgs:nil];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:1], (NSNumber*)result);
     }];
 }
 - (void) A_ExecuteQuery :(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj{
-    [A_AsyncHelper A_RunInBackgroundWithObj:@[query,params,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithObj:@[query,params,obj] Block:^id(id arg) {
         return [self A_ExecuteQuery:[arg objectAtIndex:0] withArgs:[arg objectAtIndex:1]];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:2], (NSNumber*)result);
@@ -134,14 +134,14 @@ NSMutableArray *ExistingTables;
 }
 
 - (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
-    [A_AsyncHelper A_RunInBackgroundWithObj:@[query,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithObj:@[query,obj] Block:^id(id arg) {
         return [self A_SearchDataset:[arg objectAtIndex:0] withParams:nil];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:1], (NSArray*)result);
     }];
 }
 - (void) A_SearchDataset:(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
-    [A_AsyncHelper A_RunInBackgroundWithObj:@[query,params,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithObj:@[query,params,obj] Block:^id(id arg) {
         return [self A_SearchDataset:[arg objectAtIndex:0] withParams:[arg objectAtIndex:1]];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:2], (NSArray*)result);

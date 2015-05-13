@@ -37,6 +37,7 @@ static char _a_associatedObjectKey;
 - (void)A_Event_Add:(void (^)(id sender, id argument))handler forControlEvents:(UIControlEvents)controlEvents {
     [self A_Event_Add:handler WithObj:nil forControlEvents:controlEvents];
 }
+
 - (void)A_Event_Remove:(UIControlEvents)controlEvent {
     NSMutableDictionary *events = objc_getAssociatedObject(self, &_a_associatedObjectKey);
     if (!events) {

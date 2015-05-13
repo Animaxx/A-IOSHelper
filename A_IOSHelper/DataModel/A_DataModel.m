@@ -11,7 +11,7 @@
 #import "A_JSONHelper.h"
 #import "A_PlistHelper.h"
 #import "A_SqliteManager.h"
-#import "A_AsyncHelper.h"
+#import "A_TaskHelper.h"
 
 #define DATAMODEL_STORE_GROUP @"A_DATAMODEL_GROUP"
 
@@ -120,7 +120,7 @@
         obj = [NSNull null];
     }
     
-    [A_AsyncHelper A_RunInBackgroundWithObj:@[self,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithObj:@[self,obj] Block:^id(id arg) {
         return [[A_SqliteManager A_Instance] A_SearchSimilarModels:[arg objectAtIndex:0]];
     } WhenDone:^(id arg, id result) {
         id _arg = [arg objectAtIndex:1];
@@ -135,7 +135,7 @@
         obj = [NSNull null];
     }
     
-    [A_AsyncHelper A_RunInBackgroundWithObj:@[self,where,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithObj:@[self,where,obj] Block:^id(id arg) {
         return [[A_SqliteManager A_Instance]
                 A_SearchModels:[A_Reflection A_GetClass:[arg objectAtIndex:0]]
                 Where:[arg objectAtIndex:1]];

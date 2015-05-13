@@ -39,22 +39,22 @@
 }
 
 - (void) A_Execute {
-    @synchronized(self) {
-        if (self.block) {
+    if (self.block) {
+        @synchronized(self) {
             ((void (^)(id arg))self.block)(self.arg);
         }
     }
 }
 - (void) A_Execute: (id)obj {
-    @synchronized(self) {
-        if (self.block) {
+    if (self.block) {
+        @synchronized(self) {
             ((void (^)(id obj,id arg))self.block)(obj,self.arg);
         }
     }
 }
 - (void) A_Execute: (id)obj WithObj:(id)obj2{
-    @synchronized(self) {
-        if (self.block) {
+    if (self.block) {
+        @synchronized(self) {
             ((void (^)(id obj1,id obj2,id arg))self.block)(obj,obj2,self.arg);
         }
     }

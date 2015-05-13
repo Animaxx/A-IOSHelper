@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E02968A1B018134005ABADF /* A_TaskHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E0296881B018134005ABADF /* A_TaskHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E02968B1B018134005ABADF /* A_TaskHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E0296891B018134005ABADF /* A_TaskHelper.m */; };
 		2E02F9A01A4B6D4C00F4EBDE /* A_Datetime.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E02F99E1A4B6D4C00F4EBDE /* A_Datetime.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E02F9A11A4B6D4C00F4EBDE /* A_Datetime.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E02F99F1A4B6D4C00F4EBDE /* A_Datetime.m */; };
 		2E0FD8851AB558FF00C1B828 /* NSString+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E0FD8831AB558FF00C1B828 /* NSString+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -37,15 +39,13 @@
 		2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1C1B0A1ABDE429008E30B2 /* A_SqliteManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1C1B0D1ABDE429008E30B2 /* A_SqliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1C1B0B1ABDE429008E30B2 /* A_SqliteManager.m */; };
 		2E1C1B121ABE994B008E30B2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */; };
-		2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1E33DE1AF4A32B00BC853D /* UIAlertView+A_Extension.h */; };
+		2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1E33DE1AF4A32B00BC853D /* UIAlertView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1E33E11AF4A32B00BC853D /* UIAlertView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1E33DF1AF4A32B00BC853D /* UIAlertView+A_Extension.m */; };
 		2E3830301AE8817400DFF0F4 /* StoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E38302F1AE8817400DFF0F4 /* StoreTest.m */; };
 		2E3A8D541AADEF4B00D3A833 /* A_IOSHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1187871A3750770080FFB9 /* A_IOSHelper.framework */; };
 		2E3A8D5E1AADF05F00D3A833 /* A_IOSHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D5D1AADF05F00D3A833 /* A_IOSHelperTests.m */; };
 		2E3A8D601AADF0BB00D3A833 /* A_DataModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D5F1AADF0BB00D3A833 /* A_DataModelTests.m */; };
 		2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D621AADF19C00D3A833 /* TestDataModel.m */; };
-		2E3A8D671AAE556600D3A833 /* A_AsyncHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E3A8D651AAE556600D3A833 /* A_AsyncHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E3A8D681AAE556600D3A833 /* A_AsyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D661AAE556600D3A833 /* A_AsyncHelper.m */; };
 		2E3A8D6B1AAE58D100D3A833 /* A_AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */; };
 		2E58DA571A489E2100CA10B6 /* A_AlertBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E58DA551A489E2100CA10B6 /* A_AlertBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E58DA561A489E2100CA10B6 /* A_AlertBox.m */; };
@@ -82,6 +82,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E0296881B018134005ABADF /* A_TaskHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_TaskHelper.h; sourceTree = "<group>"; };
+		2E0296891B018134005ABADF /* A_TaskHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_TaskHelper.m; sourceTree = "<group>"; };
 		2E02F99E1A4B6D4C00F4EBDE /* A_Datetime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Datetime.h; path = Datetime/A_Datetime.h; sourceTree = "<group>"; };
 		2E02F99F1A4B6D4C00F4EBDE /* A_Datetime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Datetime.m; path = Datetime/A_Datetime.m; sourceTree = "<group>"; };
 		2E0FD8831AB558FF00C1B828 /* NSString+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+A_Extension.h"; sourceTree = "<group>"; };
@@ -122,8 +124,6 @@
 		2E3A8D5F1AADF0BB00D3A833 /* A_DataModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_DataModelTests.m; sourceTree = "<group>"; };
 		2E3A8D611AADF19C00D3A833 /* TestDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDataModel.h; sourceTree = "<group>"; };
 		2E3A8D621AADF19C00D3A833 /* TestDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDataModel.m; sourceTree = "<group>"; };
-		2E3A8D651AAE556600D3A833 /* A_AsyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AsyncHelper.h; path = Async/A_AsyncHelper.h; sourceTree = "<group>"; };
-		2E3A8D661AAE556600D3A833 /* A_AsyncHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AsyncHelper.m; path = Async/A_AsyncHelper.m; sourceTree = "<group>"; };
 		2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_AsyncTests.m; sourceTree = "<group>"; };
 		2E58DA551A489E2100CA10B6 /* A_AlertBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AlertBox.h; path = AlertBox/A_AlertBox.h; sourceTree = "<group>"; };
 		2E58DA561A489E2100CA10B6 /* A_AlertBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AlertBox.m; path = AlertBox/A_AlertBox.m; sourceTree = "<group>"; };
@@ -171,6 +171,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E0296871B018134005ABADF /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				2E0296881B018134005ABADF /* A_TaskHelper.h */,
+				2E0296891B018134005ABADF /* A_TaskHelper.m */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
 		2E02F99B1A4B6AA400F4EBDE /* Datatime */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,7 +216,7 @@
 				2E1C1B091ABDE429008E30B2 /* SqliteHelper */,
 				2ECD550F1AB0D338000E9802 /* UIKItExtension */,
 				2ECD550A1AB0CF6B000E9802 /* BlockWrapper */,
-				2E3A8D691AAE557200D3A833 /* Async */,
+				2E0296871B018134005ABADF /* Task */,
 				2ED875E81A9AA18500D0D62E /* Reflection */,
 				2ED875E31A9A9CD500D0D62E /* DataModel */,
 				2E02F99B1A4B6AA400F4EBDE /* Datatime */,
@@ -354,15 +363,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2E3A8D691AAE557200D3A833 /* Async */ = {
-			isa = PBXGroup;
-			children = (
-				2E3A8D651AAE556600D3A833 /* A_AsyncHelper.h */,
-				2E3A8D661AAE556600D3A833 /* A_AsyncHelper.m */,
-			);
-			name = Async;
-			sourceTree = "<group>";
-		};
 		2E58DA591A489E2600CA10B6 /* AlertBox */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,7 +447,6 @@
 				2E1187C91A37518F0080FFB9 /* A_DeviceHelper.h in Headers */,
 				2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */,
 				2E1187C51A37518F0080FFB9 /* A_RESTRequest.h in Headers */,
-				2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */,
 				2E1187D11A37518F0080FFB9 /* A_PlistHelper.h in Headers */,
 				2E1187CB1A37518F0080FFB9 /* A_HtmlHelper.h in Headers */,
 				2E1187C11A37518F0080FFB9 /* A_CollectionHelper.h in Headers */,
@@ -459,7 +458,6 @@
 				2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */,
 				2E1187C31A37518F0080FFB9 /* A_JSONHelper.h in Headers */,
 				2ECD55081AB0CF65000E9802 /* A_BlockWrapper.h in Headers */,
-				2E3A8D671AAE556600D3A833 /* A_AsyncHelper.h in Headers */,
 				2E02F9A01A4B6D4C00F4EBDE /* A_Datetime.h in Headers */,
 				2E0FD8891AB561AC00C1B828 /* NSDictionary+A_Extension.h in Headers */,
 				2E0FD8851AB558FF00C1B828 /* NSString+A_Extension.h in Headers */,
@@ -469,6 +467,8 @@
 				2ED75EA11ABA359700B0FB5F /* UIImage+A_Extension.h in Headers */,
 				2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */,
 				2ED75EA91ABB69DE00B0FB5F /* UIColor+A_Extension.h in Headers */,
+				2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */,
+				2E02968A1B018134005ABADF /* A_TaskHelper.h in Headers */,
 				2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */,
 				2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */,
 			);
@@ -580,7 +580,6 @@
 				2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */,
 				2E0FD8861AB558FF00C1B828 /* NSString+A_Extension.m in Sources */,
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,
-				2E3A8D681AAE556600D3A833 /* A_AsyncHelper.m in Sources */,
 				2ED75EAA1ABB69DE00B0FB5F /* UIColor+A_Extension.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
 				2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */,
@@ -596,6 +595,7 @@
 				2E1187C41A37518F0080FFB9 /* A_JSONHelper.m in Sources */,
 				2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */,
 				2E0FD88E1AB561C700C1B828 /* NSArray+A_Extension.m in Sources */,
+				2E02968B1B018134005ABADF /* A_TaskHelper.m in Sources */,
 				2E02F9A11A4B6D4C00F4EBDE /* A_Datetime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
