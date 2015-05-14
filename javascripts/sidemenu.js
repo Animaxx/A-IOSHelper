@@ -6,7 +6,8 @@ $(document).ready(function() {
     $("#sidebarArea").html("<div id=\"sidebar\" class=\"animation\"><div class=\"title\">MENU</div></div><div id=\"sidebar_menu\" class=\"animation\">");
     addMenuItem("Home", "index.html");
     addMenuItem("Animation", "animation_example.html");
-    addMenuItem("Event & asyn", "event_example.html");
+    addMenuItem("Event", "event_example.html");
+    addMenuItem("Task", "task_example.html");
     addMenuItem("Network", "network_example.html");
     addMenuItem("Sqlite Manager", "sqliteManager_example.html");
     addMenuItem("Data Model", "datamodel_example.html");

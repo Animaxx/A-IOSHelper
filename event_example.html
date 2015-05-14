@@ -51,7 +51,7 @@
         </div>
         <div id="backToHome"> <a href="index.html">[back to Home]</a> </div>
         <h1>
-            Event and Asynchronization
+            Events
         </h1>
         <br/><br/>
         <div>
@@ -61,8 +61,6 @@
                 <li> <a href="#removeOnClick">Remove On Click Event</a> </li>
                 <li> <a href="#addEvent">Add an event</a> </li>
                 <li> <a href="#removeEvent">Remove an event</a> </li>
-                <li> <a href="#AsyncRequestNetwork">Request network asynchronously example</a> </li>
-                <li> <a href="#DelayWithObj">Delay execute example</a> </li>
             </ul>
         </div>
 
@@ -93,7 +91,6 @@
         <pre><code class="html">[self.theButton A_Event_Add:^(id sender, id argument) {
             NSLog(@"Test");
 } forControlEvents:UIControlEventTouchDragEnter];</code></pre>
-
         <br />
         <br />
 
@@ -120,31 +117,6 @@
 
         <br />
         <br />
-
-        <div id='AsyncRequestWithObj' class="anchor"></div>
-        <h2> Request network asynchronously example</h2>
-
-        <pre><code class="html">[A_AsyncHelper A_RunInBackgroundWithObj:@"Arguments"
-        Block:^id(id arg) {
-            return [arg stringByAppendingString:@" with result"];
-        } WhenDone:^(id arg, id result) {
-            NSLog(@"%@", result); // Arguments with result
-        }];</code></pre>
-
-        <br />
-        <br />
-
-        <div id='DelayWithObj' class="anchor"></div>
-        <h2> Delay execute example</h2>
-
-        <pre><code class="html">// Delay 1.3 seconds and pop-up an alert box
-[A_AsyncHelper A_DelayExecuteWithObj:@"Message here!" Method:^(id arg) {
-    [A_AlertBox A_SystemAlert:(NSString*)arg AndTitle:@"Alert"];
-} Delay:1.3f];</code></pre>
-
-        <br />
-        <br />
-
 
     </section>
 
