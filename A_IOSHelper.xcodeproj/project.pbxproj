@@ -55,8 +55,8 @@
 		2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB099DE1AB367D500D6DBDC /* NSDate+A_Extension.m */; };
 		2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EAC31A38DAB500946C51 /* A_Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EAC41A38DAB500946C51 /* A_Animation.m */; };
-		2ECD55081AB0CF65000E9802 /* A_BlockWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ECD55061AB0CF65000E9802 /* A_BlockWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2ECD55091AB0CF65000E9802 /* A_BlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD55071AB0CF65000E9802 /* A_BlockWrapper.m */; };
+		2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC4940A1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h */; };
+		2EC4940D1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4940B1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m */; };
 		2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */; };
 		2ED75EA11ABA359700B0FB5F /* UIImage+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -135,8 +135,8 @@
 		2EB2EAC31A38DAB500946C51 /* A_Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Animation.h; path = Animation/A_Animation.h; sourceTree = "<group>"; };
 		2EB2EAC41A38DAB500946C51 /* A_Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Animation.m; path = Animation/A_Animation.m; sourceTree = "<group>"; };
 		2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		2ECD55061AB0CF65000E9802 /* A_BlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_BlockWrapper.h; path = BlockWrapper/A_BlockWrapper.h; sourceTree = "<group>"; };
-		2ECD55071AB0CF65000E9802 /* A_BlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_BlockWrapper.m; path = BlockWrapper/A_BlockWrapper.m; sourceTree = "<group>"; };
+		2EC4940A1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+A_KVO_Extension.h"; path = "KVOHelper/NSObject+A_KVO_Extension.h"; sourceTree = "<group>"; };
+		2EC4940B1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+A_KVO_Extension.m"; path = "KVOHelper/NSObject+A_KVO_Extension.m"; sourceTree = "<group>"; };
 		2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIControl+A_Extension.h"; path = "UIKitExtension/UIControl+A_Extension.h"; sourceTree = "<group>"; };
 		2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIControl+A_Extension.m"; path = "UIKitExtension/UIControl+A_Extension.m"; sourceTree = "<group>"; };
 		2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+A_Extension.h"; path = "UIKitExtension/UIImage+A_Extension.h"; sourceTree = "<group>"; };
@@ -213,9 +213,9 @@
 		2E1187891A3750770080FFB9 /* A_IOSHelper */ = {
 			isa = PBXGroup;
 			children = (
+				2EC4940E1B05B67E00B9E8E2 /* KVOHelper */,
 				2E1C1B091ABDE429008E30B2 /* SqliteHelper */,
 				2ECD550F1AB0D338000E9802 /* UIKItExtension */,
-				2ECD550A1AB0CF6B000E9802 /* BlockWrapper */,
 				2E0296871B018134005ABADF /* Task */,
 				2ED875E81A9AA18500D0D62E /* Reflection */,
 				2ED875E31A9A9CD500D0D62E /* DataModel */,
@@ -392,13 +392,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2ECD550A1AB0CF6B000E9802 /* BlockWrapper */ = {
+		2EC4940E1B05B67E00B9E8E2 /* KVOHelper */ = {
 			isa = PBXGroup;
 			children = (
-				2ECD55061AB0CF65000E9802 /* A_BlockWrapper.h */,
-				2ECD55071AB0CF65000E9802 /* A_BlockWrapper.m */,
+				2EC4940A1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h */,
+				2EC4940B1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m */,
 			);
-			name = BlockWrapper;
+			name = KVOHelper;
 			sourceTree = "<group>";
 		};
 		2ECD550F1AB0D338000E9802 /* UIKItExtension */ = {
@@ -457,7 +457,6 @@
 				2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */,
 				2ED875E61A9A9CFE00D0D62E /* A_DataModel.h in Headers */,
 				2E1187C31A37518F0080FFB9 /* A_JSONHelper.h in Headers */,
-				2ECD55081AB0CF65000E9802 /* A_BlockWrapper.h in Headers */,
 				2E02F9A01A4B6D4C00F4EBDE /* A_Datetime.h in Headers */,
 				2E0FD8891AB561AC00C1B828 /* NSDictionary+A_Extension.h in Headers */,
 				2E0FD8851AB558FF00C1B828 /* NSString+A_Extension.h in Headers */,
@@ -471,6 +470,7 @@
 				2E02968A1B018134005ABADF /* A_TaskHelper.h in Headers */,
 				2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */,
 				2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */,
+				2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,7 +575,6 @@
 				2E1187CE1A37518F0080FFB9 /* A_ImageHelper.m in Sources */,
 				2E1C1B0D1ABDE429008E30B2 /* A_SqliteManager.m in Sources */,
 				2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */,
-				2ECD55091AB0CF65000E9802 /* A_BlockWrapper.m in Sources */,
 				2E1187CA1A37518F0080FFB9 /* A_DeviceHelper.m in Sources */,
 				2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */,
 				2E0FD8861AB558FF00C1B828 /* NSString+A_Extension.m in Sources */,
@@ -583,6 +582,7 @@
 				2ED75EAA1ABB69DE00B0FB5F /* UIColor+A_Extension.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
 				2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */,
+				2EC4940D1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m in Sources */,
 				2ED75EA61ABA35E500B0FB5F /* UIViewController+A_Extension.m in Sources */,
 				2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */,
 				2E1E33E11AF4A32B00BC853D /* UIAlertView+A_Extension.m in Sources */,

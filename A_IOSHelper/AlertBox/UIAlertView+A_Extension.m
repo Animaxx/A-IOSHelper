@@ -8,7 +8,6 @@
 
 #import <objc/runtime.h>
 #import "UIAlertView+A_Extension.h"
-#import "A_BlockWrapper.h"
 
 @interface A_AlertViewDelegate : NSObject <UIAlertViewDelegate>
 

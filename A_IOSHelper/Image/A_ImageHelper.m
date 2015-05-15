@@ -156,15 +156,17 @@
 
 /* https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIGaussianBlur */
 + (UIImage*) A_GaussianBlur: (UIImage*)theImage Radius:(float)radius {
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CIImage *image = [[CIImage alloc] initWithImage:theImage];
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [filter setValue:image forKey:kCIInputImageKey];
-    [filter setValue:[NSNumber numberWithFloat:radius] forKey: @"inputRadius"];
-    CIImage *result = [filter valueForKey:kCIOutputImageKey];
-    CGImageRef outImage = [context createCGImage: result fromRect:[result extent]];
-    UIImage * blurImage = [UIImage imageWithCGImage:outImage];
-    return blurImage;
+    @autoreleasepool {
+        CIContext *context = [CIContext contextWithOptions:nil];
+        CIImage *image = [[CIImage alloc] initWithImage:theImage];
+        CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+        [filter setValue:image forKey:kCIInputImageKey];
+        [filter setValue:[NSNumber numberWithFloat:radius] forKey: @"inputRadius"];
+        CIImage *result = [filter valueForKey:kCIOutputImageKey];
+        CGImageRef outImage = [context createCGImage: result fromRect:[result extent]];
+        UIImage * blurImage = [UIImage imageWithCGImage:outImage];
+        return blurImage;
+    }
 }
 + (UIImage*) A_GaussianBlur: (UIImage*)theImage {
     return [self A_GaussianBlur:theImage Radius:10.0f];

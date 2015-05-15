@@ -8,7 +8,22 @@
 
 #import <objc/runtime.h>
 #import "UIControl+A_Extension.h"
-#import "A_BlockWrapper.h"
+
+@interface A_BlockWrapper : NSObject
+
+@property (readwrite, nonatomic) void *block;
+@property (strong, nonatomic) id arg;
+
++ (A_BlockWrapper*) A_Init: (void *)block;
++ (A_BlockWrapper*) A_Init: (void *)block WithObj: (id)obj;
+
+- (A_BlockWrapper*) init: (void *)block;
+- (A_BlockWrapper*) init: (void *)block WithObj: (id)obj;
+
+- (void) A_Execute;
+- (void) A_Execute: (id)obj;
+
+@end
 
 @implementation UIControl (A_Extension)
 
@@ -83,6 +98,58 @@ static char _a_associatedObjectKey;
 }
 - (void)A_Event_RemoveClick {
     [self A_Event_Remove:UIControlEventTouchUpInside];
+}
+
+-(void)dealloc {
+    NSMutableDictionary *events = objc_getAssociatedObject(self, &_a_associatedObjectKey);
+    if (events) {
+        events = nil;
+    }
+}
+
+@end
+
+@implementation A_BlockWrapper
+
++ (A_BlockWrapper*) A_Init: (void *)block {
+    return [[A_BlockWrapper alloc] init:block];
+}
++ (A_BlockWrapper*) A_Init: (void *)block WithObj: (id)obj {
+    return [[A_BlockWrapper alloc] init:block WithObj:obj];
+}
+
+- (A_BlockWrapper*) init: (void *)block {
+    if ((self = [super init])) {
+        self.block = block;
+    }
+    return self;
+}
+- (A_BlockWrapper*) init: (void *)block WithObj: (id)obj{
+    if ((self = [super init])) {
+        self.block = block;
+        self.arg = obj;
+    }
+    return self;
+}
+
+- (void) A_Execute {
+    if (self.block) {
+        @synchronized(self) {
+            ((void (^)(id arg))self.block)(self.arg);
+        }
+    }
+}
+- (void) A_Execute: (id)obj {
+    if (self.block) {
+        @synchronized(self) {
+            ((void (^)(id obj,id arg))self.block)(obj,self.arg);
+        }
+    }
+}
+
+-(void)dealloc {
+    [self setBlock:nil];
+    [self setArg:nil];
 }
 
 @end

@@ -186,6 +186,14 @@
     }
 }
 
+- (void)dealloc {
+    [self setTag:nil];
+    if (_tasks)
+        _tasks = nil;
+    if (_params)
+        _params = nil;
+}
+
 @end
 
 
