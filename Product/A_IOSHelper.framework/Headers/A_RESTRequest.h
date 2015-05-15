@@ -54,6 +54,8 @@ typedef NS_ENUM(NSInteger, A_NetworkParameterFormat) {
                           FileKey: (NSString*)_filekey;
 
 #pragma mark - Methods For Applicate
++ (NSDictionary*) A_GetDictionary: (NSString*)_URL;
++ (NSArray*) A_GetArray: (NSString*)_URL;
 
 + (NSDictionary*) A_GetDictionary: (NSString*)_URL
                        Parameters: (NSDictionary*)_parameters

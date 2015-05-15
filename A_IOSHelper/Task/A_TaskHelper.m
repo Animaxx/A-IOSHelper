@@ -10,24 +10,28 @@
 
 @implementation A_TaskHelper {
     NSMutableArray* _tasks;
+    NSMutableDictionary* _params;
 }
 
-+ (void) A_RunInBackground: (dispatch_block_t) block {
++ (void) A_RunInBackground: (dispatch_block_t)block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 }
-+ (void) A_RunInBackground: (dispatch_block_t) block WhenDone: (dispatch_block_t) finishBlock{
++ (void) A_RunInBackground: (id (^)(void))block WhenDone: (void (^)(id arg))finishBlock{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        block();
-        dispatch_async(dispatch_get_main_queue(), finishBlock);
+        id result = block();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            finishBlock(result);
+        });
     });
 }
 
-+ (void) A_RunInBackgroundWithObj:(id) obj Block:(void (^)(id arg))block {
+
++ (void) A_RunInBackgroundWithObj:(id)obj Block:(void (^)(id arg))block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         block(obj);
     });
 }
-+ (void) A_RunInBackgroundWithObj:(id) obj Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock {
++ (void) A_RunInBackgroundWithObj:(id)obj Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         id result = block(obj);
         dispatch_async(dispatch_get_main_queue(), ^(void) {
@@ -36,11 +40,11 @@
     });
 }
 
-+ (void) A_DelayExecute:(dispatch_block_t) method Delay:(double) delaySec{
++ (void) A_DelayExecute:(dispatch_block_t)method Delay:(double)delaySec{
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySec * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), method);
 }
-+ (void) A_DelayExecuteWithObj:(id)obj Method: (void (^)(id arg))method Delay:(double) delaySec{
++ (void) A_DelayExecuteWithObj:(id)obj Method:(void (^)(id arg))method Delay:(double)delaySec{
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySec * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^{
         method(obj);
@@ -85,7 +89,6 @@
     return task;
 }
 
-
 - (id) init {
     if ((self = [super init])) {
         [self setRunningEnvironment:A_Task_RunInBackgroupCompleteInMain];
@@ -117,16 +120,29 @@
 - (A_TaskHelper*) A_AddDelayTask:(float)seconds Block:(TaskBlock) block {
     @synchronized(self) {
         TaskBlock _block = ^(A_TaskHelper *task) {
-            CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
-            
             [NSThread sleepForTimeInterval:seconds];
             block(task);
-            
-            CFAbsoluteTime end = CFAbsoluteTimeGetCurrent();
-            NSLog(@"operation took %2.5f seconds", end-start);
         };
         [self A_AddTask:_block];
         return self;
+    }
+}
+
+- (void) A_Set:(NSString*)name Value:(id)value{
+    @synchronized(self) {
+        if (!_params) {
+            _params = [[NSMutableDictionary alloc] init];
+        }
+        [_params setObject:value forKey:name];
+    }
+}
+- (id) A_Get:(NSString*)name{
+    @synchronized(self) {
+        if (_params) {
+            return [_params objectForKey:name];
+        } else {
+            return nil;
+        }
     }
 }
 
@@ -151,7 +167,6 @@
         for (TaskBlock _block in _tasks) {
             dispatch_group_async(group,queue, ^{
                 _block(self);
-                
             });
         }
         

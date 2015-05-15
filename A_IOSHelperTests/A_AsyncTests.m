@@ -18,15 +18,12 @@
 @implementation A_AsyncTests
 
 int _testInt = 0;
-
 - (void)testRunInBackgroundWithDone {
-    _testInt = 0;
-    
-    [A_TaskHelper A_RunInBackground:^{
-        _testInt = 1;
+    [A_TaskHelper A_RunInBackground:^id{
         NSLog(@"Step 1");
-    } WhenDone:^{
-        XCTAssertEqual(1, _testInt);
+        return @(1);
+    } WhenDone:^(id arg) {
+        XCTAssertEqual(@(1), arg);
     }];
 }
 
@@ -128,5 +125,37 @@ int _testInt = 0;
     sleep(3);
 }
 
+- (void) testTaskChainEitherInSeuquential {
+    A_TaskHelper* task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
+    [task A_AddDelayTask:2.0f Block:^(A_TaskHelper *task) {
+            NSLog(@"Task %d",1);
+    }];
+    [task A_AddDelayTask:1.0f Block:^(A_TaskHelper *task) {
+            NSLog(@"Task %d",2);
+    }];
+    [task A_AddTask:^(A_TaskHelper *task) {
+            NSLog(@"Task %d",3);
+    }];
+    
+    CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
+    
+    [task A_ExecuteWithCompletion:^(A_TaskHelper *task) {
+        CFAbsoluteTime end = CFAbsoluteTimeGetCurrent();
+        NSLog(@"operation took %2.5f seconds", end-start);
+    }];
+    
+    sleep(10);
+}
+
+- (void) testTaskChain {
+    [[[[A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES] A_AddTask:^(A_TaskHelper *task) {
+        task.Tag = @(1);
+    }] A_AddTask:^(A_TaskHelper *task) {
+        task.Tag = @([((NSNumber*)task.Tag) integerValue] + 1);
+    }] A_ExecuteWithCompletion:^(A_TaskHelper *task) {
+        NSLog(@"Tag: %@", task.Tag);
+        XCTAssertEqual(@(2), task.Tag);
+    }];
+}
 
 @end

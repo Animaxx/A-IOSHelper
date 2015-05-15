@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, A_Task_RunningEnvironment) {
 typedef void(^TaskBlock)(A_TaskHelper *task);
 
 + (void) A_RunInBackground: (dispatch_block_t)block;
-+ (void) A_RunInBackground: (dispatch_block_t) block WhenDone: (dispatch_block_t) finishBlock;
++ (void) A_RunInBackground: (id (^)(void))block WhenDone: (void (^)(id arg))finishBlock;
 
 + (void) A_RunInBackgroundWithObj:(id) obj Block:(void (^)(id arg))block;
 + (void) A_RunInBackgroundWithObj:(id) obj Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock;
@@ -53,6 +53,9 @@ typedef void(^TaskBlock)(A_TaskHelper *task);
 
 + (A_TaskHelper*) A_Init;
 + (A_TaskHelper*) A_Init: (A_Task_RunningEnvironment)environment Sequential:(bool)sequential;
+
+- (void) A_Set:(NSString*)name Value:(id)value;
+- (id) A_Get:(NSString*)name;
 
 - (A_TaskHelper*) A_AddTask:(TaskBlock) block;
 - (A_TaskHelper*) A_AddDelayTask:(float)seconds;

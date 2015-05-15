@@ -220,6 +220,12 @@
 }
 
 #pragma mark - Methods For Applicate
++ (NSDictionary*) A_GetDictionary: (NSString*)_URL {
+    return [self A_GetDictionary:_URL Parameters:nil Headers:nil];
+}
++ (NSArray*) A_GetArray: (NSString*)_URL {
+    return [self A_GetArray:_URL Parameters:nil Headers:nil];
+}
 
 + (NSDictionary*) A_GetDictionary: (NSString*)_URL
                        Parameters: (NSDictionary*)_parameters
