@@ -10,6 +10,15 @@
 
 @interface NSObject (A_KVO_Extension)
 
+-(void) A_AddObserver:(NSString*)key
+               Option:(NSKeyValueObservingOptions)option
+                Param:(id)param
+                block:(void (^)(NSObject* itself, NSDictionary* change, id param))block;
 
+-(void) A_AddObserver:(NSString*)key
+               Option:(NSKeyValueObservingOptions)option
+                block:(void (^)(NSObject* itself, NSDictionary* change))block;
+
+- (void) A_RemoveObserver: (NSString*)key;
 
 @end

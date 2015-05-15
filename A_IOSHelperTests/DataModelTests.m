@@ -11,11 +11,11 @@
 
 #import "TestDataModel.h"
 
-@interface A_DataModelTests : XCTestCase
+@interface DataModelTests : XCTestCase
 
 @end
 
-@implementation A_DataModelTests
+@implementation DataModelTests
 
 - (void)setUp {
     [super setUp];

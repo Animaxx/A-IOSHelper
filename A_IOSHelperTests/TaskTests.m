@@ -11,11 +11,11 @@
 
 #import "A_TaskHelper.h"
 
-@interface A_AsyncTests : XCTestCase
+@interface TaskTests : XCTestCase
 
 @end
 
-@implementation A_AsyncTests
+@implementation TaskTests
 
 int _testInt = 0;
 - (void)testRunInBackgroundWithDone {

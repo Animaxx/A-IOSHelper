@@ -12,11 +12,11 @@
 #import "TestDataModel.h"
 #import "A_SqliteManager.h"
 
-@interface StoreTest : XCTestCase
+@interface StoreTests : XCTestCase
 
 @end
 
-@implementation StoreTest
+@implementation StoreTests
 
 - (void)setUp {
     [super setUp];

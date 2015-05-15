@@ -41,12 +41,11 @@
 		2E1C1B121ABE994B008E30B2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */; };
 		2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1E33DE1AF4A32B00BC853D /* UIAlertView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1E33E11AF4A32B00BC853D /* UIAlertView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1E33DF1AF4A32B00BC853D /* UIAlertView+A_Extension.m */; };
-		2E3830301AE8817400DFF0F4 /* StoreTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E38302F1AE8817400DFF0F4 /* StoreTest.m */; };
+		2E3830301AE8817400DFF0F4 /* StoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E38302F1AE8817400DFF0F4 /* StoreTests.m */; };
 		2E3A8D541AADEF4B00D3A833 /* A_IOSHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1187871A3750770080FFB9 /* A_IOSHelper.framework */; };
-		2E3A8D5E1AADF05F00D3A833 /* A_IOSHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D5D1AADF05F00D3A833 /* A_IOSHelperTests.m */; };
-		2E3A8D601AADF0BB00D3A833 /* A_DataModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D5F1AADF0BB00D3A833 /* A_DataModelTests.m */; };
+		2E3A8D601AADF0BB00D3A833 /* DataModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D5F1AADF0BB00D3A833 /* DataModelTests.m */; };
 		2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D621AADF19C00D3A833 /* TestDataModel.m */; };
-		2E3A8D6B1AAE58D100D3A833 /* A_AsyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */; };
+		2E3A8D6B1AAE58D100D3A833 /* TaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D6A1AAE58D100D3A833 /* TaskTests.m */; };
 		2E58DA571A489E2100CA10B6 /* A_AlertBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E58DA551A489E2100CA10B6 /* A_AlertBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E58DA561A489E2100CA10B6 /* A_AlertBox.m */; };
 		2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -57,6 +56,7 @@
 		2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EAC41A38DAB500946C51 /* A_Animation.m */; };
 		2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC4940A1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h */; };
 		2EC4940D1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4940B1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m */; };
+		2EC494101B06569900B9E8E2 /* KVOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4940F1B06569900B9E8E2 /* KVOTests.m */; };
 		2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */; };
 		2ED75EA11ABA359700B0FB5F /* UIImage+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -117,14 +117,13 @@
 		2E1C1B0B1ABDE429008E30B2 /* A_SqliteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_SqliteManager.m; sourceTree = "<group>"; };
 		2E1E33DE1AF4A32B00BC853D /* UIAlertView+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+A_Extension.h"; path = "AlertBox/UIAlertView+A_Extension.h"; sourceTree = "<group>"; };
 		2E1E33DF1AF4A32B00BC853D /* UIAlertView+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertView+A_Extension.m"; path = "AlertBox/UIAlertView+A_Extension.m"; sourceTree = "<group>"; };
-		2E38302F1AE8817400DFF0F4 /* StoreTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreTest.m; sourceTree = "<group>"; };
+		2E38302F1AE8817400DFF0F4 /* StoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreTests.m; sourceTree = "<group>"; };
 		2E3A8D4E1AADEF4B00D3A833 /* A_IOSHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A_IOSHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E3A8D511AADEF4B00D3A833 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2E3A8D5D1AADF05F00D3A833 /* A_IOSHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_IOSHelperTests.m; sourceTree = "<group>"; };
-		2E3A8D5F1AADF0BB00D3A833 /* A_DataModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_DataModelTests.m; sourceTree = "<group>"; };
+		2E3A8D5F1AADF0BB00D3A833 /* DataModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModelTests.m; sourceTree = "<group>"; };
 		2E3A8D611AADF19C00D3A833 /* TestDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDataModel.h; sourceTree = "<group>"; };
 		2E3A8D621AADF19C00D3A833 /* TestDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDataModel.m; sourceTree = "<group>"; };
-		2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_AsyncTests.m; sourceTree = "<group>"; };
+		2E3A8D6A1AAE58D100D3A833 /* TaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskTests.m; sourceTree = "<group>"; };
 		2E58DA551A489E2100CA10B6 /* A_AlertBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AlertBox.h; path = AlertBox/A_AlertBox.h; sourceTree = "<group>"; };
 		2E58DA561A489E2100CA10B6 /* A_AlertBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AlertBox.m; path = AlertBox/A_AlertBox.m; sourceTree = "<group>"; };
 		2EB099D71AB2A66D00D6DBDC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -137,6 +136,7 @@
 		2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		2EC4940A1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+A_KVO_Extension.h"; path = "KVOHelper/NSObject+A_KVO_Extension.h"; sourceTree = "<group>"; };
 		2EC4940B1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+A_KVO_Extension.m"; path = "KVOHelper/NSObject+A_KVO_Extension.m"; sourceTree = "<group>"; };
+		2EC4940F1B06569900B9E8E2 /* KVOTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVOTests.m; sourceTree = "<group>"; };
 		2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIControl+A_Extension.h"; path = "UIKitExtension/UIControl+A_Extension.h"; sourceTree = "<group>"; };
 		2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIControl+A_Extension.m"; path = "UIKitExtension/UIControl+A_Extension.m"; sourceTree = "<group>"; };
 		2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+A_Extension.h"; path = "UIKitExtension/UIImage+A_Extension.h"; sourceTree = "<group>"; };
@@ -344,12 +344,12 @@
 		2E3A8D4F1AADEF4B00D3A833 /* A_IOSHelperTests */ = {
 			isa = PBXGroup;
 			children = (
-				2E3A8D6A1AAE58D100D3A833 /* A_AsyncTests.m */,
+				2E3A8D6A1AAE58D100D3A833 /* TaskTests.m */,
 				2E3A8D611AADF19C00D3A833 /* TestDataModel.h */,
 				2E3A8D621AADF19C00D3A833 /* TestDataModel.m */,
-				2E3A8D5F1AADF0BB00D3A833 /* A_DataModelTests.m */,
-				2E3A8D5D1AADF05F00D3A833 /* A_IOSHelperTests.m */,
-				2E38302F1AE8817400DFF0F4 /* StoreTest.m */,
+				2E3A8D5F1AADF0BB00D3A833 /* DataModelTests.m */,
+				2E38302F1AE8817400DFF0F4 /* StoreTests.m */,
+				2EC4940F1B06569900B9E8E2 /* KVOTests.m */,
 				2E3A8D501AADEF4B00D3A833 /* Supporting Files */,
 			);
 			path = A_IOSHelperTests;
@@ -604,11 +604,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E3830301AE8817400DFF0F4 /* StoreTest.m in Sources */,
+				2E3830301AE8817400DFF0F4 /* StoreTests.m in Sources */,
 				2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */,
-				2E3A8D5E1AADF05F00D3A833 /* A_IOSHelperTests.m in Sources */,
-				2E3A8D6B1AAE58D100D3A833 /* A_AsyncTests.m in Sources */,
-				2E3A8D601AADF0BB00D3A833 /* A_DataModelTests.m in Sources */,
+				2EC494101B06569900B9E8E2 /* KVOTests.m in Sources */,
+				2E3A8D6B1AAE58D100D3A833 /* TaskTests.m in Sources */,
+				2E3A8D601AADF0BB00D3A833 /* DataModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
