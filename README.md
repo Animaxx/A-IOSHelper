@@ -28,11 +28,12 @@ It should shows `Architectures in the fat file: A_IOSHelper are: i386 x86_64 arm
 ## Brief Example
 The Obecrive-C example:
 
-`#import <A_IOSHelper/A_IOSHelper.h>` // A_IOSHelper.h is only needed. 
+`#import <A_IOSHelper/A_IOSHelper.h>` // Import A_IOSHelper.h is only needed. 
 
 Get data from 2 web services concurrently, and when all of them completed, pop-up an alert view in main thread.
 
-`[[[[A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain
+```Objective-C
+[[[[A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain
                    Sequential:NO] A_AddTask:^(A_TaskHelper *task) {
     // Visit first service and store the result with the name "task1"
     [task A_Set:@"task1" Value:[A_RESTRequest A_GetArray:@"http://webservice_1"]];
@@ -46,7 +47,8 @@ Get data from 2 web services concurrently, and when all of them completed, pop-u
                                 [task A_Get:@"task2"]]
                       AndTitle:@"Result"
                   CancelButton:@"Okay"];
-}];`
+}];
+```
 
 The Swfit example:
 
@@ -54,6 +56,8 @@ The Swfit example:
 
 Download image and cache it, and it can get same image next time from cache instead of download again.
 
-`A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")`
+```Objective-C
+A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")
+```
 
 
