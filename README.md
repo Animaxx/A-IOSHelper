@@ -2,35 +2,16 @@ A-IOSHelper [![Stories in Ready](https://badge.waffle.io/animaxx/a-ioshelper.svg
 ===========
 
 ## Summary
- The aim of the project is providing any foundation functions for IOS developer to make developer build iOS app easier. It's built by Objective-c and you also can use for the Swift project. Please visit document site for more information: http://animaxx.github.io/A-IOSHelper
+The aim of the project provides base foundation functions for IOS developer to make developer build iOS app easier. I am trying hard to make it can be used for Objective-C and Swift projects.
 
-## Reference libraries
-If you use A_SqliteWrapper or A_DataMamager, please add `libsqlite3.dylib` to your project.
+More information: http://animaxx.github.io/A-IOSHelper
 
 ## How to use
-In A-IOSHelper, all functions are having the prefix `A_` , so you can easy to find the function.
+In A-IOSHelper, all functions are having the A_prefix, so we can get advantage from IDE's hint.
 
-For import this framework, please copy whole framework into your project and add the framework in to Project -> General tab -> Embedded Binaries section.
+For using this framework, you can compile it and add the compiled file, A_IOSHelper.framework, into your project at Project page -> General -> Target -> Embedded Binaries section. If your project is older then iOS 8.0, I recommend that copying whole source code to your project.
 
-The Obecrive-C example:
-
-`#import <A_IOSHelper/A_IOSHelper.h>` // A_IOSHelper.h is only needed. 
-
-// Examle of uploading a image
-
-`[A_RESTRequest A_UploadImage:@"http://animaxapps.appspot.com/Upload/" QueryParameters:@{@"key1":@"value"} Headers:@{@"header1":@"value"} Image:image FileName:@"pic.png" FileKey:@"pic.png"]`
-
-The Swfit example:
-
-`import A_IOSHelper` // Also, you only need import the A_IOSHelper
-
-// Example of downloading the image and cache it; when next time to get the same image, it will get the image from cache instead of download it again.
-
-`A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")`
-
-For more examples, please visit http://animaxx.github.io/A-IOSHelper/ 
-
-## How to compile this project
+## How to compile 
 Please use `build.sh` file to build this project.
 > sh ./build.sh
 
@@ -43,4 +24,36 @@ and you may use following code to check the building result
 > lipo -info A_IOSHelper
 
 It should shows `Architectures in the fat file: A_IOSHelper are: i386 x86_64 armv7 arm64`
+
+## Brief Example
+The Obecrive-C example:
+
+`#import <A_IOSHelper/A_IOSHelper.h>` // A_IOSHelper.h is only needed. 
+
+Get data from 2 web services concurrently, and when all of them completed, pop-up an alert view in main thread.
+
+`[[[[A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain
+                   Sequential:NO] A_AddTask:^(A_TaskHelper *task) {
+    // Visit first service and store the result with the name "task1"
+    [task A_Set:@"task1" Value:[A_RESTRequest A_GetArray:@"http://webservice_1"]];
+}] A_AddTask:^(A_TaskHelper *task) {
+    // Visit second service and store the result with the name "task2"
+    [task A_Set:@"task2" Value:[A_RESTRequest A_GetDictionary:@"http://webservice_2"]];
+}] A_ExecuteWithCompletion:^(A_TaskHelper *task) {
+    // Merge two
+    [UIAlertView A_DisplyAlert:[NSString stringWithFormat:@"%@ %@",
+                                [task A_Get:@"task1"],
+                                [task A_Get:@"task2"]]
+                      AndTitle:@"Result"
+                  CancelButton:@"Okay"];
+}];`
+
+The Swfit example:
+
+`import A_IOSHelper`
+
+Download image and cache it, and it can get same image next time from cache instead of download again.
+
+`A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")`
+
 
