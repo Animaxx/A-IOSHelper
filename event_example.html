@@ -53,13 +53,14 @@
         <h1>
             Events
         </h1>
-        <br/><br/>
+        <p> It provides a easy way to add and remove a blocking event for UIControl </p>
+        <br/>
         <div>
             <h2> Contents </h2>
             <ul>
-                <li> <a href="#addOnClick">Add On Click Event</a> </li>
-                <li> <a href="#removeOnClick">Remove On Click Event</a> </li>
-                <li> <a href="#addEvent">Add an event</a> </li>
+                <li> <a href="#addOnClick">Add On click event</a> </li>
+                <li> <a href="#removeOnClick">Remove On click event</a> </li>
+                <li> <a href="#addEvent">Add an any event</a> </li>
                 <li> <a href="#removeEvent">Remove an event</a> </li>
             </ul>
         </div>
@@ -67,8 +68,8 @@
         <div id='addOnClick' class="anchor"></div>
         <h2> Add On Click Event </h2>
 
-        <pre><code class="html">[self.theButton A_Event_OnClick:^(id sender, id argument) {
-            [((UIViewController*)argument).view
+        <pre><code class="html">[self.theButton A_Event_OnClick:^(id sender, id param) {
+            [((UIViewController*)param).view
                 setBackgroundColor:[UIColor A_ColorMakeFormString:@"ABABAB"]];
 } WithObj:self];</code></pre>
         <img class="demo" src="images/demo/Event_click.gif" />
@@ -88,9 +89,15 @@
         <div id='addEvent' class="anchor"></div>
         <h2> Add an event </h2>
 
-        <pre><code class="html">[self.theButton A_Event_Add:^(id sender, id argument) {
+        <pre><code class="html">[self.theButton A_Event_Add:^(id sender) {
             NSLog(@"Test");
-} forControlEvents:UIControlEventTouchDragEnter];</code></pre>
+} forControlEvents:UIControlEventTouchDragEnter];
+
+//If this event is going to change @property, you might need to add an object with the event.
+[self.theButton A_Event_Add:^(id sender, id param) {
+    [param.hiddenView A_Animation_FadeOut:0.3f];
+} WithObj:self forControlEvents:UIControlEventTouchUpInside];
+        </code></pre>
         <br />
         <br />
 
