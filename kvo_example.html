@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>A-IOSHelper [Animax Helper] by Animaxx</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
+    <script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <script src="javascripts/sidemenu.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="styles/hybrid.css">
+    <script src="javascripts/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<div id="header">
+    <nav>
+        <li class="fork"><a href="https://github.com/Animaxx/A-IOSHelper">View On GitHub</a></li>
+        <li class="fork"><a href="http://animaxapps.appspot.com/">View My Site</a></li>
+        <li class="downloads"><a href="https://github.com/Animaxx/A-IOSHelper/zipball/master">ZIP</a></li>
+        <li class="downloads"><a href="https://github.com/Animaxx/A-IOSHelper/tarball/master">TAR</a></li>
+        <li class="title">DOWNLOADS</li>
+    </nav>
+</div>
+<!-- end header -->
+
+<div class="wrapper">
+
+    <section>
+        <div id="title">
+            <h1>A-IOSHelper [Animax Helper]</h1>
+            <p>This is a scaffold library and the aid of the project is providing all foundation functions for IOS
+                developer to build app easier. <br/> <a href="http://waffle.io/animaxx/a-ioshelper"><img
+                        src="https://badge.waffle.io/animaxx/a-ioshelper.svg?label=ready&amp;title=Ready"
+                        alt="Stories in Ready"></a> <a href="https://travis-ci.org/Animaxx/A-IOSHelper"><img
+                        src="https://travis-ci.org/Animaxx/A-IOSHelper.svg?branch=master" alt="Build Status"></a></p>
+            <hr>
+            <span class="credits left">Project maintained by <a href="https://github.com/Animaxx">Animaxx</a></span>
+            <span class="credits right">Thanks <a
+                    href="https://twitter.com/michigangraham">mattgraham</a> for original Theme </span>
+        </div>
+        <div id="backToHome"> <a href="index.html">[back to Home]</a> </div>
+        <h1>
+            Key-Value Observing
+        </h1>
+        <p>
+            KOV helper provides changed notification and objects binding method with blocks.
+        </p>
+        <br/><br/>
+        <div>
+            <h2> Contents </h2>
+            <ul>
+                <li> <a href="#model">Demo model</a> </li>
+                <li> <a href="#addObserver">Add Observer Example</a> </li>
+                <li> <a href="#removeObserver">Remove Observer Example</a> </li>
+                <li> <a href="#binding">Binding Example</a> </li>
+                <li> <a href="#removeBinding">Remove Binding Example</a> </li>
+            </ul>
+        </div>
+
+        <div id='model' class="anchor"></div>
+        <h2> The demo model structure</h2>
+        <pre><code class="html">
+            // TestDataModel
+            @interface TestDataModel : A_DataModel
+            @property (retain, nonatomic) NSString* Name;
+            @property (retain, nonatomic) NSNumber* ID;
+            @end
+
+            // ExampleModel
+            @interface ExampleModel : NSObject
+            @property (strong, nonatomic) TestDataModel* model;
+            @property (nonatomic) int times;
+            @end
+        </code></pre>
+
+        <br />
+        <br />
+
+        <div id='AddObserver' class="anchor"></div>
+        <h2> Add Observer Example</h2>
+
+        <pre><code class="html">    /* Add an observer. In the default,
+    it's using NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew options. */
+    TestDataModel* _model = [[TestDataModel alloc] init];
+    [_model A_AddObserver:@"Name" block:^(TestDataModel *itself, NSDictionary *change) {
+        XCTAssertTrue([[change objectForKey:@"new"] isEqualToString:@"A"]);
+    }];
+    [_model setName:@"A"]; </code></pre>
+
+    <pre><code class="html">    // You can also setup your Observing Option
+    [_model A_AddObserverWithOption:NSKeyValueObservingOptionNew
+             Key:@"ID" block:^(TestDataModel *itself, NSDictionary *change) {
+        // [change objectForKey:@"new"] is the new value
+    }];</code></pre>
+
+    <pre><code class="html">    // With an assist parameter:
+    [_model A_AddObserver:@"ID" Param:@"The Message"
+                block:^(TestDataModel *itself, NSDictionary *change, id param) {
+
+        [A_TaskHelper A_RunInMainWithParam:param Block:^(id arg) {
+
+            [UIAlertView A_DisplyAlert:[NSString stringWithFormat:@"%@",arg]
+                              AndTitle:@"Changed Notice"
+                          CancelButton:@"Okay"];
+
+        }];
+
+    }];</code></pre>
+
+        <br />
+        <br />
+
+        <div id='removeObserver' class="anchor"></div>
+        <h2> Remove Observer Example</h2>
+
+        <pre><code class="html">    //Remove the observer of Name
+    [_model A_RemoveObserver:@"Name"];
+
+    // Remove all observers
+    [_model A_RemoveAllObservers];
+        </code></pre>
+
+        <br />
+        <br />
+
+        <div id='binding' class="anchor"></div>
+        <h2> Binding Example</h2>
+
+        <pre><code class="html">        ExampleModel* example = [[ExampleModel alloc] init];
+        [example A_Bind:@"times" To:@"model.ID"];
+
+        example.times = 1;
+        // example.model.ID => (NSNumber)(int)1</code></pre>
+
+        <pre><code class="html">        // Binding method provides covert block
+        ExampleModel* example = [[ExampleModel alloc] init];
+        /* the type of covert block is ^id(id value), please modify to corresponding type;
+           in this case, it should be ^NSString(int value)*/
+        [example A_Bind:@"times" To:@"model.Name" Convert:^NSString(int value) {
+            return [NSString stringWithFormat:@"The times is %@",value];
+        }];
+
+        example.times = 1;
+        // example.model.Name => (NSString)@"The times is 1"</code></pre>
+
+        <pre><code class="html">        // Crossing object binding
+        ExampleModel* example1 = [[ExampleModel alloc] init];
+        ExampleModel* example2 = [[ExampleModel alloc] init];
+        [example1 A_Bind:@"model.Name" ToTager:example2 AndKey:@"model.Name"];
+
+        [example1.model setName:@"Test"];
+        // example2.model.Name => Same as example1.model.Name (NSString)@"Test" </code></pre>
+
+        <br />
+        <br />
+
+        <div id='removeBinding' class="anchor"></div>
+        <h2> Remove Binding Example</h2>
+
+        <pre><code class="html">    //Remove binding is same as remove Observer
+            [_model A_RemoveBinding:@"model.Name"];
+
+            // Remove all binding
+            [_model A_RemoveAllBinding];
+        </code></pre>
+
+        <br />
+        <br />
+
+    </section>
+
+</div>
+
+<div id="sidebarArea"></div>
+
+
+<!--[if !IE]>
+<script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>

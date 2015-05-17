@@ -88,7 +88,7 @@
         <div id='AsyncRequestWithObj' class="anchor"></div>
         <h2> Rapid asynchronously operation example</h2>
 
-        <pre><code class="html">    [A_AsyncHelper A_RunInBackgroundWithObj:@"Arguments"
+        <pre><code class="html">    [A_TaskHelper A_RunInBackgroundWithParam:@"Arguments"
         Block:^id(id arg) {
             return [arg stringByAppendingString:@" with result"];
         } WhenDone:^(id arg, id result) {
@@ -102,7 +102,7 @@
         <h2> Delay execute example</h2>
 
         <pre><code class="html">// Delay 1.3 seconds and pop-up an alert box
-[A_AsyncHelper A_DelayExecuteWithObj:@"Message here!" Method:^(id arg) {
+[A_TaskHelper A_DelayExecuteWithObj:@"Message here!" Method:^(id arg) {
     [A_AlertBox A_SystemAlert:(NSString*)arg AndTitle:@"Alert"];
 } Delay:1.3f];</code></pre>
 
