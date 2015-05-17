@@ -39,10 +39,10 @@ NSMutableArray *ExistingTables;
     return [_storage objectForKey:file];
 }
 
-- (id) init{
+- (instancetype) init{
     return [self init:DEFAULT_SQLITE_NAME];
 }
-- (id) init: (NSString *)file {
+- (instancetype) init: (NSString *)file {
     if ((self = [super init])) {
         databaseFileName = file;
         [self A_OpenConnetion];

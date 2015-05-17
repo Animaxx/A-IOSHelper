@@ -12,22 +12,109 @@
 #import "NSObject+A_KVO_Extension.h"
 #import "TestDataModel.h"
 
+@interface ExampleModel : NSObject
+@property (strong, nonatomic) TestDataModel* model;
+@property (nonatomic) int times;
+@end
+
+@implementation ExampleModel
+-(instancetype)init {
+    if ((self = [super init])) {
+        self.model = [[TestDataModel alloc] init];
+    }
+    return self;
+}
+-(void)dealloc {
+    NSLog(@"Dealloc");
+}
+@end
+
 @interface KVOTests : XCTestCase
 
 @end
 
 @implementation KVOTests
 
-- (void) testKVO {
+- (void) testRemove {
     TestDataModel* _model = [[TestDataModel alloc] init];
-
-    [_model A_AddObserver:@"Name" Option:NSKeyValueObservingOptionNew block:^(NSObject *itself, NSDictionary *change) {
+    [_model A_AddObserver:@"Name" block:^(NSObject *itself, NSDictionary *change) {
         XCTAssertTrue([[change objectForKey:@"new"] isEqualToString:@"A"]);
     }];
     
     [_model setName:@"A"];
+    [_model setName:@"A"];
     [_model A_RemoveObserver:@"Name"];
     [_model setName:@"B"];
+}
+
+- (void) testDuplicateObserve {
+    TestDataModel* _model = [[TestDataModel alloc] init];
+    [_model A_AddObserver:@"Name" block:^(NSObject *itself, NSDictionary *change) {
+        XCTAssertTrue([[change objectForKey:@"new"] isEqualToString:@"A"]);
+    }];
+    [_model A_AddObserver:@"Name" block:^(NSObject *itself, NSDictionary *change) {
+        XCTAssertTrue([[change objectForKey:@"new"] isEqualToString:@"A"]);
+    }];
+    
+    [_model setName:@"A"];
+}
+
+- (void) testObserveProperty {
+    ExampleModel* _example = [[ExampleModel alloc] init];
+    [_example A_AddObserver:@"model.ID" block:^(NSObject *itself, NSDictionary *change) {
+        XCTAssertTrue([[change objectForKey:@"new"] isEqualToNumber:@(-1)]);
+    }];
+    
+    [_example.model setID:@(-1)];
+//    [_example A_RemoveAllObservers];
+}
+
+- (void) testWithOtpion {
+    ExampleModel* _example = [[ExampleModel alloc] init];
+    [_example A_AddObserverWithOption:NSKeyValueObservingOptionInitial Key:@"model.ID" block:^(ExampleModel *itself, NSDictionary *change) {
+        
+        NSLog(@"Times %d",itself.times);
+        itself.times ++;
+        if ([[change objectForKey:@"new"] isEqualToNumber:@(2)]) {
+            XCTAssertEqual(itself.times, 2);
+        }
+    }];
+    
+    [_example.model setID:@(1)];
+    [_example.model setID:@(2)];
+}
+
+-(void) testBindWithConvert {
+    ExampleModel* example = [[ExampleModel alloc] init];
+    [example A_Bind:@"times" To:@"model.Name" Convert:^id(id value) {
+        return [NSString stringWithFormat:@"The number is %@",value];
+    }];
+    
+    example.times = 1;
+    XCTAssertTrue(example.model.Name);
+}
+
+-(void) testBindWithoutConvert {
+    ExampleModel* example = [[ExampleModel alloc] init];
+    [example A_Bind:@"times" To:@"model.ID"];
+    
+    example.times = 1;
+    XCTAssertTrue(example.model.ID > 0);
+}
+-(void) testBindWithoutConvertAndCrossType {
+    ExampleModel* example = [[ExampleModel alloc] init];
+    [example A_Bind:@"times" To:@"model.Name"];
+    
+    example.times = 1;
+    XCTAssertNotNil(example.model.Name);
+}
+-(void) testBind2Obj {
+    ExampleModel* example1 = [[ExampleModel alloc] init];
+    ExampleModel* example2 = [[ExampleModel alloc] init];
+    [example1 A_Bind:@"model.Name" ToTager:example2 AndKey:@"model.Name"];
+    
+    [example1.model setName:@"Test"];
+    XCTAssertEqual(example1.model.Name, example2.model.Name);
 }
 
 
