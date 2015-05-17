@@ -73,7 +73,7 @@
     if ([deviceString isEqualToString:@"i386"])         return Device_Simulator;
     if ([deviceString isEqualToString:@"x86_64"])       return Device_Simulator;
     
-    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Unkonw device type> \r\n %@", deviceString);
+    NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Unkonw device type> \r\n %@ \r\n -------- \r\n\r\n", deviceString);
     return Device_Unknow;
 }
 + (float)A_DeviceWidth {

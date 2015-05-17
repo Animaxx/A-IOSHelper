@@ -61,7 +61,7 @@
                 [propertyDictionary setObject:@"id" forKey:propertyName];
             } else {
                 [propertyDictionary setObject:@"unknow" forKey:propertyName];
-                NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Reflection get property type> \r\n Cannot get the type");
+                NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Reflection get property type> \r\n Unknow type %s in class %s \r\n -------- \r\n\r\n", rawPropertyType, class_getName(class));
             }
         }
     }

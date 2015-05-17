@@ -103,14 +103,14 @@ NSMutableArray *ExistingTables;
 }
 
 - (void) A_ExecuteQuery :(NSString *) query withBlock:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj{
-    [A_TaskHelper A_RunInBackgroundWithObj:@[query,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithParam:@[query,obj] Block:^id(id arg) {
         return [self A_ExecuteQuery:[arg objectAtIndex:0] withArgs:nil];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:1], (NSNumber*)result);
     }];
 }
 - (void) A_ExecuteQuery :(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj{
-    [A_TaskHelper A_RunInBackgroundWithObj:@[query,params,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithParam:@[query,params,obj] Block:^id(id arg) {
         return [self A_ExecuteQuery:[arg objectAtIndex:0] withArgs:[arg objectAtIndex:1]];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:2], (NSNumber*)result);
@@ -134,14 +134,14 @@ NSMutableArray *ExistingTables;
 }
 
 - (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
-    [A_TaskHelper A_RunInBackgroundWithObj:@[query,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithParam:@[query,obj] Block:^id(id arg) {
         return [self A_SearchDataset:[arg objectAtIndex:0] withParams:nil];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:1], (NSArray*)result);
     }];
 }
 - (void) A_SearchDataset:(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
-    [A_TaskHelper A_RunInBackgroundWithObj:@[query,params,obj] Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithParam:@[query,params,obj] Block:^id(id arg) {
         return [self A_SearchDataset:[arg objectAtIndex:0] withParams:[arg objectAtIndex:1]];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:2], (NSArray*)result);
@@ -165,7 +165,7 @@ NSMutableArray *ExistingTables;
         }
     } else {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Can not get row %s", sqlite3_errmsg(database));
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Can not get row %s \r\n -------- \r\n\r\n", sqlite3_errmsg(database));
 #endif
         return nil;
     }
@@ -191,7 +191,7 @@ NSMutableArray *ExistingTables;
         return o;
     } else {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Can not get row %s", sqlite3_errmsg(database));
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Can not get row %s \r\n -------- \r\n\r\n", sqlite3_errmsg(database));
 #endif
         return nil;
     }
@@ -201,14 +201,14 @@ NSMutableArray *ExistingTables;
     NSInteger param_count;
     
     if (sqlite3_prepare_v2(database, cQuery, -1, &statement, NULL) != SQLITE_OK) {
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Statement exception (%s) %s", sqlite3_errmsg(database), cQuery);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Statement exception (%s) %s \r\n -------- \r\n\r\n", sqlite3_errmsg(database), cQuery);
         statement = NULL;
         return;
     }
     
     param_count = sqlite3_bind_parameter_count(statement);
     if (param_count != [params count]) {
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Parameters exception (%s)", cQuery);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Parameters exception (%s) \r\n -------- \r\n\r\n", cQuery);
         statement = NULL;
         return;
     }
@@ -226,14 +226,14 @@ NSMutableArray *ExistingTables;
                 } else if (strchr("fd", *[o objCType])) {   // double
                     sqlite3_bind_double(statement, i + 1, [o doubleValue]);
                 } else {    // unhandled types
-                    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Unhandled ObjCType: %s query: %s", [o objCType], cQuery);
+                    NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Unhandled ObjCType: %s query: %s \r\n -------- \r\n\r\n", [o objCType], cQuery);
                     statement = NULL;
                     return;
                 }
             } else if ([o isKindOfClass:[NSString class]]) { // string
                 sqlite3_bind_text(statement, i + 1, [o UTF8String], -1, SQLITE_TRANSIENT);
             } else {    // unhhandled type
-                NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Unhandled parameter type: %@ query: %s", [o class], cQuery);
+                NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Unhandled parameter type: %@ query: %s \r\n -------- \r\n\r\n", [o class], cQuery);
                 statement = NULL;
                 return;
             }
@@ -567,7 +567,7 @@ NSMutableArray *ExistingTables;
         }
     }
     @catch (NSException* e) {
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Mapping ERROR (%@)", e.reason);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Mapping ERROR (%@) \r\n -------- \r\n\r\n", e.reason);
     }
     
     return _array;
@@ -595,7 +595,7 @@ NSMutableArray *ExistingTables;
         return @"REAL";
     }
     
-    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <SQLite Manager> \r\n Unknow Type: %@", type);
+    NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQLite Manager> \r\n Unknow Type: %@ \r\n -------- \r\n\r\n", type);
     return @"REAL";
 }
 + (Boolean) A_TableColumnMarch:(A_DataModel*) model {

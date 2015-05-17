@@ -10,7 +10,7 @@
 
 @interface UIAlertView (A_Extension)
 
-+ (void)A_DisplyAlert:(NSString *) Message AndTitle: (NSString*)Title CancelButton:(NSString*)BtnMessage;
++ (void)A_DisplyAlert:(NSString *)Message AndTitle:(NSString*)Title CancelButton:(NSString*)BtnMessage;
 + (void)A_DisplyAlert:(NSString *)Message
              AndTitle:(NSString*)Title
       CompletionBlock:(void (^)(UIAlertView * alertView, NSInteger buttonIndex, id argument)) block

@@ -30,8 +30,11 @@ typedef void(^TaskBlock)(A_TaskHelper *task);
 + (void) A_RunInBackground: (dispatch_block_t)block;
 + (void) A_RunInBackground: (id (^)(void))block WhenDone: (void (^)(id arg))finishBlock;
 
-+ (void) A_RunInBackgroundWithObj:(id) obj Block:(void (^)(id arg))block;
-+ (void) A_RunInBackgroundWithObj:(id) obj Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock;
++ (void) A_RunInBackgroundWithParam:(id)param Block:(void (^)(id arg))block;
++ (void) A_RunInBackgroundWithParam:(id)param Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock;
+
++ (void) A_RunInMain:(dispatch_block_t)block;
++ (void) A_RunInMainWithParam:(id)param Block:(void (^)(id arg))block;
 
 + (dispatch_source_t) A_StartTimer:(double)seconds Block:(dispatch_block_t) block;
 + (dispatch_source_t) A_StartTimer:(double)seconds Block:(dispatch_block_t) block InMain:(bool)inMain;

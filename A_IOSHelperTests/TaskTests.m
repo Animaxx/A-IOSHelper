@@ -30,13 +30,11 @@ int _testInt = 0;
 - (void)testRunInBackgroundWithObj {
     NSString* _message = @"test";
     
-    [A_TaskHelper A_RunInBackgroundWithObj:_message Block:^id(id arg) {
+    [A_TaskHelper A_RunInBackgroundWithParam:_message Block:^id(id arg) {
         return [arg stringByAppendingString:@"123"];
     } WhenDone:^(id arg, id result) {
         XCTAssertEqual(@"123", result);
     }];
-    
-    XCTAssert(YES);
 }
 
 - (void)testDelayExecute {

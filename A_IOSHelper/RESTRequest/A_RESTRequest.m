@@ -86,13 +86,13 @@
     
     if (error){
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     }
 #ifndef NDEBUG
     NSString* _str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
-    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@", _str);
+    NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", _str);
 #endif
     
     return result;
@@ -179,13 +179,13 @@
     
     if (error){
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http upload image error> \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n[MESSAGE FROM A IOS HELPER] \r\n <Http upload image error> \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     }
 #ifndef NDEBUG
     NSString* _str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
-    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http upload image result> \r\n %@", _str);
+    NSLog(@"\r\n -------- \r\n[MESSAGE FROM A IOS HELPER] \r\n <Http upload image result> \r\n %@ \r\n -------- \r\n\r\n", _str);
 #endif
     
     return result;
@@ -207,13 +207,13 @@
     
     if (error){
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http upload image error> \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n[MESSAGE FROM A IOS HELPER] \r\n <Http upload image error> \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     }
 #ifndef NDEBUG
     NSString* _str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
-    NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Http upload image result> \r\n %@", _str);
+    NSLog(@"\r\n -------- \r\n[MESSAGE FROM A IOS HELPER] \r\n <Http upload image result> \r\n %@ \r\n -------- \r\n\r\n", _str);
 #endif
     
     return result;
@@ -239,7 +239,7 @@
                 theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
             } @catch (NSException *e) {
         #ifndef NDEBUG
-                NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@", e);
+                NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
         #endif
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 return nil;
@@ -258,7 +258,7 @@
                 theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
             } @catch (NSException *e) {
         #ifndef NDEBUG
-                NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get array error>  \r\n %@", e);
+                NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get array error>  \r\n %@ \r\n -------- \r\n\r\n", e);
         #endif
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                 return nil;
@@ -281,7 +281,7 @@
         theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
     } @catch (NSException *e) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post form and get dictionary error>  \r\n %@", e);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Post form and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
 #endif
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         return nil;
@@ -302,7 +302,7 @@
         theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
     } @catch (NSException *e) {
     #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post form and get array error>  \r\n %@", e);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Post form and get array error>  \r\n %@ \r\n -------- \r\n\r\n", e);
     #endif
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         return nil;
@@ -324,7 +324,7 @@
         theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
     } @catch (NSException *e) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post form and get dictionary error>  \r\n %@", e);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Post form and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
 #endif
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         return nil;
@@ -345,7 +345,7 @@
         theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
     } @catch (NSException *e) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Post form and get array error>  \r\n %@", e);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Post form and get array error>  \r\n %@ \r\n -------- \r\n\r\n", e);
 #endif
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         return nil;
@@ -371,7 +371,7 @@
         theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
     } @catch (NSException *e) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Upload image and get dictionary error>  \r\n %@", e);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Upload image and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
 #endif
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         return nil;

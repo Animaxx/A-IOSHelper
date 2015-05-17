@@ -30,7 +30,7 @@
             break;
         default:
             _destinationPoint = CGPointMake(self.layer.frame.size.width * -1, self.layer.position.y);
-            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Animation MoveOut> \r\n Unkonw Direction Type");
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Animation MoveOut> \r\n Unkonw Direction Type \r\n -------- \r\n\r\n");
             return;
     }
     
@@ -55,7 +55,7 @@
             break;
         default:
             _destinationPoint = CGPointMake(self.layer.frame.size.width * -1, self.layer.position.y);
-            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Animation MoveOut> \r\n Unkonw Direction Type");
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Animation MoveOut> \r\n Unkonw Direction Type \r\n -------- \r\n\r\n");
             return;
     }
     

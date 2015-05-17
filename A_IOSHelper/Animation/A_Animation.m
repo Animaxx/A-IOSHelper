@@ -105,7 +105,7 @@
             break;
         default:
             transition.type = kCATransitionFade;
-            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Create System Transition> \r\n Unkonw Transition Type");
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Create System Transition> \r\n Unkonw Transition Type \r\n -------- \r\n\r\n");
             break;
     }
     
@@ -124,7 +124,7 @@
             break;
         default:
             transition.subtype = kCATransitionFromBottom;
-            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Create System Transition> \r\n Unkonw Direction Type");
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Create System Transition> \r\n Unkonw Direction Type \r\n -------- \r\n\r\n");
             break;
     }
     

@@ -115,6 +115,17 @@
     
     [example1.model setName:@"Test"];
     XCTAssertEqual(example1.model.Name, example2.model.Name);
+    
+    [example1 A_RemoveBinding:@"model.Name"];
+    [example1.model setName:@"Demo"];
+    XCTAssertNotEqual(example1.model.Name, example2.model.Name);
+}
+-(void) testBindNilObj {
+    ExampleModel* example1 = [[ExampleModel alloc] init];
+    ExampleModel* example2 = [[ExampleModel alloc] init];
+    [example1 A_Bind:@"model.Name" ToTager:example2 AndKey:@"model.Name"];
+    example2 = nil;
+    [example1.model setName:@"Test"];
 }
 
 

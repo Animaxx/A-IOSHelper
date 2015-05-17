@@ -29,7 +29,7 @@
                                                           error: &error];
     if (!dic) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <JSON to Dictionary error>  \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <JSON to Dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     } else {
@@ -43,7 +43,7 @@
                                                      error: &error];
     if (!arr) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <JSON to Array error>  \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <JSON to Array error>  \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     } else {
@@ -59,7 +59,7 @@
                                                          error: &error];
     if (!jsonData) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Dictionary to JSON error>  \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Dictionary to JSON error>  \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     } else {
@@ -74,7 +74,7 @@
                                                          error: &error];
     if (!jsonData) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Array to JSON error>  \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Array to JSON error>  \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     } else {
@@ -90,7 +90,7 @@
                                                          error: &error];
     if (!jsonData) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Dictionary to Data error>  \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Dictionary to Data error>  \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     } else {
@@ -104,7 +104,7 @@
                                                          error: &error];
     if (!jsonData) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <Array to Data error>  \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Array to Data error>  \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     } else {
@@ -119,7 +119,7 @@
                                                           error: &error];
     if (!dic) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <JSON Data to Dictionary error>  \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <JSON Data to Dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     } else {
@@ -133,7 +133,7 @@
                                                      error: &error];
     if (!arr) {
 #ifndef NDEBUG
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <JSON Data to Array error>  \r\n %@", error);
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <JSON Data to Array error>  \r\n %@ \r\n -------- \r\n\r\n", error);
 #endif
         return nil;
     } else {

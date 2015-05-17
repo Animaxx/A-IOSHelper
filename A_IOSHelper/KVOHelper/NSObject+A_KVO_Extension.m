@@ -30,7 +30,7 @@ typedef id(^BindObserverBlock)(id value);
 @property (assign, nonatomic) NSObject *observedObject;
 @property (assign, nonatomic) NSString *fromKey;
 @property (assign, nonatomic) NSString *toKey;
-@property (assign, nonatomic) id target;
+@property (weak, nonatomic) id target;
 @property (readwrite, copy) BindObserverBlock bindBlock;
 
 + (A_BindingObserver*) A_CreateObserver:(BindObserverBlock)block
@@ -84,7 +84,7 @@ static char ABindCharKey = 'B';
 
 -(void) A_AddObserverWithOption:(NSKeyValueObservingOptions)option Key:(NSString*)key Param:(id)param block:(void (^)(id itself, NSDictionary* change, id param))block{
     if (!key || key.length <= 0) {
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Cannot observe an empty key ");
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Cannot observe an empty key  \r\n -------- \r\n\r\n");
         return;
     }
     
@@ -95,7 +95,7 @@ static char ABindCharKey = 'B';
 }
 -(void) A_AddObserverWithOption:(NSKeyValueObservingOptions)option Key:(NSString*)key block:(void (^)(id itself, NSDictionary* change))block{
     if (!key || key.length <= 0) {
-        NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Cannot observe an empty key ");
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper - Add Observer> \r\n Cannot observe an empty key  \r\n -------- \r\n\r\n");
         return;
     }
     
@@ -120,12 +120,22 @@ static char ABindCharKey = 'B';
     [self A_Bind:key To:to Convert:nil];
 }
 -(void) A_Bind:(NSString*)key To:(NSString*)to Convert:(id (^)(id value))convertBlock {
+    if (!key || key.length <= 0) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper - Binding> \r\n Cannot bind an empty key  \r\n -------- \r\n\r\n");
+        return;
+    }
+    
     [[self _getBindObservers] addObject:[A_BindingObserver A_CreateObserver:convertBlock observedObject:self from:key to:to]];
 }
 -(void) A_Bind:(NSString*)key ToTager:(id)toTager AndKey:(NSString*)toKey {
     [self A_Bind:key ToTager:toTager AndKey:toKey Convert:nil];
 }
 -(void) A_Bind:(NSString*)key ToTager:(id)toTager AndKey:(NSString*)toKey Convert:(id (^)(id value))convertBlock {
+    if (!key || key.length <= 0) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper - Binding> \r\n Cannot bind an empty key  \r\n -------- \r\n\r\n");
+        return;
+    }
+    
     [[self _getBindObservers] addObject:[A_BindingObserver A_CreateObserver:convertBlock observedObject:self from:key toTager:toTager toKey:toKey]];
 }
 
@@ -183,7 +193,7 @@ bool _blockWithParam;
             [self.observedObject removeObserver:self forKeyPath:self.key];
         }
         @catch (NSException *exception) {
-            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@", exception.reason);
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@ \r\n -------- \r\n\r\n", exception.reason);
         }
     }
 }
@@ -241,14 +251,18 @@ bool _withTager;
             [self.observedObject removeObserver:self forKeyPath:self.fromKey];
         }
         @catch (NSException *exception) {
-            NSLog(@"[MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@", exception.reason);
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@ \r\n -------- \r\n\r\n", exception.reason);
         }
     }
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     id _newValue = self.bindBlock ? self.bindBlock([change objectForKey:@"new"]): [change objectForKey:@"new"];
     if (_withTager) {
-        [self.target setValue:_newValue forKeyPath:self.toKey];
+        if (self.target) {
+            [self.target setValue:_newValue forKeyPath:self.toKey];
+        } else {
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n From %@->%@ to Tager object->%@, the binding tager already repleased. \r\n -------- \r\n\r\n", self.observedObject, self.fromKey, self.toKey);
+        }
     } else {
         [self.observedObject setValue:_newValue forKeyPath:self.toKey];
     }

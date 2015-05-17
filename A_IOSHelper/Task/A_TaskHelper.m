@@ -25,17 +25,26 @@
     });
 }
 
-+ (void) A_RunInBackgroundWithObj:(id)obj Block:(void (^)(id arg))block {
++ (void) A_RunInBackgroundWithParam:(id)param Block:(void (^)(id arg))block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        block(obj);
+        block(param);
     });
 }
-+ (void) A_RunInBackgroundWithObj:(id)obj Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock {
++ (void) A_RunInBackgroundWithParam:(id)param Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        id result = block(obj);
+        id result = block(param);
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            finishBlock(obj,result);
+            finishBlock(param,result);
         });
+    });
+}
+
++ (void) A_RunInMain:(dispatch_block_t)block {
+    dispatch_async(dispatch_get_main_queue(), block);
+}
++ (void) A_RunInMainWithParam:(id)param Block:(void (^)(id arg))block{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        block(param);
     });
 }
 
