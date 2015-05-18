@@ -6,6 +6,9 @@ The aim of the project provides base foundation functions for IOS developer to m
 
 More information: http://animaxx.github.io/A-IOSHelper
 
+## Compiled framework download
+Please [click here](http://animaxx.github.io/A-IOSHelper/release/A_IOSHelper.framework.zip) to download the zip file of the framework.
+
 ## How to use
 In A-IOSHelper, all functions are having the A_prefix, so we can get advantage from IDE's hint.
 
@@ -60,4 +63,6 @@ Download image and cache it, and it can get same image next time from cache inst
 A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")
 ```
 
+## License
+All source code is licensed under the [MIT License](https://github.com/Animaxx/A-IOSHelper/blob/master/LICENSE).
 
