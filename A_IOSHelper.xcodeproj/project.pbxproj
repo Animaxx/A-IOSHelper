@@ -48,13 +48,18 @@
 		2E3A8D6B1AAE58D100D3A833 /* TaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3A8D6A1AAE58D100D3A833 /* TaskTests.m */; };
 		2E58DA571A489E2100CA10B6 /* A_AlertBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E58DA551A489E2100CA10B6 /* A_AlertBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E58DA581A489E2100CA10B6 /* A_AlertBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E58DA561A489E2100CA10B6 /* A_AlertBox.m */; };
+		2E61F5391B122C27004DE7B2 /* NSMutableArray+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E61F5371B122C27004DE7B2 /* NSMutableArray+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E61F53A1B122C27004DE7B2 /* NSMutableArray+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E61F5381B122C27004DE7B2 /* NSMutableArray+A_Extension.m */; };
+		2E61F53D1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E61F53B1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E61F53E1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E61F53C1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m */; };
+		2E61F5401B12710E004DE7B2 /* CollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E61F53F1B12710E004DE7B2 /* CollectionTests.m */; };
 		2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB099DC1AB3310800D6DBDC /* UIView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB099DA1AB3310800D6DBDC /* UIView+A_Extension.m */; };
 		2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099DD1AB367D500D6DBDC /* NSDate+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB099DE1AB367D500D6DBDC /* NSDate+A_Extension.m */; };
 		2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB2EAC31A38DAB500946C51 /* A_Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB2EAC41A38DAB500946C51 /* A_Animation.m */; };
-		2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC4940A1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h */; };
+		2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC4940A1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EC4940D1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4940B1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m */; };
 		2EC494101B06569900B9E8E2 /* KVOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC4940F1B06569900B9E8E2 /* KVOTests.m */; };
 		2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -126,6 +131,11 @@
 		2E3A8D6A1AAE58D100D3A833 /* TaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskTests.m; sourceTree = "<group>"; };
 		2E58DA551A489E2100CA10B6 /* A_AlertBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AlertBox.h; path = AlertBox/A_AlertBox.h; sourceTree = "<group>"; };
 		2E58DA561A489E2100CA10B6 /* A_AlertBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AlertBox.m; path = AlertBox/A_AlertBox.m; sourceTree = "<group>"; };
+		2E61F5371B122C27004DE7B2 /* NSMutableArray+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+A_Extension.h"; sourceTree = "<group>"; };
+		2E61F5381B122C27004DE7B2 /* NSMutableArray+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+A_Extension.m"; sourceTree = "<group>"; };
+		2E61F53B1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+A_Extension.h"; sourceTree = "<group>"; };
+		2E61F53C1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+A_Extension.m"; sourceTree = "<group>"; };
+		2E61F53F1B12710E004DE7B2 /* CollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionTests.m; sourceTree = "<group>"; };
 		2EB099D71AB2A66D00D6DBDC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+A_Extension.h"; path = "UIKitExtension/UIView+A_Extension.h"; sourceTree = "<group>"; };
 		2EB099DA1AB3310800D6DBDC /* UIView+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+A_Extension.m"; path = "UIKitExtension/UIView+A_Extension.m"; sourceTree = "<group>"; };
@@ -254,6 +264,10 @@
 				2E0FD8881AB561AC00C1B828 /* NSDictionary+A_Extension.m */,
 				2E0FD88B1AB561C700C1B828 /* NSArray+A_Extension.h */,
 				2E0FD88C1AB561C700C1B828 /* NSArray+A_Extension.m */,
+				2E61F5371B122C27004DE7B2 /* NSMutableArray+A_Extension.h */,
+				2E61F5381B122C27004DE7B2 /* NSMutableArray+A_Extension.m */,
+				2E61F53B1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h */,
+				2E61F53C1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -344,6 +358,7 @@
 		2E3A8D4F1AADEF4B00D3A833 /* A_IOSHelperTests */ = {
 			isa = PBXGroup;
 			children = (
+				2E61F53F1B12710E004DE7B2 /* CollectionTests.m */,
 				2E3A8D6A1AAE58D100D3A833 /* TaskTests.m */,
 				2E3A8D611AADF19C00D3A833 /* TestDataModel.h */,
 				2E3A8D621AADF19C00D3A833 /* TestDataModel.m */,
@@ -468,9 +483,11 @@
 				2ED75EA91ABB69DE00B0FB5F /* UIColor+A_Extension.h in Headers */,
 				2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */,
 				2E02968A1B018134005ABADF /* A_TaskHelper.h in Headers */,
+				2E61F53D1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h in Headers */,
+				2E61F5391B122C27004DE7B2 /* NSMutableArray+A_Extension.h in Headers */,
+				2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */,
 				2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */,
 				2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */,
-				2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +588,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E0FD88A1AB561AC00C1B828 /* NSDictionary+A_Extension.m in Sources */,
+				2E61F53A1B122C27004DE7B2 /* NSMutableArray+A_Extension.m in Sources */,
 				2E1187D21A37518F0080FFB9 /* A_PlistHelper.m in Sources */,
 				2E1187CE1A37518F0080FFB9 /* A_ImageHelper.m in Sources */,
 				2E1C1B0D1ABDE429008E30B2 /* A_SqliteManager.m in Sources */,
@@ -585,6 +603,7 @@
 				2EC4940D1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m in Sources */,
 				2ED75EA61ABA35E500B0FB5F /* UIViewController+A_Extension.m in Sources */,
 				2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */,
+				2E61F53E1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m in Sources */,
 				2E1E33E11AF4A32B00BC853D /* UIAlertView+A_Extension.m in Sources */,
 				2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */,
 				2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */,
@@ -605,6 +624,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E3830301AE8817400DFF0F4 /* StoreTests.m in Sources */,
+				2E61F5401B12710E004DE7B2 /* CollectionTests.m in Sources */,
 				2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */,
 				2EC494101B06569900B9E8E2 /* KVOTests.m in Sources */,
 				2E3A8D6B1AAE58D100D3A833 /* TaskTests.m in Sources */,
@@ -710,6 +730,10 @@
 		2E11879E1A3750770080FFB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+				);
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -718,6 +742,7 @@
 				INFOPLIST_FILE = A_IOSHelper/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -727,6 +752,10 @@
 		2E11879F1A3750770080FFB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+				);
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -735,6 +764,7 @@
 				INFOPLIST_FILE = A_IOSHelper/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
