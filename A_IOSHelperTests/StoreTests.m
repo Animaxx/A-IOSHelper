@@ -18,16 +18,6 @@
 
 @implementation StoreTests
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
 - (void)testGetAndSetToFile {
     [A_PlistHelper A_Save:@"abc" byKey:@"Key"];
     NSString* _value = [A_PlistHelper A_GetByKey:@"Key"];
@@ -106,15 +96,17 @@
     [_model1 A_SaveToSqlite];
     
     [_model1 A_SearchSimilarModelsInSqliteWithBlock:^(id obj, NSArray *result) {
-        XCTAssertTrue(result.count == 1);
+        XCTAssertEqual(result.count, 1);
     } andArg:nil];
+    
+    XCTAssertEqual([TestDataModel A_SearchSqlite:@""].count, 1);
     
     [TestDataModel A_SearchSqlite:@"" withBlock:^(id obj, NSArray *result) {
-        
+        XCTAssertEqual(result.count, 1);
+        XCTAssertEqual([_model1 A_SearchSimilarModelsInSqlite].count, 1);
     } andArg:nil];
     
-    XCTAssertTrue([TestDataModel A_SearchSqlite:@""].count == 1);
-    XCTAssertTrue([_model1 A_SearchSimilarModelsInSqlite].count == 1);
+    sleep(5);
 }
 
 @end

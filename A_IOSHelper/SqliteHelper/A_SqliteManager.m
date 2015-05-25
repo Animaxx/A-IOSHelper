@@ -19,6 +19,7 @@ sqlite3_stmt *statement;
 NSString *databaseFileName;
 NSFileManager *filemanager;
 NSMutableArray *ExistingTables;
+NSObject* lockObj;
 
 #pragma mark - Database Operation
 
@@ -44,6 +45,7 @@ NSMutableArray *ExistingTables;
 }
 - (instancetype) init: (NSString *)file {
     if ((self = [super init])) {
+        lockObj = [[NSObject alloc] init];
         databaseFileName = file;
         [self A_OpenConnetion];
     }
@@ -91,14 +93,16 @@ NSMutableArray *ExistingTables;
     return [self A_ExecuteQuery:query withArgs:nil];
 }
 - (NSNumber *) A_ExecuteQuery:(NSString *) query withArgs:(NSArray*) args {
-    [self _bindSQL:[query UTF8String] withArray:args];
-    if (statement == NULL) return @0;
-    
-    sqlite3_step(statement);
-    if(sqlite3_finalize(statement) == SQLITE_OK) {
-        return @(sqlite3_changes(database));
-    } else {
-        return @0;
+    @synchronized(lockObj) {
+        [self _bindSQL:[query UTF8String] withArray:args];
+        if (statement == NULL) return @0;
+        
+        sqlite3_step(statement);
+        if(sqlite3_finalize(statement) == SQLITE_OK) {
+            return @(sqlite3_changes(database));
+        } else {
+            return @0;
+        }
     }
 }
 
@@ -121,16 +125,18 @@ NSMutableArray *ExistingTables;
     return [self A_SearchDataset:query withParams:nil];
 }
 - (NSArray*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params {
-    [self _bindSQL:[query UTF8String] withArray:params];
-    if (statement == NULL) return [[NSArray alloc] init];
-    
-    NSMutableArray* dataset = [[NSMutableArray alloc] init];
-    NSDictionary * row = nil;
-    while ((row = [self _getRow])) {
-        [dataset addObject:row];
+    @synchronized(lockObj) {
+        [self _bindSQL:[query UTF8String] withArray:params];
+        if (statement == NULL) return [[NSArray alloc] init];
+        
+        NSMutableArray* dataset = [[NSMutableArray alloc] init];
+        NSDictionary * row = nil;
+        while ((row = [self _getRow])) {
+            [dataset addObject:row];
+        }
+        
+        return dataset;
     }
-    
-    return dataset;
 }
 
 - (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{

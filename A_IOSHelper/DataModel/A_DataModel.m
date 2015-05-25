@@ -120,31 +120,27 @@
         obj = [NSNull null];
     }
     
-    [A_TaskHelper A_RunInBackgroundWithParam:@[self,obj] Block:^id(id arg) {
-        return [[A_SqliteManager A_Instance] A_SearchSimilarModels:[arg objectAtIndex:0]];
-    } WhenDone:^(id arg, id result) {
+    [A_TaskHelper A_RunInBackgroundWithParam:@[self,obj] Block:^(id arg) {
+        NSArray* result = [[A_SqliteManager A_Instance] A_SearchSimilarModels:[arg objectAtIndex:0]];
         id _arg = [arg objectAtIndex:1];
         if (_arg == [NSNull null]) {
             _arg = nil;
         }
-        finishBlock(_arg, (NSArray*)result);
+        finishBlock(_arg, result);
     }];
 }
 + (void)A_SearchSqlite: (NSString*)where withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
     if (!obj) {
         obj = [NSNull null];
     }
-    
-    [A_TaskHelper A_RunInBackgroundWithParam:@[self,where,obj] Block:^id(id arg) {
-        return [[A_SqliteManager A_Instance]
-                A_SearchModels:[A_Reflection A_GetClass:[arg objectAtIndex:0]]
-                Where:[arg objectAtIndex:1]];
-    } WhenDone:^(id arg, id result) {
-        id _arg = [arg objectAtIndex:2];
+
+    [A_TaskHelper A_RunInBackgroundWithParam:@[self,where,obj] Block:^(id arg) {
+        NSArray* result = [[A_SqliteManager A_Instance] A_SearchModels:[[arg objectAtIndex:0] class] Where:[arg objectAtIndex:1]];
+        id _arg = [arg objectAtIndex:1];
         if (_arg == [NSNull null]) {
             _arg = nil;
         }
-        finishBlock(_arg, (NSArray*)result);
+        finishBlock(_arg, result);
     }];
 }
 

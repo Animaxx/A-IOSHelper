@@ -33,6 +33,7 @@
 + (void) A_RunInBackgroundWithParam:(id)param Block:(id (^)(id arg))block WhenDone:(void (^)(id arg, id result))finishBlock {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         id result = block(param);
+        
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             finishBlock(param,result);
         });

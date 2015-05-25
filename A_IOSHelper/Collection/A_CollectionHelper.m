@@ -21,7 +21,7 @@
 
 + (NSDictionary*)A_CombineArraysToDictionary: (NSArray*)Keys Values:(NSArray*)values {
     NSMutableDictionary* _dic = [[NSMutableDictionary alloc] init];
-    for (int i=0; i<[Keys count]; i++) {
+    for (NSUInteger i=0; i<[Keys count]; i++) {
         if ([values count] > i)
             [_dic setObject:[values objectAtIndex:i] forKey:[Keys objectAtIndex:i]];
         else
@@ -35,7 +35,6 @@
     NSArray *sortedArray;
     sortedArray = [[dic allKeys] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
         return [(NSString*)b compare:(NSString*)a];
-        //return [(NSString*)a compare:(NSString*)b];
     }];
     return sortedArray;
 }
@@ -49,7 +48,7 @@
     NSUInteger length = [array1 count];
     if ([array2 count] < length) length = [array2 count];
     
-    for (int i=0; i<length; i++) {
+    for (NSUInteger i=0; i<length; i++) {
         id temp = [array2 objectAtIndex:i];
         [array2 replaceObjectAtIndex:i withObject:[[array1 objectAtIndex:i] copy]];
         [array1 replaceObjectAtIndex:i withObject:temp];
@@ -57,7 +56,8 @@
 }
 
 + (void)A_SwapDictionary:(NSMutableDictionary *)dictionary1 With:(NSMutableDictionary *)dictionary2 {
-    for (id key in dictionary1) {
+    id key;
+    for (key in dictionary1) {
         if ([dictionary1 objectForKey:key] && [dictionary2 objectForKey:key]) {
             id temp = [dictionary2 objectForKey:key];
             [dictionary2 setObject:[dictionary1 objectForKey:key] forKey:key];
