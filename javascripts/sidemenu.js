@@ -12,7 +12,7 @@ $(document).ready(function() {
     addMenuItem("Data Model", "datamodel_example.html");
     addMenuItem("Network", "network_example.html");
     addMenuItem("Animation", "animation_example.html");
-
+    addMenuItem("Collection", "collection_example.html");
 
     $("#sidebar").click(function() {
         if (parseInt($("#sidebar").css("right")) > 0) {
