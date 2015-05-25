@@ -53,6 +53,7 @@
 		2E61F53D1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E61F53B1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E61F53E1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E61F53C1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m */; };
 		2E61F5401B12710E004DE7B2 /* CollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E61F53F1B12710E004DE7B2 /* CollectionTests.m */; };
+		2E61F5421B137A58004DE7B2 /* ColorAndImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E61F5411B137A58004DE7B2 /* ColorAndImageTests.m */; };
 		2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EB099DC1AB3310800D6DBDC /* UIView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EB099DA1AB3310800D6DBDC /* UIView+A_Extension.m */; };
 		2EB099DF1AB367D500D6DBDC /* NSDate+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EB099DD1AB367D500D6DBDC /* NSDate+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -136,6 +137,7 @@
 		2E61F53B1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+A_Extension.h"; sourceTree = "<group>"; };
 		2E61F53C1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+A_Extension.m"; sourceTree = "<group>"; };
 		2E61F53F1B12710E004DE7B2 /* CollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionTests.m; sourceTree = "<group>"; };
+		2E61F5411B137A58004DE7B2 /* ColorAndImageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorAndImageTests.m; sourceTree = "<group>"; };
 		2EB099D71AB2A66D00D6DBDC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+A_Extension.h"; path = "UIKitExtension/UIView+A_Extension.h"; sourceTree = "<group>"; };
 		2EB099DA1AB3310800D6DBDC /* UIView+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+A_Extension.m"; path = "UIKitExtension/UIView+A_Extension.m"; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				2E3A8D6A1AAE58D100D3A833 /* TaskTests.m */,
 				2E3A8D611AADF19C00D3A833 /* TestDataModel.h */,
 				2E3A8D621AADF19C00D3A833 /* TestDataModel.m */,
+				2E61F5411B137A58004DE7B2 /* ColorAndImageTests.m */,
 				2E3A8D5F1AADF0BB00D3A833 /* DataModelTests.m */,
 				2E38302F1AE8817400DFF0F4 /* StoreTests.m */,
 				2EC4940F1B06569900B9E8E2 /* KVOTests.m */,
@@ -423,12 +426,12 @@
 				2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */,
 				2EB099D91AB3310800D6DBDC /* UIView+A_Extension.h */,
 				2EB099DA1AB3310800D6DBDC /* UIView+A_Extension.m */,
-				2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */,
-				2ED75EA01ABA359700B0FB5F /* UIImage+A_Extension.m */,
 				2ED75EA31ABA35E500B0FB5F /* UIViewController+A_Extension.h */,
 				2ED75EA41ABA35E500B0FB5F /* UIViewController+A_Extension.m */,
 				2ED75EA71ABB69DE00B0FB5F /* UIColor+A_Extension.h */,
 				2ED75EA81ABB69DE00B0FB5F /* UIColor+A_Extension.m */,
+				2ED75E9F1ABA359700B0FB5F /* UIImage+A_Extension.h */,
+				2ED75EA01ABA359700B0FB5F /* UIImage+A_Extension.m */,
 			);
 			name = UIKItExtension;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */,
 				2EC494101B06569900B9E8E2 /* KVOTests.m in Sources */,
 				2E3A8D6B1AAE58D100D3A833 /* TaskTests.m in Sources */,
+				2E61F5421B137A58004DE7B2 /* ColorAndImageTests.m in Sources */,
 				2E3A8D601AADF0BB00D3A833 /* DataModelTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

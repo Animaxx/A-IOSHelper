@@ -11,7 +11,7 @@
 
 @implementation UIColor (A_Extension)
 
-+ (UIColor*) A_ColorMakeFormString:(NSString*) str {
++ (UIColor*) A_MakeColor:(NSString*) str {
     return [A_ColorHelper A_ColorMakeFormString:str];
 }
 

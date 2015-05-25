@@ -52,7 +52,6 @@
     
     return [NSNumber numberWithInt:res - 1];
 }
-
 + (NSArray *) A_SpliteColor:(NSString*) colorString {
     NSMutableArray* colors = [NSMutableArray arrayWithCapacity:3];
     

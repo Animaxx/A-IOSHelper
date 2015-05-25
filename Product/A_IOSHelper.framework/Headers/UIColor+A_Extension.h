@@ -10,6 +10,6 @@
 
 @interface UIColor (A_Extension)
 
-+ (UIColor*) A_ColorMakeFormString:(NSString*) str;
++ (UIColor*) A_MakeColor:(NSString*) str;
 
 @end

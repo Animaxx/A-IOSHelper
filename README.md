@@ -29,7 +29,7 @@ and you may use following code to check the building result
 It should shows `Architectures in the fat file: A_IOSHelper are: i386 x86_64 armv7 arm64`
 
 ## Brief Example
-The Obecrive-C example:
+###### The Obecrive-C example:
 
 `#import <A_IOSHelper/A_IOSHelper.h>` // Import A_IOSHelper.h is only needed. 
 
@@ -53,7 +53,7 @@ Get data from 2 web services concurrently, and when all of them completed, pop-u
 }];
 ```
 
-The Swfit example:
+###### The Swfit example:
 
 `import A_IOSHelper`
 

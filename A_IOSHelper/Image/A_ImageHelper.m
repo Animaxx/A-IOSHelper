@@ -10,15 +10,8 @@
 
 @implementation A_ImageHelper
 
-+ (UIImage*) A_ScaleImage:(UIImage*) image ToSize:(CGSize) size {
-    UIGraphicsBeginImageContext(size);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage* retImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return retImage;
-}
 
-+ (UIImage*) A_GetImageByNamed:(NSString*) name{
++ (UIImage*) A_ImageByName:(NSString*) name{
     if (name != nil && name.length > 0) {
         NSString* path= [[NSBundle mainBundle] pathForResource:name ofType:@""];
         if (path != nil && path.length > 0) {
@@ -53,7 +46,15 @@
     return outputImage;
 }
 
-+ (UIImage*) A_ImageFromAllinoneRes: (NSString*) imageName WithRect:(CGRect) rect {
+
++ (UIImage*) A_Image: (UIImage*)image CutWithRect: (CGRect) rect {
+    CGImageRef imageRef =CGImageCreateWithImageInRect(image.CGImage, rect);
+    UIImage* _image = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return _image;
+}
+
++ (UIImage*) A_ImageByName: (NSString*) imageName CutWithRect:(CGRect) rect {
     UIImage* image = [UIImage imageNamed:imageName];
     
     if (image != nil) {
@@ -64,15 +65,45 @@
     return image;
 }
 
-+ (UIImage*) A_GetImageAndScale: (NSString*) name ToSize:(CGSize) size {
+
++ (UIImage*) A_Image:(UIImage*)image ScaleToSize:(CGSize) size {
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* retImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return retImage;
+}
+
++ (UIImage*) A_ImageByName: (NSString*) name ScaleToSize:(CGSize) size {
     UIImage* image = [UIImage imageNamed:name];
     if (image) {
-        image = [self A_ScaleImage:image ToSize:size];
+        image = [self A_Image:image ScaleToSize:size];
     }
     return image;
 }
 
-+ (UIImage*) A_GetImageNamedAndFit: (NSString*) name ToSize:(CGSize) size{
+
++ (UIImage*) A_Image:(UIImage*)image FitToSize:(CGSize) size {
+    if (image && image.size.width>0 && image.size.height>0) {
+        float imgFactor = image.size.width / image.size.height;
+        float dstFactor = size.width / size.height;
+        
+        float width = 0;
+        float height = 0;
+        if (imgFactor > dstFactor) {
+            width = size.width;
+            height = width/imgFactor;
+        }
+        else {
+            height = size.height;
+            width = height*imgFactor;
+        }
+        image = [self A_Image:image ScaleToSize:CGSizeMake(width, height)];
+    }
+    return image;
+}
+
++ (UIImage*) A_ImageByName: (NSString*) name FitToSize:(CGSize) size{
     UIImage* image = [UIImage imageNamed:name];
     
     if (image && image.size.width>0 && image.size.height>0) {
@@ -89,12 +120,13 @@
             height = size.height;
             width = height*imgFactor;
         }
-        image = [self A_ScaleImage:image ToSize:CGSizeMake(width, height)];
+        image = [self A_Image:image ScaleToSize:CGSizeMake(width, height)];
     }
     return image;
 }
 
-+ (UIImage*) A_DownloadImage: (NSString*)imageURL {
+
++ (UIImage*) A_ImageDownload: (NSString*)imageURL {
     NSData* _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
     if (_imgData && _imgData.length <= 0){
         _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
@@ -109,7 +141,7 @@
     return nil;
 }
 
-+ (UIImage*) A_DownloadImageAndCache: (NSString*)imageURL  {
++ (UIImage*) A_ImageDownloadAndCache: (NSString*)imageURL  {
     if (!imageURL)
         return nil;
     
@@ -138,19 +170,12 @@
     return nil;
 }
 
-+ (UIImage*) A_DownloadImageAndCache: (NSString*)imageURL DefaultImage: (NSString*)defaultImageName {
-    UIImage* _result = [self A_DownloadImageAndCache:imageURL];
++ (UIImage*) A_ImageDownloadAndCache: (NSString*)imageURL DefaultImage: (NSString*)defaultImageName {
+    UIImage* _result = [self A_ImageDownloadAndCache:imageURL];
     if(!_result) {
         _result = [UIImage imageNamed:defaultImageName];
     }
     return _result;
-}
-
-+ (UIImage*) A_CutImage: (UIImage*)theImage InRect: (CGRect) rect {
-    CGImageRef imageRef =CGImageCreateWithImageInRect(theImage.CGImage, rect);
-    UIImage* _image = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    return _image;
 }
 
 

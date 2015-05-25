@@ -11,24 +11,29 @@
 
 @interface A_ImageHelper : NSObject
 
-+ (UIImage*) A_ScaleImage:(UIImage*) image ToSize:(CGSize) size;
-+ (UIImage*) A_GetImageByNamed:(NSString*) name;
-+ (UIImage*) A_ImageFromLayer: (CALayer*) layer;
-+ (UIImage*) A_ImageFromColor:(UIColor*) color;
+#pragma mark - Generate image
++ (UIImage*) A_ImageByName:(NSString*)name;
++ (UIImage*) A_ImageFromLayer:(CALayer*)layer;
++ (UIImage*) A_ImageFromColor:(UIColor*)color;
 
-+ (UIImage*) A_ImageFromAllinoneRes: (NSString*) imageName WithRect:(CGRect) rect;
-+ (UIImage*) A_GetImageAndScale: (NSString*) name ToSize:(CGSize) size;
+#pragma mark - Image cutting
++ (UIImage*) A_Image:(UIImage*)image CutWithRect:(CGRect)rect;
++ (UIImage*) A_ImageByName:(NSString*)imageName CutWithRect:(CGRect)rect;
 
-+ (UIImage*) A_GetImageNamedAndFit: (NSString*) name ToSize:(CGSize) size;
++ (UIImage*) A_Image:(UIImage*)image ScaleToSize:(CGSize)size;
++ (UIImage*) A_ImageByName:(NSString*)name ScaleToSize:(CGSize)size;
 
-+ (UIImage*) A_DownloadImage: (NSString*)imageURL;
-+ (UIImage*) A_DownloadImageAndCache: (NSString*)imageURL;
++ (UIImage*) A_Image:(UIImage*)image FitToSize:(CGSize)size;
++ (UIImage*) A_ImageByName: (NSString*)name FitToSize:(CGSize)size;
 
-+ (UIImage*) A_DownloadImageAndCache: (NSString*)imageURL DefaultImage: (NSString*)defaultImageName;
+#pragma mark - Network loading
++ (UIImage*) A_ImageDownload:(NSString*)imageURL;
++ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL;
++ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL DefaultImage:(NSString*)defaultImageName;
 
-+ (UIImage*) A_CutImage: (UIImage*)theImage InRect: (CGRect) rect;
+#pragma mark - Image operation - Blur
++ (UIImage*) A_GaussianBlur:(UIImage*)theImage Radius:(float)radius;
++ (UIImage*) A_GaussianBlur:(UIImage*)theImage;
 
-+ (UIImage*) A_GaussianBlur: (UIImage*)theImage Radius:(float)radius;
-+ (UIImage*) A_GaussianBlur: (UIImage*)theImage;
 
 @end
