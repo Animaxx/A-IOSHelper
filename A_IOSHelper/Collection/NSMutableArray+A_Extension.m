@@ -11,7 +11,7 @@
 
 @implementation NSMutableArray(A_Extension)
 
-- (void)A_SwapWith:(NSMutableArray*)array{
+- (void)A_Swap:(NSMutableArray*)array{
     [A_CollectionHelper A_SwapArray:self With:array];
 }
 

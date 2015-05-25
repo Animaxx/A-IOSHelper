@@ -24,8 +24,5 @@
 - (NSString*) A_CovertToJSONString {
     return [A_JSONHelper A_ConvertDictionaryToJSON:self];
 }
-- (void) A_Swap:(NSArray*)array {
-    
-}
 
 @end

@@ -39,7 +39,7 @@
     NSMutableArray* _list1 = [[NSMutableArray alloc] initWithArray:@[@"A",@"B",@"C"]];
     NSMutableArray* _list2 = [[NSMutableArray alloc] initWithArray:@[@"1",@"2",@"3"]];
     
-    [_list1 A_SwapWith:_list2];
+    [_list1 A_Swap:_list2];
     
     XCTAssertEqual([_list1 objectAtIndex:0] , @"1");
     XCTAssertEqual([_list1 objectAtIndex:1] , @"2");

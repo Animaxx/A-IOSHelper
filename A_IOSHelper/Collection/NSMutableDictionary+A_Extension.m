@@ -11,7 +11,7 @@
 
 @implementation NSMutableDictionary(A_Extension)
 
-- (void)A_SwapWith:(NSMutableDictionary*)dictionary{
+- (void)A_Swap:(NSMutableDictionary*)dictionary{
     [A_CollectionHelper A_SwapDictionary:self With:dictionary];
 }
 
