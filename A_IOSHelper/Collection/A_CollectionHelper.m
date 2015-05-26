@@ -25,7 +25,7 @@
         if ([values count] > i)
             [_dic setObject:[values objectAtIndex:i] forKey:[Keys objectAtIndex:i]];
         else
-            [_dic setObject:nil forKey:[Keys objectAtIndex:i]];
+            [_dic setObject:[NSNull null] forKey:[Keys objectAtIndex:i]];
     }
     
     return  _dic;

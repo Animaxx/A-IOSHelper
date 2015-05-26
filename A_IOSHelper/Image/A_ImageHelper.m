@@ -189,7 +189,7 @@
         [filter setValue:[NSNumber numberWithFloat:radius] forKey: @"inputRadius"];
         CIImage *result = [filter valueForKey:kCIOutputImageKey];
         CGImageRef outImage = [context createCGImage: result fromRect:[result extent]];
-        UIImage * blurImage = [UIImage imageWithCGImage:outImage];
+        UIImage* blurImage = [UIImage imageWithCGImage:outImage];
         return blurImage;
     }
 }

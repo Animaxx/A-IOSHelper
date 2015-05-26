@@ -145,14 +145,52 @@ int _testInt = 0;
     sleep(10);
 }
 
+- (void) testMultiTaskChain {
+    A_TaskHelper* task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
+    [task A_AddDelayTask:2.0f Block:^(A_TaskHelper *task) {
+        NSLog(@"Task %d",1);
+    }];
+    [task A_AddDelayTask:1.0f Block:^(A_TaskHelper *task) {
+        NSLog(@"Task %d",2);
+    }];
+    [task A_AddTask:^(A_TaskHelper *task) {
+        NSLog(@"Task %d",3);
+    }];
+    
+    A_TaskHelper* task2 = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES];
+    [task2 A_AddTask:^(A_TaskHelper *task) {
+        NSLog(@"Task2 %d",1);
+    }];
+    [task2 A_AddDelayTask:1.0f Block:^(A_TaskHelper *task) {
+        NSLog(@"Task2 %d",2);
+    }];
+    [task2 A_AddTask:^(A_TaskHelper *task) {
+        NSLog(@"Task2 %d",3);
+    }];
+    
+    CFAbsoluteTime start = CFAbsoluteTimeGetCurrent();
+    
+    [task2 A_ExecuteWithCompletion:^(A_TaskHelper *task) {
+        CFAbsoluteTime end = CFAbsoluteTimeGetCurrent();
+        NSLog(@"operation took %2.5f seconds", end-start);
+    }];
+    
+    [task A_ExecuteWithCompletion:^(A_TaskHelper *task) {
+        CFAbsoluteTime end = CFAbsoluteTimeGetCurrent();
+        NSLog(@"operation took %2.5f seconds", end-start);
+    }];
+    
+    sleep(5);
+}
+
 - (void) testTaskChain {
     [[[[A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES] A_AddTask:^(A_TaskHelper *task) {
-        task.Tag = @(1);
+        task.tag = @(1);
     }] A_AddTask:^(A_TaskHelper *task) {
-        task.Tag = @([((NSNumber*)task.Tag) integerValue] + 1);
+        task.tag = @([((NSNumber*)task.tag) integerValue] + 1);
     }] A_ExecuteWithCompletion:^(A_TaskHelper *task) {
-        NSLog(@"Tag: %@", task.Tag);
-        XCTAssertEqual(@(2), task.Tag);
+        NSLog(@"Tag: %@", task.tag);
+        XCTAssertEqual(@(2), task.tag);
     }];
 }
 

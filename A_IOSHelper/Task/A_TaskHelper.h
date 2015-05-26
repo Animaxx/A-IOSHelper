@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, A_Task_PriorityType) {
+typedef NS_ENUM(NSUInteger, A_Task_PriorityType) {
     A_Task_Priority_UI         = 201,
     A_Task_Priority_Hight      = 202,
     A_Task_Priority_Default    = 203,
@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, A_Task_PriorityType) {
     A_Task_Priority_Background = 205,
 };
 
-typedef NS_ENUM(NSInteger, A_Task_RunningEnvironment) {
+typedef NS_ENUM(NSUInteger, A_Task_RunningEnvironment) {
     A_Task_RunInBackgroupCompleteInMain     = 211,
     A_Task_RunInMainCompleteInBackgroup     = 212,
     A_Task_RunInBackgroup                   = 213,
@@ -36,6 +36,9 @@ typedef void(^TaskBlock)(A_TaskHelper *task);
 + (void) A_RunInMain:(dispatch_block_t)block;
 + (void) A_RunInMainWithParam:(id)param Block:(void (^)(id arg))block;
 
++ (void) A_Delay:(double)delaySec RunInMain:(dispatch_block_t)method;
++ (void) A_Delay:(double)delaySec Param:(id)param RunInMain:(void (^)(id arg))method;
+
 + (dispatch_source_t) A_StartTimer:(double)seconds Block:(dispatch_block_t) block;
 + (dispatch_source_t) A_StartTimer:(double)seconds Block:(dispatch_block_t) block InMain:(bool)inMain;
 + (void) A_CancelTimer:(dispatch_source_t)timer;
@@ -48,11 +51,13 @@ typedef void(^TaskBlock)(A_TaskHelper *task);
 //@property (nonatomic) A_Task_PriorityType PriorityType;
 
 // Default is running in backgroup thread and complete in main thread
-@property (nonatomic) A_Task_RunningEnvironment RunningEnvironment;
+@property (nonatomic) A_Task_RunningEnvironment runningEnvironment;
 
-@property (nonatomic) bool Sequential;
+@property (nonatomic) bool sequential;
 
-@property (strong, atomic) id Tag;
+@property (strong, atomic) id tag;
+@property (weak, nonatomic) id param;
+@property (strong, atomic) id result;
 
 + (A_TaskHelper*) A_Init;
 + (A_TaskHelper*) A_Init: (A_Task_RunningEnvironment)environment Sequential:(bool)sequential;

@@ -10,14 +10,14 @@
 
 @interface A_RESTRequest : NSObject
 
-typedef NS_ENUM(NSInteger, A_NetworkRequestMethod) {
+typedef NS_ENUM(NSUInteger, A_NetworkRequestMethod) {
     A_Network_POST          = 1,
     A_Network_GET           = 2,
     A_Network_PUT           = 3,
     A_Network_DELETE        = 4
 };
 
-typedef NS_ENUM(NSInteger, A_NetworkParameterFormat) {
+typedef NS_ENUM(NSUInteger, A_NetworkParameterFormat) {
     A_Network_SendAsQuery   = 11,
     A_Network_SendAsJSON    = 12,
 };

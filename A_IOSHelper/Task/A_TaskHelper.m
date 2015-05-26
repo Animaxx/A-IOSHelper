@@ -41,22 +41,30 @@
 }
 
 + (void) A_RunInMain:(dispatch_block_t)block {
-    dispatch_async(dispatch_get_main_queue(), block);
+    if ([NSThread isMainThread]) {
+        block();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), block);
+    }
 }
 + (void) A_RunInMainWithParam:(id)param Block:(void (^)(id arg))block{
-    dispatch_async(dispatch_get_main_queue(), ^{
+    if ([NSThread isMainThread]) {
         block(param);
-    });
+    }  else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(param);
+        });
+    }
 }
 
-+ (void) A_DelayExecute:(dispatch_block_t)method Delay:(double)delaySec{
++ (void) A_Delay:(double)delaySec RunInMain:(dispatch_block_t)method{
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySec * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), method);
 }
-+ (void) A_DelayExecuteWithObj:(id)obj Method:(void (^)(id arg))method Delay:(double)delaySec{
++ (void) A_Delay:(double)delaySec Param:(id)param RunInMain:(void (^)(id arg))method{
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delaySec * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^{
-        method(obj);
+        method(param);
     });
 }
 
@@ -163,8 +171,8 @@
         dispatch_group_t group = dispatch_group_create();
         dispatch_queue_t queue;
         
-        if (self.RunningEnvironment == A_Task_RunInBackgroup || self.RunningEnvironment == A_Task_RunInBackgroupCompleteInMain) {
-            if (self.Sequential) {
+        if (self.runningEnvironment == A_Task_RunInBackgroup || self.runningEnvironment == A_Task_RunInBackgroupCompleteInMain) {
+            if (self.sequential) {
                 queue = dispatch_queue_create("com.Animax.iOSHelperQueue", DISPATCH_QUEUE_SERIAL);
             } else {
                 queue = dispatch_queue_create("com.Animax.iOSHelperQueue", DISPATCH_QUEUE_CONCURRENT);
@@ -181,14 +189,14 @@
         
         if (block) {
             dispatch_group_notify(group, queue, ^{
-                if (self.RunningEnvironment == A_Task_RunInBackgroup || self.RunningEnvironment == A_Task_RunInMainCompleteInBackgroup) {
+                if (self.runningEnvironment == A_Task_RunInBackgroup || self.runningEnvironment == A_Task_RunInMainCompleteInBackgroup) {
                     dispatch_async(queue, ^{
                         block(self);
                     });
                 } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    [A_TaskHelper A_RunInMain:^{
                         block(self);
-                    });
+                    }];
                 }
             });
         }

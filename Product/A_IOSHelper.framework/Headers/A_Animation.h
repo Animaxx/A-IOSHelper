@@ -15,21 +15,21 @@
 #define DEGREES_TO_RADIANS(x) ((x)/180.0*M_PI)
 
 
-typedef NS_ENUM(NSInteger, A_Animation_SystemTransitionType) {
+typedef NS_ENUM(NSUInteger, A_Animation_SystemTransitionType) {
     A_Animation_SystemTransition_Reveal     = 101,
     A_Animation_SystemTransition_MoveIn     = 102,
     A_Animation_SystemTransition_Push       = 103,
     A_Animation_SystemTransition_Fade       = 104,
 };
 
-typedef NS_ENUM(NSInteger, A_Animation_DirectionType) {
+typedef NS_ENUM(NSUInteger, A_Animation_DirectionType) {
     A_Animation_Direction_Top           = 111,
     A_Animation_Direction_Right         = 112,
     A_Animation_Direction_Bottom        = 113,
     A_Animation_Direction_Left          = 114,
 };
 
-typedef NS_ENUM(NSInteger, A_Animation_MediaTimingType) {
+typedef NS_ENUM(NSUInteger, A_Animation_MediaTimingType) {
     A_Animation_MeidaTiming_Spring      = 201,
 };
 

@@ -36,6 +36,7 @@
 #import <A_IOSHelper/NSArray+A_Extension.h>
 #import <A_IOSHelper/NSString+A_Extension.h>
 #import <A_IOSHelper/UIImage+A_Extension.h>
+#import <A_IOSHelper/UIImageView+A_Extension.h>
 #import <A_IOSHelper/NSObject+A_KVO_Extension.h>
 #import <A_IOSHelper/NSMutableArray+A_Extension.h>
 #import <A_IOSHelper/NSMutableDictionary+A_Extension.h>
