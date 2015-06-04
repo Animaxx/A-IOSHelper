@@ -10,6 +10,7 @@
 
 @interface A_Reflection : NSObject
 
++ (Class) A_GetClassByName: (NSString*)name;
 + (Class) A_GetClass: (id)obj;
 
 + (NSString*) A_GetClassName: (Class)cls;

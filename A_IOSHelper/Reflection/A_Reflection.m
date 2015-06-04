@@ -11,6 +11,9 @@
 
 @implementation A_Reflection
 
++ (Class) A_GetClassByName: (NSString*)name {
+    return NSClassFromString(name);
+}
 + (Class) A_GetClass: (id)obj {
     return object_getClass(obj);
 }

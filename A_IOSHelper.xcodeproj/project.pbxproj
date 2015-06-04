@@ -77,6 +77,10 @@
 		2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */; };
 		2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875EB1A9AA1C400D0D62E /* A_Reflection.m */; };
+		695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CA1B1FD4A200114443 /* A_Mapper.h */; };
+		695F39CD1B1FD4A200114443 /* A_Mapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F39CB1B1FD4A200114443 /* A_Mapper.m */; };
+		695F39D01B1FD56900114443 /* A_MappingMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CE1B1FD56900114443 /* A_MappingMap.h */; };
+		695F39D11B1FD56900114443 /* A_MappingMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F39CF1B1FD56900114443 /* A_MappingMap.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +169,10 @@
 		2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_DataModel.m; path = DataModel/A_DataModel.m; sourceTree = "<group>"; };
 		2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Reflection.h; path = Reflection/A_Reflection.h; sourceTree = "<group>"; };
 		2ED875EB1A9AA1C400D0D62E /* A_Reflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Reflection.m; path = Reflection/A_Reflection.m; sourceTree = "<group>"; };
+		695F39CA1B1FD4A200114443 /* A_Mapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Mapper.h; path = Mapping/A_Mapper.h; sourceTree = "<group>"; };
+		695F39CB1B1FD4A200114443 /* A_Mapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Mapper.m; path = Mapping/A_Mapper.m; sourceTree = "<group>"; };
+		695F39CE1B1FD56900114443 /* A_MappingMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_MappingMap.h; path = Mapping/A_MappingMap.h; sourceTree = "<group>"; };
+		695F39CF1B1FD56900114443 /* A_MappingMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_MappingMap.m; path = Mapping/A_MappingMap.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +246,7 @@
 				2E02F99B1A4B6AA400F4EBDE /* Datatime */,
 				2EB2EAC71A38DABD00946C51 /* Animation */,
 				2E58DA591A489E2600CA10B6 /* AlertBox */,
+				695F39C51B1FD1BC00114443 /* Mapping */,
 				2E1187A31A37518F0080FFB9 /* Collection */,
 				2E1187A61A37518F0080FFB9 /* JSONHelper */,
 				2E1187A91A37518F0080FFB9 /* RESTRequest */,
@@ -460,6 +469,17 @@
 			name = Reflection;
 			sourceTree = "<group>";
 		};
+		695F39C51B1FD1BC00114443 /* Mapping */ = {
+			isa = PBXGroup;
+			children = (
+				695F39CA1B1FD4A200114443 /* A_Mapper.h */,
+				695F39CB1B1FD4A200114443 /* A_Mapper.m */,
+				695F39CE1B1FD56900114443 /* A_MappingMap.h */,
+				695F39CF1B1FD56900114443 /* A_MappingMap.m */,
+			);
+			name = Mapping;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -469,9 +489,11 @@
 			files = (
 				2E1187CD1A37518F0080FFB9 /* A_ImageHelper.h in Headers */,
 				2E1187C91A37518F0080FFB9 /* A_DeviceHelper.h in Headers */,
+				695F39D01B1FD56900114443 /* A_MappingMap.h in Headers */,
 				2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */,
 				2E1187C51A37518F0080FFB9 /* A_RESTRequest.h in Headers */,
 				2E1187D11A37518F0080FFB9 /* A_PlistHelper.h in Headers */,
+				695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */,
 				2E1187CB1A37518F0080FFB9 /* A_HtmlHelper.h in Headers */,
 				2E1187C11A37518F0080FFB9 /* A_CollectionHelper.h in Headers */,
 				2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */,
@@ -603,6 +625,7 @@
 				2E1187CE1A37518F0080FFB9 /* A_ImageHelper.m in Sources */,
 				2E1C1B0D1ABDE429008E30B2 /* A_SqliteManager.m in Sources */,
 				2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */,
+				695F39CD1B1FD4A200114443 /* A_Mapper.m in Sources */,
 				2E1187CA1A37518F0080FFB9 /* A_DeviceHelper.m in Sources */,
 				2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */,
 				2E0FD8861AB558FF00C1B828 /* NSString+A_Extension.m in Sources */,
@@ -615,6 +638,7 @@
 				2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */,
 				2E61F53E1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.m in Sources */,
 				2E1E33E11AF4A32B00BC853D /* UIAlertView+A_Extension.m in Sources */,
+				695F39D11B1FD56900114443 /* A_MappingMap.m in Sources */,
 				2EB2EAC61A38DAB500946C51 /* A_Animation.m in Sources */,
 				2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */,
 				2EB099DC1AB3310800D6DBDC /* UIView+A_Extension.m in Sources */,
