@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "TestDataModel.h"
 #import "A_Mapper.h"
 
 @interface SecondDataModel : NSObject
@@ -29,6 +30,7 @@
 @implementation MappingTests
 
 -(void)testMapping {
+    [[[A_Mapper A_Instance] A_CreateMap:[TestDataModel class] To:[SecondDataModel class]] A_Bind:@"Name" To:@"Name"];
     
 }
 
