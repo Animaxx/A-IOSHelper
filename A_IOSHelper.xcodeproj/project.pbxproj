@@ -77,10 +77,11 @@
 		2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */; };
 		2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875EB1A9AA1C400D0D62E /* A_Reflection.m */; };
-		695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CA1B1FD4A200114443 /* A_Mapper.h */; };
+		695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CA1B1FD4A200114443 /* A_Mapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		695F39CD1B1FD4A200114443 /* A_Mapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F39CB1B1FD4A200114443 /* A_Mapper.m */; };
-		695F39D01B1FD56900114443 /* A_MappingMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CE1B1FD56900114443 /* A_MappingMap.h */; };
+		695F39D01B1FD56900114443 /* A_MappingMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CE1B1FD56900114443 /* A_MappingMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		695F39D11B1FD56900114443 /* A_MappingMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F39CF1B1FD56900114443 /* A_MappingMap.m */; };
+		69A487F51B252FA00090CD1D /* MappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A487F41B252FA00090CD1D /* MappingTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +174,7 @@
 		695F39CB1B1FD4A200114443 /* A_Mapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Mapper.m; path = Mapping/A_Mapper.m; sourceTree = "<group>"; };
 		695F39CE1B1FD56900114443 /* A_MappingMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_MappingMap.h; path = Mapping/A_MappingMap.h; sourceTree = "<group>"; };
 		695F39CF1B1FD56900114443 /* A_MappingMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_MappingMap.m; path = Mapping/A_MappingMap.m; sourceTree = "<group>"; };
+		69A487F41B252FA00090CD1D /* MappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MappingTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +384,7 @@
 				2E38302F1AE8817400DFF0F4 /* StoreTests.m */,
 				2EC4940F1B06569900B9E8E2 /* KVOTests.m */,
 				2E3A8D501AADEF4B00D3A833 /* Supporting Files */,
+				69A487F41B252FA00090CD1D /* MappingTests.m */,
 			);
 			path = A_IOSHelperTests;
 			sourceTree = "<group>";
@@ -489,11 +492,9 @@
 			files = (
 				2E1187CD1A37518F0080FFB9 /* A_ImageHelper.h in Headers */,
 				2E1187C91A37518F0080FFB9 /* A_DeviceHelper.h in Headers */,
-				695F39D01B1FD56900114443 /* A_MappingMap.h in Headers */,
 				2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */,
 				2E1187C51A37518F0080FFB9 /* A_RESTRequest.h in Headers */,
 				2E1187D11A37518F0080FFB9 /* A_PlistHelper.h in Headers */,
-				695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */,
 				2E1187CB1A37518F0080FFB9 /* A_HtmlHelper.h in Headers */,
 				2E1187C11A37518F0080FFB9 /* A_CollectionHelper.h in Headers */,
 				2EB2EAC51A38DAB500946C51 /* A_Animation.h in Headers */,
@@ -517,6 +518,8 @@
 				2E02968A1B018134005ABADF /* A_TaskHelper.h in Headers */,
 				2E61F53D1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h in Headers */,
 				2E61F5391B122C27004DE7B2 /* NSMutableArray+A_Extension.h in Headers */,
+				695F39D01B1FD56900114443 /* A_MappingMap.h in Headers */,
+				695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */,
 				2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */,
 				2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */,
 				2EB099DB1AB3310800D6DBDC /* UIView+A_Extension.h in Headers */,
@@ -658,6 +661,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69A487F51B252FA00090CD1D /* MappingTests.m in Sources */,
 				2E3830301AE8817400DFF0F4 /* StoreTests.m in Sources */,
 				2E61F5401B12710E004DE7B2 /* CollectionTests.m in Sources */,
 				2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */,

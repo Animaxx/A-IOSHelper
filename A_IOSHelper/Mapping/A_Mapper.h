@@ -17,4 +17,8 @@
 - (A_MappingMap*) A_GetMap:(Class)from To:(Class)to;
 - (A_MappingMap*) A_GetMapByName:(NSString*)from To:(NSString*)to;
 
+- (void)A_Map:(id)from To:(id)to;
+- (id)A_Map:(id)from ToClass:(Class)to;
+- (id)A_Map:(id)from ToClassName:(NSString*)to;
+
 @end

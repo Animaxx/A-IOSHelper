@@ -8,6 +8,8 @@
 
 #import "A_Mapper.h"
 #import "A_Reflection.h"
+#import "A_MappingMap.h"
+#import "NSDictionary+A_Extension.h"
 
 @interface A_Mapper ()
 
@@ -55,14 +57,55 @@
     return [self.MapDict objectForKey:key];
 }
 
-- (void) A_Map:(id)from To:(id)to {
+- (void)A_Map:(id)from To:(id)to {
+    if (!from || !to) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Param cannot be nil");
+        return;
+    }
     
+    NSString* _key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassNameFromObject:to]];
+    
+    A_MappingMap* map = [self.MapDict objectForKey:_key];
+    if (!map) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassNameFromObject:to]);
+        return;
+    }
+    
+    [map A_MapData:from To:to];
 }
-- (id) A_Map:(id)from ToClass:(Class)to {
-    return nil;
+- (id)A_Map:(id)from ToClass:(Class)to {
+    if (!from || !to) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Params cannot be nil");
+        return nil;
+    }
+    
+    NSString* _key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassName:to]];
+    
+    A_MappingMap* map = [self.MapDict objectForKey:_key];
+    if (!map) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassName:to]);
+        return nil;
+    }
+    
+    id output = [map A_MapData:from];
+    return output;
 }
-- (id) A_Map:(id)from ToClassName:(NSString*)to {
-    return nil;
+- (id)A_Map:(id)from ToClassName:(NSString*)to {
+    if (!from || !to) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Params cannot be nil");
+        return nil;
+    }
+    
+    NSString* _key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], to];
+    
+    A_MappingMap* map = [self.MapDict objectForKey:_key];
+    if (!map) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], to);
+        return nil;
+    }
+    
+    id output = [map A_MapData:from];
+    return output;
 }
 
 

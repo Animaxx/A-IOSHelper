@@ -1,6 +1,0 @@
-framework module A_IOSHelper {
-  umbrella header "A_IOSHelper.h"
-
-  export *
-  module * { export * }
-}

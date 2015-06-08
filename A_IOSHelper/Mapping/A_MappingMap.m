@@ -24,7 +24,6 @@
     [item setOutputField:OutputField];
     return item;
 }
-
 - (void) _assignValue:(id)value toObj:(NSObject*)obj {
     @try {
         if (self.block) {
@@ -63,17 +62,65 @@
     }
     return self;
 }
-- (A_MappingMap*)A_AddMemeber: (NSString*)key To:(NSString*)to Convert:(mapElementBlock)block {
+- (A_MappingMap*)A_AddMemeber:(NSString*)key To:(NSString*)to Convert:(mapElementBlock)block {
     A_MappingItem* item = [A_MappingItem A_Init:block Output:to];
     [self.mappingDict setObject:item forKey:[key copy]];
     return self;
 }
-- (A_MappingMap*)A_AddMemeber: (NSString*)key To:(NSString*)to {
+- (A_MappingMap*)A_AddMemeber:(NSString*)key To:(NSString*)to {
     return [self A_AddMemeber:key To:to Convert:nil];
+}
+
+- (void)A_MapData:(id)input To:(id)output {
+    if (!input || !output) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Mapping object cannot be nil");
+        return;
+    }
+    
+    if (![input isMemberOfClass:self.BindClass] || ![output isMemberOfClass:self.ToClass]) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Class of object is not match");
+        return;
+    }
+    
+    A_MappingItem* item;
+    for (NSString* key in self.mappingDict) {
+        item = [self.mappingDict objectForKey:key];
+        [item _assignValue:[input objectForKey:key] toObj:output];
+    }
+}
+- (id)A_MapData:(id)input {
+    if (!input) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Mapping object cannot be nil");
+        return nil;
+    }
+    if (![input isMemberOfClass:self.BindClass]) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Class of object is not match");
+        return nil;
+    }
+    
+    @try {
+        id output = [self.ToClass init];
+        
+        A_MappingItem* item;
+        for (NSString* key in self.mappingDict) {
+            item = [self.mappingDict objectForKey:key];
+            [item _assignValue:[input objectForKey:key] toObj:output];
+        }
+        
+        return output;
+    }
+    @catch (NSException *exception) {
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", exception);
+        return nil;
+    }
 }
 
 
 @end
+
+
+
+
 
 
 
