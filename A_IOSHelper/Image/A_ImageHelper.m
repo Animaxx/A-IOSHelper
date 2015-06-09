@@ -46,6 +46,28 @@
     return outputImage;
 }
 
++ (UIImage*) A_ImageQRCode:(NSString*)message {
+    @autoreleasepool {
+        CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+        [filter setDefaults];
+        NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+        [filter setValue:data forKey:@"inputMessage"];
+        
+        CIImage *outputImage = [filter outputImage];
+        
+        CIContext *context = [CIContext contextWithOptions:nil];
+        CGImageRef cgImage = [context createCGImage:outputImage
+                                           fromRect:[outputImage extent]];
+        
+        UIImage *image = [UIImage imageWithCGImage:cgImage];
+        return image;
+    }
+}
++ (UIImage*) A_ImageQRCode:(NSString*)message Size:(CGSize)size {
+    UIImage *image = [A_ImageHelper A_ImageQRCode:message];
+    UIImage *result = [A_ImageHelper A_Image:image FitToSize:size];
+    return result;
+}
 
 + (UIImage*) A_Image: (UIImage*)image CutWithRect: (CGRect) rect {
     CGImageRef imageRef =CGImageCreateWithImageInRect(image.CGImage, rect);

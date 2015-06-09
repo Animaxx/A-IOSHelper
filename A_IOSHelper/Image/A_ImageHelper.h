@@ -15,6 +15,7 @@
 + (UIImage*) A_ImageByName:(NSString*)name;
 + (UIImage*) A_ImageFromLayer:(CALayer*)layer;
 + (UIImage*) A_ImageFromColor:(UIColor*)color;
++ (UIImage*) A_ImageQRCode:(NSString*)message Size:(CGSize)size;
 
 #pragma mark - Image cutting
 + (UIImage*) A_Image:(UIImage*)image CutWithRect:(CGRect)rect;
