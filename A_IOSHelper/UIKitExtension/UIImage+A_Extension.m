@@ -22,17 +22,6 @@
     return [A_ImageHelper A_ImageFromColor:color];
 }
 
-#pragma mark - Network loading
-+ (UIImage*) A_ImageDownload:(NSString*)imageURL {
-    return [A_ImageHelper A_ImageDownload:imageURL];
-}
-+ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL {
-    return [A_ImageHelper A_ImageDownloadAndCache:imageURL];
-}
-+ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL DefaultImage:(NSString*)defaultImageName {
-    return [A_ImageHelper A_ImageDownloadAndCache:imageURL DefaultImage:defaultImageName];
-}
-
 #pragma mark - Image cutting
 - (UIImage*) A_ImageCutWithRect:(CGRect)rect {
     UIImage* _result = [A_ImageHelper A_Image:self CutWithRect:rect];
@@ -54,6 +43,33 @@
 }
 + (UIImage*) A_ImageByName: (NSString*)name FitToSize:(CGSize)size{
     return [A_ImageHelper A_ImageByName:name FitToSize:size];
+}
+
+#pragma mark - Alpha
+- (UIImage*) A_ImageAlpha:(CGFloat)alpha {
+    return [A_ImageHelper A_Image:self Alpha:alpha];
+}
++ (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha {
+    return [A_ImageHelper A_ImageByName:name Alpha:alpha];
+}
+
+#pragma mark - Rotated image
+- (UIImage*) A_ImageRotatedByDegrees:(CGFloat)degrees {
+    return [A_ImageHelper A_Image:self RotatedByDegrees:degrees];
+}
++ (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees {
+    return [A_ImageHelper A_ImageByName:name RotatedByDegrees:degrees];
+}
+
+#pragma mark - Network loading
++ (UIImage*) A_ImageDownload:(NSString*)imageURL {
+    return [A_ImageHelper A_ImageDownload:imageURL];
+}
++ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL {
+    return [A_ImageHelper A_ImageDownloadAndCache:imageURL];
+}
++ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL DefaultImage:(NSString*)defaultImageName {
+    return [A_ImageHelper A_ImageDownloadAndCache:imageURL DefaultImage:defaultImageName];
 }
 
 #pragma mark - Image operation - Blur

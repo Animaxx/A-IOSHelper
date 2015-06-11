@@ -22,7 +22,7 @@
     return nil;
 }
 
-+ (UIImage*) A_ImageFromLayer: (CALayer*) layer{
++ (UIImage*) A_ImageFromLayer:(CALayer*) layer{
     UIGraphicsBeginImageContext(layer.frame.size);
     
     [layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -70,30 +70,35 @@
 }
 
 + (UIImage*) A_Image: (UIImage*)image CutWithRect: (CGRect) rect {
-    CGImageRef imageRef =CGImageCreateWithImageInRect(image.CGImage, rect);
-    UIImage* _image = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    return _image;
-}
-
-+ (UIImage*) A_ImageByName: (NSString*) imageName CutWithRect:(CGRect) rect {
-    UIImage* image = [UIImage imageNamed:imageName];
-    
     if (image != nil) {
-        CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, rect);
+        CGRect fromRect = CGRectMake(rect.origin.x * image.scale,
+                                     rect.origin.y * image.scale,
+                                     rect.size.width * image.scale,
+                                     rect.size.height * image.scale);
+        
+        CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, fromRect);
         image = [UIImage imageWithCGImage: imageRef];
         CGImageRelease(imageRef);
     }
     return image;
 }
 
++ (UIImage*) A_ImageByName: (NSString*) imageName CutWithRect:(CGRect) rect {
+    UIImage* image = [UIImage imageNamed:imageName];
+    return [A_ImageHelper A_Image:image CutWithRect:rect];
+}
+
 
 + (UIImage*) A_Image:(UIImage*)image ScaleToSize:(CGSize) size {
-    UIGraphicsBeginImageContext(size);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage* retImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return retImage;
+    if (image != nil) {
+        CGSize _size = CGSizeMake(size.width * image.scale, size.height * image.scale);
+        
+        UIGraphicsBeginImageContext(_size);
+        [image drawInRect:CGRectMake(0, 0, _size.width, _size.height)];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    return image;
 }
 
 + (UIImage*) A_ImageByName: (NSString*) name ScaleToSize:(CGSize) size {
@@ -127,24 +132,90 @@
 
 + (UIImage*) A_ImageByName: (NSString*) name FitToSize:(CGSize) size{
     UIImage* image = [UIImage imageNamed:name];
+    return [A_ImageHelper A_Image:image FitToSize:size];
+}
+
+
++ (UIImage*) A_Image:(UIImage *)image Alpha:(CGFloat)alpha {
+    if (!image) return image;
     
-    if (image && image.size.width>0 && image.size.height>0) {
-        float imgFactor = image.size.width / image.size.height;
-        float dstFactor = size.width / size.height;
-        
-        float width = 0;
-        float height = 0;
-        if (imgFactor > dstFactor) {
-            width = size.width;
-            height = width/imgFactor;
-        }
-        else {
-            height = size.height;
-            width = height*imgFactor;
-        }
-        image = [self A_Image:image ScaleToSize:CGSizeMake(width, height)];
-    }
-    return image;
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, 0.0f);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGRect area = CGRectMake(0, 0, image.size.width, image.size.height);
+    
+    CGContextScaleCTM(ctx, 1, -1);
+    CGContextTranslateCTM(ctx, 0, -area.size.height);
+    
+    CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
+    
+    CGContextSetAlpha(ctx, alpha);
+    
+    CGContextDrawImage(ctx, area, image.CGImage);
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
++ (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha{
+    UIImage* image = [UIImage imageNamed:name];
+    return [A_ImageHelper A_Image:image Alpha:(CGFloat)alpha];
+}
+
+
++ (UIImage*) A_Image:(UIImage*)image RotatedByDegrees:(CGFloat)degrees {
+    if (!image) return image;
+    
+    CGImageRef imgRef = image.CGImage;
+    
+    CGFloat angleInRadians = degrees * (M_PI / 180);
+    CGFloat width = CGImageGetWidth(imgRef);
+    CGFloat height = CGImageGetHeight(imgRef);
+    
+    CGRect imgRect = CGRectMake(0, 0, width, height);
+    CGAffineTransform transform = CGAffineTransformMakeRotation(angleInRadians);
+    CGRect rotatedRect = CGRectApplyAffineTransform(imgRect, transform);
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    CGContextRef bmContext = CGBitmapContextCreate(NULL,
+                                                   rotatedRect.size.width,
+                                                   rotatedRect.size.height,
+                                                   8,
+                                                   0,
+                                                   colorSpace,
+                                                   kCGImageAlphaPremultipliedFirst);
+    CGContextSetAllowsAntialiasing(bmContext, YES);
+    CGContextSetShouldAntialias(bmContext, YES);
+    CGContextSetInterpolationQuality(bmContext, kCGInterpolationHigh);
+    CGColorSpaceRelease(colorSpace);
+    CGContextTranslateCTM(bmContext,
+                          +(rotatedRect.size.width/2),
+                          +(rotatedRect.size.height/2));
+    CGContextRotateCTM(bmContext, angleInRadians);
+    CGContextTranslateCTM(bmContext,
+                          -(rotatedRect.size.width/2),
+                          -(rotatedRect.size.height/2));
+    CGContextDrawImage(bmContext, CGRectMake(0, 0,
+                                             rotatedRect.size.width,
+                                             rotatedRect.size.height),
+                       imgRef);
+    
+    
+    
+    CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
+    CFRelease(bmContext);
+    
+    UIImage* outImage = [UIImage imageWithCGImage: rotatedImage];
+    return outImage;
+}
+
++ (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees {
+    UIImage* image = [UIImage imageNamed:name];
+    return [A_ImageHelper A_Image:image RotatedByDegrees:(CGFloat)degrees];
 }
 
 

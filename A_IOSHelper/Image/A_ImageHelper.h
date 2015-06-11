@@ -27,6 +27,14 @@
 + (UIImage*) A_Image:(UIImage*)image FitToSize:(CGSize)size;
 + (UIImage*) A_ImageByName: (NSString*)name FitToSize:(CGSize)size;
 
+#pragma mark - Alpha
++ (UIImage*) A_Image:(UIImage *)image Alpha:(CGFloat)alpha;
++ (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha;
+
+#pragma mark - Rotated image
++ (UIImage*) A_Image:(UIImage*)image RotatedByDegrees:(CGFloat)degrees;
++ (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees;
+
 #pragma mark - Network loading
 + (UIImage*) A_ImageDownload:(NSString*)imageURL;
 + (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL;

@@ -379,8 +379,8 @@
 				2E3A8D5F1AADF0BB00D3A833 /* DataModelTests.m */,
 				2E38302F1AE8817400DFF0F4 /* StoreTests.m */,
 				2EC4940F1B06569900B9E8E2 /* KVOTests.m */,
-				2E3A8D501AADEF4B00D3A833 /* Supporting Files */,
 				69A487F41B252FA00090CD1D /* MappingTests.m */,
+				2E3A8D501AADEF4B00D3A833 /* Supporting Files */,
 			);
 			path = A_IOSHelperTests;
 			sourceTree = "<group>";

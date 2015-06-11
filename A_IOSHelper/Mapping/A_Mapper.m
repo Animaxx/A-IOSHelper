@@ -32,7 +32,11 @@
         if (self.block) {
             [obj setValue:self.block(value) forKeyPath:self.outputField];
         } else {
-            //TODO
+            if ([[value class] isSubclassOfClass:[obj class]]) {
+                obj = value;
+            } else {
+                //TODO,
+            }
         }
     }
     @catch (NSException *exception) {
@@ -165,6 +169,7 @@
     
     return map;
 }
+
 - (A_MappingMap*) A_GetMap:(Class)from To:(Class)to {
     NSString* key = [NSString stringWithFormat:@"%@_%@",
                      [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]];

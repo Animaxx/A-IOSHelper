@@ -15,11 +15,6 @@
 + (UIImage*) A_ImageFromLayer:(CALayer*)layer;
 + (UIImage*) A_ImageFromColor:(UIColor*)color;
 
-#pragma mark - Network loading
-+ (UIImage*) A_ImageDownload:(NSString*)imageURL;
-+ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL;
-+ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL DefaultImage:(NSString*)defaultImageName;
-
 #pragma mark - Image cutting
 - (UIImage*) A_ImageCutWithRect:(CGRect)rect;
 + (UIImage*) A_ImageByName:(NSString*)imageName CutWithRect:(CGRect)rect;
@@ -29,6 +24,19 @@
 
 - (UIImage*) A_ImageFitToSize:(CGSize)size;
 + (UIImage*) A_ImageByName: (NSString*)name FitToSize:(CGSize)size;
+
+#pragma mark - Alpha
+- (UIImage*) A_ImageAlpha:(CGFloat)alpha;
++ (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha;
+
+#pragma mark - Rotated image
+- (UIImage*) A_ImageRotatedByDegrees:(CGFloat)degrees;
++ (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees;
+
+#pragma mark - Network loading
++ (UIImage*) A_ImageDownload:(NSString*)imageURL;
++ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL;
++ (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL DefaultImage:(NSString*)defaultImageName;
 
 #pragma mark - Image operation - Blur
 - (UIImage*) A_GaussianBlurWithRadius:(float)radius;

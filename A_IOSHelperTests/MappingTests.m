@@ -30,8 +30,7 @@
 @implementation MappingTests
 
 -(void)testMapping {
-    [[[A_Mapper A_Instance] A_CreateMap:[TestDataModel class] To:[SecondDataModel class]] A_Bind:@"Name" To:@"Name"];
-    
+    [[[A_Mapper A_Instance] A_CreateMap:[TestDataModel class] To:[SecondDataModel class]] A_AddMemeber:@"Name" To:@"Name"];
 }
 
 @end
