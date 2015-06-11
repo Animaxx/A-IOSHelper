@@ -38,6 +38,9 @@
 + (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL;
 + (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL DefaultImage:(NSString*)defaultImageName;
 
+#pragma mark - QR code
++ (UIImage*) A_ImageQRCode:(NSString*)message Size:(CGSize)size;
+
 #pragma mark - Image operation - Blur
 - (UIImage*) A_GaussianBlurWithRadius:(float)radius;
 - (UIImage*) A_GaussianBlur;

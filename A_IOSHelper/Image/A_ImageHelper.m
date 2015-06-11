@@ -21,7 +21,6 @@
     }
     return nil;
 }
-
 + (UIImage*) A_ImageFromLayer:(CALayer*) layer{
     UIGraphicsBeginImageContext(layer.frame.size);
     
@@ -32,7 +31,6 @@
     
     return outputImage;
 }
-
 + (UIImage*) A_ImageFromColor:(UIColor*) color {
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     label.backgroundColor = color;
@@ -82,7 +80,6 @@
     }
     return image;
 }
-
 + (UIImage*) A_ImageByName: (NSString*) imageName CutWithRect:(CGRect) rect {
     UIImage* image = [UIImage imageNamed:imageName];
     return [A_ImageHelper A_Image:image CutWithRect:rect];
@@ -100,7 +97,6 @@
     }
     return image;
 }
-
 + (UIImage*) A_ImageByName: (NSString*) name ScaleToSize:(CGSize) size {
     UIImage* image = [UIImage imageNamed:name];
     if (image) {
@@ -129,7 +125,6 @@
     }
     return image;
 }
-
 + (UIImage*) A_ImageByName: (NSString*) name FitToSize:(CGSize) size{
     UIImage* image = [UIImage imageNamed:name];
     return [A_ImageHelper A_Image:image FitToSize:size];
@@ -159,7 +154,6 @@
     
     return newImage;
 }
-
 + (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha{
     UIImage* image = [UIImage imageNamed:name];
     return [A_ImageHelper A_Image:image Alpha:(CGFloat)alpha];
@@ -212,7 +206,6 @@
     UIImage* outImage = [UIImage imageWithCGImage: rotatedImage];
     return outImage;
 }
-
 + (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees {
     UIImage* image = [UIImage imageNamed:name];
     return [A_ImageHelper A_Image:image RotatedByDegrees:(CGFloat)degrees];
@@ -233,7 +226,6 @@
     
     return nil;
 }
-
 + (UIImage*) A_ImageDownloadAndCache: (NSString*)imageURL  {
     if (!imageURL)
         return nil;
@@ -262,7 +254,6 @@
     }
     return nil;
 }
-
 + (UIImage*) A_ImageDownloadAndCache: (NSString*)imageURL DefaultImage: (NSString*)defaultImageName {
     UIImage* _result = [self A_ImageDownloadAndCache:imageURL];
     if(!_result) {

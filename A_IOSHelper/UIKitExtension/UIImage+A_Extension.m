@@ -72,6 +72,11 @@
     return [A_ImageHelper A_ImageDownloadAndCache:imageURL DefaultImage:defaultImageName];
 }
 
+#pragma mark - QR code
++ (UIImage*) A_ImageQRCode:(NSString*)message Size:(CGSize)size {
+    return [A_ImageHelper A_ImageQRCode:message Size:size];
+}
+
 #pragma mark - Image operation - Blur
 - (UIImage*) A_GaussianBlurWithRadius:(float)radius {
     return [A_ImageHelper A_GaussianBlur:self Radius:radius];
