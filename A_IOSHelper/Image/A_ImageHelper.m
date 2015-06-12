@@ -211,6 +211,51 @@
     return [A_ImageHelper A_Image:image RotatedByDegrees:(CGFloat)degrees];
 }
 
++ (UIImage*) A_ImageToCircle:(UIImage*)image {
+    CGSize _size = image.size;
+    CGFloat _minValue = fminf(_size.width, _size.height);
+    
+    return [self A_Image:image ToRoundCorner:_minValue/2.0f WithSize:CGSizeMake(_minValue, _minValue)];
+}
++ (UIImage*) A_Image:(UIImage*)image ToRoundCorner:(float)radius WithSize:(CGSize)size {
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+    
+    CGContextRef contextRef = UIGraphicsGetCurrentContext();
+    CGContextBeginPath(contextRef);
+    
+    if (radius == 0 ) {
+        CGContextAddRect(contextRef, rect);
+    } else {
+        float fw, fh;
+        CGContextSaveGState(contextRef);
+        CGContextTranslateCTM(contextRef, CGRectGetMinX(rect), CGRectGetMinY(rect));
+        CGContextScaleCTM(contextRef, radius, radius);
+        fw = CGRectGetWidth(rect) / radius;
+        fh = CGRectGetHeight(rect) / radius;
+        
+        CGContextMoveToPoint(contextRef, fw, fh/2);  // Start at lower right corner
+        CGContextAddArcToPoint(contextRef, fw, fh, fw/2, fh, 1);  // Top right corner
+        CGContextAddArcToPoint(contextRef, 0, fh, 0, fh/2, 1); // Top left corner
+        CGContextAddArcToPoint(contextRef, 0, 0, fw/2, 0, 1); // Lower left corner
+        CGContextAddArcToPoint(contextRef, fw, 0, fw, fh/2, 1); // Back to lower right
+        
+        CGContextClosePath(contextRef);
+        CGContextRestoreGState(contextRef);
+    }
+    
+    CGContextClosePath(contextRef);
+    CGContextClip(contextRef);
+    
+    [image drawInRect:rect];
+    
+    UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newPic;
+}
+
 
 + (UIImage*) A_ImageDownload: (NSString*)imageURL {
     NSData* _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];

@@ -31,6 +31,10 @@
 + (UIImage*) A_Image:(UIImage *)image Alpha:(CGFloat)alpha;
 + (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha;
 
+#pragma mark - Draw image to circle
++ (UIImage*) A_ImageToCircle:(UIImage*)image;
++ (UIImage*) A_Image:(UIImage*)image ToRoundCorner:(float)radius WithSize:(CGSize)size;
+
 #pragma mark - Rotated image
 + (UIImage*) A_Image:(UIImage*)image RotatedByDegrees:(CGFloat)degrees;
 + (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees;

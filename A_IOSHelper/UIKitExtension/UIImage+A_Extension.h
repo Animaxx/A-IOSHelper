@@ -33,6 +33,15 @@
 - (UIImage*) A_ImageRotatedByDegrees:(CGFloat)degrees;
 + (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees;
 
+#pragma mark - Make to circle
+- (UIImage*) A_ImageToCircle;
+- (UIImage*) A_ImageToRoundCorner:(float)radius;
+- (UIImage*) A_ImageToRoundCorner:(float)radius WithSize:(CGSize)size;
+
++ (UIImage*) A_ImageToCircleByName: (NSString*)name;
++ (UIImage*) A_ImageByName: (NSString*)name ToRoundCorner:(float)radius;
++ (UIImage*) A_ImageByName: (NSString*)name ToRoundCorner:(float)radius WithSize:(CGSize)size;
+
 #pragma mark - Network loading
 + (UIImage*) A_ImageDownload:(NSString*)imageURL;
 + (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL;

@@ -61,6 +61,31 @@
     return [A_ImageHelper A_ImageByName:name RotatedByDegrees:degrees];
 }
 
+#pragma mark - Make to circle
+- (UIImage*) A_ImageToCircle {
+    return [A_ImageHelper A_ImageToCircle:self];
+}
+- (UIImage*) A_ImageToRoundCorner:(float)radius {
+    return [A_ImageHelper A_Image:self ToRoundCorner:radius WithSize:self.size];
+}
+- (UIImage*) A_ImageToRoundCorner:(float)radius WithSize:(CGSize)size{
+    return [A_ImageHelper A_Image:self ToRoundCorner:radius WithSize:size];
+}
+
++ (UIImage*) A_ImageToCircleByName: (NSString*)name{
+    UIImage* image = [UIImage imageNamed:name];
+    return [image A_ImageToCircle];
+}
++ (UIImage*) A_ImageByName: (NSString*)name ToRoundCorner:(float)radius{
+    UIImage* image = [UIImage imageNamed:name];
+    return [image A_ImageToRoundCorner:radius];
+}
++ (UIImage*) A_ImageByName: (NSString*)name ToRoundCorner:(float)radius WithSize:(CGSize)size{
+    UIImage* image = [UIImage imageNamed:name];
+    return [image A_ImageToRoundCorner:radius WithSize:size];
+}
+
+
 #pragma mark - Network loading
 + (UIImage*) A_ImageDownload:(NSString*)imageURL {
     return [A_ImageHelper A_ImageDownload:imageURL];

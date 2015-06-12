@@ -231,6 +231,19 @@
     return output;
 }
 
+- (NSArray*)A_ConvertArray:(NSArray*)from ToClass:(Class)toClass {
+    NSMutableArray* _list = [[NSMutableArray alloc] init];
+    
+    
+//    _list addObject:<#(id)#>
+    return _list;
+}
+- (NSArray*)A_ConvertArray:(NSArray*)from ToClassName:(NSString*)toClass {
+    NSMutableArray* _list = [[NSMutableArray alloc] init];
+    
+    return _list;
+}
+
 #pragma mark -
 
 
