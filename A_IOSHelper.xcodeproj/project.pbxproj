@@ -80,6 +80,8 @@
 		695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CA1B1FD4A200114443 /* A_Mapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		695F39CD1B1FD4A200114443 /* A_Mapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F39CB1B1FD4A200114443 /* A_Mapper.m */; };
 		69A487F51B252FA00090CD1D /* MappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A487F41B252FA00090CD1D /* MappingTests.m */; };
+		69B767B71B2F36FC009929B9 /* A_KeyframeProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 69B767B51B2F36FC009929B9 /* A_KeyframeProvider.h */; };
+		69B767B81B2F36FC009929B9 /* A_KeyframeProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 69B767B61B2F36FC009929B9 /* A_KeyframeProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,6 +173,8 @@
 		695F39CA1B1FD4A200114443 /* A_Mapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Mapper.h; path = Mapping/A_Mapper.h; sourceTree = "<group>"; };
 		695F39CB1B1FD4A200114443 /* A_Mapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Mapper.m; path = Mapping/A_Mapper.m; sourceTree = "<group>"; };
 		69A487F41B252FA00090CD1D /* MappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MappingTests.m; sourceTree = "<group>"; };
+		69B767B51B2F36FC009929B9 /* A_KeyframeProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_KeyframeProvider.h; path = Animation/A_KeyframeProvider.h; sourceTree = "<group>"; };
+		69B767B61B2F36FC009929B9 /* A_KeyframeProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_KeyframeProvider.m; path = Animation/A_KeyframeProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -409,6 +413,8 @@
 			children = (
 				2EB2EAC31A38DAB500946C51 /* A_Animation.h */,
 				2EB2EAC41A38DAB500946C51 /* A_Animation.m */,
+				69B767B51B2F36FC009929B9 /* A_KeyframeProvider.h */,
+				69B767B61B2F36FC009929B9 /* A_KeyframeProvider.m */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -502,6 +508,7 @@
 				2E0FD8891AB561AC00C1B828 /* NSDictionary+A_Extension.h in Headers */,
 				2E0FD8851AB558FF00C1B828 /* NSString+A_Extension.h in Headers */,
 				2E0FD88D1AB561C700C1B828 /* NSArray+A_Extension.h in Headers */,
+				69B767B71B2F36FC009929B9 /* A_KeyframeProvider.h in Headers */,
 				2ECD550D1AB0D334000E9802 /* UIControl+A_Extension.h in Headers */,
 				2ED75EA51ABA35E500B0FB5F /* UIViewController+A_Extension.h in Headers */,
 				2ED75EA11ABA359700B0FB5F /* UIImage+A_Extension.h in Headers */,
@@ -629,6 +636,7 @@
 				2ED75EAA1ABB69DE00B0FB5F /* UIColor+A_Extension.m in Sources */,
 				2E1187CC1A37518F0080FFB9 /* A_HtmlHelper.m in Sources */,
 				2EB099E01AB367D500D6DBDC /* NSDate+A_Extension.m in Sources */,
+				69B767B81B2F36FC009929B9 /* A_KeyframeProvider.m in Sources */,
 				2EC4940D1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.m in Sources */,
 				2ED75EA61ABA35E500B0FB5F /* UIViewController+A_Extension.m in Sources */,
 				2ECD550E1AB0D334000E9802 /* UIControl+A_Extension.m in Sources */,

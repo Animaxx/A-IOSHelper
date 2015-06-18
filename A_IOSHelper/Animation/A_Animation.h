@@ -36,20 +36,17 @@ typedef NS_ENUM(NSUInteger, A_Animation_MediaTimingType) {
 
 
 #pragma mark - Animation Creator
-+ (CABasicAnimation*) A_FadeIn:(double)duration;
-+ (CABasicAnimation*) A_FadeOut:(double)duration;
++ (CAAnimation*) A_FadeIn:(double)duration;
++ (CAAnimation*) A_FadeOut:(double)duration;
 
-+ (CABasicAnimation*) A_MoveTo:(double)duration OriginalPosition:(CGPoint)oiginalPosition Destination:(CGPoint)destination;
-+ (CABasicAnimation*) A_MoveToPosition:(CGPoint)destination Duration:(double)duration;
++ (CAAnimation*) A_MoveTo:(double)duration OriginalPosition:(CGPoint)oiginalPosition Destination:(CGPoint)destination;
++ (CAAnimation*) A_MoveToPosition:(CGPoint)destination Duration:(double)duration;
 
-+ (CABasicAnimation*) A_ChangeSize:(double)duration OriginalSize:(CGRect)oiginalBounds To:(CGSize)size;
-+ (CABasicAnimation*) A_ChangeShapeToBall: (double)duration OriginalRadius:(CGFloat)originalradius To: (CGFloat)radius;
++ (CAAnimation*) A_ChangeSize:(double)duration OriginalSize:(CGRect)oiginalBounds To:(CGSize)size;
++ (CAAnimation*) A_ChangeShapeToBall: (double)duration OriginalRadius:(CGFloat)originalradius To: (CGFloat)radius;
 
 #pragma mark - Transition Creator
 + (CATransition*) A_CreateSystemTransition:(A_Animation_SystemTransitionType)transitionType Direction:(A_Animation_DirectionType)directionType Duration:(float)duration;
-
-#pragma mark - Media Timing Creator
-+ (CAMediaTimingFunction*) A_CreateMediaTimingFunction: (A_Animation_MediaTimingType)type;
 
 #pragma mark - Animation Executor
 + (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations;

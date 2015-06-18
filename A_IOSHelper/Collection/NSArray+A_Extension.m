@@ -62,6 +62,13 @@
     }
     return result;
 }
+
+- (void) A_Each: (void (^)(id x))block {
+    id element;
+    for (element in self) {
+        block(element);
+    }
+}
 - (BOOL) A_Any: (bool (^)(id x))block {
     id element;
     for (element in self) {

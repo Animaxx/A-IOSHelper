@@ -19,6 +19,8 @@
 - (NSArray*) A_Take: (int)count;
 - (NSArray*) A_Skip: (int)count;
 - (NSArray*) A_Where: (bool (^)(id x))block;
+
+- (void) A_Each: (void (^)(id x))block;
 - (BOOL) A_Any: (bool (^)(id x))block;
 - (id) A_FirstOrNil: (bool (^)(id x))block;
 - (id) A_LastOrNil: (bool (^)(id x))block;

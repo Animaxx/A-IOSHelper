@@ -14,7 +14,7 @@
 @implementation A_Animation
 
 #pragma mark - Creating Animation
-+ (CABasicAnimation*) A_FadeIn:(double)duration {
++ (CAAnimation*) A_FadeIn:(double)duration {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     animation.beginTime = 0.0f;
     animation.duration = duration;
@@ -25,7 +25,7 @@
     animation.additive = NO;
     return animation;
 }
-+ (CABasicAnimation*) A_FadeOut:(double)duration {
++ (CAAnimation*) A_FadeOut:(double)duration {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     animation.beginTime = 0.0f;
     animation.duration = duration;
@@ -36,7 +36,7 @@
     animation.additive = NO;
     return animation;
 }
-+ (CABasicAnimation*) A_MoveTo:(double)duration OriginalPosition:(CGPoint)oiginalPosition Destination:(CGPoint)destination {
++ (CAAnimation*) A_MoveTo:(double)duration OriginalPosition:(CGPoint)oiginalPosition Destination:(CGPoint)destination {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
     animation.beginTime = 0.0f;
     animation.duration = duration;
@@ -47,7 +47,7 @@
     animation.additive = NO;
     return animation;
 }
-+ (CABasicAnimation*) A_MoveToPosition:(CGPoint)destination Duration:(double)duration {
++ (CAAnimation*) A_MoveToPosition:(CGPoint)destination Duration:(double)duration {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
     animation.beginTime = 0.0f;
     animation.duration = duration;
@@ -58,7 +58,7 @@
     return animation;
 }
 
-+ (CABasicAnimation*) A_ChangeSize:(double)duration OriginalSize:(CGRect)oiginalBounds To:(CGSize)size {
++ (CAAnimation*) A_ChangeSize:(double)duration OriginalSize:(CGRect)oiginalBounds To:(CGSize)size {
     CGRect newBounds = oiginalBounds;
     newBounds.size = size;
     
@@ -72,7 +72,7 @@
     animation.additive = NO;
     return animation;
 }
-+ (CABasicAnimation*) A_ChangeShapeToBall: (double)duration OriginalRadius:(CGFloat)originalradius To: (CGFloat)radius {
++ (CAAnimation*) A_ChangeShapeToBall: (double)duration OriginalRadius:(CGFloat)originalradius To: (CGFloat)radius {
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
     animation.duration = duration;
     animation.fromValue = [NSNumber numberWithFloat:originalradius];
@@ -131,16 +131,6 @@
     return transition;
 }
 
-+ (CAMediaTimingFunction*) A_CreateMediaTimingFunction: (A_Animation_MediaTimingType)type {
-    switch (type) {
-        case A_Animation_MeidaTiming_Spring:
-            return [CAMediaTimingFunction functionWithControlPoints:0.5 :1.5 :1 :1];
-            break;
-        default:
-            break;
-    }
-    return [CAMediaTimingFunction functionWithControlPoints:0.5 :1.5 :1 :1];
-}
 
 #pragma mark - Executing Animation
 + (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations {
