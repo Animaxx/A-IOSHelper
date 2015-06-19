@@ -47,7 +47,7 @@ static char _a_associatedObjectKey;
     
     A_BlockWrapper* _block = [A_BlockWrapper A_Init:(__bridge void *)(handler) WithObj:arg];
     [handlers addObject:_block];
-    [self addTarget:_block action:@selector(A_Execute:) forControlEvents:UIControlEventTouchUpInside];
+    [self addTarget:_block action:@selector(A_Execute:) forControlEvents:controlEvents];
 }
 - (void)A_Event_Add:(void (^)(id sender))handler forControlEvents:(UIControlEvents)controlEvents {
     NSParameterAssert(handler);
@@ -67,7 +67,7 @@ static char _a_associatedObjectKey;
     
     A_BlockWrapper* _block = [A_BlockWrapper A_Init:(__bridge void *)(handler)];
     [handlers addObject:_block];
-    [self addTarget:_block action:@selector(A_Execute:) forControlEvents:UIControlEventTouchUpInside];
+    [self addTarget:_block action:@selector(A_Execute:) forControlEvents:controlEvents];
 }
 
 - (void)A_Event_Remove:(UIControlEvents)controlEvent {
