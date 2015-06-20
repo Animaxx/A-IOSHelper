@@ -53,4 +53,14 @@
 - (void) A_Shape_ToBall;
 
 
+
+
+#pragma mark - Animation Provide
+- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Duration:(double)duration Start:(id)start End:(id)end FPS:(A_Animation_kFPS)kps;
+- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Duration:(double)duration Start:(id)start End:(id)end;
+- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Duration:(double)duration End:(id)end;
+- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type End:(id)end;
+
+
+
 @end

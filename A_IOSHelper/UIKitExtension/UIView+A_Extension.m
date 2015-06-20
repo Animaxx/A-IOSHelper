@@ -10,6 +10,8 @@
 #import "UIView+A_Extension.h"
 #import "A_DeviceHelper.h"
 
+#define defaultDurationTime 0.5f;
+
 @implementation UIView (A_Extension)
 
 #pragma mark - Animation - Movement
@@ -34,7 +36,7 @@
             return;
     }
     
-    CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
+    CAAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
     [self.layer addAnimation:_animation forKey:@"animax_moveOut"];
     self.layer.position = _destinationPoint;
 }
@@ -62,7 +64,7 @@
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:block];
         
-        CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
+        CAAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
         [self.layer addAnimation:_animation forKey:@"animax_moveOut"];
         self.layer.position = _destinationPoint;
     } [CATransaction commit];
@@ -79,7 +81,7 @@
 - (void) A_Animation_MoveToCenter: (double)duration {
     CGPoint _destinationPoint = [A_Animation A_MakeLayerPosition:self.layer PositionX:(([A_DeviceHelper A_DeviceWidth] - self.layer.frame.size.width)/2) Y:(([A_DeviceHelper A_DeviceHeight] - self.layer.frame.size.height)/2)];
     
-    CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
+    CAAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
     [self.layer addAnimation:_animation forKey:@"animax_moveToCenter"];
     self.layer.position = _destinationPoint;
 }
@@ -89,7 +91,7 @@
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:block];
         
-        CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
+        CAAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
         [self.layer addAnimation:_animation forKey:@"animax_moveToCenter"];
         self.layer.position = _destinationPoint;
     } [CATransaction commit];
@@ -98,7 +100,7 @@
 - (void) A_Animation_MoveToPostionX: (float)x Y:(float)y  Duration:(double)duration  {
     CGPoint _destinationPoint = [A_Animation A_MakeLayerPosition:self.layer PositionX:x Y:y];
     
-    CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
+    CAAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
     [self.layer addAnimation:_animation forKey:@"animax_moveToPosition"];
     self.layer.position = _destinationPoint;
 }
@@ -108,7 +110,7 @@
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:block];
         
-        CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
+        CAAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
         [self.layer addAnimation:_animation forKey:@"animax_moveToPosition"];
         self.layer.position = _destinationPoint;
     } [CATransaction commit];
@@ -117,7 +119,7 @@
 - (void) A_Animation_MoveToAbsolutePostionX: (float)x Y:(float)y  Duration:(double)duration {
     CGPoint _destinationPoint = CGPointMake(x, y);
     
-    CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
+    CAAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
     [self.layer addAnimation:_animation forKey:@"animax_moveToAbsolutePosition"];
     self.layer.position = _destinationPoint;
 }
@@ -127,7 +129,7 @@
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:block];
         
-        CABasicAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
+        CAAnimation* _animation = [A_Animation A_MoveTo:duration OriginalPosition:self.layer.position Destination:_destinationPoint];
         [self.layer addAnimation:_animation forKey:@"animax_moveToAbsolutePosition"];
         self.layer.position = _destinationPoint;
     } [CATransaction commit];
@@ -147,7 +149,7 @@
 
 #pragma mark - Animation - Change Shape
 - (void) A_Animation_FadeIn: (double)duration {
-    CABasicAnimation* _animation = [A_Animation A_FadeIn:duration];
+    CAAnimation* _animation = [A_Animation A_FadeIn:duration];
     [self.layer addAnimation:_animation forKey:@"animax_fadeIn"];
     
     self.layer.opacity = 1.0f;
@@ -159,7 +161,7 @@
     [CATransaction begin]; {
         [CATransaction setCompletionBlock: block];
         
-        CABasicAnimation* _animation = [A_Animation A_FadeIn:duration];
+        CAAnimation* _animation = [A_Animation A_FadeIn:duration];
         [self.layer addAnimation:_animation forKey:@"animax_fadeIn"];
         
         self.layer.opacity = 1.0f;
@@ -168,7 +170,7 @@
     } [CATransaction commit];
 }
 - (void) A_Animation_FadeOut: (double)duration {
-    CABasicAnimation* _animation = [A_Animation A_FadeOut:duration];
+    CAAnimation* _animation = [A_Animation A_FadeOut:duration];
     [self.layer addAnimation:_animation forKey:@"animax_fadeOut"];
     
     self.layer.opacity = 0.0f;
@@ -177,7 +179,7 @@
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:block];
         
-        CABasicAnimation* _animation = [A_Animation A_FadeOut:duration];
+        CAAnimation* _animation = [A_Animation A_FadeOut:duration];
         [self.layer addAnimation:_animation forKey:@"animax_fadeOut"];
         self.layer.opacity = 0.0f;
         
@@ -185,7 +187,7 @@
 }
 
 - (void) A_Animation_ToSize: (CGSize)size Duration:(double)duration {
-    CABasicAnimation* _animation = [A_Animation A_ChangeSize:duration OriginalSize:self.layer.bounds To:size];
+    CAAnimation* _animation = [A_Animation A_ChangeSize:duration OriginalSize:self.layer.bounds To:size];
     
     CGRect newBounds = self.layer.bounds;
     newBounds.size = size;
@@ -197,7 +199,7 @@
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:block];
         
-        CABasicAnimation* _animation = [A_Animation A_ChangeSize:duration OriginalSize:self.layer.bounds To:size];
+        CAAnimation* _animation = [A_Animation A_ChangeSize:duration OriginalSize:self.layer.bounds To:size];
         
         CGRect newBounds = self.layer.bounds;
         newBounds.size = size;
@@ -234,7 +236,7 @@
 }
 
 - (void) A_Animation_ChangeCornerRadius: (CGFloat)radius Duration:(double)duration {
-    CABasicAnimation* _animation = [A_Animation A_ChangeShapeToBall:duration
+    CAAnimation* _animation = [A_Animation A_ChangeShapeToBall:duration
                                                      OriginalRadius:self.layer.cornerRadius
                                                                  To:radius];
     
@@ -245,7 +247,7 @@
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:block];
         
-        CABasicAnimation* _animation = [A_Animation A_ChangeShapeToBall:duration
+        CAAnimation* _animation = [A_Animation A_ChangeShapeToBall:duration
                                                          OriginalRadius:self.layer.cornerRadius
                                                                      To:radius];
         
@@ -267,6 +269,45 @@
     }
     
     self.layer.cornerRadius = _radius;
+}
+
+
+
+
+
+#pragma mark - Animation Provide
+- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Duration:(double)duration Start:(id)start End:(id)end FPS:(A_Animation_kFPS)kps {
+    
+    NSParameterAssert(keypath);
+    NSParameterAssert(type);
+    NSParameterAssert(end);
+    
+    if (kps<=0) {
+        kps = A_Animation_kFPS_middle;
+    }
+    if (!start) {
+        start = [self.layer valueForKeyPath:keypath];
+    }
+    if (duration<=0) {
+        duration = defaultDurationTime;
+    }
+    
+    CAKeyframeAnimation* keyFrames = [A_Animation A_GenerateKeyframe:keypath Type:type Duration:duration FPS:kps Start:start End:end];
+    [self.layer addAnimation:keyFrames forKey:nil];
+    [self.layer setValue:end forKeyPath:keypath];
+}
+- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Duration:(double)duration Start:(id)start End:(id)end {
+    [self A_AnimationSet:keypath AnimtionType:type Duration:duration Start:start End:end FPS:A_Animation_kFPS_middle];
+}
+- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Duration:(double)duration End:(id)end {
+    [self A_AnimationSet:keypath AnimtionType:type Duration:duration Start:nil End:end FPS:A_Animation_kFPS_middle];
+}
+- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type End:(id)end {
+    [self A_AnimationSet:keypath AnimtionType:type Duration:0 Start:nil End:end FPS:A_Animation_kFPS_middle];
+}
+
+- (void) A_AnimationGroupSet {
+    // TODO:
 }
 
 

@@ -7,12 +7,18 @@
 //
 
 #import "NSMutableDictionary+A_Extension.h"
-#import "A_CollectionHelper.h"
 
 @implementation NSMutableDictionary(A_Extension)
 
 - (void)A_Swap:(NSMutableDictionary*)dictionary{
-    [A_CollectionHelper A_SwapDictionary:self With:dictionary];
+    id key;
+    for (key in self) {
+        if ([self objectForKey:key] && [dictionary objectForKey:key]) {
+            id temp = [dictionary objectForKey:key];
+            [dictionary setObject:[self objectForKey:key] forKey:key];
+            [self setObject:[temp copy] forKey:key];
+        }
+    }
 }
 
 @end

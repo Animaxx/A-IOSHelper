@@ -66,6 +66,10 @@
     
     return colors;
 }
+
++ (UIColor*) MakeColorByR:(NSInteger)r G:(NSInteger)g B:(NSInteger)b {
+    return [UIColor colorWithRed:(float)r/255 green:(float)g/255 blue:(float)b/255 alpha:1.0f];
+}
 + (UIColor*) A_ColorMakeFormString:(NSString*) str {
     if ([str hasPrefix:@"#"]) {
         str = [str substringFromIndex:1];

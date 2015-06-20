@@ -7,16 +7,32 @@
 //
 
 #import "NSArray+A_Extension.h"
-#import "A_CollectionHelper.h"
 #import "A_JSONHelper.h"
 
 @implementation NSArray (A_Extension)
 
 - (NSDictionary*) A_CombineKeys: (NSArray*)keys {
-    return [A_CollectionHelper A_CombineArraysToDictionary:keys Values:self];
+    NSMutableDictionary* _dic = [[NSMutableDictionary alloc] init];
+    for (NSUInteger i=0; i<[keys count]; i++) {
+        if ([self count] > i)
+            [_dic setObject:[self objectAtIndex:i] forKey:[keys objectAtIndex:i]];
+        else
+            [_dic setObject:[NSNull null] forKey:[keys objectAtIndex:i]];
+    }
+    
+    return  _dic;
+
 }
 - (NSDictionary*) A_CombineValues: (NSArray*)values {
-    return [A_CollectionHelper A_CombineArraysToDictionary:self Values:values];
+    NSMutableDictionary* _dic = [[NSMutableDictionary alloc] init];
+    for (NSUInteger i=0; i<[self count]; i++) {
+        if ([values count] > i)
+            [_dic setObject:[values objectAtIndex:i] forKey:[self objectAtIndex:i]];
+        else
+            [_dic setObject:[NSNull null] forKey:[self objectAtIndex:i]];
+    }
+    
+    return  _dic;
 }
 - (NSData*) A_CovertToJSONData {
     return [A_JSONHelper A_ConvertArrayToData:self];

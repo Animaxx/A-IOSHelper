@@ -7,16 +7,24 @@
 //
 
 #import "NSDictionary+A_Extension.h"
-#import "A_CollectionHelper.h"
 #import "A_JSONHelper.h"
 
 @implementation NSDictionary (A_Extension)
 
 - (NSArray*) A_ToArray {
-    return [A_CollectionHelper A_DictionaryToArray:self];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:self.count];
+    [self enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [result addObject:obj];
+    }];
+    
+    return result;
 }
 - (NSArray*) A_SortedKeys {
-    return [A_CollectionHelper A_SortedKeys:self];
+    NSArray *sortedArray;
+    sortedArray = [[self allKeys] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        return [(NSString*)b compare:(NSString*)a];
+    }];
+    return sortedArray;
 }
 - (NSData*) A_CovertToJSONData {
     return [A_JSONHelper A_ConvertDictionaryToData:self];

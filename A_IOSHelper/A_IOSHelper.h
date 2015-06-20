@@ -8,7 +8,6 @@
 
 #import <A_IOSHelper/A_DeviceHelper.h>
 #import <A_IOSHelper/A_PlistHelper.h>
-#import <A_IOSHelper/A_CollectionHelper.h>
 #import <A_IOSHelper/A_ColorHelper.h>
 #import <A_IOSHelper/A_HtmlHelper.h>
 #import <A_IOSHelper/A_ImageHelper.h>

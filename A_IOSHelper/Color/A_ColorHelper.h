@@ -11,8 +11,7 @@
 
 @interface A_ColorHelper : NSObject
 
-+ (NSNumber*) A_ToNumber: (NSString*) hex;
-+ (NSArray *) A_SpliteColor:(NSString*) colorString;
++ (UIColor*) MakeColorByR:(NSInteger)r G:(NSInteger)g B:(NSInteger)b;
 + (UIColor*) A_ColorMakeFormString:(NSString*) str;
 
 @end
