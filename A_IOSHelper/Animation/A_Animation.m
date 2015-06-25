@@ -9,222 +9,11 @@
 #import "A_Animation.h"
 #import <UIKit/UIKit.h>
 
-#import "A_DeviceHelper.h"
+
+#define RADIANS_TO_DEGREES(x) ((x)/M_PI*180.0)
+#define DEGREES_TO_RADIANS(x) ((x)/180.0*M_PI)
 
 @implementation A_Animation
-
-#pragma mark - Creating Animation
-+ (CAAnimation*) A_FadeIn:(double)duration {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    animation.beginTime = 0.0f;
-    animation.duration = duration;
-    animation.fromValue = [NSNumber numberWithFloat:0.0f];
-    animation.toValue = [NSNumber numberWithFloat:1.0f];
-    animation.removedOnCompletion = YES;
-    animation.fillMode = kCAFillModeBoth;
-    animation.additive = NO;
-    return animation;
-}
-+ (CAAnimation*) A_FadeOut:(double)duration {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    animation.beginTime = 0.0f;
-    animation.duration = duration;
-    animation.fromValue = [NSNumber numberWithFloat:1.0f];
-    animation.toValue = [NSNumber numberWithFloat:0.0f];
-    animation.removedOnCompletion = YES;
-    animation.fillMode = kCAFillModeBoth;
-    animation.additive = NO;
-    return animation;
-}
-+ (CAAnimation*) A_MoveTo:(double)duration OriginalPosition:(CGPoint)oiginalPosition Destination:(CGPoint)destination {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    animation.beginTime = 0.0f;
-    animation.duration = duration;
-    animation.fromValue = [NSValue valueWithCGPoint:oiginalPosition];
-    animation.toValue = [NSValue valueWithCGPoint:destination];
-    animation.removedOnCompletion = YES;
-    animation.fillMode = kCAFillModeBoth;
-    animation.additive = NO;
-    return animation;
-}
-+ (CAAnimation*) A_MoveToPosition:(CGPoint)destination Duration:(double)duration {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    animation.beginTime = 0.0f;
-    animation.duration = duration;
-    animation.toValue = [NSValue valueWithCGPoint:destination];
-    animation.removedOnCompletion = YES;
-    animation.fillMode = kCAFillModeBoth;
-    animation.additive = NO;
-    return animation;
-}
-
-+ (CAAnimation*) A_ChangeSize:(double)duration OriginalSize:(CGRect)oiginalBounds To:(CGSize)size {
-    CGRect newBounds = oiginalBounds;
-    newBounds.size = size;
-    
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-    animation.beginTime = 0.0f;
-    animation.duration = duration;
-    animation.fromValue = [NSValue valueWithCGRect:oiginalBounds];
-    animation.toValue = [NSValue valueWithCGRect:newBounds];
-    animation.removedOnCompletion = YES;
-    animation.fillMode = kCAFillModeBoth;
-    animation.additive = NO;
-    return animation;
-}
-+ (CAAnimation*) A_ChangeShapeToBall: (double)duration OriginalRadius:(CGFloat)originalradius To: (CGFloat)radius {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
-    animation.duration = duration;
-    animation.fromValue = [NSNumber numberWithFloat:originalradius];
-    animation.toValue = [NSNumber numberWithFloat:radius];
-    animation.removedOnCompletion = YES;
-    animation.fillMode = kCAFillModeBoth;
-    animation.additive = NO;
-    return animation;
-}
-
-#pragma mark - Transition Creator
-+ (CATransition*) A_CreateSystemTransition:(A_Animation_SystemTransitionType)transitionType Direction:(A_Animation_DirectionType)directionType Duration:(float)duration {
-
-    CATransition* transition = [CATransition animation];
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
-    transition.duration = duration;
-    
-    switch (transitionType) {
-        case A_Animation_SystemTransition_Reveal:
-            transition.type = kCATransitionReveal;
-            break;
-        case A_Animation_SystemTransition_MoveIn:
-            transition.type = kCATransitionMoveIn;
-            break;
-        case A_Animation_SystemTransition_Push:
-            transition.type = kCATransitionPush;
-            break;
-        case A_Animation_SystemTransition_Fade:
-            transition.type = kCATransitionFade;
-            break;
-        default:
-            transition.type = kCATransitionFade;
-            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Create System Transition> \r\n Unkonw Transition Type \r\n -------- \r\n\r\n");
-            break;
-    }
-    
-    switch (directionType) {
-        case A_Animation_Direction_Top:
-            transition.subtype = kCATransitionFromTop;
-            break;
-        case A_Animation_Direction_Right:
-            transition.subtype = kCATransitionFromRight;
-            break;
-        case A_Animation_Direction_Bottom:
-            transition.subtype = kCATransitionFromBottom;
-            break;
-        case A_Animation_Direction_Left:
-            transition.subtype = kCATransitionFromLeft;
-            break;
-        default:
-            transition.subtype = kCATransitionFromBottom;
-            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Create System Transition> \r\n Unkonw Direction Type \r\n -------- \r\n\r\n");
-            break;
-    }
-    
-    return transition;
-}
-
-
-#pragma mark - Executing Animation
-+ (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations {
-    [UIView animateWithDuration:duration animations:animations];
-}
-+ (void) A_AnimationBlock: (double)duration Animation:(void (^)(void))animations WhenCompleted:(void (^)(BOOL finished))block  {
-    [UIView animateWithDuration:duration animations:animations completion:block];
-}
-+ (void) A_SubmitTransaction: (CALayer*)layer Animations:(NSDictionary*)animations WhenCompleted:(void (^)(void))block {
-    [CATransaction begin]; {
-        [CATransaction setCompletionBlock:block];
-        
-        for (NSString* key in animations) {
-            CABasicAnimation* animationItem = [animations objectForKey:key];
-            [layer addAnimation:animationItem forKey:key];
-        }
-    } [CATransaction commit];
-}
-
-
-+ (void) A_CardIn:(CALayer*)layer Direction:(A_Animation_DirectionType)direction Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block{
-    
-    CATransform3D t = CATransform3DIdentity;
-    t = CATransform3DScale(t, 0.85, 0.85, 1);
-    layer.transform = t;
-    
-    CGPoint _originalPoint = layer.position;
-    
-    switch (direction) {
-        case A_Animation_Direction_Top:
-            layer.position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.origin.x Y:layer.frame.size.height*-1];
-            break;
-        case A_Animation_Direction_Left:
-            layer.position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.size.width*-1 Y:layer.frame.origin.y];
-            break;
-        case A_Animation_Direction_Bottom:
-            layer.position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.origin.x Y:[A_DeviceHelper A_DeviceHeight]];
-            break;
-        case A_Animation_Direction_Right:
-            layer.position = [A_Animation A_MakeLayerPosition:layer PositionX:[A_DeviceHelper A_DeviceWidth] Y:layer.frame.origin.y];
-            break;
-        default:
-            break;
-    }
-    
-    [layer setHidden:NO];
-    
-    [UIView animateKeyframesWithDuration:duration delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        [UIView addKeyframeWithRelativeStartTime:0.0f relativeDuration:(duration*0.2) animations:^{
-            layer.position = _originalPoint;
-        }];
-        [UIView addKeyframeWithRelativeStartTime:(duration*0.8) relativeDuration:(duration*0.2) animations:^{
-            layer.transform = CATransform3DIdentity;
-        }];
-    } completion:block];
-}
-+ (void) A_CardOut:(CALayer*)layer Direction:(A_Animation_DirectionType)direction Duration:(double)duration WhenCompleted:(void (^)(BOOL finished))block{
-    
-    CATransform3D t = CATransform3DIdentity;
-    t = CATransform3DScale(t, 0.85, 0.85, 1);
-    
-    CGPoint _position;
-    switch (direction) {
-        case A_Animation_Direction_Top:
-            _position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.origin.x Y:layer.frame.size.height*-1];
-            break;
-        case A_Animation_Direction_Left:
-            _position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.size.width*-1 Y:layer.frame.origin.y];
-            break;
-        case A_Animation_Direction_Bottom:
-            _position = [A_Animation A_MakeLayerPosition:layer PositionX:layer.frame.origin.x Y:[A_DeviceHelper A_DeviceHeight]];
-            break;
-        case A_Animation_Direction_Right:
-            _position = [A_Animation A_MakeLayerPosition:layer PositionX:[A_DeviceHelper A_DeviceWidth] Y:layer.frame.origin.y];
-            break;
-        default:
-            break;
-    }
-    
-    [UIView animateKeyframesWithDuration:duration delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        [UIView addKeyframeWithRelativeStartTime:0.0f relativeDuration:(duration*0.2) animations:^{
-            layer.transform = t;
-        }];
-        [UIView addKeyframeWithRelativeStartTime:(duration*0.8) relativeDuration:(duration*0.2) animations:^{
-            layer.position = _position;
-        }];
-    } completion:block];
-}
-
-#pragma mark - Calculating helper
-+ (CGPoint) A_MakeLayerPosition: (CALayer*)layer PositionX:(float)x Y:(float)y {
-    CGPoint _destinationPoint = CGPointMake(x + (layer.frame.size.width * layer.anchorPoint.x), y + (layer.frame.size.height * layer.anchorPoint.y));
-    return _destinationPoint;
-}
 
 #pragma mark - Keyframe animation
 typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d);
@@ -232,9 +21,8 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
 +(keyframeCalculatingBlock) _methodProvider:(A_AnimationType)type {
     keyframeCalculatingBlock _calculatingBlock;
     switch (type) {
+            // t: current time, b: begInnIng value, c: change In value, d: duration
             //http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js
-            //http://easings.net/
-            
             // Quint
         case A_AnimationType_easeInQuint:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
@@ -392,7 +180,27 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 return (b-c)*pow(2.71, a*t)*cos(6.0*M_PI/d*t)+c;
             };
             break;
-            
+        case A_AnimationType_longSpring:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                double a = log2f(3.0f/fabs(b-c))/d;
+                if (a>0) a = -1.0f*a;
+                return (b-c)*pow(2.71, a*t)*cos(12.0*M_PI/d*t)+c;
+            };
+            break;
+        case A_AnimationType_bigSpring:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                double a = log2f(6.0f/fabs(b-c))/d;
+                if (a>0) a = -1.0f*a;
+                return (b-c)*pow(2.71, a*t)*cos(6.0*M_PI/d*t)+c;
+            };
+            break;
+        case A_AnimationType_bigLongSpring:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                double a = log2f(6.0f/fabs(b-c))/d;
+                if (a>0) a = -1.0f*a;
+                return (b-c)*pow(2.71, a*t)*cos(12.0*M_PI/d*t)+c;
+            };
+            break;
         default:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 return ((c-b)/d)*t;
@@ -406,9 +214,11 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
     
     keyframeCalculatingBlock _calculatingBlock = [self _methodProvider:type];
     NSMutableArray* _values = [[NSMutableArray alloc] initWithCapacity:steps];
+    
+    double _v = 0.0;
     for (int i=0; i<steps; i++) {
-        CGFloat _v = (CGFloat)_calculatingBlock((double)i, (double)start, (double)end, (double)steps);
-        [_values addObject:@(_v)];
+        _v = _calculatingBlock((double)(steps * 1.0 / (double)(steps) * i), 0.0, 100.0, (double)steps);
+        [_values addObject:@(start + (_v / 100.0) * (end - start))];
     }
     
     return _values;
@@ -416,10 +226,15 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
 +(NSArray*)_getPointValues:(A_AnimationType)type Steps:(NSInteger)steps Start:(CGPoint)start End:(CGPoint)end {
     keyframeCalculatingBlock _calculatingBlock = [self _methodProvider:type];
     NSMutableArray* _values = [[NSMutableArray alloc] initWithCapacity:steps];
+    
+    double _v = 0.0;
     for (int i=0; i<steps; i++) {
+        _v = _calculatingBlock((double)(steps * 1.0 / (double)(steps) * i), 0.0, 100.0, (double)steps);
+        
         CGPoint point = {
-            .x = _calculatingBlock((double)i, (double)start.x, (double)end.x, (double)steps),
-            .y = _calculatingBlock((double)i, (double)start.y, (double)end.y, (double)steps),
+            .x = start.x + (_v / 100.0) * (end.x - start.x),
+            //_calculatingBlock((double)i, (double)start.x, (double)end.x, (double)steps),
+            .y = start.y + (_v / 100.0) * (end.y - start.y),
         };
         [_values addObject:[NSValue valueWithCGPoint:point]];
     }
@@ -429,10 +244,16 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
 +(NSArray*)_getSizeValues:(A_AnimationType)type Steps:(NSInteger)steps Start:(CGSize)start End:(CGSize)end {
     keyframeCalculatingBlock _calculatingBlock = [self _methodProvider:type];
     NSMutableArray* _values = [[NSMutableArray alloc] initWithCapacity:steps];
+    
+    double _v = 0.0;
     for (int i=0; i<steps; i++) {
+        _v = _calculatingBlock((double)(steps * 1.0 / (double)(steps) * i), 0.0, 100.0, (double)steps);
+        
         CGSize size = {
-            .width = _calculatingBlock((double)i, (double)start.width, (double)end.width, (double)steps),
-            .height = _calculatingBlock((double)i, (double)start.height, (double)end.height, (double)steps),
+            .width = start.width + (_v / 100.0) * (end.width - start.width),
+            .height  = start.height + (_v / 100.0) * (end.height - start.height),
+//            .width = _calculatingBlock((double)i, (double)start.width, (double)end.width, (double)steps),
+//            .height = _calculatingBlock((double)i, (double)start.height, (double)end.height, (double)steps),
         };
         [_values addObject:[NSValue valueWithCGSize:size]];
     }
@@ -442,12 +263,21 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
 +(NSArray*)_getRectValues:(A_AnimationType)type Steps:(NSInteger)steps Start:(CGRect)start End:(CGRect)end {
     keyframeCalculatingBlock _calculatingBlock = [self _methodProvider:type];
     NSMutableArray* _values = [[NSMutableArray alloc] initWithCapacity:steps];
+    
+    double _v = 0.0;
     for (int i=0; i<steps; i++) {
+        _v = _calculatingBlock((double)(steps * 1.0 / (double)(steps) * i), 0.0, 100.0, (double)steps);
+        
         CGRect rect = {
-            .origin.x = _calculatingBlock((double)i, (double)start.origin.x, (double)end.origin.x, (double)steps),
-            .origin.y = _calculatingBlock((double)i, (double)start.origin.y, (double)end.origin.y, (double)steps),
-            .size.width = _calculatingBlock((double)i, (double)start.size.width, (double)end.size.width, (double)steps),
-            .size.height = _calculatingBlock((double)i, (double)start.size.height, (double)end.size.height, (double)steps),
+            .origin.x = start.origin.x + (_v / 100.0) * (end.origin.x - start.origin.x),
+            .origin.y = start.origin.y + (_v / 100.0) * (end.origin.y - start.origin.y),
+            .size.width = start.size.width + (_v / 100.0) * (end.size.width - start.size.width),
+            .size.height = start.size.height + (_v / 100.0) * (end.size.height - start.size.height),
+            
+//            .origin.x = _calculatingBlock((double)i, (double)start.origin.x, (double)end.origin.x, (double)steps),
+//            .origin.y = _calculatingBlock((double)i, (double)start.origin.y, (double)end.origin.y, (double)steps),
+//            .size.width = _calculatingBlock((double)i, (double)start.size.width, (double)end.size.width, (double)steps),
+//            .size.height = _calculatingBlock((double)i, (double)start.size.height, (double)end.size.height, (double)steps),
             
         };
         [_values addObject:[NSValue valueWithCGRect:rect]];
@@ -458,24 +288,28 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
 +(NSArray*)_getCATransform3DValues:(A_AnimationType)type Steps:(NSInteger)steps Start:(CATransform3D)start End:(CATransform3D)end {
     keyframeCalculatingBlock _calculatingBlock = [self _methodProvider:type];
     NSMutableArray* _values = [[NSMutableArray alloc] initWithCapacity:steps];
+    
+    double _v = 0.0;
     for (int i=0; i<steps; i++) {
+        _v = _calculatingBlock((double)(steps * 1.0 / (double)(steps) * i), 0.0, 100.0, (double)steps);
+        
         CATransform3D transform3d = {
-            .m11 = _calculatingBlock((double)i, (double)start.m11, (double)end.m11, (double)steps),
-            .m12 = _calculatingBlock((double)i, (double)start.m12, (double)end.m12, (double)steps),
-            .m13 = _calculatingBlock((double)i, (double)start.m13, (double)end.m13, (double)steps),
-            .m14 = _calculatingBlock((double)i, (double)start.m14, (double)end.m14, (double)steps),
-            .m21 = _calculatingBlock((double)i, (double)start.m21, (double)end.m21, (double)steps),
-            .m22 = _calculatingBlock((double)i, (double)start.m22, (double)end.m22, (double)steps),
-            .m23 = _calculatingBlock((double)i, (double)start.m23, (double)end.m23, (double)steps),
-            .m24 = _calculatingBlock((double)i, (double)start.m24, (double)end.m24, (double)steps),
-            .m31 = _calculatingBlock((double)i, (double)start.m31, (double)end.m31, (double)steps),
-            .m32 = _calculatingBlock((double)i, (double)start.m32, (double)end.m32, (double)steps),
-            .m33 = _calculatingBlock((double)i, (double)start.m33, (double)end.m33, (double)steps),
-            .m34 = _calculatingBlock((double)i, (double)start.m34, (double)end.m34, (double)steps),
-            .m41 = _calculatingBlock((double)i, (double)start.m41, (double)end.m41, (double)steps),
-            .m42 = _calculatingBlock((double)i, (double)start.m42, (double)end.m42, (double)steps),
-            .m43 = _calculatingBlock((double)i, (double)start.m43, (double)end.m43, (double)steps),
-            .m44 = _calculatingBlock((double)i, (double)start.m44, (double)end.m44, (double)steps),
+            .m11 = start.m11 + (_v / 100.0) * (end.m11 - start.m11),
+            .m12 = start.m12 + (_v / 100.0) * (end.m12 - start.m12),
+            .m13 = start.m13 + (_v / 100.0) * (end.m13 - start.m13),
+            .m14 = start.m14 + (_v / 100.0) * (end.m14 - start.m14),
+            .m21 = start.m21 + (_v / 100.0) * (end.m21 - start.m21),
+            .m22 = start.m22 + (_v / 100.0) * (end.m22 - start.m22),
+            .m23 = start.m23 + (_v / 100.0) * (end.m23 - start.m23),
+            .m24 = start.m24 + (_v / 100.0) * (end.m24 - start.m24),
+            .m31 = start.m31 + (_v / 100.0) * (end.m31 - start.m31),
+            .m32 = start.m32 + (_v / 100.0) * (end.m32 - start.m32),
+            .m33 = start.m33 + (_v / 100.0) * (end.m33 - start.m33),
+            .m34 = start.m34 + (_v / 100.0) * (end.m34 - start.m34),
+            .m41 = start.m41 + (_v / 100.0) * (end.m41 - start.m41),
+            .m42 = start.m42 + (_v / 100.0) * (end.m42 - start.m42),
+            .m43 = start.m43 + (_v / 100.0) * (end.m43 - start.m43),
+            .m44 = start.m44 + (_v / 100.0) * (end.m44 - start.m44),
         };
         [_values addObject:[NSValue valueWithCATransform3D:transform3d]];
     }
@@ -483,7 +317,7 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
     return _values;
 }
 
-+(CAKeyframeAnimation*)A_GenerateKeyframe:(NSString*)keypath Type:(A_AnimationType)type Duration:(double)duration FPS:(A_Animation_kFPS)kpfs Start:(id)start End:(id)end {
++(CAKeyframeAnimation*)A_GenerateKeyframe:(NSString*)keypath Type:(A_AnimationType)type Duration:(double)duration FPS:(A_AnimationFPS)kpfs Start:(id)start End:(id)end {
     
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:keypath];
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
@@ -511,6 +345,86 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
     return animation;
 }
 
++(CAAnimationGroup*)A_GenerateEffect:(A_AnimationEffectType)type Duration:(double)duration {
+    
+    CAAnimationGroup* group = [CAAnimationGroup animation];
+    [group setRemovedOnCompletion: YES];
+    group.duration = duration;
+    
+//    CABasicAnimation *a1,*a2,*a3;
+    CAKeyframeAnimation *k1; //,*k2,*k3;
+    
+    switch (type) {
+        case A_AnimationEffectType_flash:
+            k1 = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
+            k1.values = @[@(0.2),@(0.8),@(0.2),@(1.0)];
+             group.animations = @[k1];
+            break;
+        case A_AnimationEffectType_pulse:
+            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
+            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],
+                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.95, 0.95, 0.95)],
+                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],
+                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.95, 0.95, 0.95)],
+                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.0, 1.0, 1.0)]];
+            group.animations = @[k1];
+            break;
+        case A_AnimationEffectType_shakeHorizontal:
+            k1 = [CAKeyframeAnimation animationWithKeyPath:@"anchorPoint"];
+            k1.values = @[[NSValue valueWithCGPoint:CGPointMake(0.4, 0.5)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.6, 0.5)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.4, 0.5)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.6, 0.5)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.4, 0.5)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.5)]];
+            group.animations = @[k1];
+            break;
+        case A_AnimationEffectType_shakeVertical:
+            k1 = [CAKeyframeAnimation animationWithKeyPath:@"anchorPoint"];
+            k1.values = @[[NSValue valueWithCGPoint:CGPointMake(0.5, 0.4)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.6)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.4)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.6)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.4)],
+                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.5)]];
+            group.animations = @[k1];
+            break;
+        case A_AnimationEffectType_swing:
+            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(15), 0, 0, 1)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-12), 0, 0, 1)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(7), 0, 0, 1)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-7), 0, 0, 1)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 0, 0, 1)]];
+            group.animations = @[k1];
+            
+            break;
+            
+        case A_AnimationEffectType_flipX:
+            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :1.5 :1 :1];
+            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-360), 1, 0, 0)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-190), 1, 0, 0)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-170), 1, 0, 0)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 1, 0, 0)]];
+            group.animations = @[k1];
+            break;
+        case A_AnimationEffectType_flipY:
+            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :1.5 :1 :1];
+            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-360), 0, 1, 0)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-190), 0, 1, 0)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-170), 0, 1, 0)],
+                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 0, 1, 0)]];
+            group.animations = @[k1];
+        default:
+            break;
+    }
+    
+    return group;
+}
 
 @end
 

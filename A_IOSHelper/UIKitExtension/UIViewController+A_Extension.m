@@ -10,6 +10,7 @@
 
 @implementation UIViewController (A_Extension)
 
+/*
 - (void) A_Animation_TransitionFrom:(UIView*)viewA
                           ReplaceTo:(UIView*)viewB
                          Transition:(A_Animation_SystemTransitionType)transitionType
@@ -54,5 +55,6 @@
         [viewB setHidden:NO];
     } [CATransaction commit];
 }
-
+*/
+ 
 @end

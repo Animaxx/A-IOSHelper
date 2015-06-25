@@ -12,6 +12,8 @@
 @interface UIViewController (A_Extension)
 
 #pragma mark - Transition from animation
+
+/*
 - (void) A_Animation_TransitionFrom:(UIView*)viewA
                           ReplaceTo:(UIView*)viewB
                          Transition:(A_Animation_SystemTransitionType)transitionType
@@ -24,7 +26,7 @@
                            Duration:(float)duration
                       WhenCompleted:(void (^)(void))block;
 
-
+*/
 
 
 @end
