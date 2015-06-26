@@ -33,4 +33,18 @@
     return [A_JSONHelper A_ConvertDictionaryToJSON:self];
 }
 
+- (id<NSCopying>)A_GetKey:(NSInteger)index{
+    int i = 0;
+    for (id key in self) {
+        if (i == index) return key;
+        i++;
+    }
+    return nil;
+}
+- (id)A_GetValue:(NSInteger)index {
+    id key = [self A_GetKey:index];
+    return [self objectForKey:key];
+}
+
+
 @end

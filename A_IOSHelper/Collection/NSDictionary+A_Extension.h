@@ -15,4 +15,7 @@
 - (NSData*) A_CovertToJSONData;
 - (NSString*) A_CovertToJSONString;
 
+- (id<NSCopying>)A_GetKey:(NSInteger)index;
+- (id)A_GetValue:(NSInteger)index;
+
 @end
