@@ -1,19 +1,16 @@
 //
-//  A_Animation.m
+//  A_AnimationKeyframeProvider.m
 //  A_IOSHelper
 //
-//  Created by Animax on 12/10/14.
-//  Copyright (c) 2014 AnimaxDeng. All rights reserved.
+//  Created by Animax Deng on 6/26/15.
+//  Copyright (c) 2015 AnimaxDeng. All rights reserved.
 //
 
-#import "A_Animation.h"
 #import <UIKit/UIKit.h>
+#import "A_AnimationKeyframeProvider.h"
 
+@implementation A_AnimationKeyframeProvider
 
-#define RADIANS_TO_DEGREES(x) ((x)/M_PI*180.0)
-#define DEGREES_TO_RADIANS(x) ((x)/180.0*M_PI)
-
-@implementation A_Animation
 
 #pragma mark - Keyframe animation
 typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d);
@@ -252,8 +249,8 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
         CGSize size = {
             .width = start.width + (_v / 100.0) * (end.width - start.width),
             .height  = start.height + (_v / 100.0) * (end.height - start.height),
-//            .width = _calculatingBlock((double)i, (double)start.width, (double)end.width, (double)steps),
-//            .height = _calculatingBlock((double)i, (double)start.height, (double)end.height, (double)steps),
+            //            .width = _calculatingBlock((double)i, (double)start.width, (double)end.width, (double)steps),
+            //            .height = _calculatingBlock((double)i, (double)start.height, (double)end.height, (double)steps),
         };
         [_values addObject:[NSValue valueWithCGSize:size]];
     }
@@ -274,10 +271,10 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
             .size.width = start.size.width + (_v / 100.0) * (end.size.width - start.size.width),
             .size.height = start.size.height + (_v / 100.0) * (end.size.height - start.size.height),
             
-//            .origin.x = _calculatingBlock((double)i, (double)start.origin.x, (double)end.origin.x, (double)steps),
-//            .origin.y = _calculatingBlock((double)i, (double)start.origin.y, (double)end.origin.y, (double)steps),
-//            .size.width = _calculatingBlock((double)i, (double)start.size.width, (double)end.size.width, (double)steps),
-//            .size.height = _calculatingBlock((double)i, (double)start.size.height, (double)end.size.height, (double)steps),
+            //            .origin.x = _calculatingBlock((double)i, (double)start.origin.x, (double)end.origin.x, (double)steps),
+            //            .origin.y = _calculatingBlock((double)i, (double)start.origin.y, (double)end.origin.y, (double)steps),
+            //            .size.width = _calculatingBlock((double)i, (double)start.size.width, (double)end.size.width, (double)steps),
+            //            .size.height = _calculatingBlock((double)i, (double)start.size.height, (double)end.size.height, (double)steps),
             
         };
         [_values addObject:[NSValue valueWithCGRect:rect]];
@@ -345,89 +342,4 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
     return animation;
 }
 
-+(CAAnimationGroup*)A_GenerateEffect:(A_AnimationEffectType)type Duration:(double)duration {
-    
-    CAAnimationGroup* group = [CAAnimationGroup animation];
-    [group setRemovedOnCompletion: YES];
-    group.duration = duration;
-    
-//    CABasicAnimation *a1,*a2,*a3;
-    CAKeyframeAnimation *k1; //,*k2,*k3;
-    
-    switch (type) {
-        case A_AnimationEffectType_flash:
-            k1 = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
-            k1.values = @[@(0.2),@(0.8),@(0.2),@(1.0)];
-             group.animations = @[k1];
-            break;
-        case A_AnimationEffectType_pulse:
-            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
-            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],
-                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.95, 0.95, 0.95)],
-                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],
-                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.95, 0.95, 0.95)],
-                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.0, 1.0, 1.0)]];
-            group.animations = @[k1];
-            break;
-        case A_AnimationEffectType_shakeHorizontal:
-            k1 = [CAKeyframeAnimation animationWithKeyPath:@"anchorPoint"];
-            k1.values = @[[NSValue valueWithCGPoint:CGPointMake(0.4, 0.5)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.6, 0.5)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.4, 0.5)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.6, 0.5)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.4, 0.5)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.5)]];
-            group.animations = @[k1];
-            break;
-        case A_AnimationEffectType_shakeVertical:
-            k1 = [CAKeyframeAnimation animationWithKeyPath:@"anchorPoint"];
-            k1.values = @[[NSValue valueWithCGPoint:CGPointMake(0.5, 0.4)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.6)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.4)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.6)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.4)],
-                          [NSValue valueWithCGPoint:CGPointMake(0.5, 0.5)]];
-            group.animations = @[k1];
-            break;
-        case A_AnimationEffectType_swing:
-            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(15), 0, 0, 1)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-12), 0, 0, 1)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(7), 0, 0, 1)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-7), 0, 0, 1)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 0, 0, 1)]];
-            group.animations = @[k1];
-            
-            break;
-            
-        case A_AnimationEffectType_flipX:
-            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :1.5 :1 :1];
-            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-360), 1, 0, 0)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-190), 1, 0, 0)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-170), 1, 0, 0)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 1, 0, 0)]];
-            group.animations = @[k1];
-            break;
-        case A_AnimationEffectType_flipY:
-            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :1.5 :1 :1];
-            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-360), 0, 1, 0)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-190), 0, 1, 0)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(-170), 0, 1, 0)],
-                          [NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 0, 1, 0)]];
-            group.animations = @[k1];
-        default:
-            break;
-    }
-    
-    return group;
-}
-
 @end
-
-
-
-

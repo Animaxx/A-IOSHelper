@@ -1,23 +1,17 @@
 //
-//  A_Animation.h
+//  A_AnimationKeyframeProvider.h
 //  A_IOSHelper
 //
-//  Created by Animax on 12/10/14.
-//  Copyright (c) 2014 AnimaxDeng. All rights reserved.
+//  Created by Animax Deng on 6/26/15.
+//  Copyright (c) 2015 AnimaxDeng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import "A_AnimationEnumeration.h"
 
-@interface A_Animation : NSObject
+@interface A_AnimationKeyframeProvider : NSObject
 
-
-#pragma mark - Keyframe animation
 +(CAKeyframeAnimation*)A_GenerateKeyframe:(NSString*)keypath Type:(A_AnimationType)type Duration:(double)duration FPS:(A_AnimationFPS)kpfs Start:(id)start End:(id)end;
-+(CAAnimationGroup*)A_GenerateEffect:(A_AnimationEffectType)type Duration:(double)duration;
-
 
 @end
-
-

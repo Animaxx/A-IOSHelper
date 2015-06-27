@@ -62,7 +62,23 @@
     if (repeat > 0) {
         animations.repeatCount = repeat;
     }
+    
+    if (type == A_AnimationEffectType_flipInX ||
+        type == A_AnimationEffectType_flipInY ||
+        type == A_AnimationEffectType_fadeIn) {
+        [self setHidden:NO];
+        [self setAlpha:1.0f];
+        [self.layer setHidden:NO];
+    }
+    
     [self.layer addAnimation:animations forKey:nil];
+    
+    if (type == A_AnimationEffectType_flipOutX ||
+        type == A_AnimationEffectType_flipOutY ||
+        type == A_AnimationEffectType_fadeOut) {
+        [self.layer setHidden:YES];
+    }
+    
 }
 - (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat{
     [self A_AnimationEffect:type Repeat:repeat Duration:0];
