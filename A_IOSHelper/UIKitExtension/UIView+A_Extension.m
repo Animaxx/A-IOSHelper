@@ -65,7 +65,8 @@
     
     if (type == A_AnimationEffectType_flipInX ||
         type == A_AnimationEffectType_flipInY ||
-        type == A_AnimationEffectType_fadeIn) {
+        type == A_AnimationEffectType_fadeIn ||
+        type == A_AnimationEffectType_zoomIn) {
         [self setHidden:NO];
         [self setAlpha:1.0f];
         [self.layer setHidden:NO];
@@ -75,7 +76,8 @@
     
     if (type == A_AnimationEffectType_flipOutX ||
         type == A_AnimationEffectType_flipOutY ||
-        type == A_AnimationEffectType_fadeOut) {
+        type == A_AnimationEffectType_fadeOut ||
+        type == A_AnimationEffectType_zoomOut) {
         [self.layer setHidden:YES];
     }
     
