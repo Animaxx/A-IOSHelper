@@ -21,8 +21,15 @@
 
 
 #pragma mark - Animation Effect Express
+- (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat Duration:(double)duration CompletionBlock:(void (^)(void))block;
 - (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat Duration:(double)duration;
+- (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat CompletionBlock:(void (^)(void))block;
 - (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat;
+
+- (void) A_AnimationEffect:(A_AnimationEffectType)type Duration:(double)duration CompletionBlock:(void (^)(void))block;
+- (void) A_AnimationEffect:(A_AnimationEffectType)type Duration:(double)duration;
+
+- (void) A_AnimationEffect:(A_AnimationEffectType)type CompletionBlock:(void (^)(void))block;
 - (void) A_AnimationEffect:(A_AnimationEffectType)type;
 
 @end

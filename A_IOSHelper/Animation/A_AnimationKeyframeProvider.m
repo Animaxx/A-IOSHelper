@@ -20,7 +20,55 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
     switch (type) {
             // t: current time, b: begInnIng value, c: change In value, d: duration
             //http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js
-            // Quint
+        case A_AnimationType_easeInQuad:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return c*(t/=d)*t*t + b;
+            };
+            break;
+        case A_AnimationType_easeOutQuad:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return c*((t=t/d-1)*t*t + 1) + b;
+            };
+            break;
+        case A_AnimationType_easeInOutQuad:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                if ((t/=d/2) < 1) return c/2*t*t*t + b;
+                return c/2*((t-=2)*t*t + 2) + b;
+            };
+            break;
+        case A_AnimationType_easeInCubic:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return c*(t/=d)*t*t + b;
+            };
+            break;
+        case A_AnimationType_easeOutCubic:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return c*((t=t/d-1)*t*t + 1) + b;
+            };
+            break;
+        case A_AnimationType_easeInOutCubic:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                if ((t/=d/2) < 1) return c/2*t*t*t + b;
+                return c/2*((t-=2)*t*t + 2) + b;
+            };
+            break;
+        case A_AnimationType_easeInQuart:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return c*(t/=d)*t*t*t + b;
+            };
+            break;
+        case A_AnimationType_easeOutQuart:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return -c * ((t=t/d-1)*t*t*t - 1) + b;
+            };
+            break;
+        case A_AnimationType_easeInOutQuart:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
+                return -c/2 * ((t-=2)*t*t*t - 2) + b;
+            };
+            break;
+
         case A_AnimationType_easeInQuint:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 return c*(t/=d)*t*t*t + b;
@@ -37,7 +85,41 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 return c/2*((t-=2)*t*t*t*t + 2) + b;
             };
             break;
-            //Circ
+        case A_AnimationType_easeInSine:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return -c * cos(t/d * (M_PI/2)) + c + b;
+            };
+            break;
+        case A_AnimationType_easeOutSine:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return c * sin(t/d * (M_PI/2)) + b;
+            };
+            break;
+        case A_AnimationType_easeInOutSine:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return -c/2 * (cos(M_PI*t/d) - 1) + b;
+            };
+            break;
+            
+        case A_AnimationType_easeInExpo:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return (t==0) ? b : c * pow(2, 10 * (t/d - 1)) + b;
+            };
+            break;
+        case A_AnimationType_easeOutExpo:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                return (t==d) ? b+c : c * (-pow(2, -10 * t/d) + 1) + b;
+            };
+            break;
+        case A_AnimationType_easeInOutExpo:
+            _calculatingBlock = ^double(double t, double b, double c, double d) {
+                if (t==0) return b;
+                if (t==d) return b+c;
+                if ((t/=d/2) < 1) return c/2 * pow(2, 10 * (t - 1)) + b;
+                return c/2 * (-pow(2, -10 * --t) + 2) + b;
+            };
+            break;
+            
         case A_AnimationType_easeInCirc:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 return -c * (sqrt(1 - (t/=d)*t) - 1) + b;
@@ -54,7 +136,8 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 return c/2 * (sqrt(1 - (t-=2)*t) + 1) + b;
             };
             break;
-            //Back
+
+            
         case A_AnimationType_easeInBack:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 const double s = 1.70158;
@@ -75,7 +158,6 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
             };
             break;
             
-            //Elastic
         case A_AnimationType_easeInElastic:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 double s = 1.70158; double p=0; double a=c;
@@ -105,7 +187,6 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 return a*pow(2,-10*(t-=1)) * sin( (t*d-s)*(2*M_PI)/p )*.5 + c + b;
             };
             break;
-            //Bounce
         case A_AnimationType_easeInBounce:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 double _v;
@@ -140,7 +221,6 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 
                 double _v;
                 if (t < d/2) {
-                    //                    return NSBKeyframeAnimationFunctionEaseInBounce (t*2, 0, c, d) * .5 + b;
                     t=t*2;
                     if ((t/=d) < (1/2.75)) {
                         _v = c*(7.5625*t*t);
@@ -153,7 +233,6 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                     }
                     return _v * .5 + b;
                 } else {
-                    //                    return NSBKeyframeAnimationFunctionEaseOutBounce(t*2-d, 0, c, d) * .5 + c*.5 + b;
                     t=t*2-d;
                     if ((t/=d) < (1/2.75)) {
                         _v = c*(7.5625*t*t);
@@ -168,6 +247,7 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 }
             };
             break;
+            
             
             // http://khanlou.com/2012/01/cakeyframeanimation-make-it-bounce/
         case A_AnimationType_spring:
@@ -230,7 +310,6 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
         
         CGPoint point = {
             .x = start.x + (_v / 100.0) * (end.x - start.x),
-            //_calculatingBlock((double)i, (double)start.x, (double)end.x, (double)steps),
             .y = start.y + (_v / 100.0) * (end.y - start.y),
         };
         [_values addObject:[NSValue valueWithCGPoint:point]];
@@ -249,8 +328,6 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
         CGSize size = {
             .width = start.width + (_v / 100.0) * (end.width - start.width),
             .height  = start.height + (_v / 100.0) * (end.height - start.height),
-            //            .width = _calculatingBlock((double)i, (double)start.width, (double)end.width, (double)steps),
-            //            .height = _calculatingBlock((double)i, (double)start.height, (double)end.height, (double)steps),
         };
         [_values addObject:[NSValue valueWithCGSize:size]];
     }
@@ -270,18 +347,34 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
             .origin.y = start.origin.y + (_v / 100.0) * (end.origin.y - start.origin.y),
             .size.width = start.size.width + (_v / 100.0) * (end.size.width - start.size.width),
             .size.height = start.size.height + (_v / 100.0) * (end.size.height - start.size.height),
-            
-            //            .origin.x = _calculatingBlock((double)i, (double)start.origin.x, (double)end.origin.x, (double)steps),
-            //            .origin.y = _calculatingBlock((double)i, (double)start.origin.y, (double)end.origin.y, (double)steps),
-            //            .size.width = _calculatingBlock((double)i, (double)start.size.width, (double)end.size.width, (double)steps),
-            //            .size.height = _calculatingBlock((double)i, (double)start.size.height, (double)end.size.height, (double)steps),
-            
         };
         [_values addObject:[NSValue valueWithCGRect:rect]];
     }
     
     return _values;
 }
++(NSArray*)_getColorValues:(A_AnimationType)type Steps:(NSInteger)steps Start:(UIColor*)start End:(UIColor*)end {
+    keyframeCalculatingBlock _calculatingBlock = [self _methodProvider:type];
+    NSMutableArray* _values = [[NSMutableArray alloc] initWithCapacity:steps];
+    
+    const CGFloat* startColors = CGColorGetComponents( start.CGColor );
+    const CGFloat* endColors = CGColorGetComponents( end.CGColor );
+    
+    
+    double _v = 0.0;
+    for (NSInteger i = 1; i < steps; i++) {
+        _v = _calculatingBlock((double)(steps * 1.0 / (double)(steps) * i), 0.0, 100.0, (double)steps);
+        
+        UIColor *color = [UIColor
+                          colorWithRed:(startColors[0] + (_v / 100.0) * (endColors[0] - startColors[0]))
+                          green:(startColors[1] + (_v / 100.0) * (endColors[1] - startColors[1]))
+                          blue:(startColors[2] + (_v / 100.0) * (endColors[2] - startColors[2]))
+                          alpha:(startColors[3] + (_v / 100.0) * (endColors[3] - startColors[3]))];
+        [_values addObject:(id)color.CGColor];
+    }
+    return _values;
+}
+
 +(NSArray*)_getCATransform3DValues:(A_AnimationType)type Steps:(NSInteger)steps Start:(CATransform3D)start End:(CATransform3D)end {
     keyframeCalculatingBlock _calculatingBlock = [self _methodProvider:type];
     NSMutableArray* _values = [[NSMutableArray alloc] initWithCapacity:steps];
@@ -323,7 +416,9 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
     
     if ([start isKindOfClass:NSNumber.class] && [end isKindOfClass:NSNumber.class]) {
         animation.values = [self _getFloatValues:type Steps:steps Start:[start doubleValue] End:[end doubleValue]];
-    } else if (([start isKindOfClass:NSValue.class] && [end isKindOfClass:NSValue.class]) && strcmp([start objCType], [end objCType]) == 0) {
+    } else if ([start isKindOfClass:[UIColor class]] && [end isKindOfClass:[UIColor class]]) {
+        animation.values = [self _getColorValues:type Steps:steps Start:start End:end];
+    } else if (([start isKindOfClass:NSValue.class] && [end isKindOfClass:NSValue.class]) && strcmp([start objCType], [end  objCType]) == 0) {
         if (strcmp([start objCType], @encode(CATransform3D)) == 0) {
             animation.values = [self _getCATransform3DValues:type Steps:steps Start:[start CATransform3DValue] End:[end CATransform3DValue]];
         }
