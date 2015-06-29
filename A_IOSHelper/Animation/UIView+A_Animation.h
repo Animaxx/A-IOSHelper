@@ -9,16 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "A_Animation.h"
 
-@interface UIView (A_Extension)
-
-#pragma mark - Animation Provider
-- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Start:(id)start End:(id)end Duration:(double)duration FPS:(A_AnimationFPS)kps;
-- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Start:(id)start End:(id)end Duration:(double)duration;
-- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type End:(id)end Duration:(double)duration;
-- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type End:(id)end;
-
-#pragma mark - Animation Layer setting
-
+@interface UIView (A_Animation)
 
 #pragma mark - Animation Effect Express
 - (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat Duration:(double)duration CompletionBlock:(void (^)(void))block;

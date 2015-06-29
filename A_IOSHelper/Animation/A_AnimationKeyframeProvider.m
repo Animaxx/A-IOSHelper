@@ -353,12 +353,12 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
     
     return _values;
 }
-+(NSArray*)_getColorValues:(A_AnimationType)type Steps:(NSInteger)steps Start:(UIColor*)start End:(UIColor*)end {
++(NSArray*)_getColorValues:(A_AnimationType)type Steps:(NSInteger)steps Start:(CGColorRef)start End:(CGColorRef)end {
     keyframeCalculatingBlock _calculatingBlock = [self _methodProvider:type];
     NSMutableArray* _values = [[NSMutableArray alloc] initWithCapacity:steps];
     
-    const CGFloat* startColors = CGColorGetComponents( start.CGColor );
-    const CGFloat* endColors = CGColorGetComponents( end.CGColor );
+    const CGFloat* startColors = CGColorGetComponents( start );
+    const CGFloat* endColors = CGColorGetComponents( end );
     
     
     double _v = 0.0;
@@ -416,8 +416,14 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
     
     if ([start isKindOfClass:NSNumber.class] && [end isKindOfClass:NSNumber.class]) {
         animation.values = [self _getFloatValues:type Steps:steps Start:[start doubleValue] End:[end doubleValue]];
-    } else if ([start isKindOfClass:[UIColor class]] && [end isKindOfClass:[UIColor class]]) {
-        animation.values = [self _getColorValues:type Steps:steps Start:start End:end];
+    } else if (CFGetTypeID((__bridge CFTypeRef)start) == CGColorGetTypeID()) {
+        CGColorRef endColor;
+        if ([end isKindOfClass:[UIColor class]]) {
+            endColor = ((UIColor*)end).CGColor;
+        } else {
+            endColor = (__bridge CGColorRef)end;
+        }
+        animation.values = [self _getColorValues:type Steps:steps Start:(CGColorRef)start End:endColor];
     } else if (([start isKindOfClass:NSValue.class] && [end isKindOfClass:NSValue.class]) && strcmp([start objCType], [end  objCType]) == 0) {
         if (strcmp([start objCType], @encode(CATransform3D)) == 0) {
             animation.values = [self _getCATransform3DValues:type Steps:steps Start:[start CATransform3DValue] End:[end CATransform3DValue]];
