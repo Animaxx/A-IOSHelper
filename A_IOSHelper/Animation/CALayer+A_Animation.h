@@ -34,6 +34,6 @@
 - (void) A_AnimationSetShadowRadius:(CGFloat)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetSublayerTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type;
-- (void) A_AnimationSetZPosition:(CATransform3D)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetZPosition:(CGFloat)value AnimtionType:(A_AnimationType)type;
 
 @end

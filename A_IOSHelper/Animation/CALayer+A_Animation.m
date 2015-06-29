@@ -66,42 +66,41 @@
     self.backgroundColor = value.CGColor;
 }
 - (void) A_AnimationSetOpacity:(CGFloat)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"opacity" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_middle];
 }
 
 - (void) A_AnimationSetBorderWidth:(CGFloat)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"borderWidth" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_middle];
 }
 - (void) A_AnimationSetBorderColor:(UIColor*)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"borderColor" AnimtionType:type Start:nil End:value Duration:0 FPS:A_AnimationFPS_middle AutoSet:NO];
+    self.borderColor = value.CGColor;
 }
 - (void) A_AnimationSetContentsRect:(CGRect)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"contentsRect" AnimtionType:type Start:nil End:[NSValue valueWithCGRect:value] Duration:0 FPS:A_AnimationFPS_middle];
 }
 - (void) A_AnimationSetCornerRadius:(CGFloat)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"radius" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_middle];
 }
 
 - (void) A_AnimationSetShadowOffset:(CGSize)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"shadowOffset" AnimtionType:type Start:nil End:[NSValue valueWithCGSize:value] Duration:0 FPS:A_AnimationFPS_middle];
 }
 - (void) A_AnimationSetShadowOpacity:(CGSize)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"shadowOpacity" AnimtionType:type Start:nil End:[NSValue valueWithCGSize:value] Duration:0 FPS:A_AnimationFPS_middle];
 }
 - (void) A_AnimationSetShadowRadius:(CGFloat)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"shadowRadius" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_middle];
 }
 - (void) A_AnimationSetSublayerTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"sublayerTransform" AnimtionType:type Start:nil End:[NSValue valueWithCATransform3D:value] Duration:0 FPS:A_AnimationFPS_middle];
 }
 - (void) A_AnimationSetTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type {
-    
+    [self A_AnimationSet:@"transform" AnimtionType:type Start:nil End:[NSValue valueWithCATransform3D:value] Duration:0 FPS:A_AnimationFPS_middle];
 }
-- (void) A_AnimationSetZPosition:(CATransform3D)value AnimtionType:(A_AnimationType)type {
-    
+- (void) A_AnimationSetZPosition:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    [self A_AnimationSet:@"zPosition" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_middle];
 }
-
-//
 
 
 @end
