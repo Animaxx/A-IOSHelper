@@ -7,56 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIView+A_Extension.h"
+#import "UIView+A_Animation.h"
 
 #define defaultDurationTime 0.5f;
 
-@implementation UIView (A_Extension)
-
-
-#pragma mark - Animation Provider
-- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Start:(id)start End:(id)end Duration:(double)duration FPS:(A_AnimationFPS)kps {
-    
-    NSParameterAssert(keypath);
-    NSParameterAssert(type);
-    NSParameterAssert(end);
-    
-    if (kps<=0) {
-        kps = A_AnimationFPS_middle;
-    }
-    if (!start) {
-        start = [self.layer valueForKeyPath:keypath];
-    }
-    if (duration<=0) {
-        duration = defaultDurationTime;
-    }
-    
-    CAKeyframeAnimation* keyFrames = [A_Animation A_GenerateKeyframe:keypath Type:type Duration:duration FPS:kps Start:start End:end];
-    [self.layer addAnimation:keyFrames forKey:nil];
-    
-    if (type >= 0) {
-        [self.layer setValue:end forKeyPath:keypath];
-    }
-}
-- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Start:(id)start End:(id)end Duration:(double)duration {
-    [self A_AnimationSet:keypath AnimtionType:type Start:start End:end Duration:duration FPS:A_AnimationFPS_middle];
-}
-- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type End:(id)end Duration:(double)duration {
-    [self A_AnimationSet:keypath AnimtionType:type Start:nil End:end Duration:duration FPS:A_AnimationFPS_middle];
-}
-- (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type End:(id)end {
-    [self A_AnimationSet:keypath AnimtionType:type Start:nil End:end Duration:0 FPS:A_AnimationFPS_middle];
-}
-
-#pragma mark - Animation Layer setting
-//https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreAnimation_guide/AnimatableProperties/AnimatableProperties.html
-
-- (void) A_AnimationSetAnchorPoint:(CGPoint)value AnimtionType:(A_AnimationType)type{
-    [self A_AnimationSet:@"anchorPoint" AnimtionType:type Start:nil End:[NSValue valueWithCGPoint:value] Duration:0 FPS:A_AnimationFPS_middle];
-}
-//backgroundColor
-//backgroundFilters
-
+@implementation UIView (A_Animation)
 
 
 #pragma mark - Animation Effect
