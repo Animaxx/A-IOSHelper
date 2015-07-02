@@ -87,7 +87,7 @@ typedef NS_ENUM(NSUInteger, A_AnimationEffectType) {
     A_AnimationEffectType_zoomIn,
     A_AnimationEffectType_zoomOut,
     
-    //
-    A_AnimationEffectType_cardBack,
+    A_AnimationEffectType_cardIn,
+    A_AnimationEffectType_cardOut,
     
 };

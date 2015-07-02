@@ -36,4 +36,18 @@
     return [A_Datetime A_DateDiffer:self Compare:otherDate];
 }
 
+-(NSDate *) toLocalTime
+{
+    NSTimeZone *tz = [NSTimeZone defaultTimeZone];
+    NSInteger seconds = [tz secondsFromGMTForDate: self];
+    return [NSDate dateWithTimeInterval: seconds sinceDate: self];
+}
+
+-(NSDate *) toGlobalTime
+{
+    NSTimeZone *tz = [NSTimeZone defaultTimeZone];
+    NSInteger seconds = -[tz secondsFromGMTForDate: self];
+    return [NSDate dateWithTimeInterval: seconds sinceDate: self];
+}
+
 @end

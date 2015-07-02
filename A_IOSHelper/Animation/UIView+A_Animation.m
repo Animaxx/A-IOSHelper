@@ -22,16 +22,26 @@
     if (type == A_AnimationEffectType_flipInX ||
         type == A_AnimationEffectType_flipInY ||
         type == A_AnimationEffectType_fadeIn ||
-        type == A_AnimationEffectType_zoomIn) {
+        type == A_AnimationEffectType_zoomIn ||
+        type == A_AnimationEffectType_cardIn) {
         [self setHidden:NO];
         [self setAlpha:1.0f];
         [self.layer setHidden:NO];
     }
     
     [CATransaction begin]; {
-        if (block) {
-            [CATransaction setCompletionBlock:block];
-        }
+        [CATransaction setCompletionBlock:^{
+            if (type == A_AnimationEffectType_flipOutX ||
+                type == A_AnimationEffectType_flipOutY ||
+                type == A_AnimationEffectType_fadeOut ||
+                type == A_AnimationEffectType_zoomOut ||
+                type == A_AnimationEffectType_cardOut) {
+                [self.layer setHidden:YES];
+            }
+            if (block) {
+                block();
+            }
+        }];
     
         CAAnimationGroup* animations = [A_Animation A_GenerateEffect:type Duration:duration];
         if (repeat > 0) {
@@ -41,13 +51,6 @@
         [self.layer addAnimation:animations forKey:nil];
     
     } [CATransaction commit];
-    
-    if (type == A_AnimationEffectType_flipOutX ||
-        type == A_AnimationEffectType_flipOutY ||
-        type == A_AnimationEffectType_fadeOut ||
-        type == A_AnimationEffectType_zoomOut) {
-        [self.layer setHidden:YES];
-    }
 }
 - (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat Duration:(double)duration{
     [self A_AnimationEffect:type Repeat:repeat Duration:duration CompletionBlock:nil];
@@ -72,8 +75,6 @@
 - (void) A_AnimationEffect:(A_AnimationEffectType)type{
     [self A_AnimationEffect:type Repeat:0 Duration:0 CompletionBlock:nil];
 }
-
-
 
 @end
 

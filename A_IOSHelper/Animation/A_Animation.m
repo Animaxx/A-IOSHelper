@@ -211,8 +211,28 @@
             
             group.animations = @[a1,a2];
             break;
-
+        case A_AnimationEffectType_cardIn:
+            a1 = [CABasicAnimation animationWithKeyPath:@"opacity"];
+            a1.fromValue = @(0.0f);
+            a1.toValue = @(1.0f);
             
+            a2 = [CABasicAnimation animationWithKeyPath:@"transform"];
+            a2.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+            a2.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1)];
+            
+            group.animations = @[a1,a2];
+            break;
+        case A_AnimationEffectType_cardOut:
+            a1 = [CABasicAnimation animationWithKeyPath:@"opacity"];
+            a1.fromValue = @(1.0f);
+            a1.toValue = @(0.0f);
+            
+            a2 = [CABasicAnimation animationWithKeyPath:@"transform"];
+            a2.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+            a2.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, 1)];
+            
+            group.animations = @[a1,a2];
+            break;
         default:
             break;
     }
