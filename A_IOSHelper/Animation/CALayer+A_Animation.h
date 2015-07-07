@@ -23,7 +23,7 @@
 - (void) A_AnimationSetAnchorPoint:(CGPoint)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetBackgroundColor:(UIColor*)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetOpacity:(CGFloat)value AnimtionType:(A_AnimationType)type;
-
+- (void) A_AnimationSetPosition:(CGPoint)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetBorderWidth:(CGFloat)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetBorderColor:(UIColor*)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetContentsRect:(CGRect)value AnimtionType:(A_AnimationType)type;
@@ -35,5 +35,19 @@
 - (void) A_AnimationSetSublayerTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetZPosition:(CGFloat)value AnimtionType:(A_AnimationType)type;
+
+- (void) A_AnimationSetRotationX:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetRotationY:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetRotationZ:(CGFloat)value AnimtionType:(A_AnimationType)type;
+
+- (void) A_AnimationSetScaleX:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetScaleY:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetScaleZ:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetScale:(CGFloat)value AnimtionType:(A_AnimationType)type;
+
+- (void) A_AnimationSetTranslationX:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetTranslationY:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetTranslationZ:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetTranslation:(CGSize)value AnimtionType:(A_AnimationType)type;
 
 @end
