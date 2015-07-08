@@ -132,7 +132,7 @@
             
             
         case A_AnimationEffectType_flipInX:
-            k1 = [self A_GenerateKeyframe:@"transform" Type:A_AnimationType_easeInOutQuint Duration:duration FPS:A_AnimationFPS_middle Start:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 1, 0, 0)] End:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(180), 1, 0, 0)]];
+            k1 = [self A_GenerateKeyframe:@"transform" Type:A_AnimationType_easeInOutQuint Duration:duration FPS:A_AnimationFPS_middle Start:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(180), 1, 0, 0)] End:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 1, 0, 0)]];
             k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:.5 :.5 :1 :1];
             
             a1 = [CABasicAnimation animationWithKeyPath:@"opacity"];
@@ -142,7 +142,7 @@
             group.animations = @[k1,a1];
             break;
         case A_AnimationEffectType_flipInY:
-            k1 = [self A_GenerateKeyframe:@"transform" Type:A_AnimationType_easeInOutQuint Duration:duration FPS:A_AnimationFPS_middle Start:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 0, 1, 0)] End:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(180), 0, 1, 0)]];
+            k1 = [self A_GenerateKeyframe:@"transform" Type:A_AnimationType_easeInOutQuint Duration:duration FPS:A_AnimationFPS_middle Start:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(180), 0, 1, 0)] End:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 0, 1, 0)]];
             k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:.5 :.5 :1 :1];
             group.animations = @[k1];
             
@@ -217,8 +217,8 @@
             a1.toValue = @(1.0f);
             
             a2 = [CABasicAnimation animationWithKeyPath:@"transform"];
-            a2.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
-            a2.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1)];
+            a2.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.5, 0.5, 1)];
+            a2.toValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
             
             group.animations = @[a1,a2];
             break;

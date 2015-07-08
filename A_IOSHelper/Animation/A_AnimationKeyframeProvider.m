@@ -266,14 +266,14 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
             break;
         case A_AnimationType_bigSpring:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                double a = log2f(6.0f/fabs(b-c))/d;
+                double a = log2f(9.0f/fabs(b-c))/d;
                 if (a>0) a = -1.0f*a;
                 return (b-c)*pow(2.71, a*t)*cos(6.0*M_PI/d*t)+c;
             };
             break;
         case A_AnimationType_bigLongSpring:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                double a = log2f(6.0f/fabs(b-c))/d;
+                double a = log2f(9.0f/fabs(b-c))/d;
                 if (a>0) a = -1.0f*a;
                 return (b-c)*pow(2.71, a*t)*cos(12.0*M_PI/d*t)+c;
             };
