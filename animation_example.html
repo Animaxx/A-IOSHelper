@@ -56,121 +56,114 @@
         <p> Animation helper provides easy way to set CALayer value animatingly, and it also provides the some frequent animation effects, such as shake, flash, and etc. </p>
         <br />
 
-        <h2> Updating... </h2>
-<!--
         <div>
             <h2> Contents </h2>
             <ul>
-                <li> <a href="#animationCardIn">Animation Card In</a> </li>
-                <li> <a href="#animationCardOut">Animation Card Out</a> </li>
-                <li> <a href="#animationFadeout">Animation FadeOut</a> </li>
-                <li> <a href="#animationFadein">Animation FadeIn</a> </li>
-                <li> <a href="#animationMoveleft">Animation Move Out From Left</a> </li>
-                <li> <a href="#animationMoveCenter">Animation move to center</a> </li>
-                <li> <a href="#animationCompletedEvent">Completed event</a> </li>
-                <li> <a href="#systemTransition">Transition animation</a> </li>
+                <li> <a href="#expressAnimation">Express Animations </a>
+                    <ul>
+                        <li> <a href="#A_AnimationEffectType_flash">A_AnimationEffectType_flash </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_pulse">A_AnimationEffectType_pulse </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_shakeHorizontal">A_AnimationEffectType_shakeHorizontal </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_shakeVertical">A_AnimationEffectType_shakeVertical </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_swing">A_AnimationEffectType_swing </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_wobble">A_AnimationEffectType_wobble </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_quake">A_AnimationEffectType_quake </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_squeeze">A_AnimationEffectType_squeeze </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_flipX">A_AnimationEffectType_flipX </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_flipY">A_AnimationEffectType_flipY </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_flipLeft">A_AnimationEffectType_flipLeft </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_flipRight">A_AnimationEffectType_flipRight </a>  </li>
+
+                        <li> <a href="#A_AnimationEffectType_flipInOutX">A_AnimationEffectType_flipOutX & A_AnimationEffectType_flipInX </a>  </li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
-        <div id='animationCardIn' class="anchor"></div>
-        <h2> Animation Card In </h2>
+        <div id='expressAnimation' class="anchor"></div>
+        <h2> Express Animation Effect </h2>
+        <p> Express animation extends UIView animation function for providing common animations</p>
+        <br><br>
 
-        <pre><code class="html">[A_Animation A_CardIn:self._viewA.view.layer
-            Direction:A_Animation_Direction_Left
-            Duration:1.0f
-            WhenCompleted:nil];</code></pre>
-        OR
-        <pre><code class="html">[self._viewA.view A_Animation_CardIn:A_Animation_Direction_Left
-            Duration:1.0f
-            WhenCompleted:nil];</code></pre>
-        <img class="demo" src="images/demo/Animation_CardIn.gif" />
+        <div id='A_AnimationEffectType_flash' class="anchor"></div>
+        <h3>Flash</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_flash];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_flash.gif" />
+        <br><br><br><br>
 
-        <br />
-        <br />
+        <div id='A_AnimationEffectType_pulse' class="anchor"></div>
+        <h3>Pulse</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_pulse];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_pulse.gif" />
+        <br><br><br><br>
 
-        <div id='animationCardOut' class="anchor"></div>
-        <h2> Animation Card Out </h2>
+        <div id='A_AnimationEffectType_shakeHorizontal' class="anchor"></div>
+        <h3>Shake Horizontal</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_shakeHorizontal];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_shakeHorizontal.gif" />
+        <br><br><br><br>
 
-        <pre><code class="html">[A_Animation A_CardOut:self._viewA.view.layer
-            Direction:A_Animation_Direction_Left
-            Duration:1.0f
-            WhenCompleted:nil];</code></pre>
-        OR
-        <pre><code class="html">[self._viewA.view A_Animation_CardOut:A_Animation_Direction_Left
-            Duration:1.0f
-            WhenCompleted:nil];</code></pre>
-        <img class="demo" src="images/demo/Animation_CardOut.gif" />
+        <div id='A_AnimationEffectType_shakeVertical' class="anchor"></div>
+        <h3>Shake Vertical</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_shakeVertical];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_shakeVertical.gif" />
+        <br><br><br><br>
 
-        <br />
-        <br />
+        <div id='A_AnimationEffectType_swing' class="anchor"></div>
+        <h3>Swing</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_swing];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_swing.gif" />
+        <br><br><br><br>
 
-        <div id='animationFadeout' class="anchor"></div>
-        <h2> Animation FadeOut </h2>
+        <div id='A_AnimationEffectType_wobble' class="anchor"></div>
+        <h3>Wobble</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_wobble];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_wobble.gif" />
+        <br><br><br><br>
 
-        <pre><code class="html">- (IBAction)doClick:(id)sender {
-    [self.theDemoBlock A_Animation_FadeOut:1.0];
-}</code></pre>
-        <img class="demo" src="images/demo/Animation_FadeOut.gif" />
+        <div id='A_AnimationEffectType_quake' class="anchor"></div>
+        <h3>Quake</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_quake];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_quake.gif" />
+        <br><br><br><br>
 
-        <br />
-        <br />
+        <div id='A_AnimationEffectType_squeeze' class="anchor"></div>
+        <h3>Squeeze</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_squeeze];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_squeeze.gif" />
+        <br><br><br><br>
 
-        <div id='animationFadein' class="anchor"></div>
-        <h2> Animation FadeIn </h2>
+        <div id='A_AnimationEffectType_flipX' class="anchor"></div>
+        <h3>Flip X</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_flipX];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_flipX.gif" />
+        <br><br><br><br>
 
-        <pre><code class="html">- (IBAction)doClick:(id)sender {
-    [self.theDemoBlock A_Animation_FadeIn:1.0];
-}</code></pre>
-        <img class="demo" src="images/demo/Animation_FadeIn.gif" />
+        <div id='A_AnimationEffectType_flipY' class="anchor"></div>
+        <h3>Flip Y</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_flipY];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_flipY.gif" />
+        <br><br><br><br>
 
-        <br />
-        <br />
+        <div id='A_AnimationEffectType_flipLeft' class="anchor"></div>
+        <h3>Flip Left</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_flipLeft];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_flipLeft.gif" />
+        <br><br><br><br>
 
-        <div id='animationMoveleft' class="anchor"></div>
-        <h2> Animation move out from left </h2>
-        <pre><code class="html">- (IBAction)doClick:(id)sender {
-    [self.theDemoBlock A_Animation_MoveOut:A_Animation_Direction_Left Duration:1.0];
-}</code></pre>
-        <img class="demo" src="images/demo/Animation_MoveOutLeft.gif" />
+        <div id='A_AnimationEffectType_flipRight' class="anchor"></div>
+        <h3>Flip Right</h3>
+        <pre><code class="html">[demo A_AnimationEffect:A_AnimationEffectType_flipRight];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_flipRight.gif" />
+        <br><br><br><br>
 
-        <br />
-        <br />
-
-        <div id='animationMoveCenter' class="anchor"></div>
-        <h2> Animation move to center </h2>
-        <pre><code class="html">- (IBAction)doClick:(id)sender {
-    [self.theDemoBlock A_Animation_MoveToCenter:1.0];
-}</code></pre>
-        <img class="demo" src="images/demo/Animation_MoveToCenter.gif" />
-
-        <br />
-        <br />
-
-        <div id='animationCompletedEvent' class="anchor"></div>
-        <h2> Completed event</h2>
-        <pre><code class="html">- (IBAction)doClick:(id)sender {
-    [self.theDemoBlock A_Animation_ToSize:CGSizeMake(200, 200)
-    Duration:0.5 WhenCompleted:^{
-        [self.theDemoBlock A_Animation_ToBall:0.5];
-        [self.theDemoBlock A_Animation_FadeOut:1.0];
-    }];
-}</code></pre>
-        <img class="demo" src="images/demo/Animation_combine.gif" />
-
-        <br />
-        <br />
-        <div id='systemTransition' class="anchor"></div>
-        <h2> Transition animation</h2>
-        <pre><code class="html">[self A_Animation_TransitionFrom:self._viewA.view
-        ReplaceTo:self._viewB.view
-        Transition:A_Animation_SystemTransition_Push
-        Direction:A_Animation_Direction_Right
-        Duration:1.0f];</code></pre>
-        <img class="demo" src="images/demo/Animation_SystemTransition.gif" />
-
-    </section>
--->
-</div>
+        <div id='A_AnimationEffectType_flipInOutX' class="anchor"></div>
+        <h3>FlipX In & Out</h3>
+        <pre><code class="html">    [demo A_AnimationEffect:A_AnimationEffectType_flipOutX Duration:.5f CompletionBlock:^{
+        [demo A_AnimationEffect:A_AnimationEffectType_flipInX];
+    }];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_flipOutX_flipInX.gif" />
+        <br><br><br><br>
 
 <div id="sidebarArea"></div>
 
