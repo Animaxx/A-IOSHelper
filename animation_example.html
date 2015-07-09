@@ -73,8 +73,20 @@
                         <li> <a href="#A_AnimationEffectType_flipY">A_AnimationEffectType_flipY </a>  </li>
                         <li> <a href="#A_AnimationEffectType_flipLeft">A_AnimationEffectType_flipLeft </a>  </li>
                         <li> <a href="#A_AnimationEffectType_flipRight">A_AnimationEffectType_flipRight </a>  </li>
-
+                    </ul>
+                </li>
+                <li> <a href="#showin_out_express">Show-In & Show-Out Express Animations  </a>
+                    <ul>
                         <li> <a href="#A_AnimationEffectType_flipInOutX">A_AnimationEffectType_flipOutX & A_AnimationEffectType_flipInX </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_flipInOutY">A_AnimationEffectType_flipOutY & A_AnimationEffectType_flipInY </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_fadeInOut">A_AnimationEffectType_fadeOut & A_AnimationEffectType_fadeIn </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_zoomInOut">A_AnimationEffectType_zoomOut & A_AnimationEffectType_zoomIn </a>  </li>
+                        <li> <a href="#A_AnimationEffectType_cardInOut">A_AnimationEffectType_cardOut & A_AnimationEffectType_cardIn </a>  </li>
+                    </ul>
+                </li>
+                <li> <a href="#layer_setting"> Layer Properties Setting Animations </a>
+                    <ul>
+
                     </ul>
                 </li>
             </ul>
@@ -82,7 +94,7 @@
 
         <div id='expressAnimation' class="anchor"></div>
         <h2> Express Animation Effect </h2>
-        <p> Express animation extends UIView animation function for providing common animations</p>
+        <p> Express animation extends UIView animation function for providing common animations. </p>
         <br><br>
 
         <div id='A_AnimationEffectType_flash' class="anchor"></div>
@@ -157,6 +169,15 @@
         <img class="demo" src="images/demo/expressAnimations/animation_flipRight.gif" />
         <br><br><br><br>
 
+
+
+
+
+        <div id='showin_out_express' class="anchor"></div>
+        <h2> Show-In & Show-Out Express Animations </h2>
+        <p> Here is the express animations for show-in and show-out. </p>
+        <br><br>
+
         <div id='A_AnimationEffectType_flipInOutX' class="anchor"></div>
         <h3>FlipX In & Out</h3>
         <pre><code class="html">    [demo A_AnimationEffect:A_AnimationEffectType_flipOutX Duration:.5f CompletionBlock:^{
@@ -165,11 +186,55 @@
         <img class="demo" src="images/demo/expressAnimations/animation_flipOutX_flipInX.gif" />
         <br><br><br><br>
 
+        <div id='A_AnimationEffectType_flipInOutY' class="anchor"></div>
+        <h3>FlipY In & Out</h3>
+        <pre><code class="html">    [demo A_AnimationEffect:A_AnimationEffectType_flipOutY Duration:.5f CompletionBlock:^{
+        [demo A_AnimationEffect:A_AnimationEffectType_flipInY];
+    }];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_flipOutY_flipInY.gif" />
+        <br><br><br><br>
+
+        <div id='A_AnimationEffectType_fadeInOut' class="anchor"></div>
+        <h3>Fade In & Out</h3>
+        <pre><code class="html">    [demo A_AnimationEffect:A_AnimationEffectType_fadeOut Duration:.5f CompletionBlock:^{
+        [demo A_AnimationEffect:A_AnimationEffectType_fadeIn];
+    }];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_fadeOut_fadeIn.gif" />
+        <br><br><br><br>
+
+        <div id='A_AnimationEffectType_zoomInOut' class="anchor"></div>
+        <h3>Zoom In & Out</h3>
+        <pre><code class="html">    [demo A_AnimationEffect:A_AnimationEffectType_zoomOut Duration:.5f CompletionBlock:^{
+        [demo A_AnimationEffect:A_AnimationEffectType_zoomIn];
+    }];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_zoomOut_zoomIn.gif" />
+        <br><br><br><br>
+
+        <div id='A_AnimationEffectType_cardInOut' class="anchor"></div>
+        <h3>Card In & Out</h3>
+        <pre><code class="html">    [demo A_AnimationEffect:A_AnimationEffectType_cardOut Duration:.5f CompletionBlock:^{
+        [demo A_AnimationEffect:A_AnimationEffectType_cardIn];
+    }];</code></pre>
+        <img class="demo" src="images/demo/expressAnimations/animation_cardOut_cardIn.gif" />
+        <br><br><br><br>
+
+
+
+        <div id='layer_setting' class="anchor"></div>
+        <h2> Layer Properties Setting Animations </h2>
+        <p> It provides various layer setting animations. </p>
+        <br><br>
+
+
+
+
+
 <div id="sidebarArea"></div>
 
 
 <!--[if !IE]>
-<script>fixScale(document);</script><![endif]-->
+<script>fixScale(document);</script>
+<!--[endif]-->
 
 </body>
 </html>
