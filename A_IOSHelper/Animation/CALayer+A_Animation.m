@@ -49,7 +49,7 @@
     [self A_AnimationSet:keypath AnimtionType:type Start:nil End:end Duration:0 FPS:A_AnimationFPS_high AutoSet:YES];
 }
 
-#pragma mark - Animation Layer setting
+#pragma mark - Setting layer properties
 //https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreAnimation_guide/AnimatableProperties/AnimatableProperties.html
 - (void) A_AnimationSetAnchorPoint:(CGPoint)value AnimtionType:(A_AnimationType)type{
     [self A_AnimationSet:@"anchorPoint" AnimtionType:type Start:nil End:[NSValue valueWithCGPoint:value] Duration:0 FPS:A_AnimationFPS_high];
@@ -64,6 +64,9 @@
 - (void) A_AnimationSetPosition:(CGPoint)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"position" AnimtionType:type Start:nil End:[NSValue valueWithCGPoint:value] Duration:0 FPS:A_AnimationFPS_high];
 }
+- (void) A_AnimationSetBounds:(CGRect)value AnimtionType:(A_AnimationType)type {
+    [self A_AnimationSet:@"bounds" AnimtionType:type Start:nil End:[NSValue valueWithCGRect:value] Duration:0 FPS:A_AnimationFPS_high];
+}
 
 - (void) A_AnimationSetBorderWidth:(CGFloat)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"borderWidth" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
@@ -76,7 +79,7 @@
     [self A_AnimationSet:@"contentsRect" AnimtionType:type Start:nil End:[NSValue valueWithCGRect:value] Duration:0 FPS:A_AnimationFPS_high];
 }
 - (void) A_AnimationSetCornerRadius:(CGFloat)value AnimtionType:(A_AnimationType)type {
-    [self A_AnimationSet:@"radius" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
+    [self A_AnimationSet:@"cornerRadius" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
 }
 
 - (void) A_AnimationSetShadowOffset:(CGSize)value AnimtionType:(A_AnimationType)type {
@@ -98,6 +101,7 @@
     [self A_AnimationSet:@"zPosition" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
 }
 
+#pragma mark - Setting transform elements
 //https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/Key-ValueCodingExtensions/Key-ValueCodingExtensions.html
 
 - (void) A_AnimationSetRotationX:(CGFloat)value AnimtionType:(A_AnimationType)type {
@@ -134,6 +138,16 @@
 }
 - (void) A_AnimationSetTranslation:(CGSize)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"transform.translation" AnimtionType:type Start:nil End:[NSValue valueWithCGSize:value] Duration:0 FPS:A_AnimationFPS_high];
+}
+
+#pragma mark - Custom setting
+- (void) A_AnimationSetSize:(CGSize)value AnimtionType:(A_AnimationType)type {
+    float widthDiff = (value.width - self.bounds.size.width) / 2.0f;
+    float hightDiff = (value.height - self.bounds.size.height) / 2.0f;
+    
+    CGRect rect = CGRectMake(self.bounds.origin.x - widthDiff , self.bounds.origin.y - hightDiff, self.bounds.size.width + widthDiff, self.bounds.size.height + hightDiff);
+    
+    [self A_AnimationSet:@"bounds" AnimtionType:type Start:nil End:[NSValue valueWithCGRect:rect] Duration:0 FPS:A_AnimationFPS_high];
 }
 
 
