@@ -6,28 +6,6 @@ The aim of the project provides base foundation functions for IOS developer to m
 
 More information: http://animaxx.github.io/A-IOSHelper
 
-## Compiled framework download
-Please [click here](http://animaxx.github.io/A-IOSHelper/release/A_IOSHelper.framework.zip) to download the zip file of the framework.
-
-## How to use
-In A-IOSHelper, all functions are having the A_prefix, so we can get advantage from IDE's hint.
-
-For using this framework, you can compile it and add the compiled file, A_IOSHelper.framework, into your project at Project page -> General -> Target -> Embedded Binaries section. If your project is older then iOS 8.0, I recommend that copying whole source code to your project.
-
-## How to compile 
-Please use `build.sh` file to build this project.
-> sh ./build.sh
-
-OR
-> sudo sh ./build.sh
-
-and you may use following code to check the building result 
-> cd Product/A_IOSHelper.framework
-
-> lipo -info A_IOSHelper
-
-It should shows `Architectures in the fat file: A_IOSHelper are: i386 x86_64 armv7 arm64`
-
 ## Brief Example
 ###### The Obecrive-C example:
 
@@ -62,6 +40,33 @@ Download image and cache it, and it can get same image next time from cache inst
 ```Objective-C
 A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")
 ```
+
+
+## How to use
+In A-IOSHelper, all functions are having the A_prefix, so we can get advantage from IDE's hint.
+
+For using this framework, there is 3 ways. You can create Workspace and add A-IOSHelper into your Workspace. 
+You also can use Cocoapods to manage A-IOSHelper. 
+Or You can add the compiled framework file, A_IOSHelper.framework, into your project at Project page -> General -> Target -> Embedded Binaries section. (For iOS 8 or above)
+
+
+## Compile 
+Please use `build.sh` file to build this project.
+> sh ./build.sh
+
+OR
+> sudo sh ./build.sh
+
+and you may use following code to check the building result 
+> cd Product/A_IOSHelper.framework
+
+> lipo -info A_IOSHelper
+
+It should shows `Architectures in the fat file: A_IOSHelper are: i386 x86_64 armv7 arm64`
+
+You can also download compiled framework directly [HERE](http://animaxx.github.io/A-IOSHelper/release/A_IOSHelper.framework.zip)
+
+
 
 ## License
 All source code is licensed under the [MIT License](https://github.com/Animaxx/A-IOSHelper/blob/master/LICENSE).

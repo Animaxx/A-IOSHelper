@@ -17,6 +17,7 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
 
 +(keyframeCalculatingBlock) _methodProvider:(A_AnimationType)type {
     keyframeCalculatingBlock _calculatingBlock;
+    
     switch (type) {
             // t: current time, b: begInnIng value, c: change In value, d: duration
             //http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js

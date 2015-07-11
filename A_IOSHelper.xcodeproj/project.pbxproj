@@ -36,7 +36,6 @@
 		2E1187D41A37518F0080FFB9 /* A_StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1187C01A37518F0080FFB9 /* A_StringHelper.m */; };
 		2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1C1B0A1ABDE429008E30B2 /* A_SqliteManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1C1B0D1ABDE429008E30B2 /* A_SqliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1C1B0B1ABDE429008E30B2 /* A_SqliteManager.m */; };
-		2E1C1B121ABE994B008E30B2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */; };
 		2E1E33E01AF4A32B00BC853D /* UIAlertView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E1E33DE1AF4A32B00BC853D /* UIAlertView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1E33E11AF4A32B00BC853D /* UIAlertView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E1E33DF1AF4A32B00BC853D /* UIAlertView+A_Extension.m */; };
 		2E2E9DC61B143CBC001B3AB4 /* UIImageView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E2E9DC41B143CBC001B3AB4 /* UIImageView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -79,6 +78,7 @@
 		695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CA1B1FD4A200114443 /* A_Mapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		695F39CD1B1FD4A200114443 /* A_Mapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F39CB1B1FD4A200114443 /* A_Mapper.m */; };
 		69A487F51B252FA00090CD1D /* MappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A487F41B252FA00090CD1D /* MappingTests.m */; };
+		69B75F071B500A26001C069A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */; };
 		69C028DE1B41065F00800C59 /* CALayer+A_Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 69C028DA1B41065F00800C59 /* CALayer+A_Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		69C028DF1B41065F00800C59 /* CALayer+A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C028DB1B41065F00800C59 /* CALayer+A_Animation.m */; };
 		69C028E01B41065F00800C59 /* UIView+A_Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 69C028DC1B41065F00800C59 /* UIView+A_Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -173,6 +173,7 @@
 		695F39CA1B1FD4A200114443 /* A_Mapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Mapper.h; path = Mapping/A_Mapper.h; sourceTree = "<group>"; };
 		695F39CB1B1FD4A200114443 /* A_Mapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Mapper.m; path = Mapping/A_Mapper.m; sourceTree = "<group>"; };
 		69A487F41B252FA00090CD1D /* MappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MappingTests.m; sourceTree = "<group>"; };
+		69B75F051B500A20001C069A /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		69C028DA1B41065F00800C59 /* CALayer+A_Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CALayer+A_Animation.h"; path = "Animation/CALayer+A_Animation.h"; sourceTree = "<group>"; };
 		69C028DB1B41065F00800C59 /* CALayer+A_Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CALayer+A_Animation.m"; path = "Animation/CALayer+A_Animation.m"; sourceTree = "<group>"; };
 		69C028DC1B41065F00800C59 /* UIView+A_Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+A_Animation.h"; path = "Animation/UIView+A_Animation.h"; sourceTree = "<group>"; };
@@ -184,7 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E1C1B121ABE994B008E30B2 /* libsqlite3.dylib in Frameworks */,
+				69B75F071B500A26001C069A /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +428,7 @@
 		2EB2EACB1A38E38100946C51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				69B75F051B500A20001C069A /* libsqlite3.0.dylib */,
 				2EB099D71AB2A66D00D6DBDC /* QuartzCore.framework */,
 				2EB2EAC91A38E37800946C51 /* libsqlite3.dylib */,
 			);
@@ -787,6 +789,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "${inherited}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -809,6 +812,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "${inherited}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

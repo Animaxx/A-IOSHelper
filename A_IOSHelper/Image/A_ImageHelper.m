@@ -181,7 +181,7 @@
                                                    8,
                                                    0,
                                                    colorSpace,
-                                                   kCGImageAlphaPremultipliedFirst);
+                                                   (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
     CGContextSetAllowsAntialiasing(bmContext, YES);
     CGContextSetShouldAntialias(bmContext, YES);
     CGContextSetInterpolationQuality(bmContext, kCGInterpolationHigh);
