@@ -151,10 +151,9 @@ static char ABindCharKey;
         objc_removeAssociatedObjects(self);
     }
 }
-//- (void)dealloc {
-//    [self A_RemoveAllObservers];
-//    [self A_RemoveAllBinding];
-//}
+- (void)dealloc {
+    [self A_RemoveObservings];
+}
 
 @end
 

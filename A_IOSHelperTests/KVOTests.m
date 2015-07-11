@@ -44,9 +44,6 @@
     [_model setName:@"A"];
     [_model setName:@"A"];
     [_model A_RemoveObserver:@"Name"];
-    
-    [NSThread sleepForTimeInterval:1];
-    
     [_model setName:@"B"];
 }
 
