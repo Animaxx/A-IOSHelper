@@ -12,6 +12,7 @@
 #import "A_PlistHelper.h"
 #import "A_SqliteManager.h"
 #import "A_TaskHelper.h"
+#import "NSObject+A_KVO_Extension.h"
 
 #define DATAMODEL_STORE_GROUP @"A_DATAMODEL_GROUP"
 
@@ -142,6 +143,10 @@
         }
         finishBlock(_arg, result);
     }];
+}
+
+- (void)dealloc {
+    [self A_RemoveObservings];
 }
 
 #pragma mark - NSCoding

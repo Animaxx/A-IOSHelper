@@ -22,9 +22,8 @@
 -(void) A_Bind:(NSString*)key ToTager:(id)toTager AndKey:(NSString*)toKey Convert:(id (^)(id value))convertBlock;
 
 -(void) A_RemoveObserver: (NSString*)key;
--(void) A_RemoveAllObservers;
-
 -(void) A_RemoveBinding: (NSString*)fromKey;
--(void) A_RemoveAllBinding;
+
+- (void) A_RemoveObservings;
 
 @end

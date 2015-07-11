@@ -49,8 +49,8 @@ typedef id(^BindObserverBlock)(id value);
 
 @implementation NSObject (A_KVO_Extension)
 
-static char AObservationsCharKey = 'A';
-static char ABindCharKey = 'B';
+static char AObservationsCharKey;
+static char ABindCharKey;
 
 - (NSMutableArray*)_getObservers {
     NSMutableArray *observations = objc_getAssociatedObject(self, &AObservationsCharKey);
@@ -102,11 +102,6 @@ static char ABindCharKey = 'B';
     [[self _getObservers] addObject:[A_Observer A_CreateObserver:block observedObject:self key:key option:option]];
 }
 
--(void) A_RemoveAllObservers {
-    if (objc_getAssociatedObject(self, &AObservationsCharKey)) {
-        objc_removeAssociatedObjects(self);
-    }
-}
 -(void) A_RemoveObserver: (NSString*)key {
     NSIndexSet *indexes = [[self _getObservers] indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         return [obj isMemberOfClass:[A_Observer class]] && [((A_Observer*)obj).observedObject isEqual:self] && [key isEqualToString:((A_Observer*)obj).key];
@@ -139,11 +134,6 @@ static char ABindCharKey = 'B';
     [[self _getBindObservers] addObject:[A_BindingObserver A_CreateObserver:convertBlock observedObject:self from:key toTager:toTager toKey:toKey]];
 }
 
--(void) A_RemoveAllBinding {
-    if (objc_getAssociatedObject(self, &ABindCharKey)) {
-        objc_removeAssociatedObjects(self);
-    }
-}
 -(void) A_RemoveBinding: (NSString*)fromKey {
     NSIndexSet *indexes = [[self _getBindObservers] indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         return [obj isMemberOfClass:[A_BindingObserver class]] && [((A_BindingObserver*)obj).observedObject isEqual:self] && [fromKey isEqualToString:((A_BindingObserver*)obj).fromKey];
@@ -153,10 +143,18 @@ static char ABindCharKey = 'B';
     }
 }
 
-- (void)dealloc {
-    [self A_RemoveAllObservers];
-    [self A_RemoveAllBinding];
+- (void) A_RemoveObservings {
+    if (objc_getAssociatedObject(self, &AObservationsCharKey)) {
+        objc_removeAssociatedObjects(self);
+    }
+    if (objc_getAssociatedObject(self, &ABindCharKey)) {
+        objc_removeAssociatedObjects(self);
+    }
 }
+//- (void)dealloc {
+//    [self A_RemoveAllObservers];
+//    [self A_RemoveAllBinding];
+//}
 
 @end
 
@@ -188,6 +186,8 @@ bool _blockWithParam;
 }
 
 - (void)dealloc {
+    [self observationInfo];
+    
     if (self.observedObject) {
         @try {
             [self.observedObject removeObserver:self forKeyPath:self.key];

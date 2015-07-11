@@ -12,7 +12,7 @@
 #import "NSObject+A_KVO_Extension.h"
 #import "TestDataModel.h"
 
-@interface ExampleModel : NSObject
+@interface ExampleModel : A_DataModel
 @property (strong, nonatomic) TestDataModel* model;
 @property (nonatomic) int times;
 @end
@@ -44,6 +44,9 @@
     [_model setName:@"A"];
     [_model setName:@"A"];
     [_model A_RemoveObserver:@"Name"];
+    
+    [NSThread sleepForTimeInterval:1];
+    
     [_model setName:@"B"];
 }
 
