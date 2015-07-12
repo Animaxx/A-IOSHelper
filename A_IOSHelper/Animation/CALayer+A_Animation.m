@@ -64,6 +64,13 @@
 - (void) A_AnimationSetPosition:(CGPoint)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"position" AnimtionType:type Start:nil End:[NSValue valueWithCGPoint:value] Duration:0 FPS:A_AnimationFPS_high];
 }
+- (void) A_AnimationSetPositionX:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    [self A_AnimationSet:@"position.x" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
+}
+- (void) A_AnimationSetPositionY:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    [self A_AnimationSet:@"position.y" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
+}
+
 - (void) A_AnimationSetBounds:(CGRect)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"bounds" AnimtionType:type Start:nil End:[NSValue valueWithCGRect:value] Duration:0 FPS:A_AnimationFPS_high];
 }

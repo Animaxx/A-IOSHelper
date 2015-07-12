@@ -23,6 +23,9 @@
 - (void) A_AnimationSetBackgroundColor:(UIColor*)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetOpacity:(CGFloat)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetPosition:(CGPoint)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetPositionX:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetPositionY:(CGFloat)value AnimtionType:(A_AnimationType)type;
+
 - (void) A_AnimationSetBounds:(CGRect)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetBorderWidth:(CGFloat)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetBorderColor:(UIColor*)value AnimtionType:(A_AnimationType)type;

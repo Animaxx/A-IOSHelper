@@ -151,9 +151,9 @@ static char ABindCharKey;
         objc_removeAssociatedObjects(self);
     }
 }
-- (void)dealloc {
-    [self A_RemoveObservings];
-}
+//- (void)dealloc {
+//    [self A_RemoveObservings];
+//}
 
 @end
 
@@ -195,6 +195,8 @@ bool _blockWithParam;
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@ \r\n -------- \r\n\r\n", exception.reason);
         }
     }
+    
+    [self A_RemoveObservings];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -253,6 +255,8 @@ bool _withTager;
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@ \r\n -------- \r\n\r\n", exception.reason);
         }
     }
+    
+    [self A_RemoveObservings];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     id _newValue = self.bindBlock ? self.bindBlock([change objectForKey:@"new"]): [change objectForKey:@"new"];

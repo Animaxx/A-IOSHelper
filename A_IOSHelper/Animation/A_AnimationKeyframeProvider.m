@@ -23,67 +23,94 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
             //http://gsgd.co.uk/sandbox/jquery/easing/jquery.easing.1.3.js
         case A_AnimationType_easeInQuad:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return c*(t/=d)*t*t + b;
+                t = t/d;
+                return c*t*t*t + b;
+                
+                //return c*(t/=d)*t*t + b;
             };
             break;
         case A_AnimationType_easeOutQuad:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return c*((t=t/d-1)*t*t + 1) + b;
+                t = t/d-1;
+                return c*(t*t*t + 1) + b;
+//                return c*((t=t/d-1)*t*t + 1) + b;
             };
             break;
         case A_AnimationType_easeInOutQuad:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
+                
                 if ((t/=d/2) < 1) return c/2*t*t*t + b;
-                return c/2*((t-=2)*t*t + 2) + b;
+
+                t-=2;
+                return c/2*(t*t*t + 2) + b;
             };
             break;
         case A_AnimationType_easeInCubic:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return c*(t/=d)*t*t + b;
+//                return c*(t/=d)*t*t + b;
+                
+                t/=d;
+                return c*t*t*t + b;
             };
             break;
         case A_AnimationType_easeOutCubic:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return c*((t=t/d-1)*t*t + 1) + b;
+//                return c*((t=t/d-1)*t*t + 1) + b;
+                t=t/d-1;
+                return c*(t*t*t + 1) + b;
             };
             break;
         case A_AnimationType_easeInOutCubic:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 if ((t/=d/2) < 1) return c/2*t*t*t + b;
-                return c/2*((t-=2)*t*t + 2) + b;
+//                return c/2*((t-=2)*t*t + 2) + b;
+                t-=2;
+                return c/2*(t*t*t + 2) + b;
             };
             break;
         case A_AnimationType_easeInQuart:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return c*(t/=d)*t*t*t + b;
+//                return c*(t/=d)*t*t*t + b;
+                t/=d;
+                return c*t*t*t*t + b;
             };
             break;
         case A_AnimationType_easeOutQuart:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return -c * ((t=t/d-1)*t*t*t - 1) + b;
+//                return -c * ((t=t/d-1)*t*t*t - 1) + b;
+                t=t/d-1;
+                return -c * (t*t*t*t - 1) + b;
             };
             break;
         case A_AnimationType_easeInOutQuart:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
-                return -c/2 * ((t-=2)*t*t*t - 2) + b;
+//                return -c/2 * ((t-=2)*t*t*t - 2) + b;
+                t-=2;
+                return -c/2 * (t*t*t*t - 2) + b;
             };
             break;
 
         case A_AnimationType_easeInQuint:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return c*(t/=d)*t*t*t + b;
+//                return c*(t/=d)*t*t*t + b;
+                t/=d;
+                return c*t*t*t*t + b;
             };
             break;
         case A_AnimationType_easeOutQuint:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return c*((t=t/d-1)*t*t*t*t + 1) + b;
+//                return c*((t=t/d-1)*t*t*t*t + 1) + b;
+                t=t/d-1;
+                return c*(t*t*t*t*t + 1) + b;
             };
             break;
         case A_AnimationType_easeInOutQuint:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
-                return c/2*((t-=2)*t*t*t*t + 2) + b;
+//                return c/2*((t-=2)*t*t*t*t + 2) + b;
+                t-=2;
+                return c/2*(t*t*t*t*t + 2) + b;
             };
             break;
         case A_AnimationType_easeInSine:
@@ -123,18 +150,24 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
             
         case A_AnimationType_easeInCirc:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return -c * (sqrt(1 - (t/=d)*t) - 1) + b;
+                t/=d;
+                return -c * (sqrt(1 - t*t) - 1) + b;
+//                return -c * (sqrt(1 - (t/=d)*t) - 1) + b;
             };
             break;
         case A_AnimationType_easeOutCirc:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
-                return c * sqrt(1 - (t=t/d-1)*t) + b;
+                t=t/d-1;
+                return c * sqrt(1 - t*t) + b;
+//                return c * sqrt(1 - (t=t/d-1)*t) + b;
             };
             break;
         case A_AnimationType_easeInOutCirc:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 if ((t/=d/2) < 1) return -c/2 * (sqrt(1 - t*t) - 1) + b;
-                return c/2 * (sqrt(1 - (t-=2)*t) + 1) + b;
+//                return c/2 * (sqrt(1 - (t-=2)*t) + 1) + b;
+                t-=2;
+                return c/2 * (sqrt(1 - t*t) + 1) + b;
             };
             break;
 
@@ -142,20 +175,29 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
         case A_AnimationType_easeInBack:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 const double s = 1.70158;
-                return c*(t/=d)*t*((s+1)*t - s) + b;
+//                return c*(t/=d)*t*((s+1)*t - s) + b;
+                t/=d;
+                return c*t*t*((s+1)*t - s) + b;
             };
             break;
         case A_AnimationType_easeOutBack:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 const double s = 1.70158;
-                return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+//                return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+                t=t/d-1;
+                return c*(t*t*((s+1)*t + s) + 1) + b;
             };
             break;
         case A_AnimationType_easeInOutBack:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
                 double s = 1.70158;
-                if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
-                return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+                s*=(1.525);
+                if ((t/=d/2) < 1) return c/2*(t*t*((s+1)*t - s)) + b;
+                t-=2;
+                return c/2*(t*t*((s+1)*t + s) + 2) + b;
+
+//                if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
+//                return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
             };
             break;
             
@@ -190,16 +232,22 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
             break;
         case A_AnimationType_easeInBounce:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
+                //return c - easeOutBounce (x, d-t, 0, c, d) + b;
+                
                 double _v;
                 t = d-t;
+                
                 if ((t/=d) < (1/2.75)) {
                     _v = c*(7.5625*t*t);
                 } else if (t < (2/2.75)) {
-                    _v = c*(7.5625*(t-=(1.5/2.75))*t + .75);
+                    t-=(1.5/2.75);
+                    _v = c*(7.5625*t*t + .75);
                 } else if (t < (2.5/2.75)) {
-                    _v = c*(7.5625*(t-=(2.25/2.75))*t + .9375);
+                    t-=(2.25/2.75);
+                    _v = c*(7.5625*t*t + .9375);
                 } else {
-                    _v = c*(7.5625*(t-=(2.625/2.75))*t + .984375);
+                    t-=(2.625/2.75);
+                    _v = c*(7.5625*t*t + .984375);
                 }
                 return c - _v + b;
             };
@@ -209,40 +257,54 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 if ((t/=d) < (1/2.75)) {
                     return c*(7.5625*t*t) + b;
                 } else if (t < (2/2.75)) {
-                    return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+                    t-=(1.5/2.75);
+                    return c*(7.5625*t*t + .75) + b;
+//                    return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
                 } else if (t < (2.5/2.75)) {
-                    return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+                    t-=(2.25/2.75);
+                    return c*(7.5625*t*t + .9375) + b;
+//                    return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
                 } else {
-                    return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+                    t-=(2.625/2.75);
+                    return c*(7.5625*t*t + .984375) + b;
+//                    return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
                 }
             };
             break;
         case A_AnimationType_easeInOutBounce:
             _calculatingBlock = ^double(double t, double b, double c, double d) {
+//                if (t < d/2) return easeInBounce (x, t*2, 0, c, d) * .5 + b;
+//                return easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
                 
                 double _v;
                 if (t < d/2) {
-                    t=t*2;
+                    t = d-(t*2);
                     if ((t/=d) < (1/2.75)) {
                         _v = c*(7.5625*t*t);
                     } else if (t < (2/2.75)) {
-                        _v = c*(7.5625*(t-=(1.5/2.75))*t + .75);
+                        t-=(1.5/2.75);
+                        _v = c*(7.5625*t*t + .75);
                     } else if (t < (2.5/2.75)) {
-                        _v = c*(7.5625*(t-=(2.25/2.75))*t + .9375);
+                        t-=(2.25/2.75);
+                        _v = c*(7.5625*t*t + .9375);
                     } else {
-                        _v = c*(7.5625*(t-=(2.625/2.75))*t + .984375);
+                        t-=(2.625/2.75);
+                        _v = c*(7.5625*t*t + .984375);
                     }
-                    return _v * .5 + b;
+                    return (c - _v) * .5 + b;
                 } else {
                     t=t*2-d;
                     if ((t/=d) < (1/2.75)) {
                         _v = c*(7.5625*t*t);
                     } else if (t < (2/2.75)) {
-                        _v = c*(7.5625*(t-=(1.5/2.75))*t + .75);
+                        t-=(1.5/2.75);
+                        _v = c*(7.5625*t*t + .75);
                     } else if (t < (2.5/2.75)) {
-                        _v = c*(7.5625*(t-=(2.25/2.75))*t + .9375);
+                        t-=(2.25/2.75);
+                        _v = c*(7.5625*t*t + .9375);
                     } else {
-                        _v = c*(7.5625*(t-=(2.625/2.75))*t + .984375);
+                        t-=(2.625/2.75);
+                        _v = c*(7.5625*t*t + .984375);
                     }
                     return _v * .5 + c*.5 + b;
                 }

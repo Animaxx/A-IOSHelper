@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "A_IOSHelper/KVOHelper/NSObject+A_KVO_Extension.m"
-            timestampString = "458288622.241395"
+            timestampString = "458290864.260612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
-            landmarkName = "-observeValueForKeyPath:ofObject:change:context:"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "-dealloc"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
