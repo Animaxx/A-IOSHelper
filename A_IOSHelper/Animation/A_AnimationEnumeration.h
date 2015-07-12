@@ -11,7 +11,17 @@
 typedef NS_ENUM(NSInteger, A_AnimationType) {
     A_AnimationType_default   =0,
     
+    // Springs
+    A_AnimationType_spring,
+    A_AnimationType_longSpring,
+    A_AnimationType_bigSpring,
+    A_AnimationType_bigLongSpring,
+    
     // http://easings.net/
+    A_AnimationType_easeInSine,
+    A_AnimationType_easeOutSine,
+    A_AnimationType_easeInOutSine,
+    
     A_AnimationType_easeInQuad,
     A_AnimationType_easeOutQuad,
     A_AnimationType_easeInOutQuad,
@@ -28,9 +38,6 @@ typedef NS_ENUM(NSInteger, A_AnimationType) {
     A_AnimationType_easeOutQuint,
     A_AnimationType_easeInOutQuint,
     
-    A_AnimationType_easeInSine,
-    A_AnimationType_easeOutSine,
-    A_AnimationType_easeInOutSine,
     
     A_AnimationType_easeInExpo,
     A_AnimationType_easeOutExpo,
@@ -40,23 +47,17 @@ typedef NS_ENUM(NSInteger, A_AnimationType) {
     A_AnimationType_easeOutCirc,
     A_AnimationType_easeInOutCirc,
     
-    A_AnimationType_easeInElastic,
-    A_AnimationType_easeOutElastic,
-    A_AnimationType_easeInOutElastic,
-    
     A_AnimationType_easeInBack,
     A_AnimationType_easeOutBack,
     A_AnimationType_easeInOutBack,
     
+    A_AnimationType_easeInElastic,
+    A_AnimationType_easeOutElastic,
+    A_AnimationType_easeInOutElastic,
+    
     A_AnimationType_easeInBounce,
     A_AnimationType_easeOutBounce,
     A_AnimationType_easeInOutBounce,
-
-    // Springs
-    A_AnimationType_spring,
-    A_AnimationType_longSpring,
-    A_AnimationType_bigSpring,
-    A_AnimationType_bigLongSpring,
 };
 typedef NS_ENUM(NSUInteger, A_AnimationFPS) {
     A_AnimationFPS_low = 30,
