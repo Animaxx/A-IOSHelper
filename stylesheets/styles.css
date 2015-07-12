@@ -630,7 +630,7 @@ strong {
 }
 
 .wrapper {
-  max-width: 650px;
+  max-width: 800px;
   margin: 0 auto;
   position: relative;
   padding: 0 20px;
@@ -816,7 +816,7 @@ dt {
 }
 
 section {
-  max-width: 650px;
+  max-width: 800px;
   padding: 30px 0px 50px 0px;
   margin: 20px 0;
   margin-top: 70px;
@@ -965,3 +965,59 @@ section div.anchor {
     margin-top: 40px;
   }
 }
+
+.clear {
+    clear: both;
+}
+
+div.halfSizeDemoBox {
+    width: 380px;
+    float: left;
+    margin-bottom: 50px;
+}
+div.animationDiagram {
+
+}
+div.animationDiagram ul {
+    margin: 0 0 0 10px;
+    padding: 0;
+}
+div.animationDiagram ul li {
+    margin-right: 20px;
+    list-style: none;
+    display: inline-block;
+}
+div.animationDiagram ul li .diagramTitle {
+    color: #FFF;
+    font-size: 12px;
+}
+
+div.animationDiagram svg {
+    width: 170px;
+}
+div.animationDiagram svg line {
+    stroke: #bbb;
+    stroke-width: 1px;
+}
+div.animationDiagram svg path {
+    fill: transparent;
+    fill: rgba(255,255,255,0);
+    stroke: white;
+    stroke-width: 1px;
+}
+
+div.animationDiagram ul.easeDiagram {
+    margin: 0 0 0 6px;
+    float: left;
+}
+div.animationDiagram ul.easeDiagram li {
+    margin-right: 5px;
+}
+div.animationDiagram ul.easeDiagram li .diagramTitle {
+    font-size: 8px;
+    margin-bottom: 40px;
+}
+div.animationDiagram ul.easeDiagram li svg {
+    width: 120px;
+}
+
