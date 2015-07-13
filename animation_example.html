@@ -102,8 +102,7 @@
                 <li><a href="#layer_animations"> CALayer Animations </a>
                     <ul>
                         <li><a href="#A_AnimationMotionTypes">Animation motion types </a></li>
-                        <li><a href="#A_AnimationLayerFunction">Layer functions </a></li>
-                        <li><a href="#A_AnimationLayerDemo">Animation demos</a></li>
+                        <li><a href="#A_AnimationLayerFunction">Demo of CALayer animation functions </a></li>
                     </ul>
                 </li>
             </ul>
@@ -868,17 +867,78 @@
                     </div>
                 </li>
             </ul>
+            <div class="clear"></div>
         </div>
 
-        <br><br>
+        <br>
+
+        <div id="A_AnimationLayerFunction" class="anchor"></div>
+        <h3> CALayer function demos </h3>
+        <p> Setting properties of CALayer with animations </p>
+
+        <div class="subtitle"> Set position x with A_AnimationType_easeOutExpo</div>
+        <div>
+            <div style="float: left;" ><img src="images/demo/CALayerrSetting/easeOutExpo_dome.gif"/></div>
+            <div style="float: left; margin-left: 50px;"><pre><code class="html">[demo.layer A_AnimationSetPositionX:240.0f
+                AnimtionType:A_AnimationType_easeOutExpo];</code></pre></div>
+            <div class="clear" style="margin-bottom: 20px;"></div>
+        </div>
+
+        <div class="subtitle"> Set position x with A_AnimationType_easeOutBounce</div>
+        <div>
+            <div style="float: left;" ><img src="images/demo/CALayerrSetting/easeOutBounce_demo.gif"/></div>
+            <div style="float: left; margin-left: 50px;"><pre><code class="html">[demo.layer A_AnimationSetPositionX:240.0f
+                AnimtionType:A_AnimationType_easeOutBounce];</code></pre></div>
+            <div class="clear" style="margin-bottom: 20px;"></div>
+        </div>
+
+        <div class="subtitle"> Set position x with A_AnimationType_easeOutElastic</div>
+        <div>
+            <div style="float: left;" ><img src="images/demo/CALayerrSetting/easeOutElastic_demo.gif"/></div>
+            <div style="float: left; margin-left: 50px;"><pre><code class="html">[demo.layer A_AnimationSetPositionX:240.0f
+                AnimtionType:A_AnimationType_easeOutElastic];</code></pre></div>
+            <div class="clear" style="margin-bottom: 20px;"></div>
+        </div>
+
+        <div class="subtitle"> Set position x with A_AnimationType_bigLongSpring</div>
+        <div>
+            <div style="float: left;" ><img src="images/demo/CALayerrSetting/bigLongSpring_demo.gif"/></div>
+            <div style="float: left; margin-left: 50px;"><pre><code class="html">[demo.layer A_AnimationSetPositionX:240.0f
+                AnimtionType:A_AnimationType_bigLongSpring];</code></pre></div>
+            <div class="clear" style="margin-bottom: 20px;"></div>
+        </div>
+
+        <div class="subtitle"> Set position x with A_AnimationType_bigLongSpring</div>
+        <div>
+            <div style="float: left;" ><img src="images/demo/CALayerrSetting/bigLongSpring_demo.gif"/></div>
+            <div style="float: left; margin-left: 50px;"><pre><code class="html">[demo.layer A_AnimationSetPositionX:240.0f
+                AnimtionType:A_AnimationType_bigLongSpring];</code></pre></div>
+            <div class="clear" style="margin-bottom: 20px;"></div>
+        </div>
+
+        <div class="subtitle"> Combo animations </div>
+        <img src="images/demo/CALayerrSetting/combo_demo.gif"/>
+        <pre><code class="html">[demo.layer A_AnimationSet:@"position.y"
+            AnimtionType:A_AnimationType_spring
+            Start:@(0)
+            End:@(200)
+            Duration:1.2f
+            FPS:A_AnimationFPS_high];
+        [demo A_AnimationEffect:A_AnimationEffectType_squeeze Repeat:4 Duration:.3f CompletionBlock:^{
+            [demo.layer A_AnimationSetRotationZ:3.0f AnimtionType: A_AnimationType_easeOutBounce];
+            [demo.layer A_AnimationSetScale:0.8f AnimtionType:A_AnimationType_easeInOutSine];
+        }];
+        </code></pre>
 
 
-        <div id="sidebarArea"></div>
+        <br><br><br><br>
 
-
-        <!--[if !IE]>
-        <script>fixScale(document);</script>
-        <!--[endif]-->
+        </section>
+    </div>
+<div id="sidebarArea"></div>
+<!--[if !IE]>
+<script>fixScale(document);</script>
+<!--[endif]-->
 
 </body>
 </html>

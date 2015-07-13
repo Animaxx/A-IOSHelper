@@ -975,6 +975,9 @@ div.halfSizeDemoBox {
     float: left;
     margin-bottom: 50px;
 }
+div.subtitle {
+    color: #FFF;
+}
 div.animationDiagram {
 
 }
