@@ -13,7 +13,7 @@
 @interface A_Observer : NSObject
 
 @property (assign, nonatomic) NSObject *observedObject;
-@property (assign, nonatomic) NSString *key;
+@property (copy, nonatomic) NSString *key;
 @property (nonatomic) id param;
 @property (readwrite, nonatomic) void* block;
 
@@ -49,8 +49,8 @@ typedef id(^BindObserverBlock)(id value);
 
 @implementation NSObject (A_KVO_Extension)
 
-static char AObservationsCharKey;
-static char ABindCharKey;
+static void *AObservationsCharKey = &AObservationsCharKey;
+static void *ABindCharKey = &ABindCharKey;
 
 - (NSMutableArray*)_getObservers {
     NSMutableArray *observations = objc_getAssociatedObject(self, &AObservationsCharKey);
@@ -69,37 +69,26 @@ static char ABindCharKey;
     return observations;
 }
 
-
 -(void) A_AddObserver:(NSString*)key Param:(id)param block:(void (^)(id itself, NSDictionary* change, id param))block{
-    [self A_AddObserverWithOption: NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
-                              Key:key
-                            Param:param
-                            block:block];
-}
--(void) A_AddObserver:(NSString*)key block:(void (^)(id itself, NSDictionary* change))block {
-    [self A_AddObserverWithOption: NSKeyValueObservingOptionOld |NSKeyValueObservingOptionNew
-                              Key:key
-                            block:block];
-}
-
--(void) A_AddObserverWithOption:(NSKeyValueObservingOptions)option Key:(NSString*)key Param:(id)param block:(void (^)(id itself, NSDictionary* change, id param))block{
     if (!key || key.length <= 0) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Cannot observe an empty key  \r\n -------- \r\n\r\n");
         return;
     }
-    
+    [self A_registerDealloc];
     [[self _getObservers] addObject:[A_Observer A_CreateObserver:block
                                                   observedObject:self
                                                              key:key
-                                                          option:option param:param]];
+                                                          option:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
+                                                           param:param]];
 }
--(void) A_AddObserverWithOption:(NSKeyValueObservingOptions)option Key:(NSString*)key block:(void (^)(id itself, NSDictionary* change))block{
+-(void) A_AddObserver:(NSString*)key block:(void (^)(id itself, NSDictionary* change))block {
     if (!key || key.length <= 0) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper - Add Observer> \r\n Cannot observe an empty key  \r\n -------- \r\n\r\n");
         return;
     }
     
-    [[self _getObservers] addObject:[A_Observer A_CreateObserver:block observedObject:self key:key option:option]];
+    [self A_registerDealloc];
+    [[self _getObservers] addObject:[A_Observer A_CreateObserver:block observedObject:self key:key option:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew]];
 }
 
 -(void) A_RemoveObserver: (NSString*)key {
@@ -120,6 +109,7 @@ static char ABindCharKey;
         return;
     }
     
+    [self A_registerDealloc];
     [[self _getBindObservers] addObject:[A_BindingObserver A_CreateObserver:convertBlock observedObject:self from:key to:to]];
 }
 -(void) A_Bind:(NSString*)key ToTager:(id)toTager AndKey:(NSString*)toKey {
@@ -131,6 +121,7 @@ static char ABindCharKey;
         return;
     }
     
+    [self A_registerDealloc];
     [[self _getBindObservers] addObject:[A_BindingObserver A_CreateObserver:convertBlock observedObject:self from:key toTager:toTager toKey:toKey]];
 }
 
@@ -151,9 +142,14 @@ static char ABindCharKey;
         objc_removeAssociatedObjects(self);
     }
 }
-//- (void)dealloc {
-//    [self A_RemoveObservings];
-//}
+- (void) A_registerDealloc {
+    
+    class_addMethod([self class], NSSelectorFromString(@"dealloc"), (IMP)aObservatingDealloc, "v@:" ) ;
+}
+
+void aObservatingDealloc (id self,SEL _cmd) {
+    [self A_RemoveObservings];
+}
 
 @end
 
@@ -185,8 +181,6 @@ bool _blockWithParam;
 }
 
 - (void)dealloc {
-    [self observationInfo];
-    
     if (self.observedObject) {
         @try {
             [self.observedObject removeObserver:self forKeyPath:self.key];
@@ -195,8 +189,6 @@ bool _blockWithParam;
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@ \r\n -------- \r\n\r\n", exception.reason);
         }
     }
-    
-    [self A_RemoveObservings];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -255,8 +247,6 @@ bool _withTager;
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@ \r\n -------- \r\n\r\n", exception.reason);
         }
     }
-    
-    [self A_RemoveObservings];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     id _newValue = self.bindBlock ? self.bindBlock([change objectForKey:@"new"]): [change objectForKey:@"new"];

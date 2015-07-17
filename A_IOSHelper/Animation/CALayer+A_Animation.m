@@ -118,7 +118,7 @@
     [self A_AnimationSet:@"transform.rotation.y" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
 }
 - (void) A_AnimationSetRotationZ:(CGFloat)value AnimtionType:(A_AnimationType)type {
-    [self A_AnimationSet:@"transform.rotation.z" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
+    [self A_AnimationSet:@"transform.rotation.z" AnimtionType:type Start:nil End:@(value*M_PI/180.0) Duration:0 FPS:A_AnimationFPS_high];
 }
 
 - (void) A_AnimationSetScaleX:(CGFloat)value AnimtionType:(A_AnimationType)type {

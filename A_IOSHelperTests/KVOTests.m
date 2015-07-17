@@ -24,9 +24,10 @@
     }
     return self;
 }
--(void)dealloc {
-    NSLog(@"Dealloc");
-}
+//-(void)dealloc {
+//    [self A_RemoveObservings];
+//    NSLog(@"Dealloc");
+//}
 @end
 
 @interface KVOTests : XCTestCase
@@ -69,20 +70,6 @@
 //    [_example A_RemoveAllObservers];
 }
 
-- (void) testWithOtpion {
-    ExampleModel* _example = [[ExampleModel alloc] init];
-    [_example A_AddObserverWithOption:NSKeyValueObservingOptionInitial Key:@"model.ID" block:^(ExampleModel *itself, NSDictionary *change) {
-        
-        NSLog(@"Times %d",itself.times);
-        itself.times ++;
-        if ([[change objectForKey:@"new"] isEqualToNumber:@(2)]) {
-            XCTAssertEqual(itself.times, 2);
-        }
-    }];
-    
-    [_example.model setID:@(1)];
-    [_example.model setID:@(2)];
-}
 
 -(void) testBindWithConvert {
     ExampleModel* example = [[ExampleModel alloc] init];

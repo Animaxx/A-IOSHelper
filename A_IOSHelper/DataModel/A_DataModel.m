@@ -145,10 +145,6 @@
     }];
 }
 
-- (void)dealloc {
-    [self A_RemoveObservings];
-}
-
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
