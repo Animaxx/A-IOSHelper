@@ -8,7 +8,7 @@ $(document).ready(function() {
     addMenuItem("Animation", "animation_example.html");
     addMenuItem("Event", "event_example.html");
     addMenuItem("Task", "task_example.html");
-    addMenuItem("KVO", "kvo_example.html");
+    addMenuItem("KVO Binding", "kvo_example.html");
     addMenuItem("Sqlite Manager", "sqliteManager_example.html");
     addMenuItem("Data Model", "datamodel_example.html");
     addMenuItem("Network", "network_example.html");
