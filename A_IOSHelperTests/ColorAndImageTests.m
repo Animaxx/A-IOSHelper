@@ -17,7 +17,7 @@
 @implementation ColorAndImageTests
 
 - (void)testStringToColor {
-    UIColor* _result = [UIColor A_MakeColor:@"#2595cc"];
+    UIColor *_result = [UIColor A_MakeColor:@"#2595cc"];
     CGFloat _red, _green, _blue, _alpha;
     [_result getRed:&_red green:&_green blue:&_blue alpha:&_alpha];
     

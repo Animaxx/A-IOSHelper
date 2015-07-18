@@ -15,10 +15,10 @@
 @property (assign, nonatomic) NSObject *observedObject;
 @property (copy, nonatomic) NSString *key;
 @property (nonatomic) id param;
-@property (readwrite, nonatomic) void* block;
+@property (readwrite, nonatomic) void *block;
 
-+ (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary* change, id param))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option param:(id)parm;
-+ (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary* change))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option;
++ (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary *change, id param))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option param:(id)parm;
++ (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary *change))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option;
 
 @end
 
@@ -53,11 +53,20 @@ static void *AObservationsCharKey = &AObservationsCharKey;
 static void *ABindCharKey = &ABindCharKey;
 
 - (NSMutableArray*)_getObservers {
+    __strong static NSLock *kvoLock;
+    
+    static dispatch_once_t pred = 0;
+    dispatch_once(&pred, ^{
+        kvoLock = [[NSLock alloc] init];
+    });
+
+    [kvoLock lock];
     NSMutableArray *observations = objc_getAssociatedObject(self, &AObservationsCharKey);
     if ( observations == nil ) {
         observations = [NSMutableArray array];
         objc_setAssociatedObject(self, &AObservationsCharKey, observations, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
+    [kvoLock unlock];
     return observations;
 }
 - (NSMutableArray*)_getBindObservers {
@@ -69,7 +78,7 @@ static void *ABindCharKey = &ABindCharKey;
     return observations;
 }
 
--(void) A_AddObserver:(NSString*)key Param:(id)param block:(void (^)(id itself, NSDictionary* change, id param))block{
+-(void) A_AddObserver:(NSString*)key Param:(id)param block:(void (^)(id itself, NSDictionary *change, id param))block{
     if (!key || key.length <= 0) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Cannot observe an empty key  \r\n -------- \r\n\r\n");
         return;
@@ -81,7 +90,7 @@ static void *ABindCharKey = &ABindCharKey;
                                                           option:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
                                                            param:param]];
 }
--(void) A_AddObserver:(NSString*)key block:(void (^)(id itself, NSDictionary* change))block {
+-(void) A_AddObserver:(NSString*)key block:(void (^)(id itself, NSDictionary *change))block {
     if (!key || key.length <= 0) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper - Add Observer> \r\n Cannot observe an empty key  \r\n -------- \r\n\r\n");
         return;
@@ -157,8 +166,8 @@ void aObservatingDealloc (id self,SEL _cmd) {
 @implementation A_Observer
 
 bool _blockWithParam;
-+ (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary* change, id param))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option param:(id)parm{
-    A_Observer* _observer = [[A_Observer alloc] init];
++ (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary *change, id param))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option param:(id)parm{
+    A_Observer *_observer = [[A_Observer alloc] init];
     [_observer setObservedObject:observedObject];
     [_observer setKey:key];
     [_observer setParam:parm];
@@ -168,8 +177,8 @@ bool _blockWithParam;
     [observedObject addObserver:_observer forKeyPath:key options:option context:nil];
     return _observer;
 }
-+ (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary* change))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option {
-    A_Observer* _observer = [[A_Observer alloc] init];
++ (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary *change))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option {
+    A_Observer *_observer = [[A_Observer alloc] init];
     [_observer setObservedObject:observedObject];
     [_observer setKey:key];
     [_observer setParam:nil];
@@ -194,9 +203,9 @@ bool _blockWithParam;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (self.block) {
         if (_blockWithParam) {
-            ((void (^)(NSObject* itself, NSDictionary* change, id param))self.block)(self.observedObject,change,[self param]);
+            ((void (^)(NSObject *itself, NSDictionary *change, id param))self.block)(self.observedObject,change,[self param]);
         } else {
-            ((void (^)(NSObject* itself, NSDictionary* change))self.block)(self.observedObject,change);
+            ((void (^)(NSObject *itself, NSDictionary *change))self.block)(self.observedObject,change);
         }
     }
 }
@@ -211,7 +220,7 @@ bool _withTager;
                          observedObject:(NSObject*)observedObject
                                    from:(NSString*)from
                                      to:(NSString*)to {
-    A_BindingObserver* _observer = [[A_BindingObserver alloc] init];
+    A_BindingObserver *_observer = [[A_BindingObserver alloc] init];
     [_observer setObservedObject:observedObject];
     [_observer setBindBlock:block];
     [_observer setFromKey:from];
@@ -226,7 +235,7 @@ bool _withTager;
                                    from:(NSString*)from
                                 toTager:(id)tager
                                   toKey:(NSString*)toKey {
-    A_BindingObserver* _observer = [[A_BindingObserver alloc] init];
+    A_BindingObserver *_observer = [[A_BindingObserver alloc] init];
     [_observer setObservedObject:observedObject];
     [_observer setBindBlock:block];
     [_observer setFromKey:from];

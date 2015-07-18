@@ -20,24 +20,24 @@
 
 - (void)testGetAndSetToFile {
     [A_PlistHelper A_Save:@"abc" byKey:@"Key"];
-    NSString* _value = [A_PlistHelper A_GetByKey:@"Key"];
+    NSString *_value = [A_PlistHelper A_GetByKey:@"Key"];
     
     XCTAssertNotNil(_value);
 }
 
 - (void)testGetAndSetToGroupFile {
     [A_PlistHelper A_Save:@"abc" toGroup:@"group" andKey:@"Key"];
-    NSString* _value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
+    NSString *_value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
     
     XCTAssertNotNil(_value);
     
-    NSString* _value2 = [A_PlistHelper A_GetByKey:@"Key"];
+    NSString *_value2 = [A_PlistHelper A_GetByKey:@"Key"];
     XCTAssertNotEqual(_value, _value2);
 }
 
 - (void)testDeleteCache {
     [A_PlistHelper A_Save:@"abc" byKey:@"Key"];
-    NSString* _value = [A_PlistHelper A_GetByKey:@"Key"];
+    NSString *_value = [A_PlistHelper A_GetByKey:@"Key"];
     
     XCTAssertNotNil(_value);
     
@@ -48,7 +48,7 @@
 
 - (void)testDeleteCacheInGroup {
     [A_PlistHelper A_Save:@"abc" toGroup:@"group" andKey:@"Key"];
-    NSString* _value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
+    NSString *_value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
     
     XCTAssertNotNil(_value);
     
@@ -60,7 +60,7 @@
 - (void)testHandleDatamodel {
     [TestDataModel A_ClearFromPlist];
     
-    TestDataModel* _model1 = [[TestDataModel alloc] init];
+    TestDataModel *_model1 = [[TestDataModel alloc] init];
     [_model1 setName:@"Object_1"];
     [_model1 setCreateDate: [NSDate date]];
     [_model1 setID:@0];
@@ -69,7 +69,7 @@
     XCTAssertTrue([TestDataModel A_GetFromPliste].count == 1);
     XCTAssertTrue([((TestDataModel*)[TestDataModel A_GetFromPliste].firstObject).Name isEqualToString:@"Object_1"]);
     
-    TestDataModel* _model2 = [[TestDataModel alloc] init];
+    TestDataModel *_model2 = [[TestDataModel alloc] init];
     [_model2 setIndex:1];
     [_model2 setName:@"Object_2"];
     [_model2 setCreateDate: [NSDate date]];
@@ -85,7 +85,7 @@
 
 - (void)testDatamodelWithSql {
     
-    TestDataModel* _model1 = [[TestDataModel alloc] init];
+    TestDataModel *_model1 = [[TestDataModel alloc] init];
     [_model1 setIndex:0];
     [_model1 setName:@"Object_1"];
     [_model1 setCreateDate: [NSDate date]];

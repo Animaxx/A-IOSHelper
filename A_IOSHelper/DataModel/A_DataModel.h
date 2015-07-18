@@ -10,7 +10,6 @@
 
 @interface A_DataModel : NSObject<NSCoding>
 
-//@property (strong, nonatomic) NSNumber* ID;
 
 - (NSDictionary*)A_Serialize;
 + (NSObject*)A_Deserialize: (NSDictionary*)Array;
@@ -28,8 +27,8 @@
 - (NSArray*)A_SearchSimilarModelsInSqlite;
 + (NSArray*)A_SearchSqlite: (NSString*)where;
 
-- (void)A_SearchSimilarModelsInSqliteWithBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj;
-+ (void)A_SearchSqlite: (NSString*)where withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj;
+- (void)A_SearchSimilarModelsInSqliteWithBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
++ (void)A_SearchSqlite: (NSString*)where withBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
 
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder;

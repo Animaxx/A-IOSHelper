@@ -28,7 +28,7 @@ int _testInt = 0;
 }
 
 - (void)testRunInBackgroundWithObj {
-    NSString* _message = @"test";
+    NSString *_message = @"test";
     
     [A_TaskHelper A_RunInBackgroundWithParam:_message Block:^id(id arg) {
         return [arg stringByAppendingString:@"123"];
@@ -43,7 +43,7 @@ int _testInt = 0;
         _testInt = 1;
     } InMain:NO];
     
-    sleep(1);
+    sleep(3);
     XCTAssert(1==_testInt);
 }
 
@@ -51,7 +51,7 @@ int _testInt = 0;
     NSMutableArray *_list = [[NSMutableArray alloc] init];
     NSMutableArray *_list2 = [[NSMutableArray alloc] init];
     
-    A_TaskHelper* task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES];
+    A_TaskHelper *task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES];
     for (int i = 0; i<10; i++) {
         [task A_AddTask:^(A_TaskHelper *task) {
             [NSThread sleepForTimeInterval:((float)((arc4random() % (100 - i*4))) / 100)];
@@ -60,7 +60,7 @@ int _testInt = 0;
         }];
     }
     
-    A_TaskHelper* task2 = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES];
+    A_TaskHelper *task2 = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES];
     for (int i = 0; i<10; i++) {
         [task2 A_AddTask:^(A_TaskHelper *task) {
             [NSThread sleepForTimeInterval:((float)((arc4random() % (100 - i*4))) / 100)];
@@ -88,7 +88,7 @@ int _testInt = 0;
 - (void)testConcurrentSquentialTaskChain {
     NSMutableArray *_list = [[NSMutableArray alloc] init];
     
-    A_TaskHelper* task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
+    A_TaskHelper *task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
     for (int i = 0; i<10; i++) {
         [task A_AddTask:^(A_TaskHelper *task) {
             [NSThread sleepForTimeInterval:((float)((arc4random() % (100 - i*4))) / 100)];
@@ -107,7 +107,7 @@ int _testInt = 0;
 - (void)testDelayTaskChain {
     NSMutableArray *_list = [[NSMutableArray alloc] init];
     
-    A_TaskHelper* task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
+    A_TaskHelper *task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
     for (int i = 0; i<10; i++) {
         float delay = (float)((arc4random() % (100 - i*4))) / 100;
         [task A_AddDelayTask:delay Block:^(A_TaskHelper *task) {
@@ -124,7 +124,7 @@ int _testInt = 0;
 }
 
 - (void) testTaskChainEitherInSeuquential {
-    A_TaskHelper* task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
+    A_TaskHelper *task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
     [task A_AddDelayTask:2.0f Block:^(A_TaskHelper *task) {
             NSLog(@"Task %d",1);
     }];
@@ -146,7 +146,7 @@ int _testInt = 0;
 }
 
 - (void) testMultiTaskChain {
-    A_TaskHelper* task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
+    A_TaskHelper *task = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:NO];
     [task A_AddDelayTask:2.0f Block:^(A_TaskHelper *task) {
         NSLog(@"Task %d",1);
     }];
@@ -157,7 +157,7 @@ int _testInt = 0;
         NSLog(@"Task %d",3);
     }];
     
-    A_TaskHelper* task2 = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES];
+    A_TaskHelper *task2 = [A_TaskHelper A_Init:A_Task_RunInBackgroup Sequential:YES];
     [task2 A_AddTask:^(A_TaskHelper *task) {
         NSLog(@"Task2 %d",1);
     }];

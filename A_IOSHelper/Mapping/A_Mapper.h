@@ -39,6 +39,4 @@ typedef id(^mapElementBlock)(id input);
 - (NSArray*)A_ConvertArray:(NSArray*)from ToClass:(Class)toClass;
 - (NSArray*)A_ConvertArray:(NSArray*)from ToClassName:(NSString*)toClass;
 
-// TODO: Auto convert
-
 @end

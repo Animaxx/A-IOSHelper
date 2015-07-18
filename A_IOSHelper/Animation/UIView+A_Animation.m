@@ -43,7 +43,7 @@
             }
         }];
     
-        CAAnimationGroup* animations = [A_Animation A_GenerateEffect:type Duration:duration];
+        CAAnimationGroup *animations = [A_Animation A_GenerateEffect:type Duration:duration];
         if (repeat > 0) {
             animations.repeatCount = repeat;
         }

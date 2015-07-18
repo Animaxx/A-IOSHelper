@@ -23,7 +23,7 @@
     
     if (duration<=0) duration = 0.5f;
     
-    CAAnimationGroup* group = [CAAnimationGroup animation];
+    CAAnimationGroup *group = [CAAnimationGroup animation];
     [group setRemovedOnCompletion: YES];
     group.duration = duration;
     

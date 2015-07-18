@@ -45,7 +45,7 @@ static char _a_associatedObjectKey;
         events[key] = handlers;
     }
     
-    A_BlockWrapper* _block = [A_BlockWrapper A_Init:(__bridge void *)(handler) WithObj:arg];
+    A_BlockWrapper *_block = [A_BlockWrapper A_Init:(__bridge void *)(handler) WithObj:arg];
     [handlers addObject:_block];
     [self addTarget:_block action:@selector(A_Execute:) forControlEvents:controlEvents];
 }
@@ -65,7 +65,7 @@ static char _a_associatedObjectKey;
         events[key] = handlers;
     }
     
-    A_BlockWrapper* _block = [A_BlockWrapper A_Init:(__bridge void *)(handler)];
+    A_BlockWrapper *_block = [A_BlockWrapper A_Init:(__bridge void *)(handler)];
     [handlers addObject:_block];
     [self addTarget:_block action:@selector(A_Execute:) forControlEvents:controlEvents];
 }
@@ -134,16 +134,12 @@ static char _a_associatedObjectKey;
 
 - (void) A_Execute {
     if (self.block) {
-        @synchronized(self) {
-            ((void (^)(id arg))self.block)(self.arg);
-        }
+        ((void (^)(id arg))self.block)(self.arg);
     }
 }
 - (void) A_Execute: (id)obj {
     if (self.block) {
-        @synchronized(self) {
-            ((void (^)(id obj,id arg))self.block)(obj,self.arg);
-        }
+        ((void (^)(id obj,id arg))self.block)(obj,self.arg);
     }
 }
 

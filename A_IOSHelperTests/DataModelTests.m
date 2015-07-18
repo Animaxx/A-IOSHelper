@@ -18,27 +18,23 @@
 @implementation DataModelTests
 
 - (void)testSerialize {
-    TestDataModel* _test = [[TestDataModel alloc] init];
-//    _test.Name = @"Test1";
-//    _test.CreateDate = [NSDate date];
-//    _test.Index = 100;
-//    _test.ID = [NSNumber numberWithInt:123];
+    TestDataModel *_test = [[TestDataModel alloc] init];
     
-    NSDictionary* _d = [_test A_Serialize];
-    TestDataModel* _result = (TestDataModel*)[TestDataModel A_Deserialize:_d];
+    NSDictionary *_d = [_test A_Serialize];
+    TestDataModel *_result = (TestDataModel*)[TestDataModel A_Deserialize:_d];
     
     XCTAssertNotNil(_result);
 }
 
 - (void)testConvertJSON {
-    TestDataModel* _test = [[TestDataModel alloc] init];
+    TestDataModel *_test = [[TestDataModel alloc] init];
     _test.Name = @"Test2";
     _test.CreateDate = [NSDate date];
     _test.Index = 100;
     _test.ID = [NSNumber numberWithInt:123];
     
-    NSString* _d = [_test A_ConvertToJSON];
-    TestDataModel* _result = (TestDataModel*)[TestDataModel A_ConvertFromJSON:_d];
+    NSString *_d = [_test A_ConvertToJSON];
+    TestDataModel *_result = (TestDataModel*)[TestDataModel A_ConvertFromJSON:_d];
     
     XCTAssertNotNil(_result);
 }

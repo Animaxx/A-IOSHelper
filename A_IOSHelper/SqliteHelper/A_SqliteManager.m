@@ -12,14 +12,14 @@
 #import "A_Reflection.h"
 #import "A_TaskHelper.h"
 
-@implementation A_SqliteManager
-
-sqlite3 *database;
-sqlite3_stmt *statement;
-NSString *databaseFileName;
-NSFileManager *filemanager;
-NSMutableArray *ExistingTables;
-NSObject* lockObj;
+@implementation A_SqliteManager {
+    sqlite3 *database;
+    sqlite3_stmt *statement;
+    NSString *databaseFileName;
+    NSFileManager *filemanager;
+    NSMutableArray *ExistingTables;
+    NSLock *sqlLock;
+}
 
 #pragma mark - Database Operation
 
@@ -29,7 +29,7 @@ NSObject* lockObj;
 }
 + (A_SqliteManager *) A_Instance: (NSString *)file {
     static dispatch_once_t pred = 0;
-    __strong static NSMutableDictionary* _storage = nil;
+    __strong static NSMutableDictionary *_storage = nil;
     dispatch_once(&pred, ^{
         _storage = [[NSMutableDictionary alloc] init];
     });
@@ -45,7 +45,7 @@ NSObject* lockObj;
 }
 - (instancetype) init: (NSString *)file {
     if ((self = [super init])) {
-        lockObj = [[NSObject alloc] init];
+        sqlLock = [[NSLock alloc] init];
         databaseFileName = file;
         [self A_OpenConnetion];
     }
@@ -59,10 +59,10 @@ NSObject* lockObj;
     if (database) return;
     
     filemanager = [[NSFileManager alloc] init];
-    NSString * dbpath = [self A_DBPath];
+    NSString  *dbpath = [self A_DBPath];
     
     if (![filemanager fileExistsAtPath:dbpath]) {
-        NSString * defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseFileName];
+        NSString  *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseFileName];
         if ([filemanager fileExistsAtPath:defaultDBPath]) {
             [filemanager copyItemAtPath:defaultDBPath toPath:dbpath error:NULL];
         }
@@ -93,27 +93,32 @@ NSObject* lockObj;
     return [self A_ExecuteQuery:query withArgs:nil];
 }
 - (NSNumber *) A_ExecuteQuery:(NSString *) query withArgs:(NSArray*) args {
-    @synchronized(lockObj) {
-        [self _bindSQL:[query UTF8String] withArray:args];
-        if (statement == NULL) return @0;
-        
-        sqlite3_step(statement);
-        if(sqlite3_finalize(statement) == SQLITE_OK) {
-            return @(sqlite3_changes(database));
-        } else {
-            return @0;
-        }
+    [sqlLock lock];
+    [self _bindSQL:[query UTF8String] withArray:args];
+    if (statement == NULL) {
+        [sqlLock unlock];
+        return @0;
     }
+    
+    sqlite3_step(statement);
+    NSNumber *result = nil;
+    if(sqlite3_finalize(statement) == SQLITE_OK) {
+        result = @(sqlite3_changes(database));
+    } else {
+        result = @0;
+    }
+    [sqlLock unlock];
+    return result;
 }
 
-- (void) A_ExecuteQuery :(NSString *) query withBlock:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj{
+- (void) A_ExecuteQuery :(NSString *) query withBlock:(void (^)(id obj, NSNumber *result))finishBlock andArg:(id)obj{
     [A_TaskHelper A_RunInBackgroundWithParam:@[query,obj] Block:^id(id arg) {
         return [self A_ExecuteQuery:[arg objectAtIndex:0] withArgs:nil];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:1], (NSNumber*)result);
     }];
 }
-- (void) A_ExecuteQuery :(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj{
+- (void) A_ExecuteQuery :(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSNumber *result))finishBlock andArg:(id)obj{
     [A_TaskHelper A_RunInBackgroundWithParam:@[query,params,obj] Block:^id(id arg) {
         return [self A_ExecuteQuery:[arg objectAtIndex:0] withArgs:[arg objectAtIndex:1]];
     } WhenDone:^(id arg, id result) {
@@ -125,28 +130,27 @@ NSObject* lockObj;
     return [self A_SearchDataset:query withParams:nil];
 }
 - (NSArray*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params {
-    @synchronized(lockObj) {
-        [self _bindSQL:[query UTF8String] withArray:params];
-        if (statement == NULL) return [[NSArray alloc] init];
-        
-        NSMutableArray* dataset = [[NSMutableArray alloc] init];
-        NSDictionary * row = nil;
-        while ((row = [self _getRow])) {
-            [dataset addObject:row];
-        }
-        
-        return dataset;
+    [sqlLock lock];
+    [self _bindSQL:[query UTF8String] withArray:params];
+    if (statement == NULL) return [[NSArray alloc] init];
+    
+    NSMutableArray *dataset = [[NSMutableArray alloc] init];
+    NSDictionary *row = nil;
+    while ((row = [self _getRow])) {
+        [dataset addObject:row];
     }
+    [sqlLock unlock];
+    return dataset;
 }
 
-- (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
+- (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj{
     [A_TaskHelper A_RunInBackgroundWithParam:@[query,obj] Block:^id(id arg) {
         return [self A_SearchDataset:[arg objectAtIndex:0] withParams:nil];
     } WhenDone:^(id arg, id result) {
         finishBlock([arg objectAtIndex:1], (NSArray*)result);
     }];
 }
-- (void) A_SearchDataset:(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj{
+- (void) A_SearchDataset:(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj{
     [A_TaskHelper A_RunInBackgroundWithParam:@[query,params,obj] Block:^id(id arg) {
         return [self A_SearchDataset:[arg objectAtIndex:0] withParams:[arg objectAtIndex:1]];
     } WhenDone:^(id arg, id result) {
@@ -163,7 +167,7 @@ NSObject* lockObj;
     } else  if (rc == SQLITE_ROW) {
         int col_count = sqlite3_column_count(statement);
         if (col_count >= 1) {
-            NSMutableDictionary * dRow = [NSMutableDictionary dictionaryWithCapacity:col_count];
+            NSMutableDictionary  *dRow = [NSMutableDictionary dictionaryWithCapacity:col_count];
             for(int i = 0; i < col_count; i++) {
                 dRow[ @(sqlite3_column_name(statement, i)) ] = [self _columnValue:i];
             }
@@ -274,14 +278,14 @@ NSObject* lockObj;
     return [self A_CreateTableScript:model WithTableName:[A_SqliteManager A_GenerateTableName:model] AndKey:key];
 }
 + (NSString*) A_CreateTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key{
-    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
+    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
     
-    NSString* _createTableSql = [NSString stringWithFormat:@"CREATE TABLE \"%@\" (", tableName];
+    NSString *_createTableSql = [NSString stringWithFormat:@"CREATE TABLE \"%@\" (", tableName];
     
     BOOL _first = YES;
-    NSString* _format;
-    NSString* _type;
-    for (NSString* propertyName in properties) {
+    NSString *_format;
+    NSString *_type;
+    for (NSString *propertyName in properties) {
         if (_first) {
             _format = @"\"%@\" %@";
         } else {
@@ -306,15 +310,15 @@ NSObject* lockObj;
 }
 
 - (NSNumber*) A_CreateTable:(A_DataModel*) model {
-    NSString* _sql = [A_SqliteManager A_CreateTableScript:model];
+    NSString *_sql = [A_SqliteManager A_CreateTableScript:model];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_CreateTable:(A_DataModel*) model AndKey:(NSString*)key {
-    NSString* _sql = [A_SqliteManager A_CreateTableScript:model AndKey:key];
+    NSString *_sql = [A_SqliteManager A_CreateTableScript:model AndKey:key];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_CreateTable:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key {
-    NSString* _sql = [A_SqliteManager A_CreateTableScript:model WithTableName:tableName AndKey:key];
+    NSString *_sql = [A_SqliteManager A_CreateTableScript:model WithTableName:tableName AndKey:key];
     return [self A_ExecuteQuery:_sql];
 }
 
@@ -328,17 +332,17 @@ NSObject* lockObj;
     return [self A_CreateInsertScript:model WithIgnore:nil AndTable:tableName];
 }
 + (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName {
-    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
-    NSArray* _keys = [properties allKeys];
+    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray *_keys = [properties allKeys];
     
     BOOL _firstVal = YES;
     BOOL _ignore = NO;
-    NSString* _valuesStr = [[NSString alloc] init];
-    NSString* _keysStr = [[NSString alloc] init];
+    NSString *_valuesStr = [[NSString alloc] init];
+    NSString *_keysStr = [[NSString alloc] init];
     
-    for (NSString* item in _keys) {
+    for (NSString *item in _keys) {
         _ignore = NO;
-        for (NSString* _ignoreKey in ignoreKeys) {
+        for (NSString *_ignoreKey in ignoreKeys) {
             if ([[item lowercaseString] isEqualToString:[_ignoreKey lowercaseString]]) {
                 _ignore = YES;
                 break;
@@ -356,39 +360,39 @@ NSObject* lockObj;
         _firstVal = NO;
     }
     
-    NSString* _insterTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (%@) VALUES (%@)", tableName, _keysStr, _valuesStr];
+    NSString *_insterTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (%@) VALUES (%@)", tableName, _keysStr, _valuesStr];
     
     return _insterTableSql;
 }
 
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName{
-    NSString* _sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys AndTable:tableName];
+    NSString *_sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys AndTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model WithTable:(NSString*)tableName{
-    NSString* _sql = [A_SqliteManager A_CreateInsertScript:model WithTable:tableName];
+    NSString *_sql = [A_SqliteManager A_CreateInsertScript:model WithTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys{
-    NSString* _sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys];
+    NSString *_sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model{
-    NSString* _sql = [A_SqliteManager A_CreateInsertScript:model];
+    NSString *_sql = [A_SqliteManager A_CreateInsertScript:model];
     return [self A_ExecuteQuery:_sql];
 }
 
 + (NSString*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
-    NSArray* _keys = [properties allKeys];
+    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray *_keys = [properties allKeys];
     
-    NSString* _valuesStr = [[NSString alloc] init];
-    NSString* _keysStr = [[NSString alloc] init];
+    NSString *_valuesStr = [[NSString alloc] init];
+    NSString *_keysStr = [[NSString alloc] init];
     
     BOOL _isKey = NO;
-    for (NSString* item in _keys) {
+    for (NSString *item in _keys) {
         _isKey = NO;
-        for (NSString* _keys in keys) {
+        for (NSString *_keys in keys) {
             if ([[item lowercaseString] isEqualToString:[_keys lowercaseString]]) {
                 if (_keysStr.length == 0) {
                     _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
@@ -409,7 +413,7 @@ NSObject* lockObj;
         }
     }
     
-    NSString* _sql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@",tableName,_valuesStr, _keysStr];
+    NSString *_sql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@",tableName,_valuesStr, _keysStr];
     return _sql;
 }
 + (NSString*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
@@ -417,25 +421,25 @@ NSObject* lockObj;
 }
 
 - (NSNumber*) A_Update:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSString* _sql = [A_SqliteManager A_CreateUpdateScript:model WithTable:tableName AndKeys:keys];
+    NSString *_sql = [A_SqliteManager A_CreateUpdateScript:model WithTable:tableName AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Update:(A_DataModel*) model AndKeys:(NSArray*)keys {
-    NSString* _sql = [A_SqliteManager A_CreateUpdateScript:model AndKeys:keys];
+    NSString *_sql = [A_SqliteManager A_CreateUpdateScript:model AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
 
 + (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
-    NSArray* _keys = [properties allKeys];
+    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray *_keys = [properties allKeys];
     
-    NSString* _valuesStr = [[NSString alloc] init];
+    NSString *_valuesStr = [[NSString alloc] init];
     
     BOOL _isKey = NO;
-    for (NSString* item in _keys) {
+    for (NSString *item in _keys) {
         if (keys) {
-        _isKey = NO;
-            for (NSString* _keys in keys) {
+            _isKey = NO;
+            for (NSString *_keys in keys) {
                 if ([[item lowercaseString] isEqualToString:[_keys lowercaseString]]) {
                     _isKey = YES;
                 }
@@ -451,10 +455,10 @@ NSObject* lockObj;
                 _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
             }
         }
-
+        
     }
     
-    NSString* _sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@",tableName,_valuesStr];
+    NSString *_sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@",tableName,_valuesStr];
     
     return _sql;
 }
@@ -469,19 +473,19 @@ NSObject* lockObj;
 }
 
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSString* _sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName AndKeys:keys];
+    NSString *_sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName {
-    NSString* _sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName];
+    NSString *_sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model AndKeys:(NSArray*)keys {
-    NSString* _sql = [A_SqliteManager A_CreateDeleteScript:model AndKeys:keys];
+    NSString *_sql = [A_SqliteManager A_CreateDeleteScript:model AndKeys:keys];
     return [self A_ExecuteQuery:_sql];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model {
-    NSString* _sql = [A_SqliteManager A_CreateDeleteScript:model];
+    NSString *_sql = [A_SqliteManager A_CreateDeleteScript:model];
     return [self A_ExecuteQuery:_sql];
 }
 
@@ -489,11 +493,11 @@ NSObject* lockObj;
     return [self A_SearchSimilarModels:model WithTable:[A_SqliteManager A_GenerateTableName:model]];
 }
 - (NSArray*) A_SearchSimilarModels:(A_DataModel*) model WithTable:(NSString*)tableName {
-    NSDictionary* properties = [A_Reflection A_PropertiesFromObject:model];
-    NSArray* _keys = [properties allKeys];
+    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray *_keys = [properties allKeys];
     
-    NSString* _valuesStr = [[NSString alloc] init];
-    for (NSString* item in _keys) {
+    NSString *_valuesStr = [[NSString alloc] init];
+    for (NSString *item in _keys) {
         id _value = [model valueForKey:item];
         
         if (_value && _value != nil && _value != NULL && _value != [NSNull null] &&
@@ -508,28 +512,28 @@ NSObject* lockObj;
         }
     }
     
-    NSString* _sql;
+    NSString *_sql;
     if (_valuesStr.length == 0)
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
     else
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,_valuesStr];
     
-    NSArray* _result = [self A_SearchDataset:_sql];
+    NSArray *_result = [self A_SearchDataset:_sql];
     return [A_SqliteManager A_Mapping:_result ToClass:[A_Reflection A_GetClass:model]];
 }
 
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
-    NSString* _sql;
+    NSString *_sql;
     if (query.length == 0)
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
     else
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
     
-    NSArray* _result = [self A_SearchDataset:_sql];
+    NSArray *_result = [self A_SearchDataset:_sql];
     return [A_SqliteManager A_Mapping:_result ToClass:class];
 }
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query{
-    NSString* _tableName = [NSString stringWithFormat:@"A_%@_table",NSStringFromClass(class)];
+    NSString *_tableName = [NSString stringWithFormat:@"A_%@_table",NSStringFromClass(class)];
     return [self A_SearchModels:class Where:query WithTable:_tableName];
 }
 
@@ -561,10 +565,10 @@ NSObject* lockObj;
 }
 
 + (NSArray*) A_Mapping:(NSArray*) data ToClass:(Class)class{
-    NSMutableArray* _array = [[NSMutableArray alloc] init];
+    NSMutableArray *_array = [[NSMutableArray alloc] init];
     
     @try {
-        for (NSDictionary* dic in data) {
+        for (NSDictionary *dic in data) {
             id obj = [[class alloc] init];
             for (NSString *key in dic) {
                 [obj setValue:[dic objectForKey:key] forKey:key];
@@ -572,7 +576,7 @@ NSObject* lockObj;
             [_array addObject:obj];
         }
     }
-    @catch (NSException* e) {
+    @catch (NSException *e) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Mapping ERROR (%@) \r\n -------- \r\n\r\n", e.reason);
     }
     
@@ -609,7 +613,7 @@ NSObject* lockObj;
     return YES;
 }
 + (NSString*) A_GenerateTableName: (A_DataModel*) model {
-    NSString* _className = [A_Reflection A_GetClassNameFromObject:model];
+    NSString *_className = [A_Reflection A_GetClassNameFromObject:model];
     return [NSString stringWithFormat:@"A_%@_table",_className];
 }
 

@@ -13,9 +13,9 @@
 
 @interface SecondDataModel : NSObject
 
-@property (retain, nonatomic) NSString* Name;
-@property (retain, nonatomic) NSNumber* ID;
-@property (retain, nonatomic) NSString* Description;
+@property (retain, nonatomic) NSString *Name;
+@property (retain, nonatomic) NSNumber *ID;
+@property (retain, nonatomic) NSString *Description;
 
 @end
 @implementation SecondDataModel

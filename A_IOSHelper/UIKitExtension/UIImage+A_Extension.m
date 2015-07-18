@@ -24,7 +24,7 @@
 
 #pragma mark - Image cutting
 - (UIImage*) A_ImageCutWithRect:(CGRect)rect {
-    UIImage* _result = [A_ImageHelper A_Image:self CutWithRect:rect];
+    UIImage *_result = [A_ImageHelper A_Image:self CutWithRect:rect];
     return _result;
 }
 + (UIImage*) A_ImageByName:(NSString*)imageName CutWithRect:(CGRect)rect {
@@ -73,15 +73,15 @@
 }
 
 + (UIImage*) A_ImageToCircleByName: (NSString*)name{
-    UIImage* image = [UIImage imageNamed:name];
+    UIImage *image = [UIImage imageNamed:name];
     return [image A_ImageToCircle];
 }
 + (UIImage*) A_ImageByName: (NSString*)name ToRoundCorner:(float)radius{
-    UIImage* image = [UIImage imageNamed:name];
+    UIImage *image = [UIImage imageNamed:name];
     return [image A_ImageToRoundCorner:radius];
 }
 + (UIImage*) A_ImageByName: (NSString*)name ToRoundCorner:(float)radius WithSize:(CGSize)size{
-    UIImage* image = [UIImage imageNamed:name];
+    UIImage *image = [UIImage imageNamed:name];
     return [image A_ImageToRoundCorner:radius WithSize:size];
 }
 

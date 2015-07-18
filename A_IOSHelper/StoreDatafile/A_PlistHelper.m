@@ -14,19 +14,19 @@
     if (!key || !dataObject) return;
     
     @autoreleasepool {
-        NSData* data = [NSKeyedArchiver archivedDataWithRootObject:dataObject];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dataObject];
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 + (id) A_GetByKey:(NSString*)key {
     @autoreleasepool {
-        NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         if (![ud objectForKey:key])
         {
             return nil;
         } else {
-            NSData* data = [ud objectForKey:key];
+            NSData *data = [ud objectForKey:key];
             return [NSKeyedUnarchiver unarchiveObjectWithData:data];
         }
     }
@@ -51,21 +51,21 @@
     if (!key || !dataObject) return;
     
     @autoreleasepool {
-        NSUserDefaults* _file = [[NSUserDefaults alloc] initWithSuiteName:group];
+        NSUserDefaults *_file = [[NSUserDefaults alloc] initWithSuiteName:group];
         
-        NSData* data = [NSKeyedArchiver archivedDataWithRootObject:dataObject];
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dataObject];
         [_file setObject:data forKey:key];
         [_file synchronize];
     }
 }
 + (id) A_GetByGroup:(NSString*)group andKey:(NSString*)key{
     @autoreleasepool {
-        NSUserDefaults* _file = [[NSUserDefaults alloc] initWithSuiteName:group];
+        NSUserDefaults *_file = [[NSUserDefaults alloc] initWithSuiteName:group];
         if (!_file || ![_file objectForKey:key])
         {
             return nil;
         } else {
-            NSData* data = [_file objectForKey:key];
+            NSData *data = [_file objectForKey:key];
             return [NSKeyedUnarchiver unarchiveObjectWithData:data];
         }
     }
@@ -74,7 +74,7 @@
     @autoreleasepool {
         NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
         
-        NSUserDefaults* _file = [[NSUserDefaults alloc] initWithSuiteName:group];
+        NSUserDefaults *_file = [[NSUserDefaults alloc] initWithSuiteName:group];
         if (!_file) return;
         
         if (appDomain) {
@@ -89,7 +89,7 @@
     }
 }
 
-/** File operation **/
+#pragma mark - file operations
 + (void) A_CleanFilesFromDocuments {
     NSFileManager *fileMgr = [NSFileManager defaultManager];
     NSArray *fileArray = [fileMgr contentsOfDirectoryAtPath:@"Documents/" error:nil];
@@ -99,7 +99,7 @@
 }
 + (void) A_RemoveFileFromDocuments: (NSString*)filename {
     [[NSFileManager defaultManager] removeItemAtPath:
-        [NSHomeDirectory() stringByAppendingPathComponent: [NSString stringWithFormat:@"Documents/%@",filename]]
+     [NSHomeDirectory() stringByAppendingPathComponent: [NSString stringWithFormat:@"Documents/%@",filename]]
                                                error:nil];
 }
 

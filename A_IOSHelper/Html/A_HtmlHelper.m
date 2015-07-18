@@ -32,7 +32,7 @@
 + (NSString*)A_HtmlFillContent:(NSString*)htmlTemplate Content:(NSDictionary*)content {
     for (id key in [content allKeys]) {
         
-        NSString* _key = [NSString stringWithFormat:@"{%@}",[key string]];
+        NSString *_key = [NSString stringWithFormat:@"{%@}",[key string]];
         
         htmlTemplate = [htmlTemplate stringByReplacingOccurrencesOfString:_key
                                                                withString:[content objectForKey:key]];
@@ -42,7 +42,7 @@
 }
 
 + (NSString*)A_HtmlWithContent:(NSString*)htmlUrl Folder:(NSString*)folder Content:(NSDictionary*)content {
-    NSString* _htmlTemplate = [A_HtmlHelper A_HtmlTemplate:htmlUrl Folder:folder];
+    NSString *_htmlTemplate = [A_HtmlHelper A_HtmlTemplate:htmlUrl Folder:folder];
     return [A_HtmlHelper A_HtmlFillContent:_htmlTemplate Content:content];
 }
 

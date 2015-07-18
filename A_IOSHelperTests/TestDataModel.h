@@ -11,9 +11,9 @@
 
 @interface TestDataModel : A_DataModel
 
-@property (retain, nonatomic) NSString* Name;
-@property (retain, nonatomic) NSDate* CreateDate;
+@property (retain, nonatomic) NSString *Name;
+@property (retain, nonatomic) NSDate *CreateDate;
 @property (nonatomic) NSInteger Index;
-@property (retain, nonatomic) NSNumber* ID;
+@property (retain, nonatomic) NSNumber *ID;
 
 @end

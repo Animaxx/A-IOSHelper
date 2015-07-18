@@ -28,14 +28,14 @@
 - (NSNumber *) A_ExecuteQuery:(NSString *) query;
 - (NSNumber *) A_ExecuteQuery:(NSString *) query withArgs:(NSArray*) args;
 
-- (void) A_ExecuteQuery :(NSString *) query withBlock:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj;
-- (void) A_ExecuteQuery :(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSNumber* result))finishBlock andArg:(id)obj;
+- (void) A_ExecuteQuery :(NSString *) query withBlock:(void (^)(id obj, NSNumber *result))finishBlock andArg:(id)obj;
+- (void) A_ExecuteQuery :(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSNumber *result))finishBlock andArg:(id)obj;
 
 - (NSArray*) A_SearchDataset:(NSString *) query;
 - (NSArray*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params;
 
-- (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj;
-- (void) A_SearchDataset:(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSArray* result))finishBlock andArg:(id)obj;
+- (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
+- (void) A_SearchDataset:(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
 
 - (id) A_GetValueFromQuery:(NSString *) query;
 - (id) A_GetValueFromQuery:(NSString *) query withParams:(NSArray*) params;

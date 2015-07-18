@@ -14,7 +14,7 @@
 @implementation UIImageView(A_Extension)
 
 - (void)A_LoadFromUrl:(NSString*)url {
-    A_TaskHelper* _task = [A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain Sequential:NO];
+    A_TaskHelper *_task = [A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain Sequential:NO];
     [_task setParam:self];
     [_task A_AddTask:^(A_TaskHelper *task) {
         _task.result = [A_ImageHelper A_ImageDownloadAndCache:url];
@@ -26,7 +26,7 @@
     }];
 }
 - (void)A_LoadFromUrl:(NSString*)url WithDeaultImage:(NSString*)deaultImage {
-    A_TaskHelper* _task = [A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain Sequential:NO];
+    A_TaskHelper *_task = [A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain Sequential:NO];
     [_task setParam:self];
     [_task setTag:deaultImage];
     [_task A_AddTask:^(A_TaskHelper *task) {
@@ -43,7 +43,7 @@
         [self setImage:[A_ImageHelper A_ImageByName:loadingImage]];
     }];
     
-    A_TaskHelper* _task = [A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain Sequential:NO];
+    A_TaskHelper *_task = [A_TaskHelper A_Init:A_Task_RunInBackgroupCompleteInMain Sequential:NO];
     [_task setParam:self];
     [_task setTag:deaultImage];
     [_task A_AddTask:^(A_TaskHelper *task) {

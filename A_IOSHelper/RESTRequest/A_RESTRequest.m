@@ -26,7 +26,7 @@
     {
         NSArray *reqestdDataKeys = [_parameters allKeys];
         for (NSString *itemKey in reqestdDataKeys) {
-            NSString* itemObj = [_parameters objectForKey:itemKey];
+            NSString *itemObj = [_parameters objectForKey:itemKey];
             
             if (itemObj != nil)
             {
@@ -82,7 +82,7 @@
     
     // Send Request
     NSError *error = nil;
-    NSData* result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
+    NSData *result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
     
     if (error){
 #ifndef NDEBUG
@@ -91,7 +91,7 @@
         return nil;
     }
 #ifndef NDEBUG
-    NSString* _str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
+    NSString *_str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
     NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", _str);
 #endif
     
@@ -115,7 +115,7 @@
     {
         NSArray *reqestdDataKeys = [_parameters allKeys];
         for (NSString *itemKey in reqestdDataKeys) {
-            NSString* itemObj = [_parameters objectForKey:itemKey];
+            NSString *itemObj = [_parameters objectForKey:itemKey];
             
             if (itemObj != nil)
             {
@@ -175,7 +175,7 @@
     
     // Send Request
     NSError *error = nil;
-    NSData* result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
+    NSData *result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
     
     if (error){
 #ifndef NDEBUG
@@ -184,7 +184,7 @@
         return nil;
     }
 #ifndef NDEBUG
-    NSString* _str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
+    NSString *_str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
     NSLog(@"\r\n -------- \r\n[MESSAGE FROM A IOS HELPER] \r\n <Http upload image result> \r\n %@ \r\n -------- \r\n\r\n", _str);
 #endif
     
@@ -203,7 +203,7 @@
     
     // Send Request
     NSError *error = nil;
-    NSData* result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
+    NSData *result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
     
     if (error){
 #ifndef NDEBUG
@@ -212,7 +212,7 @@
         return nil;
     }
 #ifndef NDEBUG
-    NSString* _str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
+    NSString *_str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
     NSLog(@"\r\n -------- \r\n[MESSAGE FROM A IOS HELPER] \r\n <Http upload image result> \r\n %@ \r\n -------- \r\n\r\n", _str);
 #endif
     
@@ -232,9 +232,9 @@
                           Headers: (NSDictionary*)_headers {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             
-            NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
+            NSData *_result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
             
-            NSDictionary* theDataDictionary = nil;
+            NSDictionary *theDataDictionary = nil;
             @try {
                 theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
             } @catch (NSException *e) {
@@ -251,9 +251,9 @@
              Parameters: (NSDictionary*)_parameters
                 Headers: (NSDictionary*)_headers {
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-            NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
+            NSData *_result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_GET ParamFormat:A_Network_SendAsQuery];
             
-            NSArray* theDataArray = nil;
+            NSArray *theDataArray = nil;
             @try {
                 theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
             } @catch (NSException *e) {
@@ -274,9 +274,9 @@
                                        Header: (NSDictionary*)_headers{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
+    NSData *_result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
     
-    NSDictionary* theDataDictionary = nil;
+    NSDictionary *theDataDictionary = nil;
     @try {
         theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
     } @catch (NSException *e) {
@@ -295,9 +295,9 @@
                              Header: (NSDictionary*)_headers{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
+    NSData *_result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsQuery];
 
-    NSArray* theDataArray = nil;
+    NSArray *theDataArray = nil;
     @try {
         theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
     } @catch (NSException *e) {
@@ -317,9 +317,9 @@
                                       Header: (NSDictionary*)_headers {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
+    NSData *_result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
     
-    NSDictionary* theDataDictionary = nil;
+    NSDictionary *theDataDictionary = nil;
     @try {
         theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
     } @catch (NSException *e) {
@@ -338,9 +338,9 @@
                             Header: (NSDictionary*)_headers {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    NSData* _result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
+    NSData *_result = [self A_Request:_URL Parameters:_parameters Headers:_headers Method:A_Network_POST ParamFormat:A_Network_SendAsJSON];
     
-    NSArray* theDataArray = nil;
+    NSArray *theDataArray = nil;
     @try {
         theDataArray = [A_JSONHelper A_ConvertJSONDataToArray:_result];
     } @catch (NSException *e) {
@@ -365,8 +365,8 @@
                                    FileKey: (NSString*)_filekey {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    NSData* _result = [self A_UploadImage:_URL QueryParameters:_parameters Headers:_headers Image:_image FileName:_filename FileKey:_filekey];
-    NSDictionary* theDataDictionary = nil;
+    NSData *_result = [self A_UploadImage:_URL QueryParameters:_parameters Headers:_headers Image:_image FileName:_filename FileKey:_filekey];
+    NSDictionary *theDataDictionary = nil;
     @try {
         theDataDictionary = [A_JSONHelper A_ConvertJSONDataToDictionary:_result];
     } @catch (NSException *e) {

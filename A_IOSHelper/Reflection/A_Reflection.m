@@ -32,18 +32,18 @@
     
     for (int i = 0; i < count ; i++)
     {
-        NSString* propertyName = [NSString stringWithUTF8String:property_getName(properties[i])];
+        NSString *propertyName = [NSString stringWithUTF8String:property_getName(properties[i])];
         
-        const char * type = property_getAttributes(properties[i]);
-        NSArray * propertyAttributes = [[NSString stringWithUTF8String:type] componentsSeparatedByString:@","];
-        NSString * typeAttribute = [propertyAttributes objectAtIndex:0];
-        NSString * propertyType = [typeAttribute substringFromIndex:1];
+        const char *type = property_getAttributes(properties[i]);
+        NSArray *propertyAttributes = [[NSString stringWithUTF8String:type] componentsSeparatedByString:@","];
+        NSString *typeAttribute = [propertyAttributes objectAtIndex:0];
+        NSString *propertyType = [typeAttribute substringFromIndex:1];
         
         if ([typeAttribute hasPrefix:@"T@"]) { // Class type
             NSRange stringRange = {2, [propertyType length]-3};
             [propertyDictionary setObject:[propertyType substringWithRange:stringRange] forKey:propertyName];
         } else { // value type
-            const char * rawPropertyType = [propertyType UTF8String];
+            const char *rawPropertyType = [propertyType UTF8String];
             if (strcmp(rawPropertyType, @encode(BOOL)) == 0) {
                 [propertyDictionary setObject:@"BOOL" forKey:propertyName];
             } else if (strcmp(rawPropertyType, @encode(bool)) == 0) {

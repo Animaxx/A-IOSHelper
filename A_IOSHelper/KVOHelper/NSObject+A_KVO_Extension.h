@@ -10,16 +10,16 @@
 
 @interface NSObject (A_KVO_Extension)
 
--(void) A_AddObserver:(NSString*)key Param:(id)param block:(void (^)(id itself, NSDictionary* change, id param))block;
--(void) A_AddObserver:(NSString*)key block:(void (^)(id itself, NSDictionary* change))block;
+-(void) A_AddObserver:(NSString *)key Param:(id)param block:(void (^)(id itself, NSDictionary *change, id param))block;
+-(void) A_AddObserver:(NSString *)key block:(void (^)(id itself, NSDictionary *change))block;
 
--(void) A_Bind:(NSString*)key To:(NSString*)to;
--(void) A_Bind:(NSString*)key To:(NSString*)to Convert:(id (^)(id value))convertBlock;
--(void) A_Bind:(NSString*)key ToTager:(id)toTager AndKey:(NSString*)toKey;
--(void) A_Bind:(NSString*)key ToTager:(id)toTager AndKey:(NSString*)toKey Convert:(id (^)(id value))convertBlock;
+-(void) A_Bind:(NSString *)key To:(NSString *)to;
+-(void) A_Bind:(NSString *)key To:(NSString *)to Convert:(id (^)(id value))convertBlock;
+-(void) A_Bind:(NSString *)key ToTager:(id)toTager AndKey:(NSString *)toKey;
+-(void) A_Bind:(NSString *)key ToTager:(id)toTager AndKey:(NSString *)toKey Convert:(id (^)(id value))convertBlock;
 
--(void) A_RemoveObserver: (NSString*)key;
--(void) A_RemoveBinding: (NSString*)fromKey;
+-(void) A_RemoveObserver: (NSString *)key;
+-(void) A_RemoveBinding: (NSString *)fromKey;
 
 - (void) A_RemoveObservings;
 

@@ -12,7 +12,7 @@
 @implementation NSArray (A_Extension)
 
 - (NSDictionary*) A_CombineKeys: (NSArray*)keys {
-    NSMutableDictionary* _dic = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *_dic = [[NSMutableDictionary alloc] init];
     for (NSUInteger i=0; i<[keys count]; i++) {
         if ([self count] > i)
             [_dic setObject:[self objectAtIndex:i] forKey:[keys objectAtIndex:i]];
@@ -24,7 +24,7 @@
 
 }
 - (NSDictionary*) A_CombineValues: (NSArray*)values {
-    NSMutableDictionary* _dic = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *_dic = [[NSMutableDictionary alloc] init];
     for (NSUInteger i=0; i<[self count]; i++) {
         if ([values count] > i)
             [_dic setObject:[values objectAtIndex:i] forKey:[self objectAtIndex:i]];
@@ -45,7 +45,7 @@
     if ([self count] <= 1)
         return self;
     
-    NSMutableArray* _result = [NSMutableArray arrayWithCapacity:[self count]];
+    NSMutableArray *_result = [NSMutableArray arrayWithCapacity:[self count]];
     for (NSInteger i=([self count]-1); i>=0; i--) {
         [_result addObject:[self objectAtIndex:i]];
     }
@@ -69,7 +69,7 @@
         return self;
     }
     
-    NSMutableArray* result = [NSMutableArray arrayWithCapacity:[self count]];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[self count]];
     id element;
     for (element in self) {
         if (block(element)) {

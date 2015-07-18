@@ -8,10 +8,13 @@
 
 #import "A_TaskHelper.h"
 
+
 @implementation A_TaskHelper {
-    NSMutableArray* _tasks;
-    NSMutableDictionary* _params;
+    NSMutableArray *_tasks;
+    NSMutableDictionary *_params;
 }
+
+static const char *threadQueueLabel = "com.Animax.iOSHelperQueue";
 
 + (void) A_RunInBackground: (dispatch_block_t)block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
@@ -100,7 +103,7 @@
     return [[A_TaskHelper alloc] init];
 }
 + (A_TaskHelper*) A_Init: (A_Task_RunningEnvironment)environment Sequential:(bool)sequential {
-    A_TaskHelper* task = [[A_TaskHelper alloc] init];
+    A_TaskHelper *task = [[A_TaskHelper alloc] init];
     [task setSequential:sequential];
     [task setRunningEnvironment:environment];
     return task;
@@ -110,6 +113,7 @@
     if ((self = [super init])) {
         [self setRunningEnvironment:A_Task_RunInBackgroupCompleteInMain];
         [self setSequential:YES];
+        _params = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -147,19 +151,14 @@
 
 - (void) A_Set:(NSString*)name Value:(id)value{
     @synchronized(self) {
-        if (!_params) {
-            _params = [[NSMutableDictionary alloc] init];
-        }
         [_params setObject:value forKey:name];
     }
 }
 - (id) A_Get:(NSString*)name{
-    @synchronized(self) {
-        if (_params) {
-            return [_params objectForKey:name];
-        } else {
-            return nil;
-        }
+    if (_params) {
+        return [_params objectForKey:name];
+    } else {
+        return nil;
     }
 }
 
@@ -173,9 +172,9 @@
         
         if (self.runningEnvironment == A_Task_RunInBackgroup || self.runningEnvironment == A_Task_RunInBackgroupCompleteInMain) {
             if (self.sequential) {
-                queue = dispatch_queue_create("com.Animax.iOSHelperQueue", DISPATCH_QUEUE_SERIAL);
+                queue = dispatch_queue_create(threadQueueLabel, DISPATCH_QUEUE_SERIAL);
             } else {
-                queue = dispatch_queue_create("com.Animax.iOSHelperQueue", DISPATCH_QUEUE_CONCURRENT);
+                queue = dispatch_queue_create(threadQueueLabel, DISPATCH_QUEUE_CONCURRENT);
             }
         } else {
             queue = dispatch_get_main_queue();

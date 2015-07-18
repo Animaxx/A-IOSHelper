@@ -30,7 +30,6 @@
 #import <A_IOSHelper/CALayer+A_Animation.h>
 #import <A_IOSHelper/UIAlertView+A_Extension.h>
 #import <A_IOSHelper/NSDate+A_Extension.h>
-#import <A_IOSHelper/UIViewController+A_Extension.h>
 #import <A_IOSHelper/UIColor+A_Extension.h>
 
 /**** Foundation Extension ****/

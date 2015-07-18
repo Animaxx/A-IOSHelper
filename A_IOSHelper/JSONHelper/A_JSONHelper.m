@@ -11,8 +11,8 @@
 @implementation A_JSONHelper
 
 + (NSDictionary*)_tidyDict: (NSDictionary*) _dict {
-    NSMutableDictionary* _tidyDict = [[NSMutableDictionary alloc] init];
-    for (NSString* _key in [_dict allKeys]) {
+    NSMutableDictionary *_tidyDict = [[NSMutableDictionary alloc] init];
+    for (NSString *_key in [_dict allKeys]) {
         if ([[_dict valueForKey:_key] isKindOfClass:[NSDate class]]) {
             [_tidyDict setValue:[NSString stringWithFormat:@"%@", [_dict valueForKey:_key]] forKey:_key];
         }else {

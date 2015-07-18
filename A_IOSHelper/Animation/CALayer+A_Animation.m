@@ -29,7 +29,7 @@
         duration = defaultDurationTime;
     }
     
-    CAKeyframeAnimation* keyFrames = [A_Animation A_GenerateKeyframe:keypath Type:type Duration:duration FPS:kps Start:start End:end];
+    CAKeyframeAnimation *keyFrames = [A_Animation A_GenerateKeyframe:keypath Type:type Duration:duration FPS:kps Start:start End:end];
     [self addAnimation:keyFrames forKey:nil];
     
     if (type >= 0 && isset) {

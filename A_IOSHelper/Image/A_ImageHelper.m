@@ -13,9 +13,9 @@
 
 + (UIImage*) A_ImageByName:(NSString*) name{
     if (name != nil && name.length > 0) {
-        NSString* path= [[NSBundle mainBundle] pathForResource:name ofType:@""];
+        NSString *path= [[NSBundle mainBundle] pathForResource:name ofType:@""];
         if (path != nil && path.length > 0) {
-            UIImage* image = [UIImage imageWithContentsOfFile:path];
+            UIImage *image = [UIImage imageWithContentsOfFile:path];
             return image;
         }
     }
@@ -32,7 +32,7 @@
     return outputImage;
 }
 + (UIImage*) A_ImageFromColor:(UIColor*) color {
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     label.backgroundColor = color;
     
     UIGraphicsBeginImageContext(CGSizeMake(1, 1));
@@ -81,7 +81,7 @@
     return image;
 }
 + (UIImage*) A_ImageByName: (NSString*) imageName CutWithRect:(CGRect) rect {
-    UIImage* image = [UIImage imageNamed:imageName];
+    UIImage *image = [UIImage imageNamed:imageName];
     return [A_ImageHelper A_Image:image CutWithRect:rect];
 }
 
@@ -98,7 +98,7 @@
     return image;
 }
 + (UIImage*) A_ImageByName: (NSString*) name ScaleToSize:(CGSize) size {
-    UIImage* image = [UIImage imageNamed:name];
+    UIImage *image = [UIImage imageNamed:name];
     if (image) {
         image = [self A_Image:image ScaleToSize:size];
     }
@@ -126,7 +126,7 @@
     return image;
 }
 + (UIImage*) A_ImageByName: (NSString*) name FitToSize:(CGSize) size{
-    UIImage* image = [UIImage imageNamed:name];
+    UIImage *image = [UIImage imageNamed:name];
     return [A_ImageHelper A_Image:image FitToSize:size];
 }
 
@@ -155,7 +155,7 @@
     return newImage;
 }
 + (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha{
-    UIImage* image = [UIImage imageNamed:name];
+    UIImage *image = [UIImage imageNamed:name];
     return [A_ImageHelper A_Image:image Alpha:(CGFloat)alpha];
 }
 
@@ -203,11 +203,11 @@
     CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
     CFRelease(bmContext);
     
-    UIImage* outImage = [UIImage imageWithCGImage: rotatedImage];
+    UIImage *outImage = [UIImage imageWithCGImage: rotatedImage];
     return outImage;
 }
 + (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees {
-    UIImage* image = [UIImage imageNamed:name];
+    UIImage *image = [UIImage imageNamed:name];
     return [A_ImageHelper A_Image:image RotatedByDegrees:(CGFloat)degrees];
 }
 
@@ -258,12 +258,12 @@
 
 
 + (UIImage*) A_ImageDownload: (NSString*)imageURL {
-    NSData* _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
+    NSData *_imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
     if (_imgData && _imgData.length <= 0){
         _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
     }
     if (_imgData){
-        UIImage* _retuanIamge = [[UIImage alloc] initWithData:_imgData];
+        UIImage *_retuanIamge = [[UIImage alloc] initWithData:_imgData];
         if (_retuanIamge) {
             return _retuanIamge;
         }
@@ -276,13 +276,13 @@
         return nil;
     
     NSString *aPathLocal=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[imageURL lastPathComponent]];
-    UIImage* _retuanIamge =[[UIImage alloc]initWithContentsOfFile:aPathLocal];
+    UIImage *_retuanIamge =[[UIImage alloc]initWithContentsOfFile:aPathLocal];
     
     if (_retuanIamge) {
         return _retuanIamge;
     }
     
-    NSData* _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
+    NSData *_imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
     if (_imgData && _imgData.length <= 0){
         _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
     }
@@ -300,7 +300,7 @@
     return nil;
 }
 + (UIImage*) A_ImageDownloadAndCache: (NSString*)imageURL DefaultImage: (NSString*)defaultImageName {
-    UIImage* _result = [self A_ImageDownloadAndCache:imageURL];
+    UIImage *_result = [self A_ImageDownloadAndCache:imageURL];
     if(!_result) {
         _result = [UIImage imageNamed:defaultImageName];
     }
@@ -318,7 +318,7 @@
         [filter setValue:[NSNumber numberWithFloat:radius] forKey: @"inputRadius"];
         CIImage *result = [filter valueForKey:kCIOutputImageKey];
         CGImageRef outImage = [context createCGImage: result fromRect:[result extent]];
-        UIImage* blurImage = [UIImage imageWithCGImage:outImage];
+        UIImage *blurImage = [UIImage imageWithCGImage:outImage];
         return blurImage;
     }
 }

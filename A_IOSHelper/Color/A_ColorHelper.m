@@ -53,7 +53,7 @@
     return [NSNumber numberWithInt:res - 1];
 }
 + (NSArray *) A_SpliteColor:(NSString*) colorString {
-    NSMutableArray* colors = [NSMutableArray arrayWithCapacity:3];
+    NSMutableArray *colors = [NSMutableArray arrayWithCapacity:3];
     
     if ([colorString hasPrefix:@"#"]) {
         colorString = [colorString substringFromIndex:1];
@@ -75,13 +75,13 @@
         str = [str substringFromIndex:1];
     }
     
-    NSArray* colors = [self A_SpliteColor: str];
+    NSArray *colors = [self A_SpliteColor: str];
     
-    NSNumber* red = [colors objectAtIndex:0];
-    NSNumber* green = [colors objectAtIndex:1];
-    NSNumber* blue = [colors objectAtIndex:2];
+    NSNumber *red = [colors objectAtIndex:0];
+    NSNumber *green = [colors objectAtIndex:1];
+    NSNumber *blue = [colors objectAtIndex:2];
     
-    UIColor* color = [UIColor colorWithRed:[red floatValue] / 255.0
+    UIColor *color = [UIColor colorWithRed:[red floatValue] / 255.0
                                      green:[green floatValue] /255.0
                                       blue:[blue floatValue] /255.0
                                      alpha:1];

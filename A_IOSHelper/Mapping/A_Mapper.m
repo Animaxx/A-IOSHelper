@@ -15,14 +15,14 @@
 @interface A_MappingItem : NSObject
 
 @property (copy, nonatomic) mapElementBlock block;
-@property (copy, nonatomic) NSString* outputField;
+@property (copy, nonatomic) NSString *outputField;
 
 @end
 
 @implementation A_MappingItem
 
 + (A_MappingItem*) A_Init:(mapElementBlock)block Output:(NSString*)OutputField {
-    A_MappingItem* item = [[A_MappingItem alloc] init];
+    A_MappingItem *item = [[A_MappingItem alloc] init];
     [item setBlock:block];
     [item setOutputField:OutputField];
     return item;
@@ -52,14 +52,14 @@
 
 @property (readwrite, nonatomic) Class BindClass;
 @property (readwrite, nonatomic) Class ToClass;
-@property (strong, nonatomic) NSMutableDictionary* mappingDict;
+@property (strong, nonatomic) NSMutableDictionary *mappingDict;
 
 @end
 
 @implementation A_MappingMap
 
 + (A_MappingMap*) A_InitBind:(Class)bindClass To:(Class)toClass {
-    A_MappingMap* map = [[A_MappingMap alloc] init];
+    A_MappingMap *map = [[A_MappingMap alloc] init];
     map.BindClass = bindClass;
     map.ToClass = toClass;
     return map;
@@ -71,7 +71,7 @@
     return self;
 }
 - (A_MappingMap*)A_AddMemeber:(NSString*)key To:(NSString*)to Convert:(mapElementBlock)block {
-    A_MappingItem* item = [A_MappingItem A_Init:block Output:to];
+    A_MappingItem *item = [A_MappingItem A_Init:block Output:to];
     [self.mappingDict setObject:item forKey:[key copy]];
     return self;
 }
@@ -90,8 +90,8 @@
         return;
     }
     
-    A_MappingItem* item;
-    for (NSString* key in self.mappingDict) {
+    A_MappingItem *item;
+    for (NSString *key in self.mappingDict) {
         item = [self.mappingDict objectForKey:key];
         [item _assignValue:[input objectForKey:key] toObj:output];
     }
@@ -109,8 +109,8 @@
     @try {
         id output = [self.ToClass init];
         
-        A_MappingItem* item;
-        for (NSString* key in self.mappingDict) {
+        A_MappingItem *item;
+        for (NSString *key in self.mappingDict) {
             item = [self.mappingDict objectForKey:key];
             [item _assignValue:[input objectForKey:key] toObj:output];
         }
@@ -130,7 +130,7 @@
 #pragma mark - Mapper
 @interface A_Mapper ()
 
-@property (strong, nonatomic) NSMutableDictionary* MapDict;
+@property (strong, nonatomic) NSMutableDictionary *MapDict;
 
 @end
 
@@ -152,7 +152,7 @@
 }
 
 - (A_MappingMap*) A_CreateMap:(Class)from To:(Class)to {
-    A_MappingMap* map = [A_MappingMap A_InitBind:from To:to];
+    A_MappingMap *map = [A_MappingMap A_InitBind:from To:to];
     
     [self.MapDict setObject:map forKey: [NSString stringWithFormat:@"%@_%@",
          [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]]];
@@ -164,19 +164,19 @@
     Class toClass = [A_Reflection A_GetClassByName:to];
     // TODO Try catch
     
-    A_MappingMap* map = [A_MappingMap A_InitBind:fromClass To:toClass];
+    A_MappingMap *map = [A_MappingMap A_InitBind:fromClass To:toClass];
     [self.MapDict setObject:map forKey: [NSString stringWithFormat:@"%@_%@",from, to]];
     
     return map;
 }
 
 - (A_MappingMap*) A_GetMap:(Class)from To:(Class)to {
-    NSString* key = [NSString stringWithFormat:@"%@_%@",
+    NSString *key = [NSString stringWithFormat:@"%@_%@",
                      [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]];
     return [self.MapDict objectForKey:key];
 }
 - (A_MappingMap*) A_GetMapByName:(NSString*)from To:(NSString*)to {
-    NSString* key = [NSString stringWithFormat:@"%@_%@",from,to];
+    NSString *key = [NSString stringWithFormat:@"%@_%@",from,to];
     return [self.MapDict objectForKey:key];
 }
 
@@ -186,9 +186,9 @@
         return;
     }
     
-    NSString* _key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassNameFromObject:to]];
+    NSString *_key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassNameFromObject:to]];
     
-    A_MappingMap* map = [self.MapDict objectForKey:_key];
+    A_MappingMap *map = [self.MapDict objectForKey:_key];
     if (!map) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassNameFromObject:to]);
         return;
@@ -202,9 +202,9 @@
         return nil;
     }
     
-    NSString* _key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassName:to]];
+    NSString *_key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassName:to]];
     
-    A_MappingMap* map = [self.MapDict objectForKey:_key];
+    A_MappingMap *map = [self.MapDict objectForKey:_key];
     if (!map) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassName:to]);
         return nil;
@@ -219,9 +219,9 @@
         return nil;
     }
     
-    NSString* _key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], to];
+    NSString *_key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], to];
     
-    A_MappingMap* map = [self.MapDict objectForKey:_key];
+    A_MappingMap *map = [self.MapDict objectForKey:_key];
     if (!map) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], to);
         return nil;
@@ -232,14 +232,26 @@
 }
 
 - (NSArray*)A_ConvertArray:(NSArray*)from ToClass:(Class)toClass {
-    NSMutableArray* _list = [[NSMutableArray alloc] init];
+    NSMutableArray *_list = [[NSMutableArray alloc] init];
     
+    for (id item in from) {
+        id coverted = [self A_Convert:item ToClass:toClass];
+        if (coverted) {
+            [_list addObject:coverted];
+        }
+    }
     
-//    _list addObject:<#(id)#>
     return _list;
 }
 - (NSArray*)A_ConvertArray:(NSArray*)from ToClassName:(NSString*)toClass {
-    NSMutableArray* _list = [[NSMutableArray alloc] init];
+    NSMutableArray *_list = [[NSMutableArray alloc] init];
+    
+    for (id item in from) {
+        id coverted = [self A_Convert:item ToClassName:toClass];
+        if (coverted) {
+            [_list addObject:coverted];
+        }
+    }
     
     return _list;
 }
