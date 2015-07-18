@@ -41,13 +41,18 @@ Download image and cache it, and it can get same image next time from cache inst
 A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")
 ```
 
+## Contents
+* [Animation](http://animaxx.github.io/A-IOSHelper/animation_example.html) - Animation helper provides easy way to set CALayer value animatingly and animation effects.
+* [Event](http://animaxx.github.io/A-IOSHelper/event_example.html) - It provides a easy way to add and remove a blocking to UIControl event.
+* [KVO Binding](http://animaxx.github.io/A-IOSHelper/kvo_example.html) - provides changed notification and objects binding method with blocks.
+* [Task](http://animaxx.github.io/A-IOSHelper/task_example.html) - Tasks helper provides simple implement of tasks chain with async and sync.
+* [Sqlite Manager](http://animaxx.github.io/A-IOSHelper/sqliteManager_example.html) - Sqlite Manager not only provides the base CRUD Sqlite operations but also provides data model searching and storing functions.
+* [Data Model](http://animaxx.github.io/A-IOSHelper/datamodel_example.html) - When an object inherited DataModel, then it able to save the instance to plist file or sqlite database directly.
+* [Network](http://animaxx.github.io/A-IOSHelper/network_example.html) - It provides easy RESTful API operation with JSON auto-serializing function.
+* [Collection](http://animaxx.github.io/A-IOSHelper/collection_example.html) - It imitates the Linq in .Net to provide such Where, Any, Skip, and other assisting functions for NSArray and NSDictionary.
 
 ## How to use
 In A-IOSHelper, all functions are having the A_prefix, so we can get advantage from IDE's hint.
-
-For using this framework, there is 3 ways. You can create Workspace and add A-IOSHelper into your Workspace. 
-You also can use Cocoapods to manage A-IOSHelper. 
-Or You can add the compiled framework file, A_IOSHelper.framework, into your project at Project page -> General -> Target -> Embedded Binaries section. (For iOS 8 or above)
 
 
 ## Compile 
