@@ -15,6 +15,8 @@
 - (NSData*) A_CovertToJSONData;
 - (NSString*) A_CovertToJSONString;
 
+- (NSDictionary*) A_GroupBy: (id<NSCopying> (^)(id x))block;
+
 - (NSArray*) A_Reverse;
 - (NSArray*) A_Take: (int)count;
 - (NSArray*) A_Skip: (int)count;

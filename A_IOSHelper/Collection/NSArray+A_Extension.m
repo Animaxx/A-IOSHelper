@@ -41,6 +41,21 @@
     return [A_JSONHelper A_ConvertArrayToJSON:self];
 }
 
+- (NSDictionary*) A_GroupBy: (id<NSCopying> (^)(id x))block {
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    id key, element;
+    for (element in self) {
+        key = block(element);
+        NSMutableArray *row = [dictionary objectForKey:key];
+        if (!row) {
+            row = [[NSMutableArray alloc] init];
+            [dictionary setObject:row forKey:key];
+        }
+        [row addObject:element];
+    }
+    return dictionary;
+}
+
 - (NSArray*) A_Reverse {
     if ([self count] <= 1)
         return self;
@@ -111,6 +126,5 @@
     }
     return nil;
 }
-
 
 @end
