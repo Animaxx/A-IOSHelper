@@ -28,11 +28,15 @@ Wait 0.6 seconds and do the zoom in with changing position and size animation.
 ```Objective-C
 [A_TaskHelper A_Delay:.6f RunInMain:^{
     [demo A_AnimationEffect:A_AnimationEffectType_zoomIn CompletionBlock:^{
-        [demo.layer A_AnimationSetPositionX:200.0f AnimtionType:A_AnimationType_easeOutQuad];
-        [demo.layer A_AnimationSetSize:CGSizeMake(100, 100) AnimtionType:A_AnimationType_spring];
+        [demo.layer A_AnimationSetPositionX:200.0f 
+        			AnimtionType:A_AnimationType_easeOutQuad];
+        [demo.layer A_AnimationSetSize:CGSizeMake(100, 100) 
+        			AnimtionType:A_AnimationType_spring];
     }];
 }];
 ```
+
+![animationDemo](http://animaxx.github.io/A-IOSHelper/images/demo/animationDemo.gif)
 
 
 ###### The Swfit example:
@@ -45,7 +49,7 @@ Download image and cache it, and it can get same image next time from cache inst
 A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.png")
 ```
 
-![animationDemo](http://animaxx.github.io/A-IOSHelper/images/demo/animationDemo.gif)
+
 
 ## Introduction 
 #### [Cocoapods](https://github.com/CocoaPods/CocoaPods)
