@@ -48,5 +48,7 @@
 + (UIImage*) A_GaussianBlur:(UIImage*)theImage Radius:(float)radius;
 + (UIImage*) A_GaussianBlur:(UIImage*)theImage;
 
+#pragma mark - Invert Color
++ (UIImage *)A_InvertColor: (UIImage*)theImage;
 
 @end

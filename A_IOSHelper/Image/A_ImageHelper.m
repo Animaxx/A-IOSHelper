@@ -318,7 +318,7 @@
         [filter setValue:[NSNumber numberWithFloat:radius] forKey: @"inputRadius"];
         CIImage *result = [filter valueForKey:kCIOutputImageKey];
         CGImageRef outImage = [context createCGImage: result fromRect:[result extent]];
-        UIImage *blurImage = [UIImage imageWithCGImage:outImage];
+        UIImage *blurImage = [UIImage imageWithCGImage:outImage scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp];
         return blurImage;
     }
 }
@@ -326,7 +326,15 @@
     return [self A_GaussianBlur:theImage Radius:10.0f];
 }
 
-
++ (UIImage *)A_InvertColor: (UIImage*)theImage {
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    
+    CIImage *coreImage = [CIImage imageWithCGImage:theImage.CGImage];
+    CIFilter *filter = [CIFilter filterWithName:@"CIColorInvert"];
+    [filter setValue:coreImage forKey:kCIInputImageKey];
+    CIImage *result = [filter valueForKey:kCIOutputImageKey];
+    return [UIImage imageWithCIImage:result scale:scale orientation:UIImageOrientationUp];
+}
 
 
 @end

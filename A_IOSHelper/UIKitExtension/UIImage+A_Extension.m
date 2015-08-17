@@ -111,6 +111,10 @@
 }
 
 
+#pragma mark - Inver Color
+- (UIImage*) A_InvertColor {
+    return [A_ImageHelper A_InvertColor:self];
+}
 
 @end
 

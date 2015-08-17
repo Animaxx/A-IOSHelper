@@ -54,4 +54,6 @@
 - (UIImage*) A_GaussianBlurWithRadius:(float)radius;
 - (UIImage*) A_GaussianBlur;
 
+- (UIImage*) A_InvertColor;
+
 @end
