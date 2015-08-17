@@ -51,7 +51,7 @@ A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.
 
 
 
-## Introduction 
+## Installation 
 #### [Cocoapods](https://github.com/CocoaPods/CocoaPods)
 
 Add the following line in your `Podfile`.

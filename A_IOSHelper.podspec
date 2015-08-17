@@ -8,6 +8,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/Animaxx/A-IOSHelper.git", :tag => s.version }
   s.library      = 'sqlite3'
-  s.source_files = "A_IOSHelper/**/*"
+  s.source_files = "A_IOSHelper/**/*.{h,m}"
   s.requires_arc = true
 end
