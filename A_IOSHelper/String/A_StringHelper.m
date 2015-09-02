@@ -38,4 +38,24 @@
     return [predicate evaluateWithObject:str];
 }
 
++ (NSString *)A_ExtractSubstring:(NSString *)prefix postfix:(NSString *)postfix sentence:(NSString *)sentence index:(NSInteger *)index {
+    NSRange range = [sentence rangeOfString:prefix options:0 range:NSMakeRange((*index), sentence.length - (*index))];
+    if (range.location != NSNotFound) {
+        NSRange lastRange = [sentence rangeOfString:postfix options:0 range:NSMakeRange(range.location, sentence.length - range.location)];
+        if (lastRange.location == NSNotFound) {
+            return nil;
+        }
+        
+        *index = lastRange.location;
+        
+        NSRange finalRange = NSMakeRange(range.location + range.length, lastRange.location-range.location-range.length);
+        NSString *param = [sentence substringWithRange:finalRange];
+        
+        return param;
+    } else {
+        return nil;
+    }
+}
+
+
 @end

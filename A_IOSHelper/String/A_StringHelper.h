@@ -16,4 +16,6 @@
 + (BOOL) A_ValidateEmail:(NSString*)str;
 + (BOOL)A_Match:(NSString*)str WithRegex:(NSString *)regex;
 
++ (NSString *)A_ExtractSubstring:(NSString *)prefix postfix:(NSString *)postfix sentence:(NSString *)sentence index:(NSInteger *)index;
+
 @end
