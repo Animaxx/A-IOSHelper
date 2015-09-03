@@ -19,4 +19,11 @@
 + (NSDate*) A_LastMonth;
 - (NSTimeInterval) A_DateDiffer:(NSDate*)anotherDate;
 
+- (int)A_GetMonth;
+- (int)A_GetWeekday;
+- (int)A_GetDay;
+- (int)A_GetHour;
+- (int)A_GetMinute;
+- (int)A_GetSecond;
+
 @end
