@@ -79,5 +79,22 @@
     return (int)components.second;
 }
 
+- (BOOL)A_IsToday {
+    return [[NSCalendar currentCalendar] isDateInToday:self];
+}
+- (BOOL)A_IsSameDayWith:(NSDate *)day {
+    NSDateComponents *first = [[NSCalendar currentCalendar] components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:self];
+    NSDateComponents *second = [[NSCalendar currentCalendar] components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:day];
+    
+    return (first.day == second.day && first.month == second.month && first.month == second.month && first.year == second.year && first.era == second.era);
+}
+
+- (NSString *)A_ToString:(NSString *)format {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:format];
+    NSString *dateString = [dateFormatter stringFromDate:self];
+    return dateString;
+}
+
 
 @end

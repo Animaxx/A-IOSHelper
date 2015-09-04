@@ -26,4 +26,9 @@
 - (int)A_GetMinute;
 - (int)A_GetSecond;
 
+- (BOOL)A_IsToday;
+- (BOOL)A_IsSameDayWith:(NSDate *)day;
+
+- (NSString *)A_ToString:(NSString *)format;
+
 @end
