@@ -169,8 +169,8 @@
         [self.sessionTask cancel];
     }
     
-    __block requestCompliedBlock compliedBlock = block;
-    self.sessionTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    self.sessionTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
         if (error){
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
         }
@@ -181,8 +181,8 @@
         NSString *resultStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", resultStr);
 #endif
-        if (compliedBlock){
-            compliedBlock(data,response,error);
+        if (block){
+            block(data,response,error);
         }
     }];
     
@@ -294,7 +294,7 @@
     
     
     __block NSData *resultData = nil;
-    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error){
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
         }
