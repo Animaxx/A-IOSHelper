@@ -251,6 +251,7 @@
             block(data,response,error);
         }
     }];
+    [self.sessionTask resume];
     
     return self;
 }
@@ -287,18 +288,22 @@
 
 - (NSDictionary *)A_RequestDictionarySync {
     __block NSDictionary *result = nil;
+    dispatch_semaphore_t requestSemaphore = dispatch_semaphore_create(0);
     [self A_RequestDictionary:^(NSDictionary *data, NSURLResponse *response, NSError *error) {
         result = data;
+        dispatch_semaphore_signal(requestSemaphore);
     }];
-    [self.sessionTask resume];
+    dispatch_semaphore_wait(requestSemaphore, DISPATCH_TIME_FOREVER);
     return result;
 }
 - (NSArray *)A_RequestArraySync {
     __block NSArray *result = nil;
+    dispatch_semaphore_t requestSemaphore = dispatch_semaphore_create(0);
     [self A_RequestArray:^(NSArray *data, NSURLResponse *response, NSError *error) {
         result = data;
+        dispatch_semaphore_signal(requestSemaphore);
     }];
-    [self.sessionTask resume];
+    dispatch_semaphore_wait(requestSemaphore, DISPATCH_TIME_FOREVER);
     return result;
 }
 
