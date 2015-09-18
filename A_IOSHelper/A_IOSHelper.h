@@ -17,7 +17,6 @@
 #import <A_IOSHelper/A_SqliteManager.h>
 #import <A_IOSHelper/A_Animation.h>
 #import <A_IOSHelper/A_AnimationEnumeration.h>
-#import <A_IOSHelper/A_AlertBox.h>
 #import <A_IOSHelper/A_Datetime.h>
 #import <A_IOSHelper/A_Reflection.h>
 #import <A_IOSHelper/A_DataModel.h>
@@ -28,7 +27,6 @@
 #import <A_IOSHelper/UIControl+A_Extension.h>
 #import <A_IOSHelper/UIView+A_Animation.h>
 #import <A_IOSHelper/CALayer+A_Animation.h>
-#import <A_IOSHelper/UIAlertView+A_Extension.h>
 #import <A_IOSHelper/NSDate+A_Extension.h>
 #import <A_IOSHelper/UIColor+A_Extension.h>
 
