@@ -10,6 +10,42 @@
 #import "A_RESTRequest.h"
 #import "A_JSONHelper.h"
 
+#define boundary @"A_iOSHelper"
+
+@interface A_RESTRequestUploadDataSet()
+
+@property (strong, nonatomic) NSData *fileData;
+@property (strong, nonatomic) NSString *fileName;
+@property (strong, nonatomic) NSString *fileKey;
+
+@end
+
+@implementation A_RESTRequestUploadDataSet
+
++ (A_RESTRequestUploadDataSet *)A_Make:(NSData *)fileData fileName:(NSString *)filename {
+    return [self A_Make:fileData fileName:filename fileKey:filename];
+}
++ (A_RESTRequestUploadDataSet *)A_Make:(NSData *)fileData fileName:(NSString *)filename fileKey:(NSString *)fileKey {
+    A_RESTRequestUploadDataSet *dataset = [[A_RESTRequestUploadDataSet alloc] init];
+    dataset.fileData = fileData;
+    dataset.fileName = filename;
+    if (fileKey && fileKey.length > 0) {
+        dataset.fileKey = fileKey;
+    } else {
+        dataset.fileKey = filename;
+    }
+    return dataset;
+}
+
++ (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image fileName:(NSString *)filename {
+    return [self A_MakeWithImage:image fileName:filename fileKey:filename];
+}
++ (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image fileName:(NSString *)filename fileKey:(NSString *)fileKey {
+    return [self A_Make:[NSData dataWithData:UIImageJPEGRepresentation(image, 0.5f)] fileName:filename fileKey:fileKey];
+}
+
+@end
+
 @interface A_RESTRequest()
 
 @property (strong, atomic) NSURLSessionTask *sessionTask;
@@ -62,8 +98,11 @@
     return optionSet;
 }
 
-#pragma mark - New Methods 
-- (A_RESTRequest *) A_Request:(requestCompliedBlock)block {
+#pragma mark - New Methods
+- (BOOL)A_IsRunning {
+    return _sessionTask.state == NSURLSessionTaskStateRunning;
+}
+- (A_RESTRequest *)A_Request:(requestCompliedBlock)block {
     // Perpare Parameters
     NSString *myRequestString = [[NSString alloc] init] ;
     if (_parameters != nil && [self.parameters count] > 0
@@ -149,6 +188,39 @@
     
     return self;
 }
+- (A_RESTRequest *)A_RequestDictionary:(requestDictionaryCompliedBlock)block {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
+        @try {
+            NSDictionary *dicResult = [A_JSONHelper A_ConvertJSONDataToDictionary:data];
+            if (block) {
+                block(dicResult, response, error);
+            }
+        } @catch (NSException *e) {
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
+        }@finally {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        }
+    }];
+}
+- (A_RESTRequest *)A_RequestArray:(requestArrayCompliedBlock)block {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
+        @try {
+            NSArray *arrayResult = [A_JSONHelper A_ConvertJSONDataToArray:data];
+            if (block) {
+                block(arrayResult, response, error);
+            }
+        } @catch (NSException *e) {
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
+        }@finally {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        }
+    }];
+}
+
+
+
 
 
 
@@ -160,10 +232,8 @@
           ParamFormat: (A_NetworkParameterFormat)_format {
     
     // Perpare Parameters
-    NSString *myRequestString = [[NSString alloc] init] ;
-    if (_parameters != nil && [_parameters count] > 0
-        && (_method == A_Network_GET || _format == A_Network_SendAsJSON))
-    {
+    NSString *myRequestString = @"";
+    if (_parameters != nil && [_parameters count] > 0 && (_method == A_Network_GET || _format == A_Network_SendAsQuery)) {
         NSArray *reqestdDataKeys = [_parameters allKeys];
         for (NSString *itemKey in reqestdDataKeys) {
             NSString *itemObj = [_parameters objectForKey:itemKey];
@@ -172,12 +242,8 @@
             {
                 if (myRequestString.length > 0){
                     myRequestString = [myRequestString stringByAppendingString:@"&"];
-                }else{
-                    //                    myRequestString = [myRequestString stringByAppendingString:@"?"];
                 }
-                
-                if ([itemObj isKindOfClass:NSClassFromString(@"NSString")])
-                {
+                if ([itemObj isKindOfClass:NSClassFromString(@"NSString")]) {
                     myRequestString = [myRequestString stringByAppendingFormat:@"%@=%@", itemKey, itemObj];
                 }
             }
@@ -186,12 +252,16 @@
     
     // Set Parameters for GET
     NSString *urlStr = _URL;
-    if (_method == A_Network_GET){
+    if (_method == A_Network_GET && myRequestString.length > 0){
         urlStr = [[_URL stringByAppendingFormat:@"?%@", myRequestString] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     }
     
     // the Request
     NSMutableURLRequest *theRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString: urlStr]];
+    
+    // Setup upload data
+    // TODO: NSMutableData *body = [NSMutableData data];
+    
     
     // Set Parameters for POST PUT DELETE
     if (_method != A_Network_GET && _parameters != nil && [_parameters count] > 0) {
@@ -200,6 +270,8 @@
         else
             [theRequest setHTTPBody:[myRequestString dataUsingEncoding:NSUTF8StringEncoding]];
     }
+    
+    
     
     switch (_method) {
         case A_Network_POST:
@@ -219,10 +291,6 @@
     }
     
     [theRequest setAllHTTPHeaderFields:_headers];
-    
-    // Send Request
-//    NSError *error = nil;
-//    NSData *result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
     
     
     __block NSData *resultData = nil;
@@ -251,8 +319,6 @@
                                                File: (NSData*)_filedata
                                            FileName: (NSString*)_filename
                                             FileKey: (NSString*)_filekey {
-    NSString *boundary = @"A_iOS_Helper";
-    
     // Perpare Parameters
     NSString *myRequestString = [[NSString alloc] init] ;
     NSString *urlStr = _URL;
