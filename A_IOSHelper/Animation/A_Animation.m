@@ -20,7 +20,6 @@
 }
 
 +(CAAnimationGroup*)A_GenerateEffect:(A_AnimationEffectType)type Duration:(double)duration {
-    
     if (duration<=0) duration = 0.5f;
     
     CAAnimationGroup *group = [CAAnimationGroup animation];
@@ -236,8 +235,6 @@
         default:
             break;
     }
-    
-    
     
     return group;
 }

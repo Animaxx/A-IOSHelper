@@ -208,7 +208,9 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
                 if (a < fabs(c)) { a=c; s=p/4; }
                 else s = p/(2*M_PI) * asin (c/a);
-                return -(a*pow(2,10*(t-=1)) * sin( (t*d-s)*(2*M_PI)/p )) + b;
+                
+                t-=1;
+                return -(a*pow(2,10*t) * sin( (t*d-s)*(2*M_PI)/p )) + b;
             };
             break;
         case A_AnimationType_easeOutElastic:
@@ -225,9 +227,14 @@ typedef double(^keyframeCalculatingBlock)(double t, double b, double c, double d
                 double s=1.70158, p=0, a=c;
                 if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
                 if (a < fabs(c)) { a=c; s=p/4; }
-                else s = p/(2*M_PI) * asin(c/a);
-                if (t < 1) return -.5*(a*pow(2,10*(t-=1)) * sin( (t*d-s)*(2*M_PI)/p )) + b;
-                return a*pow(2,-10*(t-=1)) * sin( (t*d-s)*(2*M_PI)/p )*.5 + c + b;
+                else { s = p/(2*M_PI) * asin(c/a); }
+                if (t < 1) {
+                    t-=1;
+                    return -.5*(a*pow(2,10*(t)) * sin( (t*d-s)*(2*M_PI)/p )) + b;
+                }
+                
+                t-=1;
+                return a*pow(2,-10*(t)) * sin( (t*d-s)*(2*M_PI)/p )*.5 + c + b;
             };
             break;
         case A_AnimationType_easeInBounce:

@@ -10,7 +10,147 @@
 #import "A_RESTRequest.h"
 #import "A_JSONHelper.h"
 
+@interface A_RESTRequest()
+
+@property (strong, atomic) NSURLSessionTask *sessionTask;
+
+@end
+
 @implementation A_RESTRequest
+
+#pragma mark - Initialize methods
++ (A_RESTRequest *)A_Create:(NSString *)url {
+    A_RESTRequest *optionSet = [[A_RESTRequest alloc] init];
+    optionSet.url = url;
+    return optionSet;
+}
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method {
+    A_RESTRequest *optionSet = [[A_RESTRequest alloc] init];
+    optionSet.url = url;
+    optionSet.requestMethod = method;
+    return optionSet;
+}
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary *)headers {
+    A_RESTRequest *optionSet = [[A_RESTRequest alloc] init];
+    optionSet.url = url;
+    optionSet.requestMethod = method;
+    optionSet.headers = headers;
+    return optionSet;
+}
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary *)parameters {
+    A_RESTRequest *optionSet = [[A_RESTRequest alloc] init];
+    optionSet.url = url;
+    optionSet.requestMethod = method;
+    optionSet.parameters = parameters;
+    return optionSet;
+}
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary *)parameters format:(A_NetworkParameterFormat)parameterFormat {
+    A_RESTRequest *optionSet = [[A_RESTRequest alloc] init];
+    optionSet.url = url;
+    optionSet.requestMethod = method;
+    optionSet.parameters = parameters;
+    optionSet.parameterFormat = parameterFormat;
+    return optionSet;
+}
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary *)headers parameters:(NSDictionary *)parameters format:(A_NetworkParameterFormat)parameterFormat {
+    A_RESTRequest *optionSet = [[A_RESTRequest alloc] init];
+    optionSet.url = url;
+    optionSet.requestMethod = method;
+    optionSet.headers = headers;
+    optionSet.parameters = parameters;
+    optionSet.parameterFormat = parameterFormat;
+    return optionSet;
+}
+
+#pragma mark - New Methods 
+- (A_RESTRequest *) A_Request:(requestCompliedBlock)block {
+    // Perpare Parameters
+    NSString *myRequestString = [[NSString alloc] init] ;
+    if (_parameters != nil && [self.parameters count] > 0
+        && (_requestMethod == A_Network_GET || _parameterFormat == A_Network_SendAsJSON))
+    {
+        NSArray *reqestdDataKeys = [_parameters allKeys];
+        for (NSString *itemKey in reqestdDataKeys) {
+            NSString *itemObj = [_parameters objectForKey:itemKey];
+            
+            if (itemObj != nil)
+            {
+                if (myRequestString.length > 0){
+                    myRequestString = [myRequestString stringByAppendingString:@"&"];
+                }else{
+//                    myRequestString = [myRequestString stringByAppendingString:@"?"];
+                }
+                
+                if ([itemObj isKindOfClass:NSClassFromString(@"NSString")])
+                {
+                    myRequestString = [myRequestString stringByAppendingFormat:@"%@=%@", itemKey, itemObj];
+                }
+            }
+        }
+    }
+    
+    // Set Parameters for GET
+    NSString *urlStr = _url;
+    if (_requestMethod == A_Network_GET){
+        urlStr = [[_url stringByAppendingFormat:@"?%@", myRequestString] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    }
+    
+    // the Request
+    NSMutableURLRequest *theRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString: urlStr]];
+    
+    // Set Parameters for POST PUT DELETE
+    if (_requestMethod != A_Network_GET && _parameters != nil && [_parameters count] > 0) {
+        if (_parameterFormat == A_Network_SendAsJSON)
+            [theRequest setHTTPBody:[A_JSONHelper A_ConvertDictionaryToData:_parameters]];
+        else
+            [theRequest setHTTPBody:[myRequestString dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    switch (_requestMethod) {
+        case A_Network_POST:
+            [theRequest setHTTPMethod:@"POST"];
+            break;
+        case A_Network_GET:
+            [theRequest setHTTPMethod:@"GET"];
+            break;
+        case A_Network_PUT:
+            [theRequest setHTTPMethod:@"PUT"];
+            break;
+        case A_Network_DELETE:
+            [theRequest setHTTPMethod:@"DELETE"];
+            break;
+        default:
+            break;
+    }
+    
+    [theRequest setAllHTTPHeaderFields:_headers];
+    
+    __block NSData *resultData = nil;
+    if (self.sessionTask && self.sessionTask.state == NSURLSessionTaskStateRunning && self.sessionTask.state == NSURLSessionTaskStateSuspended) {
+        [self.sessionTask cancel];
+    }
+    
+    self.sessionTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error){
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
+        }
+        
+        resultData = data;
+        
+#ifndef NDEBUG
+        NSString *resultStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", resultStr);
+#endif
+        if (block){
+            block(data,response,error);
+        }
+        
+    }];
+    
+    return self;
+}
+
+
 
 #pragma mark - Methods For Construct
 + (NSData*) A_Request: (NSString*)_URL
@@ -47,7 +187,7 @@
     // Set Parameters for GET
     NSString *urlStr = _URL;
     if (_method == A_Network_GET){
-        urlStr = [[_URL stringByAppendingFormat:@"?%@", myRequestString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        urlStr = [[_URL stringByAppendingFormat:@"?%@", myRequestString] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     }
     
     // the Request
@@ -81,21 +221,27 @@
     [theRequest setAllHTTPHeaderFields:_headers];
     
     // Send Request
-    NSError *error = nil;
-    NSData *result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
+//    NSError *error = nil;
+//    NSData *result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:&error];
     
-    if (error){
-#ifndef NDEBUG
-        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
-#endif
-        return nil;
-    }
-#ifndef NDEBUG
-    NSString *_str = [[NSString alloc]initWithData:result encoding:NSUTF8StringEncoding];
-    NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", _str);
-#endif
     
-    return result;
+    __block NSData *resultData = nil;
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error){
+            NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
+        }
+        
+        resultData = data;
+        
+        #ifndef NDEBUG
+        NSString *resultStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", resultStr);
+        #endif
+    }];
+    
+    //TODO: result
+    [dataTask resume];
+    return resultData;
 }
 
 + (NSMutableURLRequest*) A_UploadRequestConstructor: (NSString*)_URL

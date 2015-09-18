@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface A_RESTRequest : NSObject
+
 
 typedef NS_ENUM(NSUInteger, A_NetworkRequestMethod) {
     A_Network_POST          = 1,
@@ -21,6 +21,26 @@ typedef NS_ENUM(NSUInteger, A_NetworkParameterFormat) {
     A_Network_SendAsQuery   = 11,
     A_Network_SendAsJSON    = 12,
 };
+
+typedef void(^requestCompliedBlock)(NSData *data, NSURLResponse *response, NSError *error);
+
+@interface A_RESTRequest : NSObject
+
+@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSDictionary *parameters;
+@property (strong, nonatomic) NSDictionary *headers;
+@property (nonatomic) A_NetworkRequestMethod requestMethod;
+@property (nonatomic) A_NetworkParameterFormat parameterFormat;
+
++ (A_RESTRequest *)A_Create:(NSString *)url;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary *)headers;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary *)parameters;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary *)parameters format:(A_NetworkParameterFormat)parameterFormat;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary *)headers parameters:(NSDictionary *)parameters format:(A_NetworkParameterFormat)parameterFormat;
+
+
+
 
 
 #pragma mark - Methods For Construct
