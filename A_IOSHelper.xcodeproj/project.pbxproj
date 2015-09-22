@@ -69,6 +69,7 @@
 		691B4D2A1B3D88F000B96C25 /* A_AnimationKeyframeProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 691B4D281B3D88EF00B96C25 /* A_AnimationKeyframeProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		691B4D2B1B3D88F000B96C25 /* A_AnimationKeyframeProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 691B4D291B3D88F000B96C25 /* A_AnimationKeyframeProvider.m */; };
 		691B4D2E1B3D898400B96C25 /* A_AnimationEnumeration.h in Headers */ = {isa = PBXBuildFile; fileRef = 691B4D2C1B3D898400B96C25 /* A_AnimationEnumeration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		691E1BE41BACB0FF00AF7E5D /* RESTRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 691E1BE31BACB0FF00AF7E5D /* RESTRequestTests.m */; };
 		695F39CC1B1FD4A200114443 /* A_Mapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 695F39CA1B1FD4A200114443 /* A_Mapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		695F39CD1B1FD4A200114443 /* A_Mapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F39CB1B1FD4A200114443 /* A_Mapper.m */; };
 		69A487F51B252FA00090CD1D /* MappingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 69A487F41B252FA00090CD1D /* MappingTests.m */; };
@@ -158,6 +159,7 @@
 		691B4D281B3D88EF00B96C25 /* A_AnimationKeyframeProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AnimationKeyframeProvider.h; path = Animation/A_AnimationKeyframeProvider.h; sourceTree = "<group>"; };
 		691B4D291B3D88F000B96C25 /* A_AnimationKeyframeProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AnimationKeyframeProvider.m; path = Animation/A_AnimationKeyframeProvider.m; sourceTree = "<group>"; };
 		691B4D2C1B3D898400B96C25 /* A_AnimationEnumeration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AnimationEnumeration.h; path = Animation/A_AnimationEnumeration.h; sourceTree = "<group>"; };
+		691E1BE31BACB0FF00AF7E5D /* RESTRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESTRequestTests.m; sourceTree = "<group>"; };
 		695F39CA1B1FD4A200114443 /* A_Mapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Mapper.h; path = Mapping/A_Mapper.h; sourceTree = "<group>"; };
 		695F39CB1B1FD4A200114443 /* A_Mapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Mapper.m; path = Mapping/A_Mapper.m; sourceTree = "<group>"; };
 		69A487F41B252FA00090CD1D /* MappingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MappingTests.m; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				2E38302F1AE8817400DFF0F4 /* StoreTests.m */,
 				2EC4940F1B06569900B9E8E2 /* KVOTests.m */,
 				69A487F41B252FA00090CD1D /* MappingTests.m */,
+				691E1BE31BACB0FF00AF7E5D /* RESTRequestTests.m */,
 				2E3A8D501AADEF4B00D3A833 /* Supporting Files */,
 			);
 			path = A_IOSHelperTests;
@@ -640,6 +643,7 @@
 				2E61F5401B12710E004DE7B2 /* CollectionTests.m in Sources */,
 				2E3A8D631AADF19C00D3A833 /* TestDataModel.m in Sources */,
 				2EC494101B06569900B9E8E2 /* KVOTests.m in Sources */,
+				691E1BE41BACB0FF00AF7E5D /* RESTRequestTests.m in Sources */,
 				2E3A8D6B1AAE58D100D3A833 /* TaskTests.m in Sources */,
 				2E61F5421B137A58004DE7B2 /* ColorAndImageTests.m in Sources */,
 				2E3A8D601AADF0BB00D3A833 /* DataModelTests.m in Sources */,

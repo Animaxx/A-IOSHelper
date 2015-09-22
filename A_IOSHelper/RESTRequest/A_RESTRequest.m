@@ -175,8 +175,8 @@
     
     // Set Parameters for GET
     NSString *urlStr = _url;
-    if (_requestMethod == A_Network_GET){
-        urlStr = [[_url stringByAppendingFormat:@"?%@", myRequestString] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    if (_requestMethod == A_Network_GET && myRequestString.length > 0){
+        urlStr = [_url stringByAppendingFormat:@"?%@", [myRequestString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]];
     }
     
     // the Request
@@ -259,7 +259,10 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
         @try {
-            NSDictionary *dicResult = [A_JSONHelper A_ConvertJSONDataToDictionary:data];
+            NSDictionary *dicResult = @{};
+            if (data) {
+                dicResult = [A_JSONHelper A_ConvertJSONDataToDictionary:data];
+            }
             if (block) {
                 block(dicResult, response, error);
             }
@@ -274,7 +277,10 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
         @try {
-            NSArray *arrayResult = [A_JSONHelper A_ConvertJSONDataToArray:data];
+            NSArray *arrayResult = @[];
+            if (data) {
+                arrayResult = [A_JSONHelper A_ConvertJSONDataToArray:data];
+            }
             if (block) {
                 block(arrayResult, response, error);
             }

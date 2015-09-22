@@ -17,7 +17,6 @@
 
 @implementation TaskTests
 
-int _testInt = 0;
 - (void)testRunInBackgroundWithDone {
     [A_TaskHelper A_RunInBackground:^id{
         NSLog(@"Step 1");
@@ -38,13 +37,14 @@ int _testInt = 0;
 }
 
 - (void)testDelayExecute {
-    _testInt = 0;
+    __block BOOL testBool = YES;
+    __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Time out"];
     [A_TaskHelper A_StartTimer:0.3f Block:^{
-        _testInt = 1;
-    } InMain:NO];
-    
-    sleep(3);
-    XCTAssert(1==_testInt);
+        testBool = YES;
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:0.5 handler:nil];
+    XCTAssertTrue(testBool);
 }
 
 - (void)testSquentialTaskChain {
