@@ -22,6 +22,18 @@
     return _tidyDict;
 }
 
++ (id)A_ConvertJSONToArrayOrDictionary: (NSString*)JSONStr{
+    NSError *error = nil;
+    id result = [NSJSONSerialization JSONObjectWithData: [JSONStr dataUsingEncoding:NSUTF8StringEncoding]
+                                                options: NSJSONReadingMutableContainers
+                                                  error: &error];
+    if (!result) return nil;
+    else {
+        
+        return result;
+    }
+}
+
 + (NSDictionary*)A_ConvertJSONToDictionary: (NSString*)JSONStr{
     NSError *error = nil;
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData: [JSONStr dataUsingEncoding:NSUTF8StringEncoding]

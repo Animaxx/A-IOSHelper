@@ -221,6 +221,9 @@
         case A_Network_PUT:
             [theRequest setHTTPMethod:@"PUT"];
             break;
+        case A_Network_PATCH:
+            [theRequest setHTTPMethod:@"PATCH"];
+            break;
         case A_Network_DELETE:
             [theRequest setHTTPMethod:@"DELETE"];
             break;

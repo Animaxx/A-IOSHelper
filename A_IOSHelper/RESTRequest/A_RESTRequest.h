@@ -14,6 +14,7 @@ typedef NS_ENUM(NSInteger, A_NetworkRequestMethod) {
     A_Network_GET = 0,
     A_Network_POST,
     A_Network_PUT,
+    A_Network_PATCH,
     A_Network_DELETE,
 };
 
