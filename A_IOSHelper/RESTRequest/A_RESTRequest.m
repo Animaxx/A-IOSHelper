@@ -158,8 +158,6 @@
             {
                 if (myRequestString.length > 0){
                     myRequestString = [myRequestString stringByAppendingString:@"&"];
-                }else{
-//                    myRequestString = [myRequestString stringByAppendingString:@"?"];
                 }
                 
                 if ([itemObj isKindOfClass:NSClassFromString(@"NSString")])
