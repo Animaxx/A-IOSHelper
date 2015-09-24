@@ -144,9 +144,6 @@
 }
 
 #pragma mark - Request Methods
-- (BOOL)A_IsRunning {
-    return _sessionTask.state == NSURLSessionTaskStateRunning;
-}
 - (A_RESTRequest *)A_Request:(requestCompliedBlock)block {
     // Perpare Parameters
     NSString *myRequestString = [[NSString alloc] init] ;
@@ -234,7 +231,7 @@
     [theRequest setAllHTTPHeaderFields:_headers];
     
     __block NSData *resultData = nil;
-    if (self.sessionTask && self.sessionTask.state == NSURLSessionTaskStateRunning && self.sessionTask.state == NSURLSessionTaskStateSuspended) {
+    if (self.sessionTask && (self.sessionTask.state == NSURLSessionTaskStateRunning || self.sessionTask.state == NSURLSessionTaskStateSuspended)) {
         [self.sessionTask cancel];
     }
     
@@ -258,6 +255,7 @@
     
     return self;
 }
+
 - (A_RESTRequest *)A_RequestDictionary:(requestDictionaryCompliedBlock)block {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -293,6 +291,10 @@
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         }
     }];
+}
+
+- (NSURLSessionTask *)A_GetURLSessionTask {
+    return self.sessionTask;
 }
 
 - (NSDictionary *)A_RequestDictionarySync {

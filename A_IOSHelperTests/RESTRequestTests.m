@@ -31,6 +31,11 @@
     }];
 }
 
+- (void)testRESTSimpleSyncGet {
+    NSArray *resultData = [[A_RESTRequest A_Create:TestingWebservice] A_RequestArraySync];
+    XCTAssertGreaterThanOrEqual(resultData.count, 1);
+}
+
 - (void)testRESTSimplePost {
     __weak XCTestExpectation *expectation = [self expectationWithDescription:@"Time out"];
     [[A_RESTRequest A_Create:TestingWebservice method:A_Network_POST parameters:@{@"title": @"foo", @"body": @"bar", @"userId": @(10)} format:A_Network_SendAsJSON] A_RequestDictionary:^(NSDictionary *data, NSURLResponse *response, NSError *error) {
@@ -44,6 +49,11 @@
         }
     }];
 }
+- (void)testRESTSimpleSyncPost {
+    NSArray *resultData = [[A_RESTRequest A_Create:TestingWebservice method:A_Network_POST parameters:@{@"title": @"foo", @"body": @"bar", @"userId": @(10)} format:A_Network_SendAsJSON] A_RequestArraySync];
+    XCTAssertGreaterThanOrEqual(resultData.count, 1);
+}
+
 
 
 @end

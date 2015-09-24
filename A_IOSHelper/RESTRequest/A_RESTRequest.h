@@ -62,14 +62,14 @@ typedef void(^requestArrayCompliedBlock)(NSArray *data, NSURLResponse *response,
 + (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet headers:(NSDictionary *)headers parameters:(NSDictionary *)parameters;
 
 #pragma mark - Request Methods
-- (BOOL)A_IsRunning;
-
 - (A_RESTRequest *)A_Request:(requestCompliedBlock)block;
 - (A_RESTRequest *)A_RequestDictionary:(requestDictionaryCompliedBlock)block;
 - (A_RESTRequest *)A_RequestArray:(requestArrayCompliedBlock)block;
 
 - (NSDictionary *)A_RequestDictionarySync;
 - (NSArray *)A_RequestArraySync;
+
+- (NSURLSessionTask *)A_GetURLSessionTask;
 
 @end
 
