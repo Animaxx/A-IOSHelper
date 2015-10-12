@@ -41,7 +41,7 @@ Wait 0.6 seconds and do the zoom in with changing position and size animation.
 
 ###### The Swfit example:
 
-`import A_IOSHelper`
+Add `<A_IOSHelper/A_IOSHelper.h>` to **Objective-C Bridging Header** in **Swift Compiler - Code Generation** section.
 
 Download image and cache it, and it can get same image next time from cache instead of download again.
 
