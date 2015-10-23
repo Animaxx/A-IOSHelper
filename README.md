@@ -60,6 +60,7 @@ Add the following line in your `Podfile`.
 pod "A_IOSHelper"
 ``` 
 
+If using A_IOSHelper in Swift project, don't forget add this framework in Project page -> General -> Target -> Linked Frameworks and Libraries section. Otherwise, it will cause **unrecognized selector sent to class** error when you call any method in A_IOSHelper. 
 
 #### Embedded framework file
 
