@@ -19,6 +19,8 @@
 - (UIImage*) A_ImageCutWithRect:(CGRect)rect;
 + (UIImage*) A_ImageByName:(NSString*)imageName CutWithRect:(CGRect)rect;
 
+- (UIImage*) A_ImageCutInCenter:(CGSize)size;
+
 - (UIImage*) A_ImageScaleToSize:(CGSize)size;
 + (UIImage*) A_ImageByName:(NSString*)name ScaleToSize:(CGSize)size;
 

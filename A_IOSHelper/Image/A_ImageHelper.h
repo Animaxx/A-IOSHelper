@@ -18,8 +18,10 @@
 + (UIImage*) A_ImageQRCode:(NSString*)message Size:(CGSize)size;
 
 #pragma mark - Image cutting
-+ (UIImage*) A_Image:(UIImage*)image CutWithRect:(CGRect)rect;
-+ (UIImage*) A_ImageByName:(NSString*)imageName CutWithRect:(CGRect)rect;
++ (UIImage*) A_CutImage: (UIImage*)image InRect: (CGRect) rect;
++ (UIImage*) A_CutImageByName: (NSString*)imageName InRect:(CGRect)rect;
+
++ (UIImage *)A_CutImage:(UIImage*)image InCenter:(CGSize)size;
 
 + (UIImage*) A_Image:(UIImage*)image ScaleToSize:(CGSize)size;
 + (UIImage*) A_ImageByName:(NSString*)name ScaleToSize:(CGSize)size;
@@ -44,11 +46,9 @@
 + (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL;
 + (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL DefaultImage:(NSString*)defaultImageName;
 
-#pragma mark - Image operation - Blur
-+ (UIImage*) A_GaussianBlur:(UIImage*)theImage Radius:(float)radius;
-+ (UIImage*) A_GaussianBlur:(UIImage*)theImage;
+#pragma mark - Image operation 
++ (UIImage*) A_MakeUIImageFromCIImage:(CIImage*)ciImage withScale:(CGFloat)scale;
++ (UIImage*) A_CoreImageFilter: (UIImage*)theImage FilterName:(NSString*)filterName FilterParams:(NSDictionary<NSString *,id>*)params;
 
-#pragma mark - Invert Color
-+ (UIImage *)A_InvertColor: (UIImage*)theImage;
 
 @end

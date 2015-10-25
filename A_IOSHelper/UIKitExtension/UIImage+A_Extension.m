@@ -24,11 +24,15 @@
 
 #pragma mark - Image cutting
 - (UIImage*) A_ImageCutWithRect:(CGRect)rect {
-    UIImage *_result = [A_ImageHelper A_Image:self CutWithRect:rect];
+    UIImage *_result = [A_ImageHelper A_CutImage:self InRect:rect];
     return _result;
 }
 + (UIImage*) A_ImageByName:(NSString*)imageName CutWithRect:(CGRect)rect {
-    return [A_ImageHelper A_ImageByName:imageName CutWithRect:rect];
+    return [A_ImageHelper A_CutImageByName:imageName InRect:rect];
+}
+
+- (UIImage*) A_ImageCutInCenter:(CGSize)size {
+    return [A_ImageHelper A_CutImage:self InCenter:size];
 }
 
 - (UIImage*) A_ImageScaleToSize:(CGSize)size {
@@ -104,16 +108,15 @@
 
 #pragma mark - Image operation - Blur
 - (UIImage*) A_GaussianBlurWithRadius:(float)radius {
-    return [A_ImageHelper A_GaussianBlur:self Radius:radius];
+    return [A_ImageHelper A_CoreImageFilter:self FilterName:@"CIGaussianBlur" FilterParams:@{ kCIInputRadiusKey: @(radius) }];
 }
 - (UIImage*) A_GaussianBlur {
-    return [A_ImageHelper A_GaussianBlur:self];
+    return [A_ImageHelper A_CoreImageFilter:self FilterName:@"CIGaussianBlur" FilterParams:@{ kCIInputRadiusKey: @(10.0) }];
 }
-
 
 #pragma mark - Inver Color
 - (UIImage*) A_InvertColor {
-    return [A_ImageHelper A_InvertColor:self];
+    return [A_ImageHelper A_CoreImageFilter:self FilterName:@"CIColorInvert" FilterParams:nil];
 }
 
 @end

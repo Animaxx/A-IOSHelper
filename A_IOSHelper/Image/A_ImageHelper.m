@@ -67,7 +67,7 @@
     return result;
 }
 
-+ (UIImage*) A_Image: (UIImage*)image CutWithRect: (CGRect) rect {
++ (UIImage*) A_CutImage: (UIImage*)image InRect: (CGRect) rect {
     if (image != nil) {
         CGRect fromRect = CGRectMake(rect.origin.x * image.scale,
                                      rect.origin.y * image.scale,
@@ -75,16 +75,20 @@
                                      rect.size.height * image.scale);
         
         CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, fromRect);
-        image = [UIImage imageWithCGImage: imageRef];
+        image = [UIImage imageWithCGImage:imageRef scale:image.scale orientation:image.imageOrientation];
         CGImageRelease(imageRef);
     }
     return image;
 }
-+ (UIImage*) A_ImageByName: (NSString*) imageName CutWithRect:(CGRect) rect {
++ (UIImage*) A_CutImageByName: (NSString*)imageName InRect:(CGRect)rect {
     UIImage *image = [UIImage imageNamed:imageName];
-    return [A_ImageHelper A_Image:image CutWithRect:rect];
+    return [A_ImageHelper A_CutImage:image InRect:rect];
 }
 
++ (UIImage *)A_CutImage:(UIImage*)image InCenter:(CGSize)size {
+    CGRect rect = CGRectMake((image.size.width - size.width) / 2, (image.size.height - size.height) / 2 , size.width, size.height);
+    return [A_ImageHelper A_CutImage:image InRect:rect];
+}
 
 + (UIImage*) A_Image:(UIImage*)image ScaleToSize:(CGSize) size {
     if (image != nil) {
@@ -257,6 +261,7 @@
 }
 
 
+
 + (UIImage*) A_ImageDownload: (NSString*)imageURL {
     NSData *_imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
     if (_imgData && _imgData.length <= 0){
@@ -307,34 +312,33 @@
     return _result;
 }
 
++ (UIImage*) A_MakeUIImageFromCIImage:(CIImage*)ciImage withScale:(CGFloat)scale {
+    CIContext *cicontext = [CIContext contextWithOptions:nil];
+    UIImage * returnImage;
+    
+    CGImageRef processedCGImage = [cicontext createCGImage:ciImage fromRect:[ciImage extent]];
+    
+    returnImage = [UIImage imageWithCGImage:processedCGImage scale:scale orientation:UIImageOrientationUp];
+    CGImageRelease(processedCGImage);
+    
+    return returnImage;
+}
 
-/* https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html#//apple_ref/doc/filter/ci/CIGaussianBlur */
-+ (UIImage*) A_GaussianBlur: (UIImage*)theImage Radius:(float)radius {
+/* https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html */
++ (UIImage*) A_CoreImageFilter: (UIImage*)theImage FilterName:(NSString*)filterName FilterParams:(NSDictionary<NSString *,id>*)params {
     @autoreleasepool {
-        CIContext *context = [CIContext contextWithOptions:nil];
         CIImage *image = [[CIImage alloc] initWithImage:theImage];
-        CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
+        CIFilter *filter = [CIFilter filterWithName:filterName];
         [filter setValue:image forKey:kCIInputImageKey];
-        [filter setValue:[NSNumber numberWithFloat:radius] forKey: @"inputRadius"];
+        for (NSString *key in params) {
+            [filter setValue:params[key] forKey:key];
+        }
+        
         CIImage *result = [filter valueForKey:kCIOutputImageKey];
-        CGImageRef outImage = [context createCGImage: result fromRect:[result extent]];
-        UIImage *blurImage = [UIImage imageWithCGImage:outImage scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp];
+        UIImage *blurImage = [A_ImageHelper A_MakeUIImageFromCIImage:result withScale:theImage.scale];
+        
         return blurImage;
     }
 }
-+ (UIImage*) A_GaussianBlur: (UIImage*)theImage {
-    return [self A_GaussianBlur:theImage Radius:10.0f];
-}
-
-+ (UIImage *)A_InvertColor: (UIImage*)theImage {
-    CGFloat scale = [[UIScreen mainScreen] scale];
-    
-    CIImage *coreImage = [CIImage imageWithCGImage:theImage.CGImage];
-    CIFilter *filter = [CIFilter filterWithName:@"CIColorInvert"];
-    [filter setValue:coreImage forKey:kCIInputImageKey];
-    CIImage *result = [filter valueForKey:kCIOutputImageKey];
-    return [UIImage imageWithCIImage:result scale:scale orientation:UIImageOrientationUp];
-}
-
 
 @end
