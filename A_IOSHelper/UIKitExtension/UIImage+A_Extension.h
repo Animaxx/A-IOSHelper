@@ -58,4 +58,8 @@
 
 - (UIImage*) A_InvertColor;
 
+#pragma mark - Storage
+- (void) A_SaveImageTo:(NSString *)key;
++ (UIImage *) A_GetImageFrom:(NSString *)key;
+
 @end

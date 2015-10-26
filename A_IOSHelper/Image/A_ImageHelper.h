@@ -46,9 +46,13 @@
 + (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL;
 + (UIImage*) A_ImageDownloadAndCache:(NSString*)imageURL DefaultImage:(NSString*)defaultImageName;
 
-#pragma mark - Image operation 
+#pragma mark - Image operation
 + (UIImage*) A_MakeUIImageFromCIImage:(CIImage*)ciImage withScale:(CGFloat)scale;
 + (UIImage*) A_CoreImageFilter: (UIImage*)theImage FilterName:(NSString*)filterName FilterParams:(NSDictionary<NSString *,id>*)params;
+
+#pragma mark - Storage
++ (void) A_SaveImage:(UIImage *)image To:(NSString *)key;
++ (UIImage *) A_GetImageFrom:(NSString *)key;
 
 
 @end

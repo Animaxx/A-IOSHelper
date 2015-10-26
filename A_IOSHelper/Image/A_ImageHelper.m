@@ -260,6 +260,17 @@
     return newPic;
 }
 
++ (void) A_SaveImage:(UIImage *)image To:(NSString *)key {
+    NSString *aPath=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),key];
+    
+    NSData* data = UIImagePNGRepresentation(image);
+    [data writeToFile:aPath atomically:YES];
+}
++ (UIImage *) A_GetImageFrom:(NSString *)key {
+    NSString *aPath=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),key];
+    UIImage *returnIamge =[[UIImage alloc]initWithContentsOfFile:aPath];
+    return returnIamge;
+}
 
 
 + (UIImage*) A_ImageDownload: (NSString*)imageURL {
@@ -268,9 +279,9 @@
         _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
     }
     if (_imgData){
-        UIImage *_retuanIamge = [[UIImage alloc] initWithData:_imgData];
-        if (_retuanIamge) {
-            return _retuanIamge;
+        UIImage *_returnIamge = [[UIImage alloc] initWithData:_imgData];
+        if (_returnIamge) {
+            return _returnIamge;
         }
     }
     
@@ -281,10 +292,10 @@
         return nil;
     
     NSString *aPathLocal=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[imageURL lastPathComponent]];
-    UIImage *_retuanIamge =[[UIImage alloc]initWithContentsOfFile:aPathLocal];
+    UIImage *_returnIamge =[[UIImage alloc]initWithContentsOfFile:aPathLocal];
     
-    if (_retuanIamge) {
-        return _retuanIamge;
+    if (_returnIamge) {
+        return _returnIamge;
     }
     
     NSData *_imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
@@ -297,9 +308,9 @@
         NSString *aPath=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[imageURL lastPathComponent]];
         [_imgData writeToFile:aPath atomically:YES];
         
-        _retuanIamge = [[UIImage alloc] initWithData:_imgData];
-        if (_retuanIamge) {
-            return _retuanIamge;
+        _returnIamge = [[UIImage alloc] initWithData:_imgData];
+        if (_returnIamge) {
+            return _returnIamge;
         }
     }
     return nil;

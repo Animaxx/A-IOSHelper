@@ -119,6 +119,18 @@
     return [A_ImageHelper A_CoreImageFilter:self FilterName:@"CIColorInvert" FilterParams:nil];
 }
 
+#pragma mark - Storage
+- (void) A_SaveImageTo:(NSString *)key {
+    [A_ImageHelper A_SaveImage:self To:key];
+}
++ (UIImage *) A_GetImageFrom:(NSString *)key {
+    return [A_ImageHelper A_GetImageFrom:key];
+}
+
+
+
+
+
 @end
 
 

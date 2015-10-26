@@ -16,7 +16,6 @@
 - (void) A_AnimationSet:(NSString*)keypath AnimtionType:(A_AnimationType)type Start:(id)start End:(id)end Duration:(double)duration FPS:(A_AnimationFPS)kps AutoSet:(BOOL)isset{
     
     NSParameterAssert(keypath);
-    NSParameterAssert(type);
     NSParameterAssert(end);
     
     if (kps<=0) {

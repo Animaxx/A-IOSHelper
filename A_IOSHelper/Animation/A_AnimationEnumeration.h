@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, A_AnimationType) {
-    A_AnimationType_default   =0,
+    A_AnimationType_noEffect   =0,
     
     // Springs
     A_AnimationType_spring,
