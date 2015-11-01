@@ -57,7 +57,9 @@
         CGImageRef cgImage = [context createCGImage:outputImage
                                            fromRect:[outputImage extent]];
         
-        UIImage *image = [UIImage imageWithCGImage:cgImage];
+        UIImage *image = [UIImage imageWithCGImage:cgImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+        CGImageRelease(cgImage);
+        
         return image;
     }
 }
@@ -207,7 +209,9 @@
     CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
     CFRelease(bmContext);
     
-    UIImage *outImage = [UIImage imageWithCGImage: rotatedImage];
+    UIImage *outImage = [UIImage imageWithCGImage:rotatedImage scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
+    CGImageRelease(rotatedImage);
+    
     return outImage;
 }
 + (UIImage*) A_ImageByName:(NSString*)name RotatedByDegrees:(CGFloat)degrees {

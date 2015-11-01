@@ -25,6 +25,7 @@
 
 /**** UI Kit Extension ****/
 #import <A_IOSHelper/UIControl+A_Extension.h>
+#import <A_IOSHelper/UIView+A_Extension.h>
 #import <A_IOSHelper/UIView+A_Animation.h>
 #import <A_IOSHelper/CALayer+A_Animation.h>
 #import <A_IOSHelper/NSDate+A_Extension.h>

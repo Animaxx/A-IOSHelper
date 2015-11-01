@@ -66,6 +66,8 @@
 		2ED875E71A9A9CFE00D0D62E /* A_DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */; };
 		2ED875EC1A9AA1C400D0D62E /* A_Reflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED875EB1A9AA1C400D0D62E /* A_Reflection.m */; };
+		69199BF91BE6979B00C03370 /* UIView+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 69199BF71BE6979B00C03370 /* UIView+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		69199BFA1BE6979B00C03370 /* UIView+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 69199BF81BE6979B00C03370 /* UIView+A_Extension.m */; };
 		691B4D2A1B3D88F000B96C25 /* A_AnimationKeyframeProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 691B4D281B3D88EF00B96C25 /* A_AnimationKeyframeProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		691B4D2B1B3D88F000B96C25 /* A_AnimationKeyframeProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 691B4D291B3D88F000B96C25 /* A_AnimationKeyframeProvider.m */; };
 		691B4D2E1B3D898400B96C25 /* A_AnimationEnumeration.h in Headers */ = {isa = PBXBuildFile; fileRef = 691B4D2C1B3D898400B96C25 /* A_AnimationEnumeration.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -156,6 +158,8 @@
 		2ED875E51A9A9CFE00D0D62E /* A_DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_DataModel.m; path = DataModel/A_DataModel.m; sourceTree = "<group>"; };
 		2ED875EA1A9AA1C400D0D62E /* A_Reflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_Reflection.h; path = Reflection/A_Reflection.h; sourceTree = "<group>"; };
 		2ED875EB1A9AA1C400D0D62E /* A_Reflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_Reflection.m; path = Reflection/A_Reflection.m; sourceTree = "<group>"; };
+		69199BF71BE6979B00C03370 /* UIView+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+A_Extension.h"; path = "UIKitExtension/UIView+A_Extension.h"; sourceTree = "<group>"; };
+		69199BF81BE6979B00C03370 /* UIView+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+A_Extension.m"; path = "UIKitExtension/UIView+A_Extension.m"; sourceTree = "<group>"; };
 		691B4D281B3D88EF00B96C25 /* A_AnimationKeyframeProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AnimationKeyframeProvider.h; path = Animation/A_AnimationKeyframeProvider.h; sourceTree = "<group>"; };
 		691B4D291B3D88F000B96C25 /* A_AnimationKeyframeProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_AnimationKeyframeProvider.m; path = Animation/A_AnimationKeyframeProvider.m; sourceTree = "<group>"; };
 		691B4D2C1B3D898400B96C25 /* A_AnimationEnumeration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_AnimationEnumeration.h; path = Animation/A_AnimationEnumeration.h; sourceTree = "<group>"; };
@@ -426,6 +430,8 @@
 		2ECD550F1AB0D338000E9802 /* UIKItExtension */ = {
 			isa = PBXGroup;
 			children = (
+				69199BF71BE6979B00C03370 /* UIView+A_Extension.h */,
+				69199BF81BE6979B00C03370 /* UIView+A_Extension.m */,
 				2ECD550B1AB0D334000E9802 /* UIControl+A_Extension.h */,
 				2ECD550C1AB0D334000E9802 /* UIControl+A_Extension.m */,
 				2ED75EA71ABB69DE00B0FB5F /* UIColor+A_Extension.h */,
@@ -501,6 +507,7 @@
 				691B4D2E1B3D898400B96C25 /* A_AnimationEnumeration.h in Headers */,
 				2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */,
 				2E1C1B0C1ABDE429008E30B2 /* A_SqliteManager.h in Headers */,
+				69199BF91BE6979B00C03370 /* UIView+A_Extension.h in Headers */,
 				69C028E01B41065F00800C59 /* UIView+A_Animation.h in Headers */,
 				69C028DE1B41065F00800C59 /* CALayer+A_Animation.h in Headers */,
 			);
@@ -626,6 +633,7 @@
 				2E1187C81A37518F0080FFB9 /* A_ColorHelper.m in Sources */,
 				691B4D2B1B3D88F000B96C25 /* A_AnimationKeyframeProvider.m in Sources */,
 				2E1187C41A37518F0080FFB9 /* A_JSONHelper.m in Sources */,
+				69199BFA1BE6979B00C03370 /* UIView+A_Extension.m in Sources */,
 				2E2E9DC71B143CBC001B3AB4 /* UIImageView+A_Extension.m in Sources */,
 				2E0FD88E1AB561C700C1B828 /* NSArray+A_Extension.m in Sources */,
 				2E02968B1B018134005ABADF /* A_TaskHelper.m in Sources */,
