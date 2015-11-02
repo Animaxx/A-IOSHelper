@@ -11,11 +11,11 @@
 
 @implementation UIView (A_Extension)
 
-- (NSArray<UIView *> *) A_GetSubView:(bool (^)(id x))block {
-     return [self.subviews A_Where:block];
+- (NSArray<UIView *> *) A_GetSubView:(bool (^)(UIView *x))block {
+    return [self.subviews A_Where:block];
 }
 
-- (UIView *) A_GetFirstSubView:(bool (^)(id x))block {
+- (UIView *) A_GetFirstSubView:(bool (^)(UIView *x))block {
     return [self.subviews A_FirstOrNil:block];
 }
 
