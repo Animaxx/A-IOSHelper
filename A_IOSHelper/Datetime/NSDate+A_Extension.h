@@ -18,13 +18,22 @@
 + (NSDate*) A_ThisMonth;
 + (NSDate*) A_LastMonth;
 - (NSTimeInterval) A_DateDiffer:(NSDate*)anotherDate;
++ (NSDate*) A_CreateByYear:(NSInteger)year Month:(NSInteger)month Day:(NSInteger)day Hour:(NSInteger)hour Minute:(NSInteger)minute Second:(NSInteger)second;
 
+- (int)A_GetYear;
 - (int)A_GetMonth;
 - (int)A_GetWeekday;
 - (int)A_GetDay;
 - (int)A_GetHour;
 - (int)A_GetMinute;
 - (int)A_GetSecond;
+
+- (NSDate *)A_SetYear:(NSInteger)year;
+- (NSDate *)A_SetMonth:(NSInteger)month;
+- (NSDate *)A_SetDay:(NSInteger)day;
+- (NSDate *)A_SetHour:(NSInteger)hour;
+- (NSDate *)A_SetMinute:(NSInteger)minute;
+- (NSDate *)A_SetSecond:(NSInteger)second;
 
 - (BOOL)A_IsToday;
 - (BOOL)A_IsSameDayWith:(NSDate *)day;
