@@ -30,19 +30,29 @@
     CAKeyframeAnimation *k1,*k2;//,*k3;
     
     switch (type) {
+            // MARK: generate - emphasize effect
         case A_AnimationEffectType_flash:
             k1 = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
             k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
             k1.values = @[@(0.2),@(0.8),@(0.2),@(1.0)];
-             group.animations = @[k1];
+            group.animations = @[k1];
             break;
         case A_AnimationEffectType_pulse:
             k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
             k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
             k1.values = @[[NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],
-                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.95, 0.95, 0.95)],
+                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.90, 0.90, 0.90)],
                           [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],
-                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.95, 0.95, 0.95)],
+                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.90, 0.90, 0.90)],
+                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.0, 1.0, 1.0)]];
+            group.animations = @[k1];
+            break;
+        case A_AnimationEffectType_press:
+            k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+            //            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
+            k1.timingFunction = [CAMediaTimingFunction functionWithName:@"easeOut"];
+            k1.values = @[[NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.85, 0.85, 0.85)],
+                          [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],
                           [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.0, 1.0, 1.0)]];
             group.animations = @[k1];
             break;
@@ -106,6 +116,8 @@
             group.animations = @[k1];
             
             break;
+            
+            // MARK: generate - shift effect
         case A_AnimationEffectType_flipX:
             k1 = [self A_GenerateKeyframe:@"transform" Type:A_AnimationType_easeInOutQuint Duration:duration FPS:A_AnimationFPS_middle Start:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 1, 0, 0)] End:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(180), 1, 0, 0)]];
             k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:.5 :.5 :1 :1];
@@ -129,7 +141,7 @@
             group.animations = @[k1];
             break;
             
-            
+            // MARK: appear/disappear effect
         case A_AnimationEffectType_flipInX:
             k1 = [self A_GenerateKeyframe:@"transform" Type:A_AnimationType_easeInOutQuint Duration:duration FPS:A_AnimationFPS_middle Start:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(180), 1, 0, 0)] End:[NSValue valueWithCATransform3D:CATransform3DMakeRotation(DEGREES_TO_RADIANS(0), 1, 0, 0)]];
             k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:.5 :.5 :1 :1];

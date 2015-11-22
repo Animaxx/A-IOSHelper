@@ -65,30 +65,66 @@ typedef NS_ENUM(NSUInteger, A_AnimationFPS) {
     A_AnimationFPS_high = 60,
 };
 typedef NS_ENUM(NSUInteger, A_AnimationEffectType) {
-    A_AnimationEffectType_flash =1,
-    A_AnimationEffectType_pulse,
-    A_AnimationEffectType_shakeHorizontal,
-    A_AnimationEffectType_shakeVertical,
-    A_AnimationEffectType_swing,
-    A_AnimationEffectType_wobble,
-    A_AnimationEffectType_quake,
-    A_AnimationEffectType_squeeze,
+    // emphasize effect
+    A_AnimationEffectType_flash                 =1,
+    A_AnimationEffectType_press                 =2,
+    A_AnimationEffectType_pulse                 =3,
+    A_AnimationEffectType_shakeHorizontal       =4,
+    A_AnimationEffectType_shakeVertical         =5,
+    A_AnimationEffectType_swing                 =6,
+    A_AnimationEffectType_wobble                =7,
+    A_AnimationEffectType_quake                 =8,
+    A_AnimationEffectType_squeeze               =9,
     
-    A_AnimationEffectType_flipX,
-    A_AnimationEffectType_flipY,
-    A_AnimationEffectType_flipLeft,
-    A_AnimationEffectType_flipRight,
+    // shift effect
+    A_AnimationEffectType_flipX                 =101,
+    A_AnimationEffectType_flipY                 =102,
+    A_AnimationEffectType_flipLeft              =103,
+    A_AnimationEffectType_flipRight             =104,
     
-    A_AnimationEffectType_flipInX,
-    A_AnimationEffectType_flipOutX,
-    A_AnimationEffectType_flipInY,
-    A_AnimationEffectType_flipOutY,
-    A_AnimationEffectType_fadeIn,
-    A_AnimationEffectType_fadeOut,
-    A_AnimationEffectType_zoomIn,
-    A_AnimationEffectType_zoomOut,
+    // appear effect
+    A_AnimationEffectType_flipInX               =201,
+    A_AnimationEffectType_flipInY               =202,
+    A_AnimationEffectType_fadeIn                =203,
+    A_AnimationEffectType_zoomIn                =204,
+    A_AnimationEffectType_cardIn                =205,
+    // disappear effect
+    A_AnimationEffectType_flipOutX              =301,
+    A_AnimationEffectType_flipOutY              =302,
+    A_AnimationEffectType_fadeOut               =303,
+    A_AnimationEffectType_zoomOut               =304,
+    A_AnimationEffectType_cardOut               =305,
     
-    A_AnimationEffectType_cardIn,
-    A_AnimationEffectType_cardOut,
+    
+    
+    // emphasize effect
+    A_AnimationEffectType_mirror_flash          =1001,
+    A_AnimationEffectType_mirror_press          =1002,
+    A_AnimationEffectType_mirror_pulse          =1003,
+    A_AnimationEffectType_mirror_shakeHorizontal    =1004,
+    A_AnimationEffectType_mirror_shakeVertical  =1005,
+    A_AnimationEffectType_mirror_swing          =1006,
+    A_AnimationEffectType_mirror_wobble         =1007,
+    A_AnimationEffectType_mirror_quake          =1008,
+    A_AnimationEffectType_mirror_squeeze        =1009,
+    
+    // shift effect
+    A_AnimationEffectType_mirror_flipX          =1101,
+    A_AnimationEffectType_mirror_flipY          =1102,
+    A_AnimationEffectType_mirror_flipLeft       =1103,
+    A_AnimationEffectType_mirror_flipRight      =1104,
+    
+    // mirror appear effect
+    A_AnimationEffectType_mirror_flipInX        =1201,
+    A_AnimationEffectType_mirror_flipInY        =1202,
+    A_AnimationEffectType_mirror_fadeIn         =1203,
+    A_AnimationEffectType_mirror_zoomIn         =1204,
+    A_AnimationEffectType_mirror_cardIn         =1205,
+    // mirror disappear effect
+    A_AnimationEffectType_mirror_flipOutX       =1301,
+    A_AnimationEffectType_mirror_flipOutY       =1302,
+    A_AnimationEffectType_mirror_fadeOut        =1303,
+    A_AnimationEffectType_mirror_zoomOut        =1304,
+    A_AnimationEffectType_mirror_cardOut        =1305,
     
 };
