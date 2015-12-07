@@ -48,18 +48,16 @@
 }
 
 
-
 - (NSTimeInterval) A_DateDiffer:(NSDate*)otherDate {
     return [A_Datetime A_DateDiffer:self Compare:otherDate];
 }
 
--(NSDate *) toLocalTime {
+- (NSDate *) toLocalTime {
     NSTimeZone *tz = [NSTimeZone defaultTimeZone];
     NSInteger seconds = [tz secondsFromGMTForDate: self];
     return [NSDate dateWithTimeInterval: seconds sinceDate: self];
 }
-
--(NSDate *) toGlobalTime {
+- (NSDate *) toGlobalTime {
     NSTimeZone *tz = [NSTimeZone defaultTimeZone];
     NSInteger seconds = -[tz secondsFromGMTForDate: self];
     return [NSDate dateWithTimeInterval: seconds sinceDate: self];
@@ -71,6 +69,38 @@
     return (int)components.weekday;
 }
 
+
+- (int)A_GetYear {
+    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitYear) fromDate:self];
+    
+    return (int)components.year;
+}
+- (int)A_GetMonth {
+    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitMonth) fromDate:self];
+    
+    return (int)components.month;
+}
+- (int)A_GetDay {
+    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitDay) fromDate:self];
+    
+    return (int)components.day;
+}
+- (int)A_GetHour {
+    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:self];
+    
+    return (int)components.hour;
+}
+- (int)A_GetMinute {
+    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:self];
+    
+    return (int)components.minute;
+}
+- (int)A_GetSecond {
+    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:self];
+    
+    return (int)components.second;
+}
+
 - (NSDate *)A_SetYear:(NSInteger)year {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitYear) fromDate:self];
@@ -78,11 +108,6 @@
     components.year = year;
     
     return [calendar dateFromComponents:components];
-}
-- (int)A_GetYear {
-    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitYear) fromDate:self];
-    
-    return (int)components.year;
 }
 - (NSDate *)A_SetMonth:(NSInteger)month {
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -92,11 +117,6 @@
     
     return [calendar dateFromComponents:components];
 }
-- (int)A_GetMonth {
-    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitMonth) fromDate:self];
-    
-    return (int)components.month;
-}
 - (NSDate *)A_SetDay:(NSInteger)day {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitDay) fromDate:self];
@@ -104,11 +124,6 @@
     components.day = day;
     
     return [calendar dateFromComponents:components];
-}
-- (int)A_GetDay {
-    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitDay) fromDate:self];
-    
-    return (int)components.day;
 }
 - (NSDate *)A_SetHour:(NSInteger)hour {
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -118,11 +133,6 @@
     
     return [calendar dateFromComponents:components];
 }
-- (int)A_GetHour {
-    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:self];
-    
-    return (int)components.hour;
-}
 - (NSDate *)A_SetMinute:(NSInteger)minute {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitMinute) fromDate:self];
@@ -130,11 +140,6 @@
     components.minute = minute;
     
     return [calendar dateFromComponents:components];
-}
-- (int)A_GetMinute {
-    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:self];
-    
-    return (int)components.minute;
 }
 - (NSDate *)A_SetSecond:(NSInteger)second {
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -144,10 +149,18 @@
     
     return [calendar dateFromComponents:components];
 }
-- (int)A_GetSecond {
-    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:self];
+
+- (NSDate *)A_GetOnlyDay {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitTimeZone) fromDate:self];
     
-    return (int)components.second;
+    return [calendar dateFromComponents:components];
+}
+- (NSDate *)A_GetOnlyTime {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitTimeZone) fromDate:self];
+    
+    return [calendar dateFromComponents:components];
 }
 
 - (BOOL)A_IsToday {
@@ -167,7 +180,7 @@
     return dateString;
 }
 - (NSString *)A_FormatByDate {
-    return [self A_ToString:@"E MMM d"];
+    return [self A_ToString:@"E MMM dd"];
 }
 - (NSString *)A_FormatByTime {
     return [self A_ToString:@"hh:mm a"];

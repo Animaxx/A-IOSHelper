@@ -35,6 +35,9 @@
 - (NSDate *)A_SetMinute:(NSInteger)minute;
 - (NSDate *)A_SetSecond:(NSInteger)second;
 
+- (NSDate *)A_GetOnlyDay;
+- (NSDate *)A_GetOnlyTime;
+
 - (BOOL)A_IsToday;
 - (BOOL)A_IsSameDayWith:(NSDate *)day;
 
