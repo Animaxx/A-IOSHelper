@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, A_AnimationFPS) {
+    A_AnimationFPS_low = 30,
+    A_AnimationFPS_middle = 45,
+    A_AnimationFPS_high = 60,
+};
+
 typedef NS_ENUM(NSInteger, A_AnimationType) {
     A_AnimationType_noEffect   =0,
     
@@ -59,11 +65,7 @@ typedef NS_ENUM(NSInteger, A_AnimationType) {
     A_AnimationType_easeOutBounce,
     A_AnimationType_easeInOutBounce,
 };
-typedef NS_ENUM(NSUInteger, A_AnimationFPS) {
-    A_AnimationFPS_low = 30,
-    A_AnimationFPS_middle = 45,
-    A_AnimationFPS_high = 60,
-};
+
 typedef NS_ENUM(NSUInteger, A_AnimationEffectType) {
     // emphasize effect
     A_AnimationEffectType_flash                 =1,
@@ -126,5 +128,4 @@ typedef NS_ENUM(NSUInteger, A_AnimationEffectType) {
     A_AnimationEffectType_mirror_fadeOut        =1303,
     A_AnimationEffectType_mirror_zoomOut        =1304,
     A_AnimationEffectType_mirror_cardOut        =1305,
-    
 };

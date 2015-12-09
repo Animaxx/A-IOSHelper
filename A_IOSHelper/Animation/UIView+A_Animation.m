@@ -71,7 +71,7 @@
         } else {
             [self.layer addAnimation:animations forKey:nil];
         }
-        
+    
     } [CATransaction commit];
 }
 - (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat Duration:(double)duration{

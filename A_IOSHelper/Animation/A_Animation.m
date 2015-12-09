@@ -35,7 +35,7 @@
             k1 = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
             k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
             k1.values = @[@(0.2),@(0.8),@(0.2),@(1.0)];
-            group.animations = @[k1];
+             group.animations = @[k1];
             break;
         case A_AnimationEffectType_pulse:
             k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
@@ -49,7 +49,7 @@
             break;
         case A_AnimationEffectType_press:
             k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-            //            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
+//            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
             k1.timingFunction = [CAMediaTimingFunction functionWithName:@"easeOut"];
             k1.values = @[[NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.85, 0.85, 0.85)],
                           [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],

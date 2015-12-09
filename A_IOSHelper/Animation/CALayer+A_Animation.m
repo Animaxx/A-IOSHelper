@@ -100,11 +100,24 @@
 - (void) A_AnimationSetSublayerTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"sublayerTransform" AnimtionType:type Start:nil End:[NSValue valueWithCATransform3D:value] Duration:0 FPS:A_AnimationFPS_high];
 }
+
+- (void) A_AnimationSetZPosition:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    [self A_AnimationSet:@"zPosition" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
+}
+- (void) A_AnimationSetSize:(CGSize)value AnimtionType:(A_AnimationType)type {
+    float widthDiff = (value.width - self.bounds.size.width) / 2.0f;
+    float hightDiff = (value.height - self.bounds.size.height) / 2.0f;
+    
+    CGRect rect = CGRectMake(self.bounds.origin.x - widthDiff , self.bounds.origin.y - hightDiff, self.bounds.size.width + widthDiff, self.bounds.size.height + hightDiff);
+    
+    [self A_AnimationSet:@"bounds" AnimtionType:type Start:nil End:[NSValue valueWithCGRect:rect] Duration:0 FPS:A_AnimationFPS_high];
+}
+
 - (void) A_AnimationSetTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"transform" AnimtionType:type Start:nil End:[NSValue valueWithCATransform3D:value] Duration:0 FPS:A_AnimationFPS_high];
 }
-- (void) A_AnimationSetZPosition:(CGFloat)value AnimtionType:(A_AnimationType)type {
-    [self A_AnimationSet:@"zPosition" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
+- (void) A_AnimationSetTransformScaleX:(CGFloat)x Y:(CGFloat)y AnimtionType:(A_AnimationType)type {
+    [self A_AnimationSetTransformScaleX:x Y:y Z:1.0 AnimtionType:type];
 }
 
 #pragma mark - Setting transform elements
@@ -146,14 +159,86 @@
     [self A_AnimationSet:@"transform.translation" AnimtionType:type Start:nil End:[NSValue valueWithCGSize:value] Duration:0 FPS:A_AnimationFPS_high];
 }
 
+
+
 #pragma mark - Custom setting
-- (void) A_AnimationSetSize:(CGSize)value AnimtionType:(A_AnimationType)type {
-    float widthDiff = (value.width - self.bounds.size.width) / 2.0f;
-    float hightDiff = (value.height - self.bounds.size.height) / 2.0f;
+- (void) A_AnimationCustomLeftOblique:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    if (value<0.0) { value = 0.0f; }
+    else if (value>1.0) { value = 1.0f; }
     
-    CGRect rect = CGRectMake(self.bounds.origin.x - widthDiff , self.bounds.origin.y - hightDiff, self.bounds.size.width + widthDiff, self.bounds.size.height + hightDiff);
+    [self setCustomAnchorPoint:CGPointMake(0.0, 0.5)];
+    CATransform3D transformation = CATransform3DIdentity;
+    transformation.m14 = (value/100);
     
-    [self A_AnimationSet:@"bounds" AnimtionType:type Start:nil End:[NSValue valueWithCGRect:rect] Duration:0 FPS:A_AnimationFPS_high];
+    CATransform3D yRotation = CATransform3DMakeRotation((value*-75)*M_PI/180.0, 0.0, 1.0, 0);
+    CATransform3D concatenatedTransformation = CATransform3DConcat(yRotation, transformation);
+    
+    [self A_AnimationSetTransform:concatenatedTransformation AnimtionType:type];
+}
+- (void) A_AnimationCustomRightOblique:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    if (value<0.0) { value = 0.0f; }
+    else if (value>1.0) { value = 1.0f; }
+    
+    [self setCustomAnchorPoint:CGPointMake(1.0, 0.5)];
+    CATransform3D transformation = CATransform3DIdentity;
+    transformation.m14 = -(value/100);
+    
+    CATransform3D yRotation = CATransform3DMakeRotation((value*75)*M_PI/180.0, 0.0, 1.0, 0);
+    CATransform3D concatenatedTransformation = CATransform3DConcat(yRotation, transformation);
+    
+    [self A_AnimationSetTransform:concatenatedTransformation AnimtionType:type];
+}
+- (void) A_AnimationCustomTopOblique:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    if (value<0.0) { value = 0.0f; }
+    else if (value>1.0) { value = 1.0f; }
+    
+    [self setCustomAnchorPoint:CGPointMake(0.5, 0.0)];
+    CATransform3D transformation = CATransform3DIdentity;
+    transformation.m24 = (value/100);
+    
+    CATransform3D yRotation = CATransform3DMakeRotation((value*75)*M_PI/180.0, 1.0, 0.0, 0);
+    CATransform3D concatenatedTransformation = CATransform3DConcat(yRotation, transformation);
+    
+    [self A_AnimationSetTransform:concatenatedTransformation AnimtionType:type];
+}
+- (void) A_AnimationCustomBottomOblique:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    if (value<0.0) { value = 0.0f; }
+    else if (value>1.0) { value = 1.0f; }
+    
+    [self setCustomAnchorPoint:CGPointMake(0.5, 1.0)];
+    CATransform3D transformation = CATransform3DIdentity;
+    transformation.m24 = -(value/100);
+    
+    CATransform3D yRotation = CATransform3DMakeRotation((value*-75)*M_PI/180.0, 1.0, 0.0, 0);
+    CATransform3D concatenatedTransformation = CATransform3DConcat(yRotation, transformation);
+    
+    [self A_AnimationSetTransform:concatenatedTransformation AnimtionType:type];
+}
+
+- (void) A_AnimationCustomRecoverOblique:(A_AnimationType)type {
+    [CATransaction begin]; {
+        [CATransaction setCompletionBlock:^{
+            [self setCustomAnchorPoint:CGPointMake(0.5, 0.5)];
+        }];
+        [self A_AnimationSetTransform:CATransform3DIdentity AnimtionType:type];
+    } [CATransaction commit];
+}
+
+#pragma mark - Helping method
+- (void)setCustomAnchorPoint:(CGPoint)anchorPoint {
+    CGPoint newPoint = CGPointMake(self.bounds.size.width * anchorPoint.x, self.bounds.size.height * anchorPoint.y);
+    CGPoint oldPoint = CGPointMake(self.bounds.size.width * self.anchorPoint.x, self.bounds.size.height * self.anchorPoint.y);
+    
+    CGPoint position = self.position;
+    
+    position.x -= oldPoint.x;
+    position.x += newPoint.x;
+    
+    position.y -= oldPoint.y;
+    position.y += newPoint.y;
+    
+    self.position = position;
+    self.anchorPoint = anchorPoint;
 }
 
 
