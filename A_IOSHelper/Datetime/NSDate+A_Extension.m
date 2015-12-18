@@ -95,6 +95,14 @@
     NSString *dateString = [dateFormatter stringFromDate:self];
     return dateString;
 }
-
+- (NSString *)A_FormatByDate {
+    return [self A_ToString:@"E MMM d"];
+}
+- (NSString *)A_FormatByTime {
+    return [self A_ToString:@"hh:mm a"];
+}
+- (NSString *)A_FormatByDateTime {
+    return [self A_ToString:@"E MMM YYYY, hh:mm a"];
+}
 
 @end
