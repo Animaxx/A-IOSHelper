@@ -42,9 +42,6 @@
 - (void) A_AnimationSetSize:(CGSize)value AnimtionType:(A_AnimationType)type;
 
 - (void) A_AnimationSetTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type;
-- (void) A_AnimationSetTransformScaleX:(CGFloat)x Y:(CGFloat)y AnimtionType:(A_AnimationType)type;
-- (void) A_AnimationSetTransformScaleX:(CGFloat)x Y:(CGFloat)y Z:(CGFloat)z AnimtionType:(A_AnimationType)type;
-
 
 #pragma mark - Animation Transform Setting
 - (void) A_AnimationSetRotationX:(CGFloat)value AnimtionType:(A_AnimationType)type;

@@ -116,9 +116,6 @@
 - (void) A_AnimationSetTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"transform" AnimtionType:type Start:nil End:[NSValue valueWithCATransform3D:value] Duration:0 FPS:A_AnimationFPS_high];
 }
-- (void) A_AnimationSetTransformScaleX:(CGFloat)x Y:(CGFloat)y AnimtionType:(A_AnimationType)type {
-    [self A_AnimationSetTransformScaleX:x Y:y Z:1.0 AnimtionType:type];
-}
 
 #pragma mark - Setting transform elements
 //https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/Key-ValueCodingExtensions/Key-ValueCodingExtensions.html
