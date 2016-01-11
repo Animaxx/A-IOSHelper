@@ -42,10 +42,6 @@
     
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:^{
-            if ((int)type >= 300 && (int)type <= 399) {
-                // disappear effect group
-                [self.layer setHidden:YES];
-            }
             if ((int)type >= 1000 && (int)type <= 1999 && mirrorLayer) {
                 [mirrorLayer removeFromSuperlayer];
             }
@@ -69,10 +65,19 @@
             // mirror effect group
             [mirrorLayer addAnimation:animations forKey:nil];
         } else {
+            if ((int)type >= 300 && (int)type <= 399) {
+                // disappear effect group
+                animations.removedOnCompletion = NO;
+            }
             [self.layer addAnimation:animations forKey:nil];
         }
     
     } [CATransaction commit];
+    
+    if ((int)type >= 300 && (int)type <= 399) {
+        // disappear effect group
+        [self.layer setOpacity:0.0];
+    }
 }
 - (void) A_AnimationEffect:(A_AnimationEffectType)type Repeat:(float)repeat Duration:(double)duration{
     [self A_AnimationEffect:type Repeat:repeat Duration:duration CompletionBlock:nil];
