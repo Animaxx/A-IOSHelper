@@ -16,6 +16,7 @@
 #import <A_IOSHelper/A_RESTRequest.h>
 #import <A_IOSHelper/A_SqliteManager.h>
 #import <A_IOSHelper/A_Animation.h>
+#import <A_IOSHelper/A_AnimationKeyframeProvider.h>
 #import <A_IOSHelper/A_AnimationEnumeration.h>
 #import <A_IOSHelper/A_Datetime.h>
 #import <A_IOSHelper/A_Reflection.h>
