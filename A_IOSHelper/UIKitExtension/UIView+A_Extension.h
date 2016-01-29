@@ -12,5 +12,6 @@
 
 - (NSArray<UIView *> *) A_GetSubView:(bool (^)(UIView *x))block;
 - (UIView *) A_GetFirstSubView:(bool (^)(UIView *x))block;
+- (UIColor *) A_ExtractColor:(CGPoint)point;
 
 @end
