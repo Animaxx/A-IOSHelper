@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "A_IOSHelper"
-  s.version      = "1.0.1"
+  s.version      = "1.1.2"
   s.summary      = "IOSHelper provides various helping functions included: animation, controls event, task chain, KVO binding, data model, network, and so on."
   s.homepage     = "https://github.com/Animaxx/A-IOSHelper"
   s.license      = "MIT"
