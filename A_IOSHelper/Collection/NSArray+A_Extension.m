@@ -94,6 +94,19 @@
     return result;
 }
 
+- (NSArray*) A_Extract: (id (^)(id x))block {
+    if ([self count] <=0) {
+        return self;
+    }
+    
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[self count]];
+    id element;
+    for (element in self) {
+        [result addObject:block(element)];
+    }
+    return result;
+}
+
 - (void) A_Each: (void (^)(id x))block {
     id element;
     for (element in self) {
