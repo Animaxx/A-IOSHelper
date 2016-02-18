@@ -84,7 +84,7 @@
         return self;
     }
     
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[self count]];
+    NSMutableArray *result = [NSMutableArray new];
     id element;
     for (element in self) {
         if (block(element)) {
@@ -93,7 +93,6 @@
     }
     return result;
 }
-
 - (NSArray*) A_Extract: (id (^)(id x))block {
     if ([self count] <=0) {
         return self;
@@ -138,6 +137,35 @@
         }
     }
     return nil;
+}
+
+- (NSArray *) A_First:(NSInteger)n block: (bool (^)(id x))block {
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSInteger counter = 0;
+    for (id element in self) {
+        if (block(element)) {
+            [elements addObject:element];
+            counter ++;
+            if (counter >= n) {
+                return elements;
+            }
+        }
+    }
+    return elements;
+}
+- (NSArray *) A_Last:(NSInteger)n block: (bool (^)(id x))block {
+    NSMutableArray *elements = [[NSMutableArray alloc] init];
+    NSInteger counter = 0;
+    for (NSInteger i=([self count]-1); i>=0; i--) {
+        if (block([self objectAtIndex:i])) {
+            [elements addObject:[self objectAtIndex:i]];
+            counter ++;
+            if (counter >= n) {
+                return elements;
+            }
+        }
+    }
+    return elements;
 }
 
 @end

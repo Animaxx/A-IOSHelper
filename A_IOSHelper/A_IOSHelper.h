@@ -24,6 +24,9 @@
 #import <A_IOSHelper/A_TaskHelper.h>
 #import <A_IOSHelper/A_Mapper.h>
 
+/**** Base element rewrited ****/
+#import <A_IOSHelper/A_Dictionary.h>
+
 /**** UI Kit Extension ****/
 #import <A_IOSHelper/UIControl+A_Extension.h>
 #import <A_IOSHelper/UIView+A_Extension.h>

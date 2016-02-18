@@ -108,6 +108,23 @@
     XCTAssertEqual(_last, @10);
     XCTAssertNil(_nil);
 }
+- (void)testFirstLastWithNElements {
+    NSArray *firstList = [@[@1,@2,@3,@4,@5,@6,@7,@8,@9,@10] A_First:2 block:^bool(NSNumber *x) {
+        return [x integerValue] <= 5;
+    }];
+    NSArray *lastList = [@[@1,@2,@3,@4,@5,@6,@7,@8,@9,@10] A_Last:2 block:^bool(NSNumber *x) {
+        return [x integerValue] <= 5;
+    }];
+    
+    XCTAssertEqual([firstList count], 2);
+    XCTAssertEqual([lastList count], 2);
+    
+    XCTAssertEqual([firstList objectAtIndex:0], @(1));
+    XCTAssertEqual([firstList objectAtIndex:1], @(2));
+    
+    XCTAssertEqual([lastList objectAtIndex:0], @(5));
+    XCTAssertEqual([lastList objectAtIndex:1], @(4));
+}
 
 @end
 

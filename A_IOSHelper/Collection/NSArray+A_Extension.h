@@ -28,4 +28,7 @@
 - (id) A_FirstOrNil: (bool (^)(id x))block;
 - (id) A_LastOrNil: (bool (^)(id x))block;
 
+- (NSArray *) A_First:(NSInteger)n block: (bool (^)(id x))block;
+- (NSArray *) A_Last:(NSInteger)n block: (bool (^)(id x))block;
+
 @end
