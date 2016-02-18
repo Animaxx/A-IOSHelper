@@ -38,7 +38,6 @@
     [coder encodeObject:_keys forKey:@"keys"];
 }
 
-
 - (NSArray *)allKeys {
     return [_keys array];
 }
@@ -79,7 +78,8 @@
 
 - (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex {
     [self removeObjectForKey:aKey];
-    
+    [_keys insertObject:aKey atIndex:anIndex];
+    [_values setObject:anObject forKey:aKey];
 }
 - (void)setObject:(id)anObject forKey:(id<NSCopying>)aKey {
     if (!aKey) return;

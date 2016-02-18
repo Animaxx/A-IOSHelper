@@ -14,6 +14,7 @@
 #import "NSMutableArray+A_Extension.h"
 #import "NSMutableDictionary+A_Extension.h"
 #import "NSString+A_Extension.h"
+#import "A_Dictionary.h"
 
 @interface CollectionTests : XCTestCase
 
@@ -124,6 +125,31 @@
     
     XCTAssertEqual([lastList objectAtIndex:0], @(5));
     XCTAssertEqual([lastList objectAtIndex:1], @(4));
+}
+- (void)testADicitionary {
+    A_Dictionary *dic = [[A_Dictionary alloc] init];
+    [dic setObject:@"A" forKey:@(5)];
+    [dic setObject:@"A" forKey:@(4)];
+    [dic setObject:@"B" forKey:@(3)];
+    [dic setObject:@"C" forKey:@(2)];
+    [dic setObject:@"D" forKey:@(1)];
+    [dic setObject:@"E" forKey:@(1)];
+    
+    XCTAssertEqual([dic count], 5);
+    XCTAssertEqual([dic objectAtIndex:0], @"A");
+    XCTAssertEqual([dic objectForKey:@(4)], @"A");
+    
+    [dic removeObjectAtIndex:2]; //Delete @(3):@"B"
+    XCTAssertEqual([dic getKeyAtIndex:2], @(2));
+    XCTAssertEqual([dic objectAtIndex:2], @"C");
+    
+    [dic insertObject:@"F" forKey:@(6) atIndex:1];
+    NSArray *keys = @[@(5),@(6),@(4),@(2),@(1)];
+
+    for (NSInteger i = 0; i < keys.count; i++) {
+        XCTAssertEqual([[[dic allKeys] objectAtIndex:i] integerValue], [[keys objectAtIndex:i] integerValue]);
+    }
+    
 }
 
 @end
