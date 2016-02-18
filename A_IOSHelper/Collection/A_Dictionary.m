@@ -82,11 +82,26 @@
     
 }
 - (void)setObject:(id)anObject forKey:(id<NSCopying>)aKey {
+    if (!aKey) return;
+    if (!anObject) {
+        [self removeObjectForKey:aKey];
+        return;
+    }
+    
     if (![_values objectForKey:aKey])
     {
         [_keys addObject:aKey];
     }
     [_values setObject:anObject forKey:aKey];
+}
+- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key {
+    [self setObject:obj forKey:key];
+}
+- (void)replaceObject:(id)anObject atIndex:(NSUInteger)anIndex {
+    id key = [_keys objectAtIndex:anIndex];
+    if (!key) return;
+    
+    [_values setObject:anObject forKey:key];
 }
 
 - (void)removeObjectForKey:(id)aKey {
