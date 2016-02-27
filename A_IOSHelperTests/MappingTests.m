@@ -15,7 +15,6 @@
 
 @property (retain, nonatomic) NSString *Name;
 @property (retain, nonatomic) NSNumber *ID;
-@property (retain, nonatomic) NSString *Description;
 
 @end
 @implementation SecondDataModel
@@ -30,7 +29,16 @@
 @implementation MappingTests
 
 -(void)testMapping {
-    [[[A_Mapper A_Instance] A_CreateMap:[TestDataModel class] To:[SecondDataModel class]] A_AddMemeber:@"Name" To:@"Name"];
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[TestDataModel class] To:[SecondDataModel class]];
+    [map A_AddMemeber:@"Name" To:@"Name"];
+    
+    TestDataModel *sourceModel = [TestDataModel new];
+    sourceModel.Name = @"name";
+    sourceModel.ID = @(10);
+    
+    SecondDataModel *outputModel = [[A_Mapper A_Instance] A_Convert:sourceModel ToClassName:@"SecondDataModel"];
+    
+
 }
 
 @end

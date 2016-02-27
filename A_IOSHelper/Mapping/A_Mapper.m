@@ -64,7 +64,7 @@
     map.ToClass = toClass;
     return map;
 }
--(instancetype)init {
+- (instancetype)init {
     if ((self = [super init])) {
         self.mappingDict = [[NSMutableDictionary alloc] init];
     }
@@ -79,7 +79,7 @@
     return [self A_AddMemeber:key To:to Convert:nil];
 }
 
-- (void)A_MapData:(id)input To:(id)output {
+- (void)A_ConvertData:(id)input To:(id)output {
     if (!input || !output) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Mapping object cannot be nil");
         return;
@@ -96,7 +96,7 @@
         [item _assignValue:[input objectForKey:key] toObj:output];
     }
 }
-- (id)A_MapData:(id)input {
+- (id)A_ConvertData:(id)input {
     if (!input) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Mapping object cannot be nil");
         return nil;
@@ -122,7 +122,6 @@
         return nil;
     }
 }
-
 
 @end
 
@@ -151,33 +150,30 @@
     return self;
 }
 
-- (A_MappingMap*) A_CreateMap:(Class)from To:(Class)to {
-    A_MappingMap *map = [A_MappingMap A_InitBind:from To:to];
-    
-    [self.MapDict setObject:map forKey: [NSString stringWithFormat:@"%@_%@",
-         [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]]];
-    
-    return map;
-}
-- (A_MappingMap*) A_CreateMapByName:(NSString*)from To:(NSString*)to {
-    Class fromClass = [A_Reflection A_GetClassByName:from];
-    Class toClass = [A_Reflection A_GetClassByName:to];
-    // TODO Try catch
-    
-    A_MappingMap *map = [A_MappingMap A_InitBind:fromClass To:toClass];
-    [self.MapDict setObject:map forKey: [NSString stringWithFormat:@"%@_%@",from, to]];
-    
-    return map;
-}
-
 - (A_MappingMap*) A_GetMap:(Class)from To:(Class)to {
-    NSString *key = [NSString stringWithFormat:@"%@_%@",
-                     [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]];
-    return [self.MapDict objectForKey:key];
+    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]];
+    A_MappingMap *map = [self.MapDict objectForKey:key];
+    if (map) {
+        map = [A_MappingMap A_InitBind:from To:to];
+    }
+    return map;
 }
 - (A_MappingMap*) A_GetMapByName:(NSString*)from To:(NSString*)to {
     NSString *key = [NSString stringWithFormat:@"%@_%@",from,to];
-    return [self.MapDict objectForKey:key];
+    A_MappingMap *map = [self.MapDict objectForKey:key];
+    if (map) {
+        map = [A_MappingMap A_InitBind:[A_Reflection A_GetClassByName:from] To:[A_Reflection A_GetClassByName:to]];
+    }
+    return map;
+}
+
+- (void)A_RemoveMap:(Class)from To:(Class)to {
+    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]];
+    [self.MapDict removeObjectForKey:key];
+}
+- (void)A_RemoveMapByName:(NSString*)from To:(NSString*)to {
+    NSString *key = [NSString stringWithFormat:@"%@_%@",from,to];
+    [self.MapDict removeObjectForKey:key];
 }
 
 - (void)A_Convert:(id)from To:(id)to {
@@ -194,7 +190,7 @@
         return;
     }
     
-    [map A_MapData:from To:to];
+    [map A_ConvertData:from];
 }
 - (id)A_Convert:(id)from ToClass:(Class)to {
     if (!from || !to) {
@@ -210,7 +206,7 @@
         return nil;
     }
     
-    id output = [map A_MapData:from];
+    id output = [map A_ConvertData:from];
     return output;
 }
 - (id)A_Convert:(id)from ToClassName:(NSString*)to {
@@ -227,7 +223,7 @@
         return nil;
     }
     
-    id output = [map A_MapData:from];
+    id output = [map A_ConvertData:from];
     return output;
 }
 

@@ -1,6 +1,5 @@
 
 FMK_NAME="A_IOSHelper"
-FMK_VERSION=1.0
 
 INSTALL_DIR=Product/${FMK_NAME}.framework
 

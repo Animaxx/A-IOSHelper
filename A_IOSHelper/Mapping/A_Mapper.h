@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+// Mapper is for fast auto convert one class type to the other.
 
 #pragma mark - Mapping Map
 typedef id(^mapElementBlock)(id input);
@@ -21,16 +22,21 @@ typedef id(^mapElementBlock)(id input);
 - (A_MappingMap*)A_AddMemeber:(NSString*)key To:(NSString*)to;
 - (A_MappingMap*)A_AddMemeber: (NSString*)key To:(NSString*)to Convert:(mapElementBlock)block;
 
+- (void)A_ConvertData:(id)input To:(id)output;
+- (id)A_ConvertData:(id)input;
+
 @end
 
 #pragma mark - Mapper
 @interface A_Mapper : NSObject
 
 + (A_Mapper*) A_Instance;
-- (A_MappingMap*) A_CreateMap:(Class)from To:(Class)to;
-- (A_MappingMap*) A_CreateMapByName:(NSString*)from To:(NSString*)to;
+
 - (A_MappingMap*) A_GetMap:(Class)from To:(Class)to;
 - (A_MappingMap*) A_GetMapByName:(NSString*)from To:(NSString*)to;
+
+- (void)A_RemoveMap:(Class)from To:(Class)to;
+- (void)A_RemoveMapByName:(NSString*)from To:(NSString*)to;
 
 - (void)A_Convert:(id)from To:(id)to;
 - (id)A_Convert:(id)from ToClass:(Class)to;
