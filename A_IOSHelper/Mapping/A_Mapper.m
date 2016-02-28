@@ -27,7 +27,10 @@
     [item setOutputField:OutputField];
     return item;
 }
-- (void) _assignSourceInst:(id)source key:(NSString *)key toOutcomeInst:(NSObject*)outcome {
+- (void) _assignSourceInst:(id)source
+                       key:(NSString *)key
+             toOutcomeInst:(NSObject*)outcome
+             exceptionType:(A_MappingExceptionType)type {
     @try {
         id inputValue = [source valueForKeyPath:key];
         if (self.block) {
@@ -37,7 +40,16 @@
             [outcome setValue:inputValue forKeyPath:self.outputField];
         }
     }@catch (NSException *exception) {
-        [NSException raise:@"Convert item exception" format:@"Error from converting %@ to %@", key, _outputField];
+        switch (type) {
+            case A_MappingExceptionType_Throw:
+                [NSException raise:@"Convert item exception" format:@"Error from converting %@ to %@", key, _outputField];
+                break;
+            case A_MappingExceptionType_Ignore:
+                NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data convert error>  \r\n Error from converting %@ to %@ \r\n -------- \r\n\r\n", key, _outputField);
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -64,6 +76,7 @@
 - (instancetype)init {
     if ((self = [super init])) {
         self.mappingDict = [[NSMutableDictionary alloc] init];
+        self.ExceptionType = A_MappingExceptionType_Throw;
     }
     return self;
 }
@@ -90,7 +103,7 @@
     A_MappingItem *item;
     for (NSString *key in self.mappingDict) {
         item = [self.mappingDict objectForKey:key];
-        [item _assignSourceInst:input key:key toOutcomeInst:output];
+        [item _assignSourceInst:input key:key toOutcomeInst:output exceptionType:self.ExceptionType];
     }
 }
 - (id)A_ConvertData:(id)input {
@@ -109,12 +122,11 @@
         A_MappingItem *item;
         for (NSString *key in self.mappingDict) {
             item = [self.mappingDict objectForKey:key];
-            [item _assignSourceInst:input key:key toOutcomeInst:output];
+            [item _assignSourceInst:input key:key toOutcomeInst:output exceptionType:self.ExceptionType];
         }
         
         return output;
-    }
-    @catch (NSException *exception) {
+    }@catch (NSException *exception) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", exception);
         return nil;
     }

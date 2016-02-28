@@ -9,12 +9,17 @@
 #import <Foundation/Foundation.h>
 
 // Mapper is for fast auto convert one class type to the other.
+typedef NS_ENUM(NSInteger, A_MappingExceptionType) {
+    A_MappingExceptionType_Throw = 0,
+    A_MappingExceptionType_Ignore
+};
 
 #pragma mark - Mapping Map
 typedef _Nonnull id(^mapElementBlock)(_Nonnull id input);
 
 @interface A_MappingMap : NSObject
 
+@property (assign, atomic) A_MappingExceptionType ExceptionType;
 @property (readonly, nonatomic) _Nonnull Class BindClass;
 @property (readonly, nonatomic) _Nonnull Class ToClass;
 
