@@ -11,18 +11,18 @@
 // Mapper is for fast auto convert one class type to the other.
 
 #pragma mark - Mapping Map
-typedef id(^mapElementBlock)(id input);
+typedef _Nonnull id(^mapElementBlock)(_Nonnull id input);
 
 @interface A_MappingMap : NSObject
 
-@property (readonly, nonatomic) Class BindClass;
-@property (readonly, nonatomic) Class ToClass;
+@property (readonly, nonatomic) _Nonnull Class BindClass;
+@property (readonly, nonatomic) _Nonnull Class ToClass;
 
-+ (A_MappingMap*)A_InitBind:(Class)bindClass To:(Class)toClass;
-- (A_MappingMap*)A_SetMemeber:(NSString*)key To:(NSString*)to;
-- (A_MappingMap*)A_SetMemeber: (NSString*)key To:(NSString*)to Convert:(mapElementBlock)block;
++ (A_MappingMap *_Nonnull)A_InitBind:(_Nonnull Class)bindClass To:(_Nonnull Class)toClass;
+- (A_MappingMap *_Nonnull)A_SetMemeber:(NSString *_Nonnull)key To:(NSString *_Nonnull)to;
+- (A_MappingMap *_Nonnull)A_SetMemeber: (NSString *_Nonnull)key To:(NSString *_Nonnull)to Convert:(_Nullable mapElementBlock)block;
 
-- (void)A_ConvertData:(id)input To:(id)output;
+- (void)A_ConvertData:(_Nonnull id)input To:(_Nonnull id)output;
 - (NSObject *_Nullable)A_ConvertData:(NSObject *_Nullable)input;
 
 @end
@@ -32,17 +32,17 @@ typedef id(^mapElementBlock)(id input);
 
 + (A_Mapper *_Nonnull) A_Instance;
 
-- (A_MappingMap*) A_GetMap:(Class)from To:(Class)to;
-- (A_MappingMap*) A_GetMapByName:(NSString*)from To:(NSString*)to;
+- (A_MappingMap *_Nonnull) A_GetMap:(_Nonnull Class)from To:(_Nonnull Class)to;
+- (A_MappingMap *_Nonnull) A_GetMapByName:(NSString *_Nonnull)from To:(NSString *_Nonnull)to;
 
-- (void)A_RemoveMap:(Class)from To:(Class)to;
-- (void)A_RemoveMapByName:(NSString*)from To:(NSString*)to;
+- (void)A_RemoveMap:(_Nonnull Class)from To:(_Nonnull Class)to;
+- (void)A_RemoveMapByName:(NSString *_Nonnull)from To:(NSString *_Nonnull)to;
 
-- (void)A_Convert:(id)from To:(id)to;
-- (id)A_Convert:(id)from ToClass:(Class)to;
-- (id)A_Convert:(id)from ToClassName:(NSString*)to;
+- (void)A_Convert:(_Nonnull id)from To:(_Nonnull id)to;
+- (_Nonnull id)A_Convert:(_Nonnull id)from ToClass:(_Nonnull Class)to;
+- (_Nonnull id)A_Convert:(_Nonnull id)from ToClassName:(NSString *_Nonnull)to;
 
-- (NSArray*)A_ConvertArray:(NSArray*)from ToClass:(Class)toClass;
-- (NSArray*)A_ConvertArray:(NSArray*)from ToClassName:(NSString*)toClass;
+- (NSArray *_Nonnull)A_ConvertArray:(NSArray *_Nonnull)from ToClass:(_Nonnull Class)toClass;
+- (NSArray *_Nonnull)A_ConvertArray:(NSArray *_Nonnull)from ToClassName:(NSString *_Nonnull)toClass;
 
 @end
