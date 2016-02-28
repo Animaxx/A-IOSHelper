@@ -19,8 +19,8 @@ typedef id(^mapElementBlock)(id input);
 @property (readonly, nonatomic) Class ToClass;
 
 + (A_MappingMap*)A_InitBind:(Class)bindClass To:(Class)toClass;
-- (A_MappingMap*)A_AddMemeber:(NSString*)key To:(NSString*)to;
-- (A_MappingMap*)A_AddMemeber: (NSString*)key To:(NSString*)to Convert:(mapElementBlock)block;
+- (A_MappingMap*)A_SetMemeber:(NSString*)key To:(NSString*)to;
+- (A_MappingMap*)A_SetMemeber: (NSString*)key To:(NSString*)to Convert:(mapElementBlock)block;
 
 - (void)A_ConvertData:(id)input To:(id)output;
 - (NSObject *_Nullable)A_ConvertData:(NSObject *_Nullable)input;

@@ -11,13 +11,42 @@
 #import "TestDataModel.h"
 #import "A_Mapper.h"
 
-@interface SecondDataModel : NSObject
+//////////////////
+// Test Models
+//////////////////
 
-@property (retain, nonatomic) NSString *Name;
-@property (retain, nonatomic) NSNumber *ID;
-
+// Input 2Lv Model
+@interface Input2lvModel : NSObject
+@property (strong, nonatomic) NSString *ModelDescription;
 @end
-@implementation SecondDataModel
+@implementation Input2lvModel
+@end
+
+// Input Model
+@interface InputDataModel : NSObject
+@property (strong, nonatomic) NSString *Name;
+@property (strong, nonatomic) NSNumber *ID;
+@property (strong, nonatomic) Input2lvModel *lv2;
+@end
+@implementation InputDataModel
+@end
+
+
+// Output 2Lv Model
+@interface Output2lvModel : NSObject
+@property (strong, nonatomic) NSString *Explanation;
+@end
+@implementation Output2lvModel
+@end
+
+// Output Model
+@interface OutputDataModel : NSObject
+@property (strong, nonatomic) NSString *Name;
+@property (strong, nonatomic) NSNumber *ID;
+@property (strong, nonatomic) NSString *ModelDescription;
+@property (strong, nonatomic) Input2lvModel *lv2;
+@end
+@implementation OutputDataModel
 @end
 
 
@@ -28,19 +57,40 @@
 
 @implementation MappingTests
 
--(void)testMapping {
-    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[TestDataModel class] To:[SecondDataModel class]];
-    [map A_AddMemeber:@"Name" To:@"Name"];
-    [map A_AddMemeber:@"ID" To:@"ID"];
+-(void)testOneLvDirectMapping {
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[InputDataModel class] To:[OutputDataModel class]];
+    [map A_SetMemeber:@"Name" To:@"Name"];
+    [map A_SetMemeber:@"ID" To:@"ID"];
     
-    TestDataModel *sourceModel = [TestDataModel new];
+    InputDataModel *sourceModel = [InputDataModel new];
     sourceModel.Name = @"name";
     sourceModel.ID = @(10);
     
-    SecondDataModel *outputModel = [[A_Mapper A_Instance] A_Convert:sourceModel ToClassName:@"SecondDataModel"];
+    OutputDataModel *outputModel = [[A_Mapper A_Instance] A_Convert:sourceModel ToClassName:@"OutputDataModel"];
     
     XCTAssertEqual(outputModel.Name, sourceModel.Name);
     XCTAssertEqual(outputModel.ID, sourceModel.ID);
 }
+
+-(void)testSecondLvToFirstLvDirectMapping {
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[InputDataModel class] To:[OutputDataModel class]];
+    [map A_SetMemeber:@"Name" To:@"Name"];
+    [map A_SetMemeber:@"ID" To:@"ID"];
+    [map A_SetMemeber:@"lv2.ModelDescription" To:@"ModelDescription"];
+    
+    InputDataModel *sourceModel = [InputDataModel new];
+    sourceModel.Name = @"name";
+    sourceModel.ID = @(10);
+    sourceModel.lv2 = [Input2lvModel new];
+    sourceModel.lv2.ModelDescription = @"Description";
+    
+    OutputDataModel *outputModel = [[A_Mapper A_Instance] A_Convert:sourceModel ToClassName:@"OutputDataModel"];
+    
+    XCTAssertEqual(outputModel.Name, sourceModel.Name);
+    XCTAssertEqual(outputModel.ID, sourceModel.ID);
+    XCTAssertEqual(outputModel.ModelDescription, sourceModel.lv2.ModelDescription);
+}
+
+
 
 @end

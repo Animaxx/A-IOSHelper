@@ -67,13 +67,13 @@
     }
     return self;
 }
-- (A_MappingMap*)A_AddMemeber:(NSString*)key To:(NSString*)to Convert:(mapElementBlock)block {
+- (A_MappingMap*)A_SetMemeber:(NSString*)key To:(NSString*)to Convert:(mapElementBlock)block {
     A_MappingItem *item = [A_MappingItem A_Init:block Output:to];
     [self.mappingDict setObject:item forKey:[key copy]];
     return self;
 }
-- (A_MappingMap*)A_AddMemeber:(NSString*)key To:(NSString*)to {
-    return [self A_AddMemeber:key To:to Convert:nil];
+- (A_MappingMap*)A_SetMemeber:(NSString*)key To:(NSString*)to {
+    return [self A_SetMemeber:key To:to Convert:nil];
 }
 
 - (void)A_ConvertData:(id)input To:(id)output {
