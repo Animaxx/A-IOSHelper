@@ -95,7 +95,8 @@
         return;
     }
     
-    if (![input isMemberOfClass:self.BindClass] || ![output isMemberOfClass:self.ToClass]) {
+    if ((![input isMemberOfClass:self.BindClass] && ![[input class] isSubclassOfClass:self.BindClass])
+        || (![output isMemberOfClass:self.ToClass] && ![[output class] isSubclassOfClass:self.ToClass]) ) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Class of object is not match");
         return;
     }
@@ -111,7 +112,7 @@
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Mapping object cannot be nil");
         return nil;
     }
-    if (![input isMemberOfClass:self.BindClass]) {
+    if (![input isMemberOfClass:self.BindClass] && ![[input class] isSubclassOfClass:self.BindClass]) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n %@ \r\n -------- \r\n\r\n", @"Class of object is not match");
         return nil;
     }
@@ -160,7 +161,7 @@
 }
 
 - (A_MappingMap*) A_GetMap:(Class)from To:(Class)to {
-    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]];
+    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Mapper getClassKey:from], [A_Mapper getClassKey:to]];
     A_MappingMap *map = [self.MapDict objectForKey:key];
     if (!map) {
         map = [A_MappingMap A_InitBind:from To:to];
@@ -179,7 +180,7 @@
 }
 
 - (void)A_RemoveMap:(Class)from To:(Class)to {
-    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]];
+    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Mapper getClassKey:from], [A_Mapper getClassKey:to]];
     [self.MapDict removeObjectForKey:key];
 }
 - (void)A_RemoveMapByName:(NSString*)from To:(NSString*)to {
@@ -193,9 +194,10 @@
         return;
     }
     
-    NSString *_key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassNameFromObject:to]];
     
-    A_MappingMap *map = [self.MapDict objectForKey:_key];
+    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Mapper getClassKey: [A_Reflection A_GetClass:from]],  [A_Mapper getClassKey: [A_Reflection A_GetClass:to]]];
+    
+    A_MappingMap *map = [self.MapDict objectForKey:key];
     if (!map) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassNameFromObject:to]);
         return;
@@ -209,9 +211,9 @@
         return nil;
     }
     
-    NSString *_key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassName:to]];
+    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Mapper getClassKey: [A_Reflection A_GetClass:from]], [A_Mapper getClassKey:to]];
     
-    A_MappingMap *map = [self.MapDict objectForKey:_key];
+    A_MappingMap *map = [self.MapDict objectForKey:key];
     if (!map) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], [A_Reflection A_GetClassName:to]);
         return nil;
@@ -226,9 +228,9 @@
         return nil;
     }
     
-    NSString *_key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassNameFromObject:from], to];
+    NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Mapper getClassKey: [A_Reflection A_GetClass:from]], to];
     
-    A_MappingMap *map = [self.MapDict objectForKey:_key];
+    A_MappingMap *map = [self.MapDict objectForKey:key];
     if (!map) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Mapping data error>  \r\n Cannot found the map between %@ and %@\r\n -------- \r\n\r\n", [A_Reflection A_GetClassNameFromObject:from], to);
         return nil;
@@ -263,7 +265,35 @@
     return _list;
 }
 
-#pragma mark -
+#pragma mark - private methods
++ (NSString *)getClassKey:(Class)cls {
+    
+    static NSMutableDictionary *hashKeys;
+    static dispatch_once_t classKeyPred;
+    dispatch_once(&classKeyPred, ^{
+        hashKeys = [[NSMutableDictionary alloc] init];
+
+        [hashKeys setObject:@"NSDictionary" forKey:@"NSMutableDictionary"];
+        [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionary0"];
+        [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionaryI"];
+        [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionaryM"];
+        
+        [hashKeys setObject:@"NSArray" forKey:@"NSMutableArray"];
+        [hashKeys setObject:@"NSArray" forKey:@"__NSArray0"];
+        [hashKeys setObject:@"NSArray" forKey:@"__NSArrayI"];
+        [hashKeys setObject:@"NSArray" forKey:@"__NSArrayM"];
+        
+        //TODO: complete the missing mapping
+    });
+    
+    NSString *key = [A_Reflection A_GetClassName:cls];
+    
+    if ([hashKeys objectForKey:key]) {
+        return [hashKeys objectForKey:key];
+    } else {
+        return key;
+    }
+}
 
 
 @end

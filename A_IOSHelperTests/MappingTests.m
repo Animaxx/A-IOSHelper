@@ -10,6 +10,7 @@
 #import <XCTest/XCTest.h>
 #import "TestDataModel.h"
 #import "A_Mapper.h"
+#import "NSString+A_Extension.h"
 
 //////////////////
 // Test Models
@@ -31,7 +32,6 @@
 @implementation InputDataModel
 @end
 
-
 // Output 2Lv Model
 @interface Output2lvModel : NSObject
 @property (strong, nonatomic) NSString *Explanation;
@@ -50,6 +50,9 @@
 @end
 
 
+//////////////////
+// Unit Test
+//////////////////
 
 @interface MappingTests : XCTestCase
 
@@ -91,6 +94,20 @@
     XCTAssertEqual(outputModel.ModelDescription, sourceModel.lv2.ModelDescription);
 }
 
-
+-(void)testConvertFromJSON {
+    NSString *json = @"{\"Name\": \"name\",\"ID\": \"5\",\"lv2\": {\"ModelDescription\": \"description\"} }";
+    NSDictionary *jsonDic = [json A_CovertJSONToDictionary];
+    
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[NSDictionary class] To:[OutputDataModel class]];
+    [map A_SetMemeber:@"Name" To:@"Name"];
+    [map A_SetMemeber:@"ID" To:@"ID"];
+    [map A_SetMemeber:@"lv2.ModelDescription" To:@"ModelDescription"];
+    
+    OutputDataModel *outputModel = [[A_Mapper A_Instance] A_Convert:jsonDic ToClassName:@"OutputDataModel"];
+    
+    XCTAssertEqual(outputModel.Name, [jsonDic objectForKey:@"Name"]);
+    XCTAssertEqual(outputModel.ID, [jsonDic objectForKey:@"ID"]);
+    XCTAssertEqual(outputModel.ModelDescription, [jsonDic valueForKeyPath:@"lv2.ModelDescription"]);
+}
 
 @end
