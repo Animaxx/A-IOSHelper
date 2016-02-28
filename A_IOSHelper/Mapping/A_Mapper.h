@@ -23,14 +23,14 @@ typedef id(^mapElementBlock)(id input);
 - (A_MappingMap*)A_AddMemeber: (NSString*)key To:(NSString*)to Convert:(mapElementBlock)block;
 
 - (void)A_ConvertData:(id)input To:(id)output;
-- (id)A_ConvertData:(id)input;
+- (NSObject *_Nullable)A_ConvertData:(NSObject *_Nullable)input;
 
 @end
 
 #pragma mark - Mapper
 @interface A_Mapper : NSObject
 
-+ (A_Mapper*) A_Instance;
++ (A_Mapper *_Nonnull) A_Instance;
 
 - (A_MappingMap*) A_GetMap:(Class)from To:(Class)to;
 - (A_MappingMap*) A_GetMapByName:(NSString*)from To:(NSString*)to;

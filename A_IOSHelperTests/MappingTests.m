@@ -31,6 +31,7 @@
 -(void)testMapping {
     A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[TestDataModel class] To:[SecondDataModel class]];
     [map A_AddMemeber:@"Name" To:@"Name"];
+    [map A_AddMemeber:@"ID" To:@"ID"];
     
     TestDataModel *sourceModel = [TestDataModel new];
     sourceModel.Name = @"name";
@@ -38,7 +39,8 @@
     
     SecondDataModel *outputModel = [[A_Mapper A_Instance] A_Convert:sourceModel ToClassName:@"SecondDataModel"];
     
-
+    XCTAssertEqual(outputModel.Name, sourceModel.Name);
+    XCTAssertEqual(outputModel.ID, sourceModel.ID);
 }
 
 @end

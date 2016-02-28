@@ -27,20 +27,17 @@
     [item setOutputField:OutputField];
     return item;
 }
-- (void) _assignValue:(id)value toObj:(NSObject*)obj {
+- (void) _assignSourceInst:(id)source key:(NSString *)key toOutcomeInst:(NSObject*)outcome {
     @try {
+        id inputValue = [source valueForKeyPath:key];
         if (self.block) {
-            [obj setValue:self.block(value) forKeyPath:self.outputField];
+            [outcome setValue:self.block(inputValue) forKeyPath:self.outputField];
         } else {
-            if ([[value class] isSubclassOfClass:[obj class]]) {
-                obj = value;
-            } else {
-                //TODO,
-            }
+            // TODO: convert different property type
+            [outcome setValue:inputValue forKeyPath:self.outputField];
         }
-    }
-    @catch (NSException *exception) {
-        NSLog(@"ERROR");
+    }@catch (NSException *exception) {
+        [NSException raise:@"Convert item exception" format:@"Error from converting %@ to %@", key, _outputField];
     }
 }
 
@@ -93,7 +90,7 @@
     A_MappingItem *item;
     for (NSString *key in self.mappingDict) {
         item = [self.mappingDict objectForKey:key];
-        [item _assignValue:[input objectForKey:key] toObj:output];
+        [item _assignSourceInst:input key:key toOutcomeInst:output];
     }
 }
 - (id)A_ConvertData:(id)input {
@@ -107,12 +104,12 @@
     }
     
     @try {
-        id output = [self.ToClass init];
+        id output = [[self.ToClass alloc] init];
         
         A_MappingItem *item;
         for (NSString *key in self.mappingDict) {
             item = [self.mappingDict objectForKey:key];
-            [item _assignValue:[input objectForKey:key] toObj:output];
+            [item _assignSourceInst:input key:key toOutcomeInst:output];
         }
         
         return output;
@@ -153,16 +150,18 @@
 - (A_MappingMap*) A_GetMap:(Class)from To:(Class)to {
     NSString *key = [NSString stringWithFormat:@"%@_%@", [A_Reflection A_GetClassName:from], [A_Reflection A_GetClassName:to]];
     A_MappingMap *map = [self.MapDict objectForKey:key];
-    if (map) {
+    if (!map) {
         map = [A_MappingMap A_InitBind:from To:to];
+        [self.MapDict setObject:map forKey:key];
     }
     return map;
 }
 - (A_MappingMap*) A_GetMapByName:(NSString*)from To:(NSString*)to {
     NSString *key = [NSString stringWithFormat:@"%@_%@",from,to];
     A_MappingMap *map = [self.MapDict objectForKey:key];
-    if (map) {
+    if (!map) {
         map = [A_MappingMap A_InitBind:[A_Reflection A_GetClassByName:from] To:[A_Reflection A_GetClassByName:to]];
+        [self.MapDict setObject:map forKey:key];
     }
     return map;
 }
