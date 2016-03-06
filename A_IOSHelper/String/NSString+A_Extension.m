@@ -89,4 +89,15 @@
     }
 }
 
+- (id)A_ConvertJSONToMappedInstance:(id)obj {
+    NSDictionary *jsonDic = [A_JSONHelper A_ConvertJSONToDictionary:self];
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[NSDictionary class] To:[obj class]];
+    if (jsonDic && map) {
+        [map A_ConvertData:jsonDic To:obj];
+        return obj;
+    } else {
+        return obj;
+    }
+}
+
 @end

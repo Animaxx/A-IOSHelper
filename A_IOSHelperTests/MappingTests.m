@@ -110,4 +110,19 @@
     XCTAssertEqual(outputModel.ModelDescription, [jsonDic valueForKeyPath:@"lv2.ModelDescription"]);
 }
 
+-(void)testConvertFromJSONdirectly {
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[NSDictionary class] To:[OutputDataModel class]];
+    [map A_SetMemeber:@"Name" To:@"Name"];
+    [map A_SetMemeber:@"ID" To:@"ID"];
+    [map A_SetMemeber:@"lv2.ModelDescription" To:@"ModelDescription"];
+    
+    NSString *json = @"{\"Name\": \"name\",\"ID\": \"5\",\"lv2\": {\"ModelDescription\": \"description\"} }";
+    OutputDataModel *outputModel = [json A_ConvertJSONToMappedClassWithName:@"OutputDataModel"];
+    
+    XCTAssertEqualObjects(outputModel.Name, @"name");
+    XCTAssertEqualObjects(outputModel.ID, @"5");
+    XCTAssertEqualObjects(outputModel.ModelDescription, @"description");
+}
+
+
 @end

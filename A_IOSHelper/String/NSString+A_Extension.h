@@ -27,4 +27,6 @@
 - (_Nullable id)A_ConvertJSONToMappedClass:(_Nonnull Class)classType;
 - (NSArray *_Nullable)A_ConvertJSONToMappedArrayWithClass:(_Nonnull Class)classType;
 
+- (_Nonnull id)A_ConvertJSONToMappedInstance:(_Nonnull id)obj;
+
 @end
