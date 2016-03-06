@@ -8,6 +8,7 @@
 
 #import "A_Datetime.h"
 #import "A_JSONHelper.h"
+#import "A_Mapper.h"
 #import "A_StringHelper.h"
 #import "NSString+A_Extension.h"
 
@@ -32,7 +33,7 @@
 	return [A_Datetime A_StringToDate:self Format:format];
 }
 - (NSDate *)A_ToDateByDetailFormat {
-    return [A_Datetime A_StringToDate:self Format:@"YYYY-MM-dd'T'HH:mm:ssZZZ"];
+	return [A_Datetime A_StringToDate:self Format:@"YYYY-MM-dd'T'HH:mm:ssZZZ"];
 }
 
 - (NSDictionary *)A_CovertJSONToDictionary {
@@ -42,5 +43,50 @@
 	return [A_JSONHelper A_ConvertJSONToArray:self];
 }
 
+- (id)A_ConvertJSONToMappedClassWithName:(NSString *)className {
+    NSDictionary *jsonDic = [A_JSONHelper A_ConvertJSONToDictionary:self];
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMapByName:@"NSDictionary" To:className];
+    if (jsonDic && map) {
+        return [map A_ConvertData:jsonDic];
+    } else {
+        return nil;
+    }
+}
+- (NSArray *)A_ConvertJSONToMappedArrayWithClassName:(NSString *)className {
+    NSArray *jsonArr = [A_JSONHelper A_ConvertJSONToArray:self];
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMapByName:@"NSDictionary" To:className];
+    if (jsonArr && map) {
+        NSMutableArray *result = [[NSMutableArray alloc] init];
+        for (NSDictionary *item in jsonArr) {
+            [result addObject:[map A_ConvertData:item]];
+        }
+        return result;
+    } else {
+        return nil;
+    }
+}
+
+- (id)A_ConvertJSONToMappedClass:(Class)classType {
+    NSDictionary *jsonDic = [A_JSONHelper A_ConvertJSONToDictionary:self];
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[NSDictionary class] To:classType];
+    if (jsonDic && map) {
+        return [map A_ConvertData:jsonDic];
+    } else {
+        return nil;
+    }
+}
+- (NSArray *)A_ConvertJSONToMappedArrayWithClass:(Class)classType {
+    NSArray *jsonArr = [A_JSONHelper A_ConvertJSONToArray:self];
+    A_MappingMap *map = [[A_Mapper A_Instance] A_GetMap:[NSDictionary class] To:classType];
+    if (jsonArr && map) {
+        NSMutableArray *result = [[NSMutableArray alloc] init];
+        for (NSDictionary *item in jsonArr) {
+            [result addObject:[map A_ConvertData:item]];
+        }
+        return result;
+    } else {
+        return nil;
+    }
+}
 
 @end

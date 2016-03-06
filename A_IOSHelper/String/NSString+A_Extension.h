@@ -10,15 +10,21 @@
 
 @interface NSString (A_Extension)
 
-- (BOOL) A_CheckEmpty;
-- (NSString*) A_StripHTMLTag;
-- (NSString*) A_TrimString;
-- (BOOL) A_ValidateEmail;
-- (BOOL) A_MatchRegex: (NSString *)regex;
-- (NSDate*) A_ToDate:(NSString*)format;
-- (NSDate *)A_ToDateByDetailFormat;
+- (BOOL)A_CheckEmpty;
+- (NSString *_Nonnull)A_StripHTMLTag;
+- (NSString *_Nonnull)A_TrimString;
+- (BOOL)A_ValidateEmail;
+- (BOOL)A_MatchRegex:(NSString *_Nonnull)regex;
+- (NSDate *_Nullable)A_ToDate:(NSString *_Nonnull)format;
+- (NSDate *_Nullable)A_ToDateByDetailFormat;
 
-- (NSDictionary*) A_CovertJSONToDictionary;
-- (NSArray*) A_CovertJSONToArray;
+- (NSDictionary *_Nonnull)A_CovertJSONToDictionary;
+- (NSArray *_Nonnull)A_CovertJSONToArray;
+
+- (_Nullable id)A_ConvertJSONToMappedClassWithName:(NSString *_Nonnull)className;
+- (NSArray *_Nullable)A_ConvertJSONToMappedArrayWithClassName:(NSString *_Nonnull)className;
+
+- (_Nullable id)A_ConvertJSONToMappedClass:(_Nonnull Class)classType;
+- (NSArray *_Nullable)A_ConvertJSONToMappedArrayWithClass:(_Nonnull Class)classType;
 
 @end
