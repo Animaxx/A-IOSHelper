@@ -7,16 +7,20 @@
 //
 
 #import "A_JSONHelper.h"
+#import "NSDate+A_Extension.h"
+#import "NSString+A_Extension.h"
 
 @implementation A_JSONHelper
 
 + (NSDictionary*)_tidyDict: (NSDictionary*) _dict {
     NSMutableDictionary *_tidyDict = [[NSMutableDictionary alloc] init];
     for (NSString *_key in [_dict allKeys]) {
-        if ([[_dict valueForKey:_key] isKindOfClass:[NSDate class]]) {
-            [_tidyDict setValue:[NSString stringWithFormat:@"%@", [_dict valueForKey:_key]] forKey:_key];
+        id value = [_dict objectForKey:_key];
+        
+        if ([value isKindOfClass:[NSDate class]]) {
+            [_tidyDict setValue:[(NSDate *)value A_FormatToDetailString] forKey:_key];
         }else {
-            [_tidyDict setValue:[_dict valueForKey:_key] forKey:_key];
+            [_tidyDict setValue:value forKey:_key];
         }
     }
     return _tidyDict;

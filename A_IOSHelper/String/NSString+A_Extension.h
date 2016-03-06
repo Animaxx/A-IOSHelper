@@ -16,6 +16,8 @@
 - (BOOL) A_ValidateEmail;
 - (BOOL) A_MatchRegex: (NSString *)regex;
 - (NSDate*) A_ToDate:(NSString*)format;
+- (NSDate *)A_ToDateByDetailFormat;
+
 - (NSDictionary*) A_CovertJSONToDictionary;
 - (NSArray*) A_CovertJSONToArray;
 

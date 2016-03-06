@@ -44,6 +44,7 @@
 - (NSString *)A_ToString:(NSString *)format;
 - (NSString *)A_FormatByDate;
 - (NSString *)A_FormatByTime;
+- (NSString *)A_FormatToDetailString;
 - (NSString *)A_FormatByDateTime;
 
 @end

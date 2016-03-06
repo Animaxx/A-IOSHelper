@@ -188,6 +188,8 @@
 - (NSString *)A_FormatByDateTime {
     return [self A_ToString:@"E MMM d YYYY, hh:mm a"];
 }
-
+- (NSString *)A_FormatToDetailString {
+    return [self A_ToString:@"YYYY-MM-dd'T'HH:mm:ssZZZ"];
+}
 
 @end
