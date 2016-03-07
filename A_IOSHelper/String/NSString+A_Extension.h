@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class A_MappingMap;
+
 @interface NSString (A_Extension)
 
 - (BOOL)A_CheckEmpty;
@@ -28,5 +30,7 @@
 - (NSArray *_Nullable)A_ConvertJSONToMappedArrayWithClass:(_Nonnull Class)classType;
 
 - (_Nonnull id)A_ConvertJSONToMappedInstance:(_Nonnull id)obj;
+- (_Nonnull id)A_ConvertJSONToObjectWithMap:(A_MappingMap *_Nonnull)map;
+- (_Nonnull id)A_ConvertJSONToArrayWithMap:(A_MappingMap *_Nonnull)map;
 
 @end

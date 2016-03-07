@@ -62,7 +62,7 @@
         }
         return result;
     } else {
-        return nil;
+        return @[];
     }
 }
 
@@ -85,7 +85,7 @@
         }
         return result;
     } else {
-        return nil;
+        return @[];
     }
 }
 
@@ -97,6 +97,27 @@
         return obj;
     } else {
         return obj;
+    }
+}
+
+- (id)A_ConvertJSONToObjectWithMap:(A_MappingMap *)map {
+    NSDictionary *jsonDic = [A_JSONHelper A_ConvertJSONToDictionary:self];
+    if (jsonDic && map) {
+        return [map A_ConvertData:jsonDic];
+    } else {
+        return nil;
+    }
+}
+- (id)A_ConvertJSONToArrayWithMap:(A_MappingMap *)map {
+    NSArray *jsonArr = [A_JSONHelper A_ConvertJSONToArray:self];
+    if (jsonArr && map) {
+        NSMutableArray *result = [[NSMutableArray alloc] init];
+        for (NSDictionary *item in jsonArr) {
+            [result addObject:[map A_ConvertData:item]];
+        }
+        return result;
+    } else {
+        return @[];
     }
 }
 

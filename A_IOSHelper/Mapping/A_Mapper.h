@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 
 // Mapper is for fast auto convert one class type to the other.
-typedef NS_ENUM(NSInteger, A_MappingExceptionType) {
-    A_MappingExceptionType_Throw = 0,
-    A_MappingExceptionType_Ignore
+typedef NS_ENUM (NSInteger, A_MappingExceptionType) {
+	A_MappingExceptionType_Throw= 0,
+	A_MappingExceptionType_Ignore
 };
 
 #pragma mark - Mapping Map
-typedef _Nonnull id(^mapElementBlock)(_Nonnull id input);
+typedef _Nonnull id (^mapElementBlock) (_Nonnull id input);
 
 @interface A_MappingMap : NSObject
 
@@ -24,8 +24,9 @@ typedef _Nonnull id(^mapElementBlock)(_Nonnull id input);
 @property (readonly, nonatomic) _Nonnull Class ToClass;
 
 + (A_MappingMap *_Nonnull)A_InitBind:(_Nonnull Class)bindClass To:(_Nonnull Class)toClass;
++ (A_MappingMap *_Nonnull)A_InitBindDictionaryTo:(_Nonnull Class)toClass;
 - (A_MappingMap *_Nonnull)A_SetMemeber:(NSString *_Nonnull)key To:(NSString *_Nonnull)to;
-- (A_MappingMap *_Nonnull)A_SetMemeber: (NSString *_Nonnull)key To:(NSString *_Nonnull)to Convert:(_Nullable mapElementBlock)block;
+- (A_MappingMap *_Nonnull)A_SetMemeber:(NSString *_Nonnull)key To:(NSString *_Nonnull)to Convert:(_Nullable mapElementBlock)block;
 
 - (void)A_ConvertData:(_Nonnull id)input To:(_Nonnull id)output;
 - (NSObject *_Nullable)A_ConvertData:(NSObject *_Nullable)input;
@@ -35,10 +36,12 @@ typedef _Nonnull id(^mapElementBlock)(_Nonnull id input);
 #pragma mark - Mapper
 @interface A_Mapper : NSObject
 
-+ (A_Mapper *_Nonnull) A_Instance;
++ (A_Mapper *_Nonnull)A_Instance;
 
-- (A_MappingMap *_Nonnull) A_GetMap:(_Nonnull Class)from To:(_Nonnull Class)to;
-- (A_MappingMap *_Nonnull) A_GetMapByName:(NSString *_Nonnull)from To:(NSString *_Nonnull)to;
+- (A_MappingMap *_Nonnull)A_GetMap:(_Nonnull Class)from To:(_Nonnull Class)to;
+- (A_MappingMap *_Nonnull)A_GetMapByName:(NSString *_Nonnull)from To:(NSString *_Nonnull)to;
+- (A_MappingMap *_Nonnull)A_GetMapDictionaryTo:(_Nonnull Class)to;
+- (A_MappingMap *_Nonnull)A_GetMapDictionaryToName:(NSString *_Nonnull)to;
 
 - (void)A_RemoveMap:(_Nonnull Class)from To:(_Nonnull Class)to;
 - (void)A_RemoveMapByName:(NSString *_Nonnull)from To:(NSString *_Nonnull)to;
