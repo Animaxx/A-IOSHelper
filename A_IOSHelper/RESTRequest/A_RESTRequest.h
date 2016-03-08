@@ -8,26 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-
-
-typedef NS_ENUM(NSInteger, A_NetworkRequestMethod) {
-    A_Network_GET = 0,
-    A_Network_POST,
-    A_Network_PUT,
-    A_Network_PATCH,
-    A_Network_DELETE,
+#pragma mark - Network enumeration
+typedef NS_ENUM (NSInteger, A_NetworkRequestMethod) {
+	A_Network_GET= 0,
+	A_Network_POST,
+	A_Network_PUT,
+	A_Network_PATCH,
+	A_Network_DELETE,
 };
 
-typedef NS_ENUM(NSInteger, A_NetworkParameterFormat) {
-    A_Network_SendAsQuery = 0,
-    A_Network_SendAsJSON,
-    A_Network_SendAsDataForm,
+typedef NS_ENUM (NSInteger, A_NetworkParameterFormat) {
+	A_Network_SendAsQuery= 0,
+	A_Network_SendAsJSON,
+	A_Network_SendAsDataForm,
 };
 
-typedef void(^requestCompliedBlock)(NSData *data, NSURLResponse *response, NSError *error);
-typedef void(^requestDictionaryCompliedBlock)(NSDictionary *data, NSURLResponse *response, NSError *error);
-typedef void(^requestArrayCompliedBlock)(NSArray *data, NSURLResponse *response, NSError *error);
-
+#pragma mark - Upload data set -
 @interface A_RESTRequestUploadDataSet : NSObject
 
 + (A_RESTRequestUploadDataSet *)A_Make:(NSData *)fileData fileName:(NSString *)filename;
@@ -38,10 +34,18 @@ typedef void(^requestArrayCompliedBlock)(NSArray *data, NSURLResponse *response,
 
 @end
 
-typedef void (^A_RESTDidReceiveChallenge)(NSURLSession *session, NSURLAuthenticationChallenge *challenge);
+#pragma mark - Define blocks
+typedef void (^A_RESTRequestCompliedBlock) (NSData *data, NSURLResponse *response, NSError *error);
+typedef void (^A_RESTRequestDictionaryCompliedBlock) (NSDictionary *data, NSURLResponse *response, NSError *error);
+typedef void (^A_RESTRequestArrayCompliedBlock) (NSArray *data, NSURLResponse *response, NSError *error);
 
+typedef void (^A_RESTDidReceiveChallengeCompletionHandler) (NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential);
+typedef void (^A_RESTDidReceiveChallenge) (NSURLSession *session, NSURLAuthenticationChallenge *challenge, A_RESTDidReceiveChallengeCompletionHandler completion);
+
+#pragma mark - REST request -
 @interface A_RESTRequest : NSObject
 
+#pragma mark - Base params
 @property (strong, nonatomic) NSString *url;
 @property (strong, nonatomic) NSDictionary *parameters;
 @property (strong, nonatomic) NSDictionary *headers;
@@ -49,6 +53,7 @@ typedef void (^A_RESTDidReceiveChallenge)(NSURLSession *session, NSURLAuthentica
 @property (nonatomic) A_NetworkRequestMethod requestMethod;
 @property (nonatomic) A_NetworkParameterFormat parameterFormat;
 
+#pragma mark - Advanced optional params
 @property (copy, nonatomic) A_RESTDidReceiveChallenge didReceiveChallenge;
 
 #pragma mark - Initialize methods
@@ -65,9 +70,9 @@ typedef void (^A_RESTDidReceiveChallenge)(NSURLSession *session, NSURLAuthentica
 + (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet headers:(NSDictionary *)headers parameters:(NSDictionary *)parameters;
 
 #pragma mark - Request Methods
-- (A_RESTRequest *)A_Request:(requestCompliedBlock)block;
-- (A_RESTRequest *)A_RequestDictionary:(requestDictionaryCompliedBlock)block;
-- (A_RESTRequest *)A_RequestArray:(requestArrayCompliedBlock)block;
+- (A_RESTRequest *)A_Request:(A_RESTRequestCompliedBlock)block;
+- (A_RESTRequest *)A_RequestDictionary:(A_RESTRequestDictionaryCompliedBlock)block;
+- (A_RESTRequest *)A_RequestArray:(A_RESTRequestArrayCompliedBlock)block;
 
 - (NSDictionary *)A_RequestDictionarySync;
 - (NSArray *)A_RequestArraySync;
@@ -80,4 +85,3 @@ typedef void (^A_RESTDidReceiveChallenge)(NSURLSession *session, NSURLAuthentica
 - (void)A_Cancel;
 
 @end
-
