@@ -38,6 +38,8 @@ typedef void(^requestArrayCompliedBlock)(NSArray *data, NSURLResponse *response,
 
 @end
 
+typedef void (^A_RESTDidReceiveChallenge)(NSURLSession *session, NSURLAuthenticationChallenge *challenge);
+
 @interface A_RESTRequest : NSObject
 
 @property (strong, nonatomic) NSString *url;
@@ -47,6 +49,7 @@ typedef void(^requestArrayCompliedBlock)(NSArray *data, NSURLResponse *response,
 @property (nonatomic) A_NetworkRequestMethod requestMethod;
 @property (nonatomic) A_NetworkParameterFormat parameterFormat;
 
+@property (copy, nonatomic) A_RESTDidReceiveChallenge didReceiveChallenge;
 
 #pragma mark - Initialize methods
 + (A_RESTRequest *)A_Create:(NSString *)url;
@@ -70,6 +73,11 @@ typedef void(^requestArrayCompliedBlock)(NSArray *data, NSURLResponse *response,
 - (NSArray *)A_RequestArraySync;
 
 - (NSURLSessionTask *)A_GetURLSessionTask;
+
+#pragma mark - Thread Operations
+- (void)A_Suspend;
+- (void)A_Resume;
+- (void)A_Cancel;
 
 @end
 

@@ -50,7 +50,7 @@
 
 @end
 
-@interface A_RESTRequest()
+@interface A_RESTRequest() <NSURLSessionDelegate>
 
 @property (strong, atomic) NSURLSessionTask *sessionTask;
 
@@ -233,7 +233,14 @@
         [self.sessionTask cancel];
     }
     
-    self.sessionTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSession *session = nil;
+    if (self.didReceiveChallenge) {
+        [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue currentQueue]];
+    } else {
+        session = [NSURLSession sharedSession];
+    }
+    
+    self.sessionTask = [session dataTaskWithRequest:theRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         if (error){
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
@@ -249,6 +256,7 @@
             block(data,response,error);
         }
     }];
+    
     [self.sessionTask resume];
     
     return self;
@@ -316,6 +324,31 @@
     return result;
 }
 
+#pragma mark - Implement NSURLSessionDelegate
+- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
+    // TODO:
+}
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
+    if (self.didReceiveChallenge) {
+        self.didReceiveChallenge(session, challenge);
+    }
+}
 
+#pragma mark - Thread Operations
+- (void)A_Suspend {
+    if (self.sessionTask) {
+        [self.sessionTask suspend];
+    }
+}
+- (void)A_Resume {
+    if (self.sessionTask) {
+        [self.sessionTask resume];
+    }
+}
+- (void)A_Cancel {
+    if (self.sessionTask) {
+        [self.sessionTask cancel];
+    }
+}
 
 @end
