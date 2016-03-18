@@ -5,12 +5,16 @@
 //  Created by Animax
 //  Copyright (c) 2014 AnimaxStudio. All rights reserved.
 //
-#import <UIKit/UIKit.h>
-
 #import "A_JSONHelper.h"
 #import "A_RESTRequest.h"
 
 #define boundary @"A_iOSHelper"
+
+typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
+    A_NetworkSessionType_NormalRequest= 0,
+    A_NetworkSessionType_DownloadRequest,
+    A_NetworkSessionType_UploadRequest,
+};
 
 @interface A_RESTRequestUploadDataSet ()
 
@@ -50,7 +54,7 @@
 
 @end
 
-@interface A_RESTRequest ()<NSURLSessionDelegate>
+@interface A_RESTRequest ()<NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
 @property (strong, atomic) NSURLSessionTask *sessionTask;
 
@@ -144,7 +148,12 @@
 }
 
 #pragma mark - Request Methods
-- (A_RESTRequest *)A_Request:(A_RESTRequestCompliedBlock)block {
+/**
+ *  foundation request call
+ */
+- (A_RESTRequest *)A_RequestWithType:(A_NetworkSessionType)request CompleledBlock:(A_RESTRequestCompliedBlock)block {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible= YES;
+    
 	// Perpare Parameters
 	NSString *myRequestString= [[NSString alloc] init];
 	if (_parameters != nil && [self.parameters count] > 0 && (_requestMethod == A_Network_GET || _parameterFormat == A_Network_SendAsJSON)) {
@@ -230,35 +239,66 @@
 	}
 
 	NSURLSession *session= nil;
-	if (self.didReceiveChallenge) {
+	if (self.didReceiveChallengeBlock || self.didReceiveDataBlock || self.didSendDataBlock) {
 		session= [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue currentQueue]];
 	} else {
 		session= [NSURLSession sharedSession];
 	}
-
-	self.sessionTask= [session dataTaskWithRequest:theRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
-	  if (error) {
-		  NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
-	  }
-
-	  resultData= data;
-
+    
+    void(^compleledBlock)(NSData *data, NSURLResponse *response, NSError *error) = ^(NSData *data, NSURLResponse *response, NSError *error){
+        
+        if (error) {
+            NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http request error> \r\n %@ \r\n -------- \r\n\r\n", error);
+        }
+        
+        resultData= data;
+        
 #ifndef NDEBUG
-	  NSString *resultStr= [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	  NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", resultStr);
+        NSString *resultStr= [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", resultStr);
 #endif
-	  if (block) {
-		  block (data, response, error);
-	  }
-	}];
+        if (block) {
+            block (data, response, error);
+        }
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
+    };
+    
+    switch (request) {
+        case A_NetworkSessionType_NormalRequest:
+            self.sessionTask= [session dataTaskWithRequest:theRequest completionHandler:compleledBlock];
+            break;
+        case A_NetworkSessionType_DownloadRequest: {
+                self.sessionTask= [session downloadTaskWithRequest:theRequest completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                    
+                    if (!location) {
+                        NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http download requested result> \r\n %@ \r\n -------- \r\n\r\n", @"Download failed");
+                        [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
+                        return;
+                    }
+                    NSData *data = [[NSFileManager defaultManager] contentsAtPath:[location path]];
+                    if (compleledBlock) {
+                        compleledBlock(data,response,error);
+                    }
+                }];
+            }
+            break;
+        case A_NetworkSessionType_UploadRequest:
+            self.sessionTask= [session uploadTaskWithRequest:theRequest fromData:body completionHandler:compleledBlock];
+            break;
+        default:
+            break;
+    }
 
 	[self.sessionTask resume];
 
 	return self;
 }
+
+- (A_RESTRequest *)A_Request:(A_RESTRequestCompliedBlock)block {
+    return [self A_RequestWithType:A_NetworkSessionType_NormalRequest CompleledBlock:block];
+}
 - (A_RESTRequest *)A_RequestDictionary:(A_RESTRequestDictionaryCompliedBlock)block {
-	[UIApplication sharedApplication].networkActivityIndicatorVisible= YES;
 	return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
 	  @try {
 		  NSDictionary *dicResult= @{};
@@ -271,12 +311,10 @@
 	  } @catch (NSException *e) {
 		  NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
 	  } @finally {
-		  [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
 	  }
 	}];
 }
 - (A_RESTRequest *)A_RequestArray:(A_RESTRequestArrayCompliedBlock)block {
-	[UIApplication sharedApplication].networkActivityIndicatorVisible= YES;
 	return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
 	  @try {
 		  NSArray *arrayResult= @[];
@@ -289,9 +327,48 @@
 	  } @catch (NSException *e) {
 		  NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
 	  } @finally {
-		  [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
 	  }
 	}];
+}
+
+- (A_RESTRequest *)A_RequestDownload:(A_RESTRequestCompliedBlock)block {
+    return [self A_RequestWithType:A_NetworkSessionType_DownloadRequest CompleledBlock:block];
+}
+
+- (A_RESTRequest *)A_RequestUpload:(A_RESTRequestCompliedBlock)block {
+    return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:block];
+}
+- (A_RESTRequest *)A_RequestUploadAndReturnDictionary:(A_RESTRequestDictionaryCompliedBlock)block {
+    return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
+        @try {
+            NSDictionary *dicResult= @{};
+            if (data) {
+                dicResult= [A_JSONHelper A_ConvertJSONDataToDictionary:data];
+            }
+            if (block) {
+                block (dicResult, response, error);
+            }
+        } @catch (NSException *e) {
+            NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
+        } @finally {
+        }
+    }];
+}
+- (A_RESTRequest *)A_RequestUploadAndReturnArray:(A_RESTRequestArrayCompliedBlock)block {
+    return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
+        @try {
+            NSArray *arrayResult= @[];
+            if (data) {
+                arrayResult= [A_JSONHelper A_ConvertJSONDataToArray:data];
+            }
+            if (block) {
+                block (arrayResult, response, error);
+            }
+        } @catch (NSException *e) {
+            NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
+        } @finally {
+        }
+    }];
 }
 
 - (NSURLSessionTask *)A_GetURLSessionTask {
@@ -319,25 +396,35 @@
 	return result;
 }
 
-#pragma mark - Implement NSURLSessionDelegate
+#pragma mark - Implement Session Delegates
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
 	// TODO:
 }
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^) (NSURLSessionAuthChallengeDisposition, NSURLCredential *_Nullable))completionHandler {
-	if (self.didReceiveChallenge) {
-		self.didReceiveChallenge (session, challenge, completionHandler);
+	if (self.didReceiveChallengeBlock) {
+		self.didReceiveChallengeBlock (session, challenge, completionHandler);
 	}
+}
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
+    if (self.didSendDataBlock) {
+        self.didSendDataBlock (session, task, bytesSent, totalBytesSent, totalBytesExpectedToSend);
+    }
+}
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
+    if (self.didReceiveDataBlock) {
+        self.didReceiveDataBlock (session, dataTask, data);
+    }
 }
 
 #pragma mark - Thread Operations
-- (void)A_Suspend {
-	if (self.sessionTask) {
-		[self.sessionTask suspend];
-	}
-}
 - (void)A_Resume {
-	if (self.sessionTask) {
-		[self.sessionTask resume];
+    if (self.sessionTask && self.sessionTask.state != NSURLSessionTaskStateRunning) {
+        [self.sessionTask resume];
+    }
+}
+- (void)A_Suspend {
+	if (self.sessionTask && self.sessionTask.state == NSURLSessionTaskStateRunning) {
+		[self.sessionTask suspend];
 	}
 }
 - (void)A_Cancel {
