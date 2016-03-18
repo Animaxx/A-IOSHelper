@@ -88,7 +88,7 @@
 }
 
 + (UIImage *)A_CutImage:(UIImage*)image InCenter:(CGSize)size {
-    CGRect rect = CGRectMake((image.size.width - size.width) / 2, (image.size.height - size.height) / 2 , size.width, size.height);
+    CGRect rect = CGRectMake(ceil((image.size.width - size.width) / 2), ceil((image.size.height - size.height) / 2), size.width, size.height);
     return [A_ImageHelper A_CutImage:image InRect:rect];
 }
 
