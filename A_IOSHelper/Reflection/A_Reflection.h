@@ -10,18 +10,18 @@
 
 @interface A_Reflection : NSObject
 
-+ (Class) A_GetClassByName: (NSString*)name;
-+ (Class) A_GetClass: (id)obj;
++ (Class)A_GetClassByName:(NSString *)name;
++ (Class)A_GetClass:(id)obj;
 
-+ (NSString*) A_GetClassName: (Class)cls;
-+ (NSString*) A_GetClassNameFromObject: (id)obj;
++ (NSString *)A_GetClassName:(Class)cls;
++ (NSString *)A_GetClassNameFromObject:(id)obj;
 
-+ (NSDictionary*) A_PropertiesFromClass: (Class)class;
-+ (NSDictionary*) A_PropertiesFromObject: (id)obj;
++ (NSDictionary<NSString *, NSString *> *)A_PropertiesFromClass:(Class)cls;
++ (NSDictionary<NSString *, NSString *> *)A_PropertiesFromObject:(id)obj;
 
-+ (NSArray *) A_PropertieNamesFromClass: (Class)class;
-+ (NSArray *) A_PropertieNamesFromObject: (id)obj;
++ (NSArray<NSString *> *)A_PropertieNamesFromClass:(Class)cls;
++ (NSArray<NSString *> *)A_PropertieNamesFromObject:(id)obj;
 
-+ (NSObject*) A_CreateObject: (NSString*) className;
++ (NSObject *)A_CreateObject:(NSString *)className;
 
 @end
