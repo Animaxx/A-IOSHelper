@@ -21,6 +21,6 @@
 -(void) A_RemoveObserver: (NSString *)key;
 -(void) A_RemoveBinding: (NSString *)fromKey;
 
-- (void) A_RemoveObservings;
+-(void) A_RemoveObservings;
 
 @end
