@@ -82,6 +82,8 @@
 		69C028DF1B41065F00800C59 /* CALayer+A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C028DB1B41065F00800C59 /* CALayer+A_Animation.m */; };
 		69C028E01B41065F00800C59 /* UIView+A_Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 69C028DC1B41065F00800C59 /* UIView+A_Animation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		69C028E11B41065F00800C59 /* UIView+A_Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C028DD1B41065F00800C59 /* UIView+A_Animation.m */; };
+		8F50534C1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F50534A1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F50534D1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F50534B1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +178,8 @@
 		69C028DB1B41065F00800C59 /* CALayer+A_Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CALayer+A_Animation.m"; path = "Animation/CALayer+A_Animation.m"; sourceTree = "<group>"; };
 		69C028DC1B41065F00800C59 /* UIView+A_Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+A_Animation.h"; path = "Animation/UIView+A_Animation.h"; sourceTree = "<group>"; };
 		69C028DD1B41065F00800C59 /* UIView+A_Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+A_Animation.m"; path = "Animation/UIView+A_Animation.m"; sourceTree = "<group>"; };
+		8F50534A1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+A_ConvertToCollection.h"; sourceTree = "<group>"; };
+		8F50534B1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+A_ConvertToCollection.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +279,8 @@
 		2E1187A31A37518F0080FFB9 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
+				8F50534A1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.h */,
+				8F50534B1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.m */,
 				2E0FD8871AB561AC00C1B828 /* NSDictionary+A_Extension.h */,
 				2E0FD8881AB561AC00C1B828 /* NSDictionary+A_Extension.m */,
 				2E0FD88B1AB561C700C1B828 /* NSArray+A_Extension.h */,
@@ -375,10 +381,9 @@
 		2E3A8D4F1AADEF4B00D3A833 /* A_IOSHelperTests */ = {
 			isa = PBXGroup;
 			children = (
+				8F50534E1C9DD07300311732 /* TestDataModel */,
 				2E61F53F1B12710E004DE7B2 /* CollectionTests.m */,
 				2E3A8D6A1AAE58D100D3A833 /* TaskTests.m */,
-				2E3A8D611AADF19C00D3A833 /* TestDataModel.h */,
-				2E3A8D621AADF19C00D3A833 /* TestDataModel.m */,
 				2E61F5411B137A58004DE7B2 /* ColorAndImageTests.m */,
 				2E3A8D5F1AADF0BB00D3A833 /* DataModelTests.m */,
 				2E38302F1AE8817400DFF0F4 /* StoreTests.m */,
@@ -477,6 +482,15 @@
 			name = Mapping;
 			sourceTree = "<group>";
 		};
+		8F50534E1C9DD07300311732 /* TestDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				2E3A8D611AADF19C00D3A833 /* TestDataModel.h */,
+				2E3A8D621AADF19C00D3A833 /* TestDataModel.m */,
+			);
+			name = TestDataModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -513,6 +527,7 @@
 				2ED75EA91ABB69DE00B0FB5F /* UIColor+A_Extension.h in Headers */,
 				2E61F53D1B126FF7004DE7B2 /* NSMutableDictionary+A_Extension.h in Headers */,
 				2E61F5391B122C27004DE7B2 /* NSMutableArray+A_Extension.h in Headers */,
+				8F50534C1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.h in Headers */,
 				2EC4940C1B05B67900B9E8E2 /* NSObject+A_KVO_Extension.h in Headers */,
 				69199BF91BE6979B00C03370 /* UIView+A_Extension.h in Headers */,
 				69C028E01B41065F00800C59 /* UIView+A_Animation.h in Headers */,
@@ -644,6 +659,7 @@
 				69199BFA1BE6979B00C03370 /* UIView+A_Extension.m in Sources */,
 				2E2E9DC71B143CBC001B3AB4 /* UIImageView+A_Extension.m in Sources */,
 				2E0FD88E1AB561C700C1B828 /* NSArray+A_Extension.m in Sources */,
+				8F50534D1C9DCBCF00311732 /* NSObject+A_ConvertToCollection.m in Sources */,
 				2E02968B1B018134005ABADF /* A_TaskHelper.m in Sources */,
 				2E02F9A11A4B6D4C00F4EBDE /* A_Datetime.m in Sources */,
 				69C028E11B41065F00800C59 /* UIView+A_Animation.m in Sources */,

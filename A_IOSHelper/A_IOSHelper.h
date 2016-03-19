@@ -34,6 +34,7 @@
 #import <A_IOSHelper/CALayer+A_Animation.h>
 #import <A_IOSHelper/NSDate+A_Extension.h>
 #import <A_IOSHelper/UIColor+A_Extension.h>
+#import "A_IOSHelper/NSObject+A_ConvertToCollection.h"
 
 /**** Foundation Extension ****/
 #import <A_IOSHelper/NSDictionary+A_Extension.h>
