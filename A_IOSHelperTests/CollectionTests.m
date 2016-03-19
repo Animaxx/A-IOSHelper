@@ -9,13 +9,31 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+#import "NSObject+A_ConvertToCollection.h"
 #import "NSArray+A_Extension.h"
 #import "NSDictionary+A_Extension.h"
 #import "NSMutableArray+A_Extension.h"
 #import "NSMutableDictionary+A_Extension.h"
 #import "NSString+A_Extension.h"
+#import "TestDataModel.h"
 #import "A_Dictionary.h"
 
+/**
+ *  Mock data model
+ **/
+@interface collectionTestModel : NSObject
+
+@property (strong, nonatomic) NSString *test;
+@property (strong, nonatomic) TestDataModel *data;
+
+@end
+
+@implementation collectionTestModel
+@end
+
+/**
+ *  Collection unit tests
+ **/
 @interface CollectionTests : XCTestCase
 
 @end
@@ -151,6 +169,44 @@
     }
     
 }
+- (void)testConvertObjectToCollection {
+    TestDataModel *model = [[TestDataModel alloc] init];
+    model.Name = @"Test Name";
+    model.CreateDate = [NSDate date];
+    model.Index = 0;
+    model.ID = @(1234.5);
+    
+    NSDictionary<NSString *, id> *result = [model A_ConvertToDictionary];
+    
+    XCTAssertEqual(result.count, 4);
+    XCTAssertEqualObjects(model.Name, [result objectForKey:@"Name"]);
+    XCTAssertEqualObjects(model.CreateDate, [result objectForKey:@"CreateDate"]);
+    XCTAssertEqual(@(model.Index), [result objectForKey:@"Index"]);
+    XCTAssertEqualObjects(model.ID, [result objectForKey:@"ID"]);
+}
+- (void)testConvertObjectWithContentsToCollection {
+    TestDataModel *model = [[TestDataModel alloc] init];
+    model.Name = @"Test Name";
+    model.CreateDate = [NSDate date];
+    model.Index = 0;
+    model.ID = @(1234.5);
+    
+    collectionTestModel *rootModel = [[collectionTestModel alloc] init];
+    rootModel.test = @"Test data";
+    rootModel.data = model;
+    
+    
+    NSDictionary<NSString *, id> *result = [rootModel A_ConvertToDictionaryWithContent];
+    
+    NSLog(@"%@", result);
+//    XCTAssertEqual(result.count, 4);
+//    XCTAssertEqualObjects(model.Name, [result objectForKey:@"Name"]);
+//    XCTAssertEqualObjects(model.CreateDate, [result objectForKey:@"CreateDate"]);
+//    XCTAssertEqual(@(model.Index), [result objectForKey:@"Index"]);
+//    XCTAssertEqualObjects(model.ID, [result objectForKey:@"ID"]);
+}
+
+
 
 @end
 
