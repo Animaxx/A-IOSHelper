@@ -122,6 +122,17 @@
     [_keys removeAllObjects];
 }
 
+- (NSString *)description {
+    NSMutableString *desc = [NSMutableString string];
+    
+    for (id key in _keys) {
+        [desc appendFormat:@"\n    %@ = %@", [key description], [[_values objectForKey:key] description]];
+    }
+    
+    
+    return [NSString stringWithFormat:@"{%@\n}", desc];
+}
+
 //- (void)sort {
 ////    _keys = [NSMutableOrderedSet alloc] initWithArray:
 //    
