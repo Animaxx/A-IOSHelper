@@ -33,6 +33,10 @@
     for (NSString *key in properties) {
         id val = [self valueForKey:key];
         if (val) {
+            // to avoid parsing cyclic pointing
+            if (val == self) {
+                continue;
+            }
             u_int count;
             class_copyPropertyList ([val class], &count);
             if (count) {
