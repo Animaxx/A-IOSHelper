@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "A_Dictionary.h"
 
 @interface A_JSONHelper : NSObject
 
-+ (NSDictionary*)A_ConvertJSONToDictionary: (NSString*)JSONStr;
++ (A_Dictionary*)A_ConvertJSONToDictionary: (NSString*)JSONStr;
 + (NSArray*)A_ConvertJSONToArray: (NSString*)JSONStr;
 
 + (NSString*)A_ConvertDictionaryToJSON: (NSDictionary*)Dict;
@@ -19,7 +20,7 @@
 + (NSData*)A_ConvertDictionaryToData: (NSDictionary*)Dict;
 + (NSData*)A_ConvertArrayToData: (NSArray*)Arr;
 
-+ (NSDictionary*)A_ConvertJSONDataToDictionary: (NSData*)JSONData;
++ (A_Dictionary*)A_ConvertJSONDataToDictionary: (NSData*)JSONData;
 + (NSArray*)A_ConvertJSONDataToArray: (NSData*)JSONData;
 
 @end

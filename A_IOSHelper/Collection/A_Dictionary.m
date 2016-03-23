@@ -29,6 +29,20 @@
     return self;
 }
 
+- (instancetype)initWithDictionary:(NSDictionary *)otherDictionary {
+    if (self = [super init]) {
+        @synchronized (otherDictionary) {
+            _keys = [[NSMutableOrderedSet alloc] initWithArray:otherDictionary.allKeys];
+            _values = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsWeakMemory valueOptions:NSPointerFunctionsStrongMemory capacity:0];
+            
+            for (id key in _keys) {
+                [_values setObject:[otherDictionary objectForKey:key] forKey:key];
+            }
+        }
+    }
+    return self;
+}
+
 - (instancetype)copy {
     return [self mutableCopy];
 }
@@ -57,8 +71,8 @@
     return [_keys objectAtIndex:index];
 }
 - (id)objectForKey:(id)aKey {
-//    NSUInteger index = [_keys indexOfObject:aKey];
-//    if (index == NSNotFound) return nil;
+    //    NSUInteger index = [_keys indexOfObject:aKey];
+    //    if (index == NSNotFound) return nil;
     return [_values objectForKey:aKey];
 }
 - (id)objectAtIndex:(NSInteger)index {
@@ -135,9 +149,9 @@
 
 //- (void)sort {
 ////    _keys = [NSMutableOrderedSet alloc] initWithArray:
-//    
+//
 //    [_keys sortedArrayWithOptions:0 usingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-//        
+//
 //    }];
 //}
 

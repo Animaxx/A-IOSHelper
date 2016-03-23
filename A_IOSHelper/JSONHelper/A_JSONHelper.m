@@ -48,7 +48,7 @@
 #endif
         return nil;
     } else {
-        return dic;
+        return [[A_Dictionary alloc] initWithDictionary:dic];
     }
 }
 + (NSArray*)A_ConvertJSONToArray: (NSString*)JSONStr{
@@ -138,7 +138,7 @@
 #endif
         return nil;
     } else {
-        return dic;
+        return [[A_Dictionary alloc] initWithDictionary:dic];
     }
 }
 + (NSArray*)A_ConvertJSONDataToArray: (NSData*)JSONData {
