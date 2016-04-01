@@ -309,7 +309,13 @@
     if (_imgData){
         
         // Save Image
-        NSString *aPath=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[imageURL lastPathComponent]];
+        NSString *filename = [imageURL stringByReplacingOccurrencesOfString:@"https" withString:@""];
+        filename = [filename stringByReplacingOccurrencesOfString:@"http" withString:@""];
+        filename = [filename stringByReplacingOccurrencesOfString:@":" withString:@""];
+        filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+        filename = [filename stringByReplacingOccurrencesOfString:@"." withString:@"-"];
+        
+        NSString *aPath=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),filename];
         [_imgData writeToFile:aPath atomically:YES];
         
         _returnIamge = [[UIImage alloc] initWithData:_imgData];
