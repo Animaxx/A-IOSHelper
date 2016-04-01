@@ -35,6 +35,13 @@
 - (NSDate *)A_SetMinute:(NSInteger)minute;
 - (NSDate *)A_SetSecond:(NSInteger)second;
 
+- (NSDate *)A_AddYears:(NSInteger)year;
+- (NSDate *)A_AddMonth:(NSInteger)month;
+- (NSDate *)A_AddDay:(NSInteger)day;
+- (NSDate *)A_AddHour:(NSInteger)hour;
+- (NSDate *)A_AddMinute:(NSInteger)minute;
+- (NSDate *)A_AddSecond:(NSInteger)second;
+
 - (NSDate *)A_GetOnlyDay;
 - (NSDate *)A_GetOnlyTime;
 

@@ -150,6 +150,55 @@
     return [calendar dateFromComponents:components];
 }
 
+- (NSDate *)A_AddYears:(NSInteger)year {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitTimeZone) fromDate:self];
+    
+    components.year += year;
+    
+    return [calendar dateFromComponents:components];
+}
+- (NSDate *)A_AddMonth:(NSInteger)month {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitTimeZone) fromDate:self];
+    
+    components.month += month;
+    
+    return [calendar dateFromComponents:components];
+}
+- (NSDate *)A_AddDay:(NSInteger)day {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitTimeZone) fromDate:self];
+    
+    components.day += day;
+    
+    return [calendar dateFromComponents:components];
+}
+- (NSDate *)A_AddHour:(NSInteger)hour {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitTimeZone) fromDate:self];
+    
+    components.hour += hour;
+    
+    return [calendar dateFromComponents:components];
+}
+- (NSDate *)A_AddMinute:(NSInteger)minute {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitTimeZone) fromDate:self];
+    
+    components.minute += minute;
+    
+    return [calendar dateFromComponents:components];
+}
+- (NSDate *)A_AddSecond:(NSInteger)second {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond | NSCalendarUnitTimeZone) fromDate:self];
+    
+    components.second += second;
+    
+    return [calendar dateFromComponents:components];
+}
+
 - (NSDate *)A_GetOnlyDay {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitTimeZone) fromDate:self];
