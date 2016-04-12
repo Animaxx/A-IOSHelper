@@ -17,6 +17,15 @@
 - (id) init;
 - (id) init: (NSString *)file;
 
+/**
+ * Reopen database in shared group folder, after that all data operations for this instace will go to shared group folder
+ *
+ * @group shared group key, please ensure the group already add to "App Groups" in project Capabilities section
+ * @return BOOL True - reopen success, False - the group is not exist, please check "App Groups" in Capabilities section.
+ *
+ */
+- (BOOL) A_ReopenInSharedGroup:(NSString *)group;
+
 - (BOOL) A_IsOpened;
 - (void) A_OpenConnetion;
 - (void) A_CloseConnetion;

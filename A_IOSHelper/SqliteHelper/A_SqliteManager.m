@@ -52,6 +52,36 @@
     return self;
 }
 
+- (BOOL) A_ReopenInSharedGroup:(NSString *)group {
+    NSURL *groupFolder = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:group];
+    if (!groupFolder) {
+        return NO;
+    }
+    NSString *filePath = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:group] URLByAppendingPathComponent:databaseFileName] absoluteString];
+    
+    filemanager = [[NSFileManager alloc] init];
+    
+    if ([self A_IsOpened]) {
+        [self A_CloseConnetion];
+        
+        // Copy original sqlite to shared group
+        if ([filemanager fileExistsAtPath:filePath]) {
+            NSString  *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseFileName];
+            if ([filemanager fileExistsAtPath:defaultDBPath]) {
+                [filemanager copyItemAtPath:defaultDBPath toPath:filePath error:NULL];
+            }
+        }
+    }
+    
+    database = nil;
+    if (sqlite3_open([filePath UTF8String], &database) != SQLITE_OK) {
+        NSAssert1(0, @"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Initialize Database: could not open database (%s)", sqlite3_errmsg(database));
+    }
+    filemanager = nil;
+    
+    return YES;
+}
+
 - (BOOL) A_IsOpened {
     return database!=nil;
 }
