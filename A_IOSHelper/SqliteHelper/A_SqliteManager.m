@@ -566,9 +566,9 @@
     return [A_SqliteManager A_Mapping:_result ToClass:class];
 }
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query{
-    NSString *_tableName = [NSString stringWithFormat:@"A_%@_table",NSStringFromClass(class)];
-    _tableName = [_tableName componentsSeparatedByString:@"."].lastObject;
-    return [self A_SearchModels:class Where:query WithTable:_tableName];
+    NSString *_className = NSStringFromClass(class);
+    _className = [_className componentsSeparatedByString:@"."].lastObject;
+    return [self A_SearchModels:class Where:query WithTable:[NSString stringWithFormat:@"A_%@_table",_className]];
 }
 
 #pragma mark - Utility Methods
