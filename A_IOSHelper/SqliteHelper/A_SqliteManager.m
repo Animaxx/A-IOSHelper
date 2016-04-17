@@ -162,7 +162,10 @@
 - (NSArray*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params {
     [sqlLock lock];
     [self _bindSQL:[query UTF8String] withArray:params];
-    if (statement == NULL) return [[NSArray alloc] init];
+    if (statement == NULL) {
+        [sqlLock unlock];
+        return [[NSArray alloc] init];
+    }
     
     NSMutableArray *dataset = [[NSMutableArray alloc] init];
     NSDictionary *row = nil;
@@ -554,7 +557,7 @@
 
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
     NSString *_sql;
-    if (query.length == 0)
+    if (!query || query.length == 0)
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
     else
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
@@ -564,6 +567,7 @@
 }
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query{
     NSString *_tableName = [NSString stringWithFormat:@"A_%@_table",NSStringFromClass(class)];
+    _tableName = [_tableName componentsSeparatedByString:@"."].lastObject;
     return [self A_SearchModels:class Where:query WithTable:_tableName];
 }
 
@@ -644,6 +648,7 @@
 }
 + (NSString*) A_GenerateTableName: (A_DataModel*) model {
     NSString *_className = [A_Reflection A_GetClassNameFromObject:model];
+    _className = [_className componentsSeparatedByString:@"."].lastObject;
     return [NSString stringWithFormat:@"A_%@_table",_className];
 }
 
