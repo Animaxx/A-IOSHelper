@@ -54,4 +54,6 @@
 - (NSString *)A_FormatToDetailString;
 - (NSString *)A_FormatByDateTime;
 
++ (NSDate *)A_ConvertStringToDate:(NSString *)str;
+
 @end

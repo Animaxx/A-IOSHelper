@@ -11,6 +11,7 @@
 #import <sqlite3.h>
 #import "A_Reflection.h"
 #import "A_TaskHelper.h"
+#import "NSDate+A_Extension.h"
 
 @implementation A_SqliteManager {
     sqlite3 *database;
@@ -598,14 +599,21 @@
     return [NSNumber numberWithLongLong:sqlite3_last_insert_rowid(database)];
 }
 
-+ (NSArray*) A_Mapping:(NSArray*) data ToClass:(Class)class{
++ (NSArray*) A_Mapping:(NSArray*)data ToClass:(Class)class{
     NSMutableArray *_array = [[NSMutableArray alloc] init];
     
     @try {
+        NSDictionary<NSString *, NSString *> *properties = [A_Reflection A_PropertiesFromClass:class];
+        
         for (NSDictionary *dic in data) {
             id obj = [[class alloc] init];
             for (NSString *key in dic) {
-                [obj setValue:[dic objectForKey:key] forKey:key];
+                NSString *propertyType = [properties objectForKey:key];
+                if ([propertyType isEqualToString:@"NSDate"]) {
+                    [obj setValue:[NSDate A_ConvertStringToDate:[dic objectForKey:key]] forKey:key];
+                } else {
+                    [obj setValue:[dic objectForKey:key] forKey:key];
+                }
             }
             [_array addObject:obj];
         }

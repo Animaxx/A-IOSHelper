@@ -241,4 +241,8 @@
     return [self A_ToString:@"YYYY-MM-dd'T'HH:mm:ssZZZ"];
 }
 
++ (NSDate *)A_ConvertStringToDate:(NSString *)str {
+    return [A_Datetime A_StringToDate:str Format:@"YYYY-MM-dd'T'HH:mm:ssZZZ"];
+}
+
 @end
