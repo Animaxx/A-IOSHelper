@@ -57,7 +57,10 @@ A_ImageHelper.A_DownloadImageAndCache("http://animaxapps.appspot.com/img/Animax.
 Add the following line in your `Podfile`.
 
 ```
-pod "A_IOSHelper"
+use_frameworks!
+target 'YOUR_PROJECT_NAME' do
+	pod "A_IOSHelper"
+end
 ``` 
 
 If using A_IOSHelper in Swift project, don't forget add this framework in Project page -> General -> Target -> Linked Frameworks and Libraries section. Otherwise, it will cause **unrecognized selector sent to class** error when you call any method in A_IOSHelper. 
