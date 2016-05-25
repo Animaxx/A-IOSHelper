@@ -41,4 +41,68 @@
     return color;
 }
 
+- (void) A_SetViewSize:(CGSize)size {
+    CGRect rect = self.frame;
+    rect.size = size;
+    self.frame = rect;
+    
+    [self layoutIfNeeded];
+}
+
+- (void) A_SetViewHeight:(CGFloat)height {
+    CGRect rect = self.frame;
+    rect.size.height = height;
+    self.frame = rect;
+    
+    [self layoutIfNeeded];
+}
+
+- (void) A_SetViewWeight:(CGFloat)width {
+    CGRect rect = self.frame;
+    rect.size.width = width;
+    self.frame = rect;
+    
+    [self layoutIfNeeded];
+}
+
+- (void) A_SetViewPosition:(CGPoint)position {
+    CGRect rect = self.frame;
+    rect.origin = position;
+    self.frame = rect;
+    
+    [self layoutIfNeeded];
+}
+
+- (void) A_SetViewPositionX:(CGFloat)x {
+    CGRect rect = self.frame;
+    rect.origin.x = x;
+    self.frame = rect;
+    
+    [self layoutIfNeeded];
+}
+
+- (void) A_SetViewPositionY:(CGFloat)y {
+    CGRect rect = self.frame;
+    rect.origin.y = y;
+    self.frame = rect;
+    
+    [self layoutIfNeeded];
+}
+
+- (CGFloat) A_GetViewHeight {
+    return self.frame.size.height;
+}
+
+- (CGFloat) A_GetViewWeight {
+    return self.frame.size.width;
+}
+
+- (CGFloat) A_GetViewPositionX {
+    return self.frame.origin.x;
+}
+
+- (CGFloat) A_GetViewPositionY {
+    return self.frame.origin.y;
+}
+
 @end
