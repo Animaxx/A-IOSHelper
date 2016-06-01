@@ -53,6 +53,7 @@
 #pragma mark - Storage
 + (void) A_SaveImage:(UIImage *)image To:(NSString *)key;
 + (UIImage *) A_GetImageFrom:(NSString *)key;
++ (UIImage *) A_GetImageFromURL:(NSString *)url;
 
 
 @end

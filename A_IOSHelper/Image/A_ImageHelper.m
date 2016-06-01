@@ -111,7 +111,6 @@
     return image;
 }
 
-
 + (UIImage*) A_Image:(UIImage*)image FitToSize:(CGSize) size {
     if (image && image.size.width>0 && image.size.height>0) {
         float imgFactor = image.size.width / image.size.height;
@@ -136,7 +135,6 @@
     return [A_ImageHelper A_Image:image FitToSize:size];
 }
 
-
 + (UIImage*) A_Image:(UIImage *)image Alpha:(CGFloat)alpha {
     if (!image) return image;
     
@@ -160,11 +158,10 @@
     
     return newImage;
 }
-+ (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha{
++ (UIImage*) A_ImageByName: (NSString*) name Alpha:(CGFloat)alpha {
     UIImage *image = [UIImage imageNamed:name];
     return [A_ImageHelper A_Image:image Alpha:(CGFloat)alpha];
 }
-
 
 + (UIImage*) A_Image:(UIImage*)image RotatedByDegrees:(CGFloat)degrees {
     if (!image) return image;
@@ -275,7 +272,15 @@
     UIImage *returnIamge =[[UIImage alloc]initWithContentsOfFile:aPath];
     return returnIamge;
 }
-
++ (UIImage *) A_GetImageFromURL:(NSString *)url {
+    NSString *filename = [url stringByReplacingOccurrencesOfString:@"https" withString:@""];
+    filename = [filename stringByReplacingOccurrencesOfString:@"http" withString:@""];
+    filename = [filename stringByReplacingOccurrencesOfString:@":" withString:@""];
+    filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    filename = [filename stringByReplacingOccurrencesOfString:@"." withString:@"-"];
+    
+    return [self A_GetImageFrom:filename];
+}
 
 + (UIImage*) A_ImageDownload: (NSString*)imageURL {
     NSData *_imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
@@ -295,7 +300,13 @@
     if (!imageURL)
         return nil;
     
-    NSString *aPathLocal=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[imageURL lastPathComponent]];
+    NSString *filename = [imageURL stringByReplacingOccurrencesOfString:@"https" withString:@""];
+    filename = [filename stringByReplacingOccurrencesOfString:@"http" withString:@""];
+    filename = [filename stringByReplacingOccurrencesOfString:@":" withString:@""];
+    filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    filename = [filename stringByReplacingOccurrencesOfString:@"." withString:@"-"];
+    
+    NSString *aPathLocal=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),filename];
     UIImage *_returnIamge =[[UIImage alloc]initWithContentsOfFile:aPathLocal];
     
     if (_returnIamge) {
@@ -307,14 +318,7 @@
         _imgData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imageURL]];
     }
     if (_imgData){
-        
         // Save Image
-        NSString *filename = [imageURL stringByReplacingOccurrencesOfString:@"https" withString:@""];
-        filename = [filename stringByReplacingOccurrencesOfString:@"http" withString:@""];
-        filename = [filename stringByReplacingOccurrencesOfString:@":" withString:@""];
-        filename = [filename stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-        filename = [filename stringByReplacingOccurrencesOfString:@"." withString:@"-"];
-        
         NSString *aPath=[NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),filename];
         [_imgData writeToFile:aPath atomically:YES];
         
