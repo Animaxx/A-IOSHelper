@@ -32,6 +32,7 @@ typedef NS_ENUM (NSInteger, A_NetworkParameterFormat) {
 
 + (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image fileName:(NSString *)filename;
 + (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image fileName:(NSString *)filename fileKey:(NSString *)fileKey;
++ (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image compressRate:(float)rate fileName:(NSString *)filename fileKey:(NSString *)fileKey;
 
 @end
 

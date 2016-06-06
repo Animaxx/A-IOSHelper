@@ -45,7 +45,10 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	return [self A_MakeWithImage:image fileName:filename fileKey:filename];
 }
 + (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image fileName:(NSString *)filename fileKey:(NSString *)fileKey {
-	return [self A_Make:[NSData dataWithData:UIImageJPEGRepresentation (image, 0.5f)] fileName:filename fileKey:fileKey];
+    return [self A_MakeWithImage:image compressRate:1.0f fileName:filename fileKey:fileKey];
+}
++ (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image compressRate:(float)rate fileName:(NSString *)filename fileKey:(NSString *)fileKey {
+    return [self A_Make:[NSData dataWithData:UIImageJPEGRepresentation (image, rate)] fileName:filename fileKey:fileKey];
 }
 
 - (BOOL)dataCompleted {
@@ -201,6 +204,14 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 		}
 
 		[theRequest setHTTPBody:body];
+        
+        
+        NSMutableDictionary *rebuildHeader = [[NSMutableDictionary alloc] initWithDictionary:_headers];
+        [rebuildHeader setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forKey:@"Content-type"];
+        [rebuildHeader setValue:[NSString stringWithFormat:@"%d", [body length]] forKey:@"Content-Length"];
+        
+        _headers = rebuildHeader;
+        
 	} else {
 		// Set Parameters for POST PUT DELETE
 		if (_requestMethod != A_Network_GET && _parameters != nil && [_parameters count] > 0) {
@@ -230,8 +241,8 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	default:
 		break;
 	}
-
-	[theRequest setAllHTTPHeaderFields:_headers];
+    
+    [theRequest setAllHTTPHeaderFields:_headers];
 
 	__block NSData *resultData= nil;
 	if (self.sessionTask && (self.sessionTask.state == NSURLSessionTaskStateRunning || self.sessionTask.state == NSURLSessionTaskStateSuspended)) {
