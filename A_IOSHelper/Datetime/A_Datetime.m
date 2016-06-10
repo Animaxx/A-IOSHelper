@@ -28,8 +28,8 @@
     [components setHour:-24];
     [components setMinute:0];
     [components setSecond:0];
-    NSDate *today = [cal dateByAddingComponents:components toDate:[[NSDate alloc] init] options:0];
-    return today;
+    NSDate *result = [cal dateByAddingComponents:components toDate:[[NSDate alloc] init] options:0];
+    return result;
 }
 + (NSDate*) A_Tomorrow {
     NSCalendar *cal = [NSCalendar currentCalendar];
@@ -38,8 +38,8 @@
     [components setHour:+24];
     [components setMinute:0];
     [components setSecond:0];
-    NSDate *today = [cal dateByAddingComponents:components toDate:[[NSDate alloc] init] options:0];
-    return today;
+    NSDate *result = [cal dateByAddingComponents:components toDate:[[NSDate alloc] init] options:0];
+    return result;
 }
 + (NSDate*) A_ThisWeek {
     NSCalendar *cal = [NSCalendar currentCalendar];

@@ -7,23 +7,26 @@ WRK_DIR=build
 DEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework
 SIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework
 
-xcodebuild -configuration "Release" -target "${FMK_NAME}" -sdk iphoneos IPHONEOS_DEPLOYMENT_TARGET='6.0' clean build
-xcodebuild -configuration "Release" -target "${FMK_NAME}" -sdk iphonesimulator IPHONEOS_DEPLOYMENT_TARGET='6.0' clean build
+xcodebuild -configuration "Release" -arch arm64 -arch armv7 -arch armv7s only_active_arch=no defines_module=yes -target "${FMK_NAME}" -sdk iphoneos IPHONEOS_DEPLOYMENT_TARGET='8.0' clean build
+xcodebuild -configuration "Release" -arch x86_64 -arch i386 only_active_arch=no defines_module=yes -target "${FMK_NAME}" -sdk iphonesimulator IPHONEOS_DEPLOYMENT_TARGET='8.0' clean build
 
 if [ -d "${INSTALL_DIR}" ]
 then
-rm -rf "${INSTALL_DIR}"
+	rm -rf "${INSTALL_DIR}"
 fi
 
 mkdir -p "${INSTALL_DIR}"
-mkdir -p "${INSTALL_DIR}/Modules"
-mkdir -p "${INSTALL_DIR}/Headers"
 
-cp -R "${DEVICE_DIR}/Headers/" "${INSTALL_DIR}/Headers/"
-cp -R "${DEVICE_DIR}/Modules/" "${INSTALL_DIR}/Modules/"
-cp -R "${DEVICE_DIR}/Info.plist" "${INSTALL_DIR}/Info.plist"
+cp -R "${DEVICE_DIR}"/* "${INSTALL_DIR}"
+rm -rf "${INSTALL_DIR}/${FMK_NAME}"
 
 lipo -create "${DEVICE_DIR}/${FMK_NAME}" "${SIMULATOR_DIR}/${FMK_NAME}" -output "${INSTALL_DIR}/${FMK_NAME}"
 rm -r "${WRK_DIR}"
+
+echo "==========================="
+echo "========== INFO ==========="
+echo "==========================="
+
+lipo -info "${INSTALL_DIR}/${FMK_NAME}"
 
 open Product
