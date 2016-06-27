@@ -8,8 +8,6 @@
 
 #import "A_DeviceHelper.h"
 #import <sys/utsname.h>
-#import <UIKit/UIKit.h>
-
 #import <MobileCoreServices/MobileCoreServices.h>
 
 @implementation A_DeviceHelper
@@ -107,11 +105,13 @@
 + (BOOL) A_CheckFrontCameraAvailable {
     return [UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront];
 }
-+ (BOOL) A_CheckCanSendSMS {
-    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"sms://"]];
++ (BOOL) A_CheckCanSendSMS:(UIApplication *)application {
+//    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"sms://"]];
+    return [application canOpenURL:[NSURL URLWithString:@"sms://"]];
 }
-+ (BOOL) A_CheckCanCall {
-    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]];
++ (BOOL) A_CheckCanCall:(UIApplication *)application {
+//    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]];
+    return [application canOpenURL:[NSURL URLWithString:@"tel://"]];
 }
 
 @end

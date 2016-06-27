@@ -155,7 +155,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
  *  foundation request call
  */
 - (A_RESTRequest *)A_RequestWithType:(A_NetworkSessionType)request CompleledBlock:(A_RESTRequestCompliedBlock)block {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible= YES;
+//    [UIApplication sharedApplication].networkActivityIndicatorVisible= YES;
     
 	// Perpare Parameters
 	NSString *myRequestString= [[NSString alloc] init];
@@ -208,7 +208,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
         
         NSMutableDictionary *rebuildHeader = [[NSMutableDictionary alloc] initWithDictionary:_headers];
         [rebuildHeader setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary] forKey:@"Content-type"];
-        [rebuildHeader setValue:[NSString stringWithFormat:@"%d", [body length]] forKey:@"Content-Length"];
+        [rebuildHeader setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[body length]] forKey:@"Content-Length"];
         
         _headers = rebuildHeader;
         
@@ -272,7 +272,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
             block (data, response, error);
         }
         
-        [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
+//        [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
     };
     
     switch (request) {
@@ -284,7 +284,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
                     
                     if (!location) {
                         NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http download requested result> \r\n %@ \r\n -------- \r\n\r\n", @"Download failed");
-                        [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
+//                        [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
                         return;
                     }
                     NSData *data = [[NSFileManager defaultManager] contentsAtPath:[location path]];

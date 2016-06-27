@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Animax Deng. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
 @interface A_DeviceHelper : NSObject
@@ -55,7 +56,7 @@ enum {
 + (BOOL) A_CheckCameraAvailable;
 + (BOOL) A_CheckCideoCameraAvailable;
 + (BOOL) A_CheckFrontCameraAvailable;
-+ (BOOL) A_CheckCanSendSMS;
-+ (BOOL) A_CheckCanCall;
++ (BOOL) A_CheckCanSendSMS:(UIApplication *)application;
++ (BOOL) A_CheckCanCall:(UIApplication *)application;
 
 @end
