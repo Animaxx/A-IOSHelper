@@ -17,6 +17,7 @@
 @property (nonatomic) id param;
 @property (readwrite, nonatomic) void *block;
 
+- (void)removeObserver;
 + (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary *change, id param))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option param:(id)parm;
 + (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary *change))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option;
 
@@ -33,6 +34,7 @@ typedef id(^BindObserverBlock)(id value);
 @property (weak, nonatomic) id target;
 @property (readwrite, copy) BindObserverBlock bindBlock;
 
+- (void)removeObserver;
 + (A_BindingObserver*) A_CreateObserver:(BindObserverBlock)block
                          observedObject:(NSObject*)observedObject
                                    from:(NSString*)from
@@ -52,7 +54,7 @@ typedef id(^BindObserverBlock)(id value);
 static void *AObservationsCharKey = &AObservationsCharKey;
 static void *ABindCharKey = &ABindCharKey;
 
-- (NSMutableArray*)_getObservers {
+- (NSMutableArray<A_Observer *> *)_getObservers {
     __strong static NSLock *kvoLock;
     
     static dispatch_once_t pred = 0;
@@ -69,7 +71,7 @@ static void *ABindCharKey = &ABindCharKey;
     [kvoLock unlock];
     return observations;
 }
-- (NSMutableArray*)_getBindObservers {
+- (NSMutableArray<A_BindingObserver *> *)_getBindObservers {
     NSMutableArray *observations = objc_getAssociatedObject(self, &ABindCharKey);
     if ( observations == nil ) {
         observations = [NSMutableArray array];
@@ -105,6 +107,11 @@ static void *ABindCharKey = &ABindCharKey;
         return [obj isMemberOfClass:[A_Observer class]] && [((A_Observer*)obj).observedObject isEqual:self] && [key isEqualToString:((A_Observer*)obj).key];
     }];
     if ( indexes.count > 0 ) {
+        NSArray<A_Observer *> *items = [[self _getObservers] objectsAtIndexes:indexes];
+        for (A_Observer *item in items) {
+            [item removeObserver];
+        }
+        
         [[self _getObservers] removeObjectsAtIndexes:indexes];
     }
 }
@@ -139,20 +146,35 @@ static void *ABindCharKey = &ABindCharKey;
         return [obj isMemberOfClass:[A_BindingObserver class]] && [((A_BindingObserver*)obj).observedObject isEqual:self] && [fromKey isEqualToString:((A_BindingObserver*)obj).fromKey];
     }];
     if ( indexes.count > 0 ) {
+        NSArray<A_BindingObserver *> *items = [[self _getBindObservers] objectsAtIndexes:indexes];
+        for (A_BindingObserver *item in items) {
+            [item removeObserver];
+        }
+        
         [[self _getBindObservers] removeObjectsAtIndexes:indexes];
     }
 }
 
 - (void) A_RemoveObservings {
-    if (objc_getAssociatedObject(self, &AObservationsCharKey)) {
-        objc_removeAssociatedObjects(self);
-    }
-    if (objc_getAssociatedObject(self, &ABindCharKey)) {
+    if (objc_getAssociatedObject(self, &ABindCharKey) || objc_getAssociatedObject(self, &AObservationsCharKey)) {
+        NSMutableArray<A_BindingObserver *> *bindObservers = [self _getBindObservers];
+        if (bindObservers && bindObservers.count > 0){
+            for (A_BindingObserver *item in bindObservers) {
+                [item removeObserver];
+            }
+        }
+        
+        NSMutableArray<A_Observer *> *observers = [self _getObservers];
+        if (observers && observers.count > 0){
+            for (A_Observer *item in observers) {
+                [item removeObserver];
+            }
+        }
+        
         objc_removeAssociatedObjects(self);
     }
 }
 - (void) A_registerDealloc {
-    
     class_addMethod([self class], NSSelectorFromString(@"dealloc"), (IMP)aObservatingDealloc, "v@:" ) ;
 }
 
@@ -189,15 +211,19 @@ bool _blockWithParam;
     return _observer;
 }
 
-- (void)dealloc {
+- (void)removeObserver {
     if (self.observedObject) {
         @try {
             [self.observedObject removeObserver:self forKeyPath:self.key];
+            self.observedObject = nil;
         }
         @catch (NSException *exception) {
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@ \r\n -------- \r\n\r\n", exception.reason);
         }
     }
+}
+- (void)dealloc {
+    [self removeObserver];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -247,15 +273,19 @@ bool _withTager;
     return _observer;
 }
 
-- (void)dealloc {
+- (void)removeObserver {
     if (self.observedObject) {
         @try {
             [self.observedObject removeObserver:self forKeyPath:self.fromKey];
+            self.observedObject = nil;
         }
         @catch (NSException *exception) {
             NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Error while remove observer %@ \r\n -------- \r\n\r\n", exception.reason);
         }
     }
+}
+- (void)dealloc {
+    [self removeObserver];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     id _newValue = self.bindBlock ? self.bindBlock([change objectForKey:@"new"]): [change objectForKey:@"new"];

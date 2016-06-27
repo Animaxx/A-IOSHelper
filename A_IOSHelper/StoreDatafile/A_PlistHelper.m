@@ -79,6 +79,7 @@
         
         if (appDomain) {
             [_file removePersistentDomainForName:appDomain];
+            [_file synchronize];
         } else {
             NSDictionary *defaultsDictionary = [_file dictionaryRepresentation];
             for (NSString *key in [defaultsDictionary allKeys]) {

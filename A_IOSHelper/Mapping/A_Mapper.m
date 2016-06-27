@@ -291,19 +291,20 @@
 	static NSMutableDictionary *hashKeys;
 	static dispatch_once_t classKeyPred;
 	dispatch_once (&classKeyPred, ^{
-	  hashKeys= [[NSMutableDictionary alloc] init];
+        hashKeys= [[NSMutableDictionary alloc] init];
+        
+        [hashKeys setObject:@"NSDictionary" forKey:@"NSMutableDictionary"];
+        [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionary0"];
+        [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionaryI"];
+        [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionaryM"];
+        [hashKeys setObject:@"NSDictionary" forKey:@"A_Dictionary"];
+        
+        [hashKeys setObject:@"NSArray" forKey:@"NSMutableArray"];
+        [hashKeys setObject:@"NSArray" forKey:@"__NSArray0"];
+        [hashKeys setObject:@"NSArray" forKey:@"__NSArrayI"];
+        [hashKeys setObject:@"NSArray" forKey:@"__NSArrayM"];
 
-	  [hashKeys setObject:@"NSDictionary" forKey:@"NSMutableDictionary"];
-	  [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionary0"];
-	  [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionaryI"];
-	  [hashKeys setObject:@"NSDictionary" forKey:@"__NSDictionaryM"];
-
-	  [hashKeys setObject:@"NSArray" forKey:@"NSMutableArray"];
-	  [hashKeys setObject:@"NSArray" forKey:@"__NSArray0"];
-	  [hashKeys setObject:@"NSArray" forKey:@"__NSArrayI"];
-	  [hashKeys setObject:@"NSArray" forKey:@"__NSArrayM"];
-
-	  //TODO: complete the missing mapping
+        //TODO: complete the missing mapping
 	});
 
 	NSString *key= [A_Reflection A_GetClassName:cls];
