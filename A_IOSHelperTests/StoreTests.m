@@ -26,6 +26,7 @@
 }
 
 - (void)testGetAndSetToGroupFile {
+    [A_PlistHelper A_Save:@"123" byKey:@"Key"];
     [A_PlistHelper A_Save:@"abc" toGroup:@"group" andKey:@"Key"];
     NSString *_value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
     
@@ -46,16 +47,16 @@
     XCTAssertNil(_value);
 }
 
-- (void)testDeleteCacheInGroup {
-    [A_PlistHelper A_Save:@"abc" toGroup:@"group" andKey:@"Key"];
-    NSString *_value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
-    
-    XCTAssertNotNil(_value);
-    
-    [A_PlistHelper A_CleanAllInGroup:@"group"];
-    _value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
-    XCTAssertNil(_value);
-}
+//- (void)testDeleteCacheInGroup {
+//    [A_PlistHelper A_Save:@"abc" toGroup:@"group" andKey:@"Key"];
+//    NSString *_value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
+//    
+//    XCTAssertNotNil(_value);
+//    
+//    [A_PlistHelper A_CleanAllInGroup:@"group"];
+//    _value = [A_PlistHelper A_GetByGroup:@"group" andKey:@"Key"];
+//    XCTAssertNil(_value);
+//}
 
 - (void)testHandleDatamodel {
     [TestDataModel A_ClearFromPlist];

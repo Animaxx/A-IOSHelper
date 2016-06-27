@@ -45,6 +45,7 @@
     [_model setName:@"A"];
     [_model setName:@"A"];
     [_model A_RemoveObserver:@"Name"];
+    
 //    [_model setName:@"B"];
 }
 
