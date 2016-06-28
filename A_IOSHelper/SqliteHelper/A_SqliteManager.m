@@ -89,15 +89,29 @@
 - (void) A_OpenConnetion {
     if (database) return;
     
-    filemanager = [[NSFileManager alloc] init];
+    filemanager = [NSFileManager defaultManager];
     NSString  *dbpath = [self A_DBPath];
-    
     if (![filemanager fileExistsAtPath:dbpath]) {
+        
         NSString  *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseFileName];
         if ([filemanager fileExistsAtPath:defaultDBPath]) {
             [filemanager copyItemAtPath:defaultDBPath toPath:dbpath error:NULL];
+        } else {
+            if (![filemanager createFileAtPath:dbpath contents:nil attributes:nil]) {
+                NSLog(@"Create file sql file [%@] failed", dbpath);
+                
+                // Create document folder
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *documentsDirectory = [paths lastObject];
+                NSError *error = nil;
+                [filemanager createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:&error];
+                if (error) {
+                    NSLog(@"Create document folder [%@] failed", documentsDirectory);
+                }
+            }
         }
     }
+    
     if (sqlite3_open([dbpath UTF8String], &database) != SQLITE_OK) {
         NSAssert1(0, @"[MESSAGE FROM A IOS HELPER] \r\n <SQlite error>  \r\n Initialize Database: could not open database (%s)", sqlite3_errmsg(database));
     }
@@ -114,7 +128,7 @@
 
 - (NSString *) A_DBPath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = paths[0];
+    NSString *documentsDirectory = [paths lastObject];
     return [documentsDirectory stringByAppendingPathComponent:databaseFileName];
 }
 
