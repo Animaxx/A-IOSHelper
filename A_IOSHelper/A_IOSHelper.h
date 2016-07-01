@@ -45,5 +45,6 @@
 #import <A_IOSHelper/NSObject+A_KVO_Extension.h>
 #import <A_IOSHelper/NSMutableArray+A_Extension.h>
 #import <A_IOSHelper/NSMutableDictionary+A_Extension.h>
+#import <A_IOSHelper/NSObject+A_Extension.h>
 
 
