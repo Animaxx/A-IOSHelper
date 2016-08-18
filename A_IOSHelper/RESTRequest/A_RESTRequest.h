@@ -58,6 +58,12 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
 @property (nonatomic) A_NetworkRequestMethod requestMethod;
 @property (nonatomic) A_NetworkParameterFormat parameterFormat;
 
+/**
+ *  Request timeout, seconds, default 60s
+ */
+@property (nonatomic) double timeout;
+
+
 #pragma mark - Advanced optional params
 @property (copy, nonatomic) A_RESTDidReceiveChallenge didReceiveChallengeBlock;
 @property (copy, nonatomic) A_RESTDidSendData didSendDataBlock;

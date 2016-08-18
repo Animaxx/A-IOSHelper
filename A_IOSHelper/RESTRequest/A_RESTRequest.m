@@ -76,6 +76,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 }
 - (instancetype)initInternal {
 	self= [super init];
+    self.timeout = 60.0f;
 	return self;
 }
 
@@ -243,6 +244,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	}
     
     [theRequest setAllHTTPHeaderFields:_headers];
+    [theRequest setTimeoutInterval:self.timeout];
 
 	__block NSData *resultData= nil;
 	if (self.sessionTask && (self.sessionTask.state == NSURLSessionTaskStateRunning || self.sessionTask.state == NSURLSessionTaskStateSuspended)) {
