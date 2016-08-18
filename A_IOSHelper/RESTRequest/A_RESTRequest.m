@@ -321,6 +321,10 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 		  }
 	  } @catch (NSException *e) {
 		  NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
+          if (block) {
+              NSError *error = [[NSError alloc] initWithDomain:e.name code:0 userInfo:@{@"reason":e.reason, @"userInfo": e.userInfo}];
+              block (nil, nil, error);
+          }
 	  } @finally {
 	  }
 	}];
@@ -337,6 +341,10 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 		  }
 	  } @catch (NSException *e) {
 		  NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
+          if (block) {
+              NSError *error = [[NSError alloc] initWithDomain:e.name code:0 userInfo:@{@"reason":e.reason, @"userInfo": e.userInfo}];
+              block (nil, nil, error);
+          }
 	  } @finally {
 	  }
 	}];
@@ -361,6 +369,10 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
             }
         } @catch (NSException *e) {
             NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
+            if (block) {
+                NSError *error = [[NSError alloc] initWithDomain:e.name code:0 userInfo:@{@"reason":e.reason, @"userInfo": e.userInfo}];
+                block (nil, nil, error);
+            }
         } @finally {
         }
     }];
@@ -377,6 +389,10 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
             }
         } @catch (NSException *e) {
             NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Get JSON and get dictionary error>  \r\n %@ \r\n -------- \r\n\r\n", e);
+            if (block) {
+                NSError *error = [[NSError alloc] initWithDomain:e.name code:0 userInfo:@{@"reason":e.reason, @"userInfo": e.userInfo}];
+                block (nil, nil, error);
+            }
         } @finally {
         }
     }];
