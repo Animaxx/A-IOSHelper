@@ -52,8 +52,8 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
 
 #pragma mark - Base params
 @property (strong, nonatomic) NSString *url;
-@property (strong, nonatomic) NSDictionary *parameters;
-@property (strong, nonatomic) NSDictionary *headers;
+@property (strong, nonatomic) NSDictionary<NSString *, NSObject *> *parameters;
+@property (strong, nonatomic) NSDictionary<NSString *, NSString *> *headers;
 @property (strong, nonatomic) A_RESTRequestUploadDataSet *uploadDataSet;
 @property (nonatomic) A_NetworkRequestMethod requestMethod;
 @property (nonatomic) A_NetworkParameterFormat parameterFormat;
@@ -73,14 +73,14 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
 + (A_RESTRequest *)A_Create:(NSString *)url;
 
 + (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary *)headers;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary *)parameters;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary *)parameters format:(A_NetworkParameterFormat)parameterFormat;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary *)headers parameters:(NSDictionary *)parameters format:(A_NetworkParameterFormat)parameterFormat;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary<NSString *, NSString *> *)headers;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary<NSString *, NSObject *> *)parameters;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary<NSString *, NSObject *> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, NSObject *> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
 
 + (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet;
-+ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet parameters:(NSDictionary *)parameters;
-+ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet headers:(NSDictionary *)headers parameters:(NSDictionary *)parameters;
++ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet parameters:(NSDictionary<NSString *, NSObject *> *)parameters;
++ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, NSObject *> *)parameters;
 
 #pragma mark - Request Methods
 - (A_RESTRequest *)A_Request:(A_RESTRequestCompliedBlock)block;
