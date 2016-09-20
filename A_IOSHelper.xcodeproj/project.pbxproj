@@ -87,6 +87,8 @@
 		A9BA8D2B1D257E1600540AA0 /* NSObject+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = A9BA8D291D257E1600540AA0 /* NSObject+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9BA8D2C1D257E1600540AA0 /* NSObject+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BA8D2A1D257E1600540AA0 /* NSObject+A_Extension.m */; };
 		A9BA8D381D258BBE00540AA0 /* ExtensionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BA8D371D258BBE00540AA0 /* ExtensionTest.m */; };
+		A9F6DD721D90F15400CF915E /* A_AttributedStringBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A9F6DD701D90F15400CF915E /* A_AttributedStringBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9F6DD731D90F15400CF915E /* A_AttributedStringBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F6DD711D90F15400CF915E /* A_AttributedStringBuilder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +188,8 @@
 		A9BA8D291D257E1600540AA0 /* NSObject+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+A_Extension.h"; path = "ObjExtension/NSObject+A_Extension.h"; sourceTree = "<group>"; };
 		A9BA8D2A1D257E1600540AA0 /* NSObject+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+A_Extension.m"; path = "ObjExtension/NSObject+A_Extension.m"; sourceTree = "<group>"; };
 		A9BA8D371D258BBE00540AA0 /* ExtensionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtensionTest.m; sourceTree = "<group>"; };
+		A9F6DD701D90F15400CF915E /* A_AttributedStringBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_AttributedStringBuilder.h; sourceTree = "<group>"; };
+		A9F6DD711D90F15400CF915E /* A_AttributedStringBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_AttributedStringBuilder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,6 +372,8 @@
 		2E1187BE1A37518F0080FFB9 /* String */ = {
 			isa = PBXGroup;
 			children = (
+				A9F6DD701D90F15400CF915E /* A_AttributedStringBuilder.h */,
+				A9F6DD711D90F15400CF915E /* A_AttributedStringBuilder.m */,
 				2E1187BF1A37518F0080FFB9 /* A_StringHelper.h */,
 				2E1187C01A37518F0080FFB9 /* A_StringHelper.m */,
 				2E0FD8831AB558FF00C1B828 /* NSString+A_Extension.h */,
@@ -549,6 +555,7 @@
 				69199BF91BE6979B00C03370 /* UIView+A_Extension.h in Headers */,
 				69C028E01B41065F00800C59 /* UIView+A_Animation.h in Headers */,
 				A9BA8D2B1D257E1600540AA0 /* NSObject+A_Extension.h in Headers */,
+				A9F6DD721D90F15400CF915E /* A_AttributedStringBuilder.h in Headers */,
 				69C028DE1B41065F00800C59 /* CALayer+A_Animation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -659,6 +666,7 @@
 				695F39CD1B1FD4A200114443 /* A_Mapper.m in Sources */,
 				2E1187CA1A37518F0080FFB9 /* A_DeviceHelper.m in Sources */,
 				2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */,
+				A9F6DD731D90F15400CF915E /* A_AttributedStringBuilder.m in Sources */,
 				690263F71C755BB70016D32A /* A_Dictionary.m in Sources */,
 				2E0FD8861AB558FF00C1B828 /* NSString+A_Extension.m in Sources */,
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,

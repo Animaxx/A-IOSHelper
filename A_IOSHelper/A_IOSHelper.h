@@ -23,6 +23,7 @@
 #import <A_IOSHelper/A_DataModel.h>
 #import <A_IOSHelper/A_TaskHelper.h>
 #import <A_IOSHelper/A_Mapper.h>
+#import <A_IOSHelper/A_AttributedStringBuilder.h>
 
 /**** Base element rewrited ****/
 #import <A_IOSHelper/A_Dictionary.h>
