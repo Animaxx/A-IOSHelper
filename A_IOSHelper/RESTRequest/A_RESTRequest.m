@@ -198,7 +198,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 		// Set parameters as form-data
 		if (_requestMethod != A_Network_GET && _parameters != nil && [_parameters count] > 0) {
 			for (NSString *key in [_parameters allKeys]) {
-				NSString *value= [_parameters objectForKey:key];
+				NSString *value= (NSString *)[_parameters objectForKey:key];
 				[body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n%@", key, value] dataUsingEncoding:NSUTF8StringEncoding]];
 				[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
 			}
@@ -216,8 +216,13 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	} else {
 		// Set Parameters for POST PUT DELETE
 		if (_requestMethod != A_Network_GET && _parameters != nil && [_parameters count] > 0) {
-			if (_parameterFormat == A_Network_SendAsJSON)
+            if (_parameterFormat == A_Network_SendAsJSON) {
 				[theRequest setHTTPBody:[A_JSONHelper A_ConvertDictionaryToData:_parameters]];
+                
+                NSMutableDictionary *rebuildHeader = [[NSMutableDictionary alloc] initWithDictionary:_headers];
+                [rebuildHeader setValue:@"application/json; charset=utf-8" forKey:@"Content-Type"];
+                _headers = rebuildHeader;
+            }
 			else
 				[theRequest setHTTPBody:[myRequestString dataUsingEncoding:NSUTF8StringEncoding]];
 		}
