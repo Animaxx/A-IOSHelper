@@ -163,7 +163,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	if (_parameters != nil && [self.parameters count] > 0 && (_requestMethod == A_Network_GET || _parameterFormat == A_Network_SendAsJSON)) {
 		NSArray *reqestdDataKeys= [_parameters allKeys];
 		for (NSString *itemKey in reqestdDataKeys) {
-			NSString *itemObj= [_parameters objectForKey:itemKey];
+			NSString *itemObj= (NSString *)[_parameters objectForKey:itemKey];
 
 			if (itemObj != nil) {
 				if (myRequestString.length > 0) {
