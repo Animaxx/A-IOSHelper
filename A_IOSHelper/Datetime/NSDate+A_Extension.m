@@ -68,7 +68,16 @@
     
     return (int)components.weekday;
 }
-
+- (int)A_GetWeekOfYear {
+    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitWeekOfYear) fromDate:self];
+    
+    return (int)components.weekOfYear;
+}
+- (int)A_GetYearForWeekOfYear {
+    NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitYearForWeekOfYear) fromDate:self];
+    
+    return (int)components.yearForWeekOfYear;
+}
 
 - (int)A_GetYear {
     NSDateComponents *components = [[NSCalendar currentCalendar]  components:(NSCalendarUnitYear) fromDate:self];
@@ -199,6 +208,12 @@
     return [calendar dateFromComponents:components];
 }
 
+- (NSDate *)A_GetOnlyMonth {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitTimeZone) fromDate:self];
+    
+    return [calendar dateFromComponents:components];
+}
 - (NSDate *)A_GetOnlyDay {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitTimeZone) fromDate:self];
@@ -215,11 +230,36 @@
 - (BOOL)A_IsToday {
     return [[NSCalendar currentCalendar] isDateInToday:self];
 }
+- (BOOL)A_IsThisWeek {
+    NSDateComponents *first = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear| NSCalendarUnitYearForWeekOfYear fromDate:self];
+    NSDateComponents *second = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear| NSCalendarUnitYearForWeekOfYear fromDate:[NSDate date]];
+    
+    return first.weekOfYear == second.weekOfYear && first.yearForWeekOfYear == second.yearForWeekOfYear;
+}
+- (BOOL)A_IsThisMonth {
+    NSDateComponents *first = [[NSCalendar currentCalendar] components:NSCalendarUnitYear| NSCalendarUnitMonth fromDate:self];
+    NSDateComponents *second = [[NSCalendar currentCalendar] components:NSCalendarUnitYear| NSCalendarUnitMonth fromDate:[NSDate date]];
+    
+    return first.year == second.year && first.month == second.month;
+}
+
 - (BOOL)A_IsSameDayWith:(NSDate *)day {
     NSDateComponents *first = [[NSCalendar currentCalendar] components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:self];
     NSDateComponents *second = [[NSCalendar currentCalendar] components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:day];
     
     return (first.day == second.day && first.month == second.month && first.month == second.month && first.year == second.year && first.era == second.era);
+}
+- (BOOL)A_IsSameWeekWith:(NSDate *)day {
+    NSDateComponents *first = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear| NSCalendarUnitYearForWeekOfYear fromDate:self];
+    NSDateComponents *second = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear| NSCalendarUnitYearForWeekOfYear fromDate:day];
+    
+    return (first.weekOfYear == second.weekOfYear && first.yearForWeekOfYear == second.yearForWeekOfYear);
+}
+- (BOOL)A_IsSameMonthWith:(NSDate *)day {
+    NSDateComponents *first = [[NSCalendar currentCalendar] components:NSCalendarUnitYear| NSCalendarUnitMonth fromDate:self];
+    NSDateComponents *second = [[NSCalendar currentCalendar] components:NSCalendarUnitYear| NSCalendarUnitMonth fromDate:day];
+    
+    return (first.year == second.year && first.month == second.month);
 }
 
 - (NSString *)A_ToString:(NSString *)format {
