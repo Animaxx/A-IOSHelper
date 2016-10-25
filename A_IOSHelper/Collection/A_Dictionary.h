@@ -14,6 +14,7 @@
 - (id)objectAtIndex:(NSInteger)index;
 
 - (NSEnumerator *)reverseKeyEnumerator;
+- (void)orderBy:(NSComparator NS_NOESCAPE)comparator;
 
 - (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex;
 - (void)replaceObject:(id)anObject atIndex:(NSUInteger)anIndex;

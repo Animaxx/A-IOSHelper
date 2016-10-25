@@ -89,6 +89,9 @@
 - (NSEnumerator *)objectEnumerator {
     return [_values objectEnumerator];
 }
+- (void)orderBy:(NSComparator NS_NOESCAPE)comparator {
+    [_keys sortUsingComparator:comparator];
+}
 
 - (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex {
     [self removeObjectForKey:aKey];
