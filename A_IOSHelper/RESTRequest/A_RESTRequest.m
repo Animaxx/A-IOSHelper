@@ -309,6 +309,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
     }
 
 	[self.sessionTask resume];
+    [session finishTasksAndInvalidate];
 
 	return self;
 }
