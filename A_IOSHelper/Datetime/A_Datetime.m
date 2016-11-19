@@ -81,8 +81,16 @@
 }
 
 + (NSDate*) A_StringToDate:(NSString*)dateStr Format:(NSString*)format {
+    return [self A_StringToDate:dateStr Format:format withTimezone:@"UTC"];
+}
++ (NSDate*) A_StringToDate:(NSString*)dateStr Format:(NSString*)format withTimezone:(NSString *)timezone {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:format]; //@"EE, d LLLL yyyy HH:mm:ss Z"
+    if (!timezone) {
+        [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
+    } else {
+        [dateFormat setTimeZone:[NSTimeZone timeZoneWithAbbreviation:timezone]];
+    }
     NSDate *date = [dateFormat dateFromString:dateStr];
     
     return date;
