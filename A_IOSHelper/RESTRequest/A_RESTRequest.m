@@ -151,11 +151,25 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	return optionSet;
 }
 
+#pragma mark - blocks
+- (A_RESTRequest *)A_SetDidReceiveChallengeBlock:(A_RESTDidReceiveChallenge)block {
+    self.didReceiveChallengeBlock = block;
+    return self;
+}
+- (A_RESTRequest *)A_SetDidReceiveDataBlock:(A_RESTDidReceiveData)block {
+    self.didReceiveDataBlock = block;
+    return self;
+}
+- (A_RESTRequest *)A_SetSendDataBlock:(A_RESTDidSendData)block {
+    self.didSendDataBlock = block;
+    return self;
+}
+
 #pragma mark - Request Methods
 /**
  *  foundation request call
  */
-- (A_RESTRequest *)A_RequestWithType:(A_NetworkSessionType)request CompleledBlock:(A_RESTRequestCompliedBlock)block {
+- (NSURLSessionTask *)A_RequestWithType:(A_NetworkSessionType)request CompleledBlock:(A_RESTRequestCompliedBlock)block {
 //    [UIApplication sharedApplication].networkActivityIndicatorVisible= YES;
     
 	// Perpare Parameters
@@ -311,13 +325,13 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	[self.sessionTask resume];
     [session finishTasksAndInvalidate];
 
-	return self;
+	return self.sessionTask;
 }
 
-- (A_RESTRequest *)A_Request:(A_RESTRequestCompliedBlock)block {
+- (NSURLSessionTask *)A_Request:(A_RESTRequestCompliedBlock)block {
     return [self A_RequestWithType:A_NetworkSessionType_NormalRequest CompleledBlock:block];
 }
-- (A_RESTRequest *)A_RequestDictionary:(A_RESTRequestDictionaryCompliedBlock)block {
+- (NSURLSessionTask *)A_RequestDictionary:(A_RESTRequestDictionaryCompliedBlock)block {
 	return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
 	  @try {
 		  NSDictionary *dicResult= @{};
@@ -337,7 +351,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	  }
 	}];
 }
-- (A_RESTRequest *)A_RequestArray:(A_RESTRequestArrayCompliedBlock)block {
+- (NSURLSessionTask *)A_RequestArray:(A_RESTRequestArrayCompliedBlock)block {
 	return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
 	  @try {
 		  NSArray *arrayResult= @[];
@@ -358,14 +372,14 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	}];
 }
 
-- (A_RESTRequest *)A_RequestDownload:(A_RESTRequestCompliedBlock)block {
+- (NSURLSessionTask *)A_RequestDownload:(A_RESTRequestCompliedBlock)block {
     return [self A_RequestWithType:A_NetworkSessionType_DownloadRequest CompleledBlock:block];
 }
 
-- (A_RESTRequest *)A_RequestUpload:(A_RESTRequestCompliedBlock)block {
+- (NSURLSessionTask *)A_RequestUpload:(A_RESTRequestCompliedBlock)block {
     return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:block];
 }
-- (A_RESTRequest *)A_RequestUploadAndReturnDictionary:(A_RESTRequestDictionaryCompliedBlock)block {
+- (NSURLSessionTask *)A_RequestUploadAndReturnDictionary:(A_RESTRequestDictionaryCompliedBlock)block {
     return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
         @try {
             NSDictionary *dicResult= @{};
@@ -385,7 +399,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
         }
     }];
 }
-- (A_RESTRequest *)A_RequestUploadAndReturnArray:(A_RESTRequestArrayCompliedBlock)block {
+- (NSURLSessionTask *)A_RequestUploadAndReturnArray:(A_RESTRequestArrayCompliedBlock)block {
     return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
         @try {
             NSArray *arrayResult= @[];
