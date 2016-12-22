@@ -94,15 +94,32 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
 - (NSURLSessionTask *)A_RequestDictionary:(A_RESTRequestDictionaryCompliedBlock)block;
 - (NSURLSessionTask *)A_RequestArray:(A_RESTRequestArrayCompliedBlock)block;
 
+/**
+ Execute Download Task, didReceiveDataBlock params will be avaliable with this request.
+
+ @param block Download complied block
+ @return SessionTask
+ */
+- (NSURLSessionTask *)A_RequestDownload:(A_RESTRequestDownloadCompliedBlock)block;
 
 /**
  Execute Download Task, didReceiveDataBlock params will be avaliable with this request.
+
+ @param filename File in app's document folder
+ @param block Download complied block
+ @return Session Task
  */
-- (NSURLSessionTask *)A_RequestDownload:(A_RESTRequestDownloadCompliedBlock)block;
+- (NSURLSessionTask *)A_RequestDownloadToDocument:(NSString *)filename withBlock:(A_RESTRequestDownloadCompliedBlock)block;
+
+
 /**
  Execute Download Task, didReceiveDataBlock params will be avaliable with this request.
+
+ @param url Full Path URL
+ @param block Download complied block
+ @return Session Task
  */
-- (NSURLSessionTask *)A_RequestDownloadTo:(NSString *)filePath withBlock:(A_RESTRequestDownloadCompliedBlock)block;
+- (NSURLSessionTask *)A_RequestDownloadToUrl:(NSURL *)url withBlock:(A_RESTRequestDownloadCompliedBlock)block;
 
 /**
  Execute Upload Task, didSendDataBlock params will be avaliable with these requests.

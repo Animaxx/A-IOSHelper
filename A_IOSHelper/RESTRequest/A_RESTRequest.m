@@ -417,6 +417,11 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
     [self setDownloadCompliedBlock:block];
     return [self A_RequestWithType:A_NetworkSessionType_DownloadRequest];
 }
+- (NSURLSessionTask *)A_RequestDownloadToUrl:(NSURL *)url withBlock:(A_RESTRequestDownloadCompliedBlock)block {
+    self.downloadToPath = url;
+    [self setDownloadCompliedBlock:block];
+    return [self A_RequestWithType:A_NetworkSessionType_DownloadRequest];
+}
 
 - (NSURLSessionTask *)A_RequestUpload:(A_RESTRequestCompliedBlock)block {
     [self setNormalCompliedBlock:block];
