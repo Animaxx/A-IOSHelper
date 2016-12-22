@@ -59,7 +59,11 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 
 @interface A_RESTRequest ()<NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
-@property (strong, atomic) NSURLSessionTask *sessionTask;
+@property (strong, atomic) NSURLSessionTask                     *sessionTask;
+@property (strong, atomic) NSURL                                *downloadToPath;
+
+@property (copy, atomic) A_RESTRequestCompliedBlock             normalCompliedBlock;
+@property (copy, atomic) A_RESTRequestDownloadCompliedBlock     downloadCompliedBlock;
 
 @end
 
@@ -151,7 +155,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	return optionSet;
 }
 
-#pragma mark - blocks
+#pragma mark - Event Blocks
 - (A_RESTRequest *)A_SetDidReceiveChallengeBlock:(A_RESTDidReceiveChallenge)block {
     self.didReceiveChallengeBlock = block;
     return self;
@@ -169,7 +173,8 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 /**
  *  foundation request call
  */
-- (NSURLSessionTask *)A_RequestWithType:(A_NetworkSessionType)request CompleledBlock:(A_RESTRequestCompliedBlock)block {
+- (NSURLSessionTask *)A_RequestWithType:(A_NetworkSessionType)request {
+    //A_RESTRequestCompliedBlock
 //    [UIApplication sharedApplication].networkActivityIndicatorVisible= YES;
     
 	// Perpare Parameters
@@ -289,8 +294,8 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
         NSString *resultStr= [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http requested result> \r\n %@ \r\n -------- \r\n\r\n", resultStr);
 #endif
-        if (block) {
-            block (data, response, error);
+        if (self.normalCompliedBlock) {
+            self.normalCompliedBlock(data, response, error);
         }
         
 //        [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
@@ -307,11 +312,32 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
                         NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http download requested result> \r\n %@ \r\n -------- \r\n\r\n", @"Download failed");
 //                        [UIApplication sharedApplication].networkActivityIndicatorVisible= NO;
                         return;
+                    } else {
+                        if (self.downloadToPath) {
+                            NSError *fileErr = nil;
+                            if ([[NSFileManager defaultManager] fileExistsAtPath:[self.downloadToPath path]]) {
+                                [[NSFileManager defaultManager] removeItemAtURL:self.downloadToPath error:&fileErr];
+                                if (fileErr) {
+                                    NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http remove exist file> \r\n %@ \r\n -------- \r\n\r\n", fileErr);
+                                }
+                            }
+                            
+                            fileErr = nil;
+                            [[NSFileManager defaultManager] moveItemAtURL:location toURL:self.downloadToPath error:&fileErr];
+                            if (fileErr) {
+                                NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Http saving downloaded file> \r\n %@ \r\n -------- \r\n\r\n", fileErr);
+                            }
+                        }
                     }
-                    NSData *data = [[NSFileManager defaultManager] contentsAtPath:[location path]];
-                    if (compleledBlock) {
-                        compleledBlock(data,response,error);
+                    
+                    if (self.downloadCompliedBlock) {
+                        if (self.downloadToPath) {
+                            self.downloadCompliedBlock(self.downloadToPath, response, error);
+                        } else {
+                            self.downloadCompliedBlock(location, response, error);
+                        }
                     }
+                    
                 }];
             }
             break;
@@ -329,7 +355,8 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 }
 
 - (NSURLSessionTask *)A_Request:(A_RESTRequestCompliedBlock)block {
-    return [self A_RequestWithType:A_NetworkSessionType_NormalRequest CompleledBlock:block];
+    [self setNormalCompliedBlock:block];
+    return [self A_RequestWithType:A_NetworkSessionType_NormalRequest];
 }
 - (NSURLSessionTask *)A_RequestDictionary:(A_RESTRequestDictionaryCompliedBlock)block {
 	return [self A_Request:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -372,15 +399,31 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	}];
 }
 
-- (NSURLSessionTask *)A_RequestDownload:(A_RESTRequestCompliedBlock)block {
-    return [self A_RequestWithType:A_NetworkSessionType_DownloadRequest CompleledBlock:block];
+- (NSURLSessionTask *)A_RequestDownload:(A_RESTRequestDownloadCompliedBlock)block {
+    [self setDownloadCompliedBlock:block];
+    [self setDownloadToPath:nil];
+    return [self A_RequestWithType:A_NetworkSessionType_DownloadRequest];
+}
+- (NSURLSessionTask *)A_RequestDownloadToDocument:(NSString *)filename withBlock:(A_RESTRequestDownloadCompliedBlock)block {
+    
+    NSURL *documentDir = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
+    if (documentDir) {
+        NSURL *filePath = [documentDir URLByAppendingPathComponent:filename];
+        self.downloadToPath = filePath;
+    } else {
+        NSLog (@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <Document Directory Not Found> \r\n -------- \r\n\r\n");
+    }
+    
+    [self setDownloadCompliedBlock:block];
+    return [self A_RequestWithType:A_NetworkSessionType_DownloadRequest];
 }
 
 - (NSURLSessionTask *)A_RequestUpload:(A_RESTRequestCompliedBlock)block {
-    return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:block];
+    [self setNormalCompliedBlock:block];
+    return [self A_RequestWithType:A_NetworkSessionType_UploadRequest];
 }
 - (NSURLSessionTask *)A_RequestUploadAndReturnDictionary:(A_RESTRequestDictionaryCompliedBlock)block {
-    return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
+    return [self A_RequestUpload:^(NSData *data, NSURLResponse *response, NSError *error) {
         @try {
             NSDictionary *dicResult= @{};
             if (data) {
@@ -400,7 +443,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
     }];
 }
 - (NSURLSessionTask *)A_RequestUploadAndReturnArray:(A_RESTRequestArrayCompliedBlock)block {
-    return [self A_RequestWithType:A_NetworkSessionType_UploadRequest CompleledBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
+    return [self A_RequestUpload:^(NSData *data, NSURLResponse *response, NSError *error) {
         @try {
             NSArray *arrayResult= @[];
             if (data) {

@@ -38,6 +38,8 @@ typedef NS_ENUM (NSInteger, A_NetworkParameterFormat) {
 
 #pragma mark - Define blocks
 typedef void (^A_RESTRequestCompliedBlock) (NSData *data, NSURLResponse *response, NSError *error);
+typedef void (^A_RESTRequestDownloadCompliedBlock) (NSURL *temporaryURL, NSURLResponse *response, NSError *error);
+
 typedef void (^A_RESTRequestDictionaryCompliedBlock) (NSDictionary *data, NSURLResponse *response, NSError *error);
 typedef void (^A_RESTRequestArrayCompliedBlock) (NSArray *data, NSURLResponse *response, NSError *error);
 
@@ -82,22 +84,37 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
 + (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet parameters:(NSDictionary<NSString *, NSObject *> *)parameters;
 + (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, NSObject *> *)parameters;
 
-#pragma mark - Request Methods
+#pragma mark - Event Blocks
+- (A_RESTRequest *)A_SetDidReceiveChallengeBlock:(A_RESTDidReceiveChallenge)block;
+- (A_RESTRequest *)A_SetDidReceiveDataBlock:(A_RESTDidReceiveData)block;
+- (A_RESTRequest *)A_SetSendDataBlock:(A_RESTDidSendData)block;
+
+#pragma mark - Excute Request Methods
 - (NSURLSessionTask *)A_Request:(A_RESTRequestCompliedBlock)block;
 - (NSURLSessionTask *)A_RequestDictionary:(A_RESTRequestDictionaryCompliedBlock)block;
 - (NSURLSessionTask *)A_RequestArray:(A_RESTRequestArrayCompliedBlock)block;
 
 
 /**
- * Request a download seesion task, didReceiveDataBlock params will be avaliable with this request.
- **/
-- (NSURLSessionTask *)A_RequestDownload:(A_RESTRequestCompliedBlock)block;
+ Execute Download Task, didReceiveDataBlock params will be avaliable with this request.
+ */
+- (NSURLSessionTask *)A_RequestDownload:(A_RESTRequestDownloadCompliedBlock)block;
+/**
+ Execute Download Task, didReceiveDataBlock params will be avaliable with this request.
+ */
+- (NSURLSessionTask *)A_RequestDownloadTo:(NSString *)filePath withBlock:(A_RESTRequestDownloadCompliedBlock)block;
 
 /**
- * Request a upload seesion task, didSendDataBlock params will be avaliable with these requests.
- **/
+ Execute Upload Task, didSendDataBlock params will be avaliable with these requests.
+ */
 - (NSURLSessionTask *)A_RequestUpload:(A_RESTRequestCompliedBlock)block;
+/**
+ Execute Upload Task, didSendDataBlock params will be avaliable with these requests.
+ */
 - (NSURLSessionTask *)A_RequestUploadAndReturnDictionary:(A_RESTRequestDictionaryCompliedBlock)block;
+/**
+ Execute Upload Task, didSendDataBlock params will be avaliable with these requests.
+ */
 - (NSURLSessionTask *)A_RequestUploadAndReturnArray:(A_RESTRequestArrayCompliedBlock)block;
 
 
