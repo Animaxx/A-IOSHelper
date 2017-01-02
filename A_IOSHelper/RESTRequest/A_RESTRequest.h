@@ -40,21 +40,21 @@ typedef NS_ENUM (NSInteger, A_NetworkParameterFormat) {
 typedef void (^A_RESTRequestCompliedBlock) (NSData *data, NSURLResponse *response, NSError *error);
 typedef void (^A_RESTRequestDownloadCompliedBlock) (NSURL *temporaryURL, NSURLResponse *response, NSError *error);
 
-typedef void (^A_RESTRequestDictionaryCompliedBlock) (NSDictionary *data, NSURLResponse *response, NSError *error);
+typedef void (^A_RESTRequestDictionaryCompliedBlock) (NSDictionary<NSString *, id> *data, NSURLResponse *response, NSError *error);
 typedef void (^A_RESTRequestArrayCompliedBlock) (NSArray *data, NSURLResponse *response, NSError *error);
 
 typedef void (^A_RESTDidReceiveChallengeCompletionHandler) (NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential);
 typedef void (^A_RESTDidReceiveChallenge) (NSURLSession *session, NSURLAuthenticationChallenge *challenge, A_RESTDidReceiveChallengeCompletionHandler completion);
 
 typedef void (^A_RESTDidSendData) (NSURLSession *session, NSURLSessionTask *dataTask, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
-typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTask *dataTask, NSData *data);
+typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTask *dataTask, CGFloat progress);
 
 #pragma mark - REST request -
 @interface A_RESTRequest : NSObject
 
 #pragma mark - Base params
 @property (strong, nonatomic) NSString *url;
-@property (strong, nonatomic) NSDictionary<NSString *, NSObject *> *parameters;
+@property (strong, nonatomic) NSDictionary<NSString *, id> *parameters;
 @property (strong, nonatomic) NSDictionary<NSString *, NSString *> *headers;
 @property (strong, nonatomic) A_RESTRequestUploadDataSet *uploadDataSet;
 @property (nonatomic) A_NetworkRequestMethod requestMethod;
@@ -76,16 +76,20 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
 
 + (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method;
 + (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary<NSString *, NSString *> *)headers;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary<NSString *, NSObject *> *)parameters;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary<NSString *, NSObject *> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, NSObject *> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary<NSString *, id> *)parameters;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary<NSString *, id> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
++ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, id> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
 
 + (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet;
-+ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet parameters:(NSDictionary<NSString *, NSObject *> *)parameters;
-+ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, NSObject *> *)parameters;
++ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet parameters:(NSDictionary<NSString *, id> *)parameters;
++ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, id> *)parameters;
 
 #pragma mark - Event Blocks
+/**
+ Block for handling challenges as SSL; if not set, it will trust any SSL certificates.
+ */
 - (A_RESTRequest *)A_SetDidReceiveChallengeBlock:(A_RESTDidReceiveChallenge)block;
+
 - (A_RESTRequest *)A_SetDidReceiveDataBlock:(A_RESTDidReceiveData)block;
 - (A_RESTRequest *)A_SetSendDataBlock:(A_RESTDidSendData)block;
 
