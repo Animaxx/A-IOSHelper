@@ -87,6 +87,8 @@
 		A9BA8D2B1D257E1600540AA0 /* NSObject+A_Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = A9BA8D291D257E1600540AA0 /* NSObject+A_Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9BA8D2C1D257E1600540AA0 /* NSObject+A_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BA8D2A1D257E1600540AA0 /* NSObject+A_Extension.m */; };
 		A9BA8D381D258BBE00540AA0 /* ExtensionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BA8D371D258BBE00540AA0 /* ExtensionTest.m */; };
+		A9E2BA631E96D26800E251A6 /* A_ChainAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A9E2BA611E96D26800E251A6 /* A_ChainAnimation.h */; };
+		A9E2BA641E96D26800E251A6 /* A_ChainAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E2BA621E96D26800E251A6 /* A_ChainAnimation.m */; };
 		A9F6DD721D90F15400CF915E /* A_AttributedStringBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = A9F6DD701D90F15400CF915E /* A_AttributedStringBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9F6DD731D90F15400CF915E /* A_AttributedStringBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F6DD711D90F15400CF915E /* A_AttributedStringBuilder.m */; };
 /* End PBXBuildFile section */
@@ -188,6 +190,8 @@
 		A9BA8D291D257E1600540AA0 /* NSObject+A_Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+A_Extension.h"; path = "ObjExtension/NSObject+A_Extension.h"; sourceTree = "<group>"; };
 		A9BA8D2A1D257E1600540AA0 /* NSObject+A_Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+A_Extension.m"; path = "ObjExtension/NSObject+A_Extension.m"; sourceTree = "<group>"; };
 		A9BA8D371D258BBE00540AA0 /* ExtensionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtensionTest.m; sourceTree = "<group>"; };
+		A9E2BA611E96D26800E251A6 /* A_ChainAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = A_ChainAnimation.h; path = Animation/A_ChainAnimation.h; sourceTree = "<group>"; };
+		A9E2BA621E96D26800E251A6 /* A_ChainAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = A_ChainAnimation.m; path = Animation/A_ChainAnimation.m; sourceTree = "<group>"; };
 		A9F6DD701D90F15400CF915E /* A_AttributedStringBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A_AttributedStringBuilder.h; sourceTree = "<group>"; };
 		A9F6DD711D90F15400CF915E /* A_AttributedStringBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A_AttributedStringBuilder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -429,6 +433,8 @@
 				691B4D281B3D88EF00B96C25 /* A_AnimationKeyframeProvider.h */,
 				691B4D291B3D88F000B96C25 /* A_AnimationKeyframeProvider.m */,
 				691B4D2C1B3D898400B96C25 /* A_AnimationEnumeration.h */,
+				A9E2BA611E96D26800E251A6 /* A_ChainAnimation.h */,
+				A9E2BA621E96D26800E251A6 /* A_ChainAnimation.m */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -523,6 +529,7 @@
 			files = (
 				2E1187CD1A37518F0080FFB9 /* A_ImageHelper.h in Headers */,
 				2E1187C91A37518F0080FFB9 /* A_DeviceHelper.h in Headers */,
+				A9E2BA631E96D26800E251A6 /* A_ChainAnimation.h in Headers */,
 				2E1187D31A37518F0080FFB9 /* A_StringHelper.h in Headers */,
 				2E1187C51A37518F0080FFB9 /* A_RESTRequest.h in Headers */,
 				2E1187D11A37518F0080FFB9 /* A_PlistHelper.h in Headers */,
@@ -667,6 +674,7 @@
 				2E1187CA1A37518F0080FFB9 /* A_DeviceHelper.m in Sources */,
 				2ED875ED1A9AA1C400D0D62E /* A_Reflection.m in Sources */,
 				A9F6DD731D90F15400CF915E /* A_AttributedStringBuilder.m in Sources */,
+				A9E2BA641E96D26800E251A6 /* A_ChainAnimation.m in Sources */,
 				690263F71C755BB70016D32A /* A_Dictionary.m in Sources */,
 				2E0FD8861AB558FF00C1B828 /* NSString+A_Extension.m in Sources */,
 				2E1187C61A37518F0080FFB9 /* A_RESTRequest.m in Sources */,

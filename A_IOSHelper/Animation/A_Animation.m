@@ -35,7 +35,7 @@
             k1 = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
             k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
             k1.values = @[@(0.2),@(0.8),@(0.2),@(1.0)];
-             group.animations = @[k1];
+            group.animations = @[k1];
             break;
         case A_AnimationEffectType_pulse:
             k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
@@ -49,7 +49,7 @@
             break;
         case A_AnimationEffectType_press:
             k1 = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-//            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
+            //            k1.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:0.5 :0.5 :1 :1];
             k1.timingFunction = [CAMediaTimingFunction functionWithName:@"easeOut"];
             k1.values = @[[NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 0.85, 0.85, 0.85)],
                           [NSValue valueWithCATransform3D:CATransform3DScale(CATransform3DIdentity, 1.05, 1.05, 1.05)],
@@ -250,6 +250,20 @@
     
     return group;
 }
+
++(BOOL)A_CheckIfMirrorEffect:(A_AnimationEffectType)type {
+    return (NSUInteger)type >= 1000 && (NSUInteger)type <= 1999;
+}
++(BOOL)A_CheckIfDisappearingEffect:(A_AnimationEffectType)type {
+    return (NSUInteger)type >= 300 && (NSUInteger)type <= 399;
+}
++(A_AnimationEffectType)A_ConvertMirrorEffect:(A_AnimationEffectType)type {
+    if ([A_Animation A_CheckIfMirrorEffect:type]) {
+        return (A_AnimationEffectType)((NSUInteger)type - 1000);
+    }
+    return type;
+}
+
 
 @end
 

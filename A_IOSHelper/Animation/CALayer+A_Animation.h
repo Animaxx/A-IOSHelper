@@ -45,8 +45,8 @@
 
 - (void) A_AnimationSetShadowOffset:(CGSize)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetShadowOffset:(CGSize)value AnimtionType:(A_AnimationType)type Duraion:(double)duration;
-- (void) A_AnimationSetShadowOpacity:(CGSize)value AnimtionType:(A_AnimationType)type;
-- (void) A_AnimationSetShadowOpacity:(CGSize)value AnimtionType:(A_AnimationType)type Duraion:(double)duration;
+- (void) A_AnimationSetShadowOpacity:(CGFloat)value AnimtionType:(A_AnimationType)type;
+- (void) A_AnimationSetShadowOpacity:(CGFloat)value AnimtionType:(A_AnimationType)type Duraion:(double)duration;
 - (void) A_AnimationSetShadowRadius:(CGFloat)value AnimtionType:(A_AnimationType)type;
 - (void) A_AnimationSetShadowRadius:(CGFloat)value AnimtionType:(A_AnimationType)type Duraion:(double)duration;
 - (void) A_AnimationSetSublayerTransform:(CATransform3D)value AnimtionType:(A_AnimationType)type;

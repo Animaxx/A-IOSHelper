@@ -129,11 +129,11 @@
 - (void) A_AnimationSetShadowOffset:(CGSize)value AnimtionType:(A_AnimationType)type Duraion:(double)duration{
     [self A_AnimationSet:@"shadowOffset" AnimtionType:type Start:nil End:[NSValue valueWithCGSize:value] Duration:duration FPS:A_AnimationFPS_high];
 }
-- (void) A_AnimationSetShadowOpacity:(CGSize)value AnimtionType:(A_AnimationType)type {
-    [self A_AnimationSet:@"shadowOpacity" AnimtionType:type Start:nil End:[NSValue valueWithCGSize:value] Duration:0 FPS:A_AnimationFPS_high];
+- (void) A_AnimationSetShadowOpacity:(CGFloat)value AnimtionType:(A_AnimationType)type {
+    [self A_AnimationSet:@"shadowOpacity" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
 }
-- (void) A_AnimationSetShadowOpacity:(CGSize)value AnimtionType:(A_AnimationType)type Duraion:(double)duration{
-    [self A_AnimationSet:@"shadowOpacity" AnimtionType:type Start:nil End:[NSValue valueWithCGSize:value] Duration:duration FPS:A_AnimationFPS_high];
+- (void) A_AnimationSetShadowOpacity:(CGFloat)value AnimtionType:(A_AnimationType)type Duraion:(double)duration{
+    [self A_AnimationSet:@"shadowOpacity" AnimtionType:type Start:nil End:@(value) Duration:duration FPS:A_AnimationFPS_high];
 }
 - (void) A_AnimationSetShadowRadius:(CGFloat)value AnimtionType:(A_AnimationType)type {
     [self A_AnimationSet:@"shadowRadius" AnimtionType:type Start:nil End:@(value) Duration:0 FPS:A_AnimationFPS_high];
