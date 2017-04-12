@@ -416,9 +416,9 @@ typedef enum : NSUInteger {
         item.animationsForMirror = [[NSMutableArray alloc] init];
         
         if ([A_Animation A_CheckIfMirrorEffect:effect]) {
-            [_syncingChainItem.animationsForMirror addObject:[A_Animation A_GenerateEffect:[A_Animation A_ConvertMirrorEffect:effect] Duration:duration]];
+            [item.animationsForMirror addObject:[A_Animation A_GenerateEffect:[A_Animation A_ConvertMirrorEffect:effect] Duration:duration]];
         } else {
-            [_syncingChainItem.animations addObject:[A_Animation A_GenerateEffect:effect Duration:duration]];
+            [item.animations addObject:[A_Animation A_GenerateEffect:effect Duration:duration]];
         }
         
         [self.chainItems addObject:item];
