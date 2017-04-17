@@ -100,10 +100,35 @@
     [A_PlistHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
 }
 
+- (NSNumber *)A_SaveToSqliteWithKey: (NSString *)tableKey {
+    if (![[A_SqliteManager A_Instance] A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
+        [[A_SqliteManager A_Instance] A_CreateTable:self AndKey:tableKey];
+    }
+    
+    NSNumber *effectRows = [[A_SqliteManager A_Instance] A_Update:self AndKeys:@[tableKey]];
+    if ([effectRows integerValue] <= 0) {
+        [[A_SqliteManager A_Instance] A_Insert:self];
+        return [[A_SqliteManager A_Instance] A_lastInsertId];
+    } else {
+        id kv = [self valueForKeyPath:tableKey];
+        if (kv) {
+            if ([kv isKindOfClass:[NSNumber class]]) {
+                return (NSNumber*)kv;
+            }
+        }
+        
+        return effectRows;
+    }
+}
 - (void)A_SaveToSqlite {
     if (![[A_SqliteManager A_Instance] A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
         [[A_SqliteManager A_Instance] A_CreateTable:self];
     }
+    
+//    NSNumber *effectRows = [[A_SqliteManager A_Instance] A_Update:self AndKeys:@[tableKey]];
+//    if ([effectRows integerValue] <= 0) {
+//        
+//    }
     [[A_SqliteManager A_Instance] A_Insert:self];
 }
 - (void)A_DeleteModelInSqlite {

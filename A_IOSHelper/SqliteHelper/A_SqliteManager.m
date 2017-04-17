@@ -440,15 +440,25 @@
     BOOL _isKey = NO;
     for (NSString *item in _keys) {
         _isKey = NO;
-        for (NSString *_keys in keys) {
-            if ([[item lowercaseString] isEqualToString:[_keys lowercaseString]]) {
-                if (_keysStr.length == 0) {
-                    _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
-                } else {
-                    _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+        if (keys.count > 0) {
+            // If keys exist, put them to where
+            for (NSString *_keys in keys) {
+                if ([[item lowercaseString] isEqualToString:[_keys lowercaseString]]) {
+                    if (_keysStr.length == 0) {
+                        _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+                    } else {
+                        _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+                    }
+                    _isKey = YES;
+                    break;
                 }
-                _isKey = YES;
-                break;
+            }
+        } else {
+            // If keys not exist, put all to where
+            if (_keysStr.length == 0) {
+                _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+            } else {
+                _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
             }
         }
         
@@ -503,7 +513,6 @@
                 _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
             }
         }
-        
     }
     
     NSString *_sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@",tableName,_valuesStr];

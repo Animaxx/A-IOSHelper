@@ -22,6 +22,7 @@
 + (NSArray*)A_GetFromPliste;
 + (void)A_ClearFromPlist;
 
+- (NSNumber *)A_SaveToSqliteWithKey: (NSString *)tableKey;
 - (void)A_SaveToSqlite;
 - (void)A_DeleteModelInSqlite;
 - (NSArray*)A_SearchSimilarModelsInSqlite;
