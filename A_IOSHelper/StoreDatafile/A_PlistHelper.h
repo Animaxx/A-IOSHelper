@@ -10,12 +10,12 @@
 
 @interface A_PlistHelper : NSObject
 
-+ (void) A_Save:(id)dataObject byKey:(NSString*)key;
-+ (id) A_GetByKey:(NSString*)key;
++ (void) A_Save:(nonnull id)dataObject byKey:(nonnull NSString*)key;
++ (nullable id) A_GetByKey:(nonnull NSString*)key;
 + (void) A_CleanAll;
 
-+ (void) A_Save:(id)dataObject toGroup:(NSString*)group andKey:(NSString*)key;
-+ (id) A_GetByGroup:(NSString*)group andKey:(NSString*)key;
-+ (void) A_CleanAllInGroup: (NSString*)group;
++ (void) A_Save:(nonnull id)dataObject toGroup:(nonnull NSString*)group andKey:(nonnull NSString*)key;
++ (nullable id) A_GetByGroup:(nonnull NSString*)group andKey:(nonnull NSString*)key;
++ (void) A_CleanAllInGroup: (nonnull NSString*)group;
 
 @end
