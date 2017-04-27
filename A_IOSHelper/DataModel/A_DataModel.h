@@ -23,13 +23,16 @@
 + (void)A_ClearFromPlist;
 
 - (NSNumber *)A_SaveToSqliteWithKey: (NSString *)tableKey;
-- (void)A_SaveToSqlite;
+- (void)A_InsertToSqlite;
 - (void)A_DeleteModelInSqlite;
 - (NSArray*)A_SearchSimilarModelsInSqlite;
 + (NSArray*)A_SearchSqlite: (NSString*)where;
 
 - (void)A_SearchSimilarModelsInSqliteWithBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
 + (void)A_SearchSqlite: (NSString*)where withBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
+
+#pragma mark - OVerride
+- (NSString *)nameOfDatabaseFile;
 
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(NSCoder *)aCoder;

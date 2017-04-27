@@ -5,7 +5,7 @@
 //  Created by Animax on 12/10/14.
 //  Copyright (c) 2014 AnimaxDeng. All rights reserved.
 //
-#define DEFAULT_SQLITE_NAME @"A_SQLITE_FILE.DB"
+#define DEFAULT_SQLITE_NAME @"DATABASE_STORE.DB"
 
 #import "A_SqliteManager.h"
 #import <sqlite3.h>

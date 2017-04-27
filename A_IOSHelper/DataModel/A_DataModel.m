@@ -101,14 +101,16 @@
 }
 
 - (NSNumber *)A_SaveToSqliteWithKey: (NSString *)tableKey {
-    if (![[A_SqliteManager A_Instance] A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
-        [[A_SqliteManager A_Instance] A_CreateTable:self AndKey:tableKey];
+    A_SqliteManager *manager = [self __sqliteManager];
+    
+    if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
+        [manager A_CreateTable:self AndKey:tableKey];
     }
     
-    NSNumber *effectRows = [[A_SqliteManager A_Instance] A_Update:self AndKeys:@[tableKey]];
+    NSNumber *effectRows = [manager A_Update:self AndKeys:@[tableKey]];
     if ([effectRows integerValue] <= 0) {
-        [[A_SqliteManager A_Instance] A_Insert:self];
-        return [[A_SqliteManager A_Instance] A_lastInsertId];
+        [manager A_Insert:self];
+        return [manager A_lastInsertId];
     } else {
         id kv = [self valueForKeyPath:tableKey];
         if (kv) {
@@ -120,25 +122,40 @@
         return effectRows;
     }
 }
-- (void)A_SaveToSqlite {
-    if (![[A_SqliteManager A_Instance] A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
-        [[A_SqliteManager A_Instance] A_CreateTable:self];
+
+- (A_SqliteManager *)__sqliteManager {
+    NSString *dbname = [self nameOfDatabaseFile];
+    if (dbname.length <= 0) {
+        return [A_SqliteManager A_Instance];
+    } else {
+        return [A_SqliteManager A_Instance:dbname];
+    }
+}
+- (void)A_InsertToSqlite {
+    A_SqliteManager *manager = [A_SqliteManager A_Instance];
+    
+    if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
+        [manager A_CreateTable:self];
     }
     
-//    NSNumber *effectRows = [[A_SqliteManager A_Instance] A_Update:self AndKeys:@[tableKey]];
-//    if ([effectRows integerValue] <= 0) {
-//        
-//    }
-    [[A_SqliteManager A_Instance] A_Insert:self];
+    [manager A_Insert:self];
 }
 - (void)A_DeleteModelInSqlite {
-    [[A_SqliteManager A_Instance] A_Delete:self];
+    [[self __sqliteManager] A_Delete:self];
 }
 - (NSArray*)A_SearchSimilarModelsInSqlite {
-    return [[A_SqliteManager A_Instance] A_SearchSimilarModels:self];
+    return [[self __sqliteManager] A_SearchSimilarModels:self];
 }
 + (NSArray*)A_SearchSqlite: (NSString*)where {
-    return [[A_SqliteManager A_Instance] A_SearchModels:[self class] Where:where];
+    id obj = [[[self class] alloc] init];
+    A_SqliteManager *manager = nil;
+    if ([obj isKindOfClass:[A_DataModel class]]) {
+        manager = [(A_DataModel*)obj __sqliteManager];
+    } else {
+        manager = [A_SqliteManager A_Instance];
+    }
+    
+    return [manager A_SearchModels:[self class] Where:where];
 }
 
 - (void)A_SearchSimilarModelsInSqliteWithBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj{
@@ -160,14 +177,27 @@
         obj = [NSNull null];
     }
 
+    id instance = [[[self class] alloc] init];
+    A_SqliteManager *manager = nil;
+    if ([obj isKindOfClass:[A_DataModel class]]) {
+        manager = [(A_DataModel*)instance __sqliteManager];
+    } else {
+        manager = [A_SqliteManager A_Instance];
+    }
+    
     [A_TaskHelper A_RunInBackgroundWithParam:@[self,where,obj] Block:^(id arg) {
-        NSArray *result = [[A_SqliteManager A_Instance] A_SearchModels:[[arg objectAtIndex:0] class] Where:[arg objectAtIndex:1]];
+        NSArray *result = [manager A_SearchModels:[[arg objectAtIndex:0] class] Where:[arg objectAtIndex:1]];
         id _arg = [arg objectAtIndex:1];
         if (_arg == [NSNull null]) {
             _arg = nil;
         }
         finishBlock(_arg, result);
     }];
+}
+
+#pragma mark - Override
+- (NSString *)nameOfDatabaseFile {
+    return @"";
 }
 
 #pragma mark - NSCoding

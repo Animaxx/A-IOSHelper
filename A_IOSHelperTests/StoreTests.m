@@ -94,7 +94,7 @@
     
     [[A_SqliteManager A_Instance] A_ExecuteQuery:[NSString stringWithFormat:@"DROP TABLE %@", [A_SqliteManager A_GenerateTableName:_model1]]];
     
-    [_model1 A_SaveToSqlite];
+    [_model1 A_InsertToSqlite];
     
     [_model1 A_SearchSimilarModelsInSqliteWithBlock:^(id obj, NSArray *result) {
         XCTAssertEqual(result.count, 1);
