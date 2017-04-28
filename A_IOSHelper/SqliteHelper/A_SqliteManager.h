@@ -11,6 +11,8 @@
 
 @interface A_SqliteManager : NSObject
 
+@property (nonatomic) BOOL isStoringInDocumentFolder;
+
 + (A_SqliteManager *) A_Instance;
 + (A_SqliteManager *) A_Instance: (NSString *)file;
 

@@ -24,7 +24,6 @@
 
 #pragma mark - Database Operation
 
-
 + (A_SqliteManager *) A_Instance {
     return [A_SqliteManager A_Instance:DEFAULT_SQLITE_NAME];
 }
@@ -129,6 +128,10 @@
 - (NSString *) A_DBPath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths lastObject];
+    if (!self.isStoringInDocumentFolder) {
+        documentsDirectory = [documentsDirectory stringByDeletingLastPathComponent];
+    }
+    
     return [documentsDirectory stringByAppendingPathComponent:databaseFileName];
 }
 
