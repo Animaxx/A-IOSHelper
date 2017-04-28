@@ -109,7 +109,7 @@
     
     NSNumber *effectRows = [manager A_Update:self AndKeys:@[tableKey]];
     if ([effectRows integerValue] <= 0) {
-        [manager A_Insert:self];
+        [manager A_Insert:self WithIgnore:@[tableKey]];
         return [manager A_lastInsertId];
     } else {
         id kv = [self valueForKeyPath:tableKey];
