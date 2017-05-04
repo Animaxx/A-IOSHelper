@@ -126,10 +126,13 @@
 }
 
 - (NSString *) A_DBPath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths lastObject];
+    NSString *documentsDirectory = @"";
     if (!self.isStoringInDocumentFolder) {
-        documentsDirectory = [documentsDirectory stringByDeletingLastPathComponent];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        documentsDirectory = [paths lastObject];
+    } else {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+        documentsDirectory = [paths lastObject];
     }
     
     return [documentsDirectory stringByAppendingPathComponent:databaseFileName];
