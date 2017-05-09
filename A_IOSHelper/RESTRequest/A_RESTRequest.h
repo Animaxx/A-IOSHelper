@@ -27,36 +27,36 @@ typedef NS_ENUM (NSInteger, A_NetworkParameterFormat) {
 #pragma mark - Upload data set -
 @interface A_RESTRequestUploadDataSet : NSObject
 
-+ (A_RESTRequestUploadDataSet *)A_Make:(NSData *)fileData fileName:(NSString *)filename;
-+ (A_RESTRequestUploadDataSet *)A_Make:(NSData *)fileData fileName:(NSString *)filename fileKey:(NSString *)fileKey;
++ (nonnull A_RESTRequestUploadDataSet *)A_Make:(nonnull NSData *)fileData fileName:(nonnull NSString *)filename;
++ (nonnull A_RESTRequestUploadDataSet *)A_Make:(nonnull NSData *)fileData fileName:(nonnull NSString *)filename fileKey:(nullable NSString *)fileKey;
 
-+ (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image fileName:(NSString *)filename;
-+ (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image fileName:(NSString *)filename fileKey:(NSString *)fileKey;
-+ (A_RESTRequestUploadDataSet *)A_MakeWithImage:(UIImage *)image compressRate:(float)rate fileName:(NSString *)filename fileKey:(NSString *)fileKey;
++ (nonnull A_RESTRequestUploadDataSet *)A_MakeWithImage:(nonnull UIImage *)image fileName:(nonnull NSString *)filename;
++ (nonnull A_RESTRequestUploadDataSet *)A_MakeWithImage:(nonnull UIImage *)image fileName:(nonnull NSString *)filename fileKey:(nullable NSString *)fileKey;
++ (nonnull A_RESTRequestUploadDataSet *)A_MakeWithImage:(nonnull UIImage *)image compressRate:(float)rate fileName:(nonnull NSString *)filename fileKey:(nullable NSString *)fileKey;
 
 @end
 
 #pragma mark - Define blocks
-typedef void (^A_RESTRequestCompliedBlock) (NSData *data, NSURLResponse *response, NSError *error);
-typedef void (^A_RESTRequestDownloadCompliedBlock) (NSURL *temporaryURL, NSURLResponse *response, NSError *error);
+typedef void (^A_RESTRequestCompliedBlock) (NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error);
+typedef void (^A_RESTRequestDownloadCompliedBlock) (NSURL *_Nullable emporaryURL, NSURLResponse *_Nullable response, NSError *_Nullable error);
 
-typedef void (^A_RESTRequestDictionaryCompliedBlock) (NSDictionary<NSString *, id> *data, NSURLResponse *response, NSError *error);
-typedef void (^A_RESTRequestArrayCompliedBlock) (NSArray *data, NSURLResponse *response, NSError *error);
+typedef void (^A_RESTRequestDictionaryCompliedBlock) (NSDictionary<NSString *, id> *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error);
+typedef void (^A_RESTRequestArrayCompliedBlock) (NSArray *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error);
 
-typedef void (^A_RESTDidReceiveChallengeCompletionHandler) (NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential);
-typedef void (^A_RESTDidReceiveChallenge) (NSURLSession *session, NSURLAuthenticationChallenge *challenge, A_RESTDidReceiveChallengeCompletionHandler completion);
+typedef void (^A_RESTDidReceiveChallengeCompletionHandler) (NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *_Nullable credential);
+typedef void (^A_RESTDidReceiveChallenge) (NSURLSession *_Nullable session, NSURLAuthenticationChallenge *_Nullable challenge, A_RESTDidReceiveChallengeCompletionHandler _Nullable completion);
 
-typedef void (^A_RESTDidSendData) (NSURLSession *session, NSURLSessionTask *dataTask, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
-typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTask *dataTask, CGFloat progress);
+typedef void (^A_RESTDidSendData) (NSURLSession *_Nullable session, NSURLSessionTask *_Nullable dataTask, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
+typedef void (^A_RESTDidReceiveData) (NSURLSession *_Nullable session, NSURLSessionTask *_Nullable dataTask, CGFloat progress);
 
 #pragma mark - REST request -
 @interface A_RESTRequest : NSObject
 
 #pragma mark - Base params
-@property (strong, nonatomic) NSString *url;
-@property (strong, nonatomic) NSDictionary<NSString *, id> *parameters;
-@property (strong, nonatomic) NSDictionary<NSString *, NSString *> *headers;
-@property (strong, nonatomic) A_RESTRequestUploadDataSet *uploadDataSet;
+@property (strong, nonatomic, nonnull) NSString *url;
+@property (strong, nonatomic, nullable) NSDictionary<NSString *, id> *parameters;
+@property (strong, nonatomic, nullable) NSDictionary<NSString *, NSString *> *headers;
+@property (strong, nonatomic, nullable) A_RESTRequestUploadDataSet *uploadDataSet;
 @property (nonatomic) A_NetworkRequestMethod requestMethod;
 @property (nonatomic) A_NetworkParameterFormat parameterFormat;
 
@@ -67,36 +67,36 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
 
 
 #pragma mark - Advanced optional params
-@property (copy, nonatomic) A_RESTDidReceiveChallenge didReceiveChallengeBlock;
-@property (copy, nonatomic) A_RESTDidSendData didSendDataBlock;
-@property (copy, nonatomic) A_RESTDidReceiveData didReceiveDataBlock;
+@property (copy, nonatomic, nullable) A_RESTDidReceiveChallenge didReceiveChallengeBlock;
+@property (copy, nonatomic, nullable) A_RESTDidSendData didSendDataBlock;
+@property (copy, nonatomic, nullable) A_RESTDidReceiveData didReceiveDataBlock;
 
 #pragma mark - Initialize methods
-+ (A_RESTRequest *)A_Create:(NSString *)url;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url;
 
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary<NSString *, NSString *> *)headers;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary<NSString *, id> *)parameters;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method parameters:(NSDictionary<NSString *, id> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
-+ (A_RESTRequest *)A_Create:(NSString *)url method:(A_NetworkRequestMethod)method headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, id> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url method:(A_NetworkRequestMethod)method;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url method:(A_NetworkRequestMethod)method headers:(nullable NSDictionary<NSString *, NSString *> *)headers;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url method:(A_NetworkRequestMethod)method parameters:(nullable NSDictionary<NSString *, id> *)parameters;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url method:(A_NetworkRequestMethod)method parameters:(nullable NSDictionary<NSString *, id> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url method:(A_NetworkRequestMethod)method headers:(nullable NSDictionary<NSString *, NSString *> *)headers parameters:(nullable NSDictionary<NSString *, id> *)parameters format:(A_NetworkParameterFormat)parameterFormat;
 
-+ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet;
-+ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet parameters:(NSDictionary<NSString *, id> *)parameters;
-+ (A_RESTRequest *)A_Create:(NSString *)url upload:(A_RESTRequestUploadDataSet *)uploadSet headers:(NSDictionary<NSString *, NSString *> *)headers parameters:(NSDictionary<NSString *, id> *)parameters;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url upload:(nonnull A_RESTRequestUploadDataSet *)uploadSet;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url upload:(nonnull A_RESTRequestUploadDataSet *)uploadSet parameters:(nullable NSDictionary<NSString *, id> *)parameters;
++ (nonnull A_RESTRequest *)A_Create:(nonnull NSString *)url upload:(nonnull A_RESTRequestUploadDataSet *)uploadSet headers:(nullable NSDictionary<NSString *, NSString *> *)headers parameters:(nullable NSDictionary<NSString *, id> *)parameters;
 
 #pragma mark - Event Blocks
 /**
  Block for handling challenges as SSL; if not set, it will trust any SSL certificates.
  */
-- (A_RESTRequest *)A_SetDidReceiveChallengeBlock:(A_RESTDidReceiveChallenge)block;
+- (nonnull A_RESTRequest *)A_SetDidReceiveChallengeBlock:(nullable A_RESTDidReceiveChallenge)block;
 
-- (A_RESTRequest *)A_SetDidReceiveDataBlock:(A_RESTDidReceiveData)block;
-- (A_RESTRequest *)A_SetSendDataBlock:(A_RESTDidSendData)block;
+- (nonnull A_RESTRequest *)A_SetDidReceiveDataBlock:(nullable A_RESTDidReceiveData)block;
+- (nonnull A_RESTRequest *)A_SetSendDataBlock:(nullable A_RESTDidSendData)block;
 
 #pragma mark - Excute Request Methods
-- (NSURLSessionTask *)A_Request:(A_RESTRequestCompliedBlock)block;
-- (NSURLSessionTask *)A_RequestDictionary:(A_RESTRequestDictionaryCompliedBlock)block;
-- (NSURLSessionTask *)A_RequestArray:(A_RESTRequestArrayCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_Request:(nullable A_RESTRequestCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_RequestDictionary:(nullable A_RESTRequestDictionaryCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_RequestArray:(nullable A_RESTRequestArrayCompliedBlock)block;
 
 /**
  Execute Download Task, didReceiveDataBlock params will be avaliable with this request.
@@ -104,7 +104,7 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
  @param block Download complied block
  @return SessionTask
  */
-- (NSURLSessionTask *)A_RequestDownload:(A_RESTRequestDownloadCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_RequestDownload:(nullable A_RESTRequestDownloadCompliedBlock)block;
 
 /**
  Execute Download Task, didReceiveDataBlock params will be avaliable with this request.
@@ -113,7 +113,7 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
  @param block Download complied block
  @return Session Task
  */
-- (NSURLSessionTask *)A_RequestDownloadToDocument:(NSString *)filename withBlock:(A_RESTRequestDownloadCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_RequestDownloadToDocument:(nonnull NSString *)filename withBlock:(nullable A_RESTRequestDownloadCompliedBlock)block;
 
 
 /**
@@ -123,26 +123,26 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *session, NSURLSessionDataTas
  @param block Download complied block
  @return Session Task
  */
-- (NSURLSessionTask *)A_RequestDownloadToUrl:(NSURL *)url withBlock:(A_RESTRequestDownloadCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_RequestDownloadToUrl:(nonnull NSURL *)url withBlock:(nullable A_RESTRequestDownloadCompliedBlock)block;
 
 /**
  Execute Upload Task, didSendDataBlock params will be avaliable with these requests.
  */
-- (NSURLSessionTask *)A_RequestUpload:(A_RESTRequestCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_RequestUpload:(nullable A_RESTRequestCompliedBlock)block;
 /**
  Execute Upload Task, didSendDataBlock params will be avaliable with these requests.
  */
-- (NSURLSessionTask *)A_RequestUploadAndReturnDictionary:(A_RESTRequestDictionaryCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_RequestUploadAndReturnDictionary:(nullable A_RESTRequestDictionaryCompliedBlock)block;
 /**
  Execute Upload Task, didSendDataBlock params will be avaliable with these requests.
  */
-- (NSURLSessionTask *)A_RequestUploadAndReturnArray:(A_RESTRequestArrayCompliedBlock)block;
+- (nonnull NSURLSessionTask *)A_RequestUploadAndReturnArray:(nullable A_RESTRequestArrayCompliedBlock)block;
 
 
-- (NSDictionary *)A_RequestDictionarySync;
-- (NSArray *)A_RequestArraySync;
+- (nonnull NSDictionary *)A_RequestDictionarySync;
+- (nonnull NSArray *)A_RequestArraySync;
 
-- (NSURLSessionTask *)A_GetURLSessionTask;
+- (nonnull NSURLSessionTask *)A_GetURLSessionTask;
 
 #pragma mark - Thread Operations
 - (void)A_Resume;

@@ -85,6 +85,7 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 - (instancetype)initInternal {
 	self= [super init];
     self.timeout = 60.0f;
+    self.url = @"";
 	return self;
 }
 
@@ -210,6 +211,10 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	NSMutableURLRequest *theRequest= [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr]];
 
 	// Set upload data
+    if (!_headers) {
+        _headers = @{};
+    }
+    
 	NSMutableData *body= [NSMutableData data];
 	if (self.uploadDataSet && [self.uploadDataSet dataCompleted]) {
 		[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -274,12 +279,12 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
     [theRequest setAllHTTPHeaderFields:_headers];
     [theRequest setTimeoutInterval:self.timeout];
 
-	__block NSData *resultData= nil;
+//	__block NSData *resultData= nil;
 	if (self.currectSessionTask && (self.currectSessionTask.state == NSURLSessionTaskStateRunning || self.currectSessionTask.state == NSURLSessionTaskStateSuspended)) {
 		[self.currectSessionTask cancel];
 	}
 
-    _currectSession= [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    _currectSession= [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue currentQueue]];
 //	_currectSession= [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue currentQueue]];
     
 //	if (self.didReceiveChallengeBlock || self.didReceiveDataBlock || self.didSendDataBlock) {
