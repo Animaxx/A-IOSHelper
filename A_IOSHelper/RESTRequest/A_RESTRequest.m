@@ -438,23 +438,60 @@ typedef NS_ENUM (NSInteger, A_NetworkSessionType) {
 	return self.currectSessionTask;
 }
 
+- (NSData *)A_RequestDataSync {
+    dispatch_semaphore_t requestSemaphore= dispatch_semaphore_create (0);
+    __block NSData *result = nil;
+    
+    void(^runBlock)(void)  = ^ {
+        [self A_Request:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            result = data;
+            dispatch_semaphore_signal (requestSemaphore);
+        }];
+    };
+    if (![NSThread isMainThread]) {
+        runBlock();
+    } else {
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), runBlock);
+    }
+    
+    dispatch_semaphore_wait (requestSemaphore, DISPATCH_TIME_FOREVER);
+    return result;
+}
 - (NSDictionary *)A_RequestDictionarySync {
 	__block NSDictionary *result= nil;
 	dispatch_semaphore_t requestSemaphore= dispatch_semaphore_create (0);
-	[self A_RequestDictionary:^(NSDictionary *data, NSURLResponse *response, NSError *error) {
-	  result= data;
-	  dispatch_semaphore_signal (requestSemaphore);
-	}];
+    
+    void(^runBlock)(void)  = ^ {
+        [self A_RequestDictionary:^(NSDictionary *data, NSURLResponse *response, NSError *error) {
+          result= data;
+          dispatch_semaphore_signal (requestSemaphore);
+        }];
+    };
+    if (![NSThread isMainThread]) {
+        runBlock();
+    } else {
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), runBlock);
+    }
+        
 	dispatch_semaphore_wait (requestSemaphore, DISPATCH_TIME_FOREVER);
 	return result;
 }
 - (NSArray *)A_RequestArraySync {
 	__block NSArray *result= nil;
 	dispatch_semaphore_t requestSemaphore= dispatch_semaphore_create (0);
-	[self A_RequestArray:^(NSArray *data, NSURLResponse *response, NSError *error) {
-	  result= data;
-	  dispatch_semaphore_signal (requestSemaphore);
-	}];
+    
+    void(^runBlock)(void)  = ^ {
+        [self A_RequestArray:^(NSArray *data, NSURLResponse *response, NSError *error) {
+          result= data;
+          dispatch_semaphore_signal (requestSemaphore);
+        }];
+    };
+    if (![NSThread isMainThread]) {
+        runBlock();
+    } else {
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), runBlock);
+    }
+    
 	dispatch_semaphore_wait (requestSemaphore, DISPATCH_TIME_FOREVER);
 	return result;
 }

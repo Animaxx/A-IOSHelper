@@ -138,7 +138,7 @@ typedef void (^A_RESTDidReceiveData) (NSURLSession *_Nullable session, NSURLSess
  */
 - (nonnull NSURLSessionTask *)A_RequestUploadAndReturnArray:(nullable A_RESTRequestArrayCompliedBlock)block;
 
-
+- (nonnull NSData *)A_RequestDataSync;
 - (nonnull NSDictionary *)A_RequestDictionarySync;
 - (nonnull NSArray *)A_RequestArraySync;
 
