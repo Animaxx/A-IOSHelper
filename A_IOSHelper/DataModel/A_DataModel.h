@@ -11,32 +11,33 @@
 @interface A_DataModel : NSObject<NSCoding>
 
 
-- (NSDictionary*)A_Serialize;
-+ (NSObject*)A_Deserialize: (NSDictionary*)Array;
+- (nonnull NSDictionary*)A_Serialize;
++ (nonnull NSObject*)A_Deserialize: (nonnull NSDictionary*)Array;
 
-- (NSString*)A_ConvertToJSON;
-+ (NSObject*)A_ConvertFromJSON: (NSString*)JSON;
+- (nullable NSString*)A_ConvertToJSON;
++ (nonnull NSObject*)A_ConvertFromJSON: (nonnull NSString*)JSON;
 
 - (void)A_SaveToPlist;
 - (void)A_DeleteInPlist;
-+ (NSArray*)A_GetFromPliste;
++ (nonnull NSArray*)A_GetFromPliste;
 + (void)A_ClearFromPlist;
 
-- (NSNumber *)A_SaveToSqliteWithKey: (NSString *)tableKey;
+- (nonnull NSNumber *)A_SaveToSqliteWithKey: (nonnull NSString *)tableKey;
 - (void)A_InsertToSqlite;
 - (void)A_DeleteModelInSqlite;
-- (NSArray*)A_SearchSimilarModelsInSqlite;
-+ (NSArray*)A_SearchSqlite: (NSString*)where;
+- (void)A_DeleteModelInSqliteWithKeys: (nonnull NSArray<NSString *> *)tableKeys;
+- (nonnull NSArray*)A_SearchSimilarModelsInSqlite;
++ (nonnull NSArray*)A_SearchSqlite: (nullable NSString*)where;
 
-- (void)A_SearchSimilarModelsInSqliteWithBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
-+ (void)A_SearchSqlite: (NSString*)where withBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
+- (void)A_SearchSimilarModelsInSqliteWithBlock:(nonnull void (^)(id _Nullable obj, NSArray *_Nullable result))finishBlock andArg:(nullable id)obj;
++ (void)A_SearchSqlite: (nullable NSString*)where withBlock:(nonnull void (^)(id _Nullable obj, NSArray *_Nullable result))finishBlock andArg:(nullable id)obj;
 
-#pragma mark - OVerride
-- (NSString *)nameOfDatabaseFile;
+#pragma mark - Override
+- (nonnull NSString *)nameOfDatabaseFile;
 
 #pragma mark - NSCoding
-- (void)encodeWithCoder:(NSCoder *)aCoder;
-- (id)initWithCoder:(NSCoder *)aDecoder;
+- (void)encodeWithCoder:(nonnull NSCoder *)aCoder;
+- (nonnull id)initWithCoder:(nonnull NSCoder *)aDecoder;
 #pragma mark -
 
 @end

@@ -143,10 +143,13 @@
 - (void)A_DeleteModelInSqlite {
     [[self __sqliteManager] A_Delete:self];
 }
-- (NSArray*)A_SearchSimilarModelsInSqlite {
+- (void)A_DeleteModelInSqliteWithKeys: (NSArray<NSString *> *)tableKeys {
+    [[self __sqliteManager] A_Delete:self AndKeys:tableKeys];
+}
+- (nonnull NSArray*)A_SearchSimilarModelsInSqlite {
     return [[self __sqliteManager] A_SearchSimilarModels:self];
 }
-+ (NSArray*)A_SearchSqlite: (NSString*)where {
++ (nonnull NSArray*)A_SearchSqlite: (NSString*)where {
     id obj = [[[self class] alloc] init];
     A_SqliteManager *manager = nil;
     if ([obj isKindOfClass:[A_DataModel class]]) {
