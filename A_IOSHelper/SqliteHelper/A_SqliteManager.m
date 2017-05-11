@@ -12,61 +12,120 @@
 #import "A_Reflection.h"
 #import "A_TaskHelper.h"
 #import "NSDate+A_Extension.h"
+#import "A_DataModel.h"
+
+
+@implementation A_DataModelDBIdentity
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.DatabaseIdentity = DEFAULT_SQLITE_NAME;
+        self.SharedGroupName = nil;
+        self.StoringType = A_SqliteStoringInLibraryFolder;
+    }
+    return self;
+}
+- (instancetype)initWithIdentity:(NSString *)databaseIdentity
+{
+    self = [super init];
+    if (self) {
+        self.DatabaseIdentity = databaseIdentity;
+        self.SharedGroupName = nil;
+        self.StoringType = A_SqliteStoringInLibraryFolder;
+    }
+    return self;
+}
+- (instancetype)initWithIdentity:(NSString *)databaseIdentity storingType:(A_SqliteStoringType)storingType
+{
+    self = [super init];
+    if (self) {
+        self.DatabaseIdentity = databaseIdentity;
+        self.SharedGroupName = nil;
+        self.StoringType = storingType;
+    }
+    return self;
+}
+- (instancetype)initWithIdentity:(NSString *)databaseIdentity group:(NSString *)group
+{
+    self = [super init];
+    if (self) {
+        self.DatabaseIdentity = databaseIdentity;
+        self.SharedGroupName = group;
+        self.StoringType = A_SqliteStoringInSharedGroup;
+    }
+    return self;
+}
+
+
+@end
+
+@interface A_SqliteManager()
+
+@end
 
 @implementation A_SqliteManager {
     sqlite3 *database;
     sqlite3_stmt *statement;
-    NSString *databaseFileName;
     NSFileManager *filemanager;
     NSMutableArray *ExistingTables;
     NSLock *sqlLock;
+    
+    A_DataModelDBIdentity *databaseIdentity;
 }
 
 #pragma mark - Database Operation
 
+
 + (A_SqliteManager *) A_Instance {
-    return [A_SqliteManager A_Instance:DEFAULT_SQLITE_NAME];
+    return [A_SqliteManager A_InstanceWithIdentity:DEFAULT_SQLITE_NAME];
 }
-+ (A_SqliteManager *) A_Instance: (NSString *)file {
++ (A_SqliteManager *) A_InstanceWithIdentity: (NSString *)Identity {
+    return [A_SqliteManager A_Instance:[[A_DataModelDBIdentity alloc] initWithIdentity:Identity]];
+}
++ (A_SqliteManager *) A_Instance: (A_DataModelDBIdentity *)Identity {
+    if (!Identity.DatabaseIdentity || [Identity.DatabaseIdentity length] == 0) {
+        Identity.DatabaseIdentity = DEFAULT_SQLITE_NAME;
+    }
+    
     static dispatch_once_t pred = 0;
     __strong static NSMutableDictionary *_storage = nil;
     dispatch_once(&pred, ^{
         _storage = [[NSMutableDictionary alloc] init];
     });
-    if (![_storage objectForKey:file] || [_storage objectForKey:file] == nil) {
-        [_storage setObject:[[A_SqliteManager alloc] init:file] forKey:file];
+    if (![_storage objectForKey:Identity.DatabaseIdentity] || [_storage objectForKey:Identity.DatabaseIdentity] == nil) {
+        [_storage setObject:[[A_SqliteManager alloc] init:Identity] forKey:Identity.DatabaseIdentity];
     }
     
-    return [_storage objectForKey:file];
+    return [_storage objectForKey:Identity.DatabaseIdentity];
 }
 
-- (instancetype) init{
-    return [self init:DEFAULT_SQLITE_NAME];
-}
-- (instancetype) init: (NSString *)file {
+- (instancetype) init: (A_DataModelDBIdentity *)DBIdentity {
     if ((self = [super init])) {
         sqlLock = [[NSLock alloc] init];
-        databaseFileName = file;
+        databaseIdentity = DBIdentity;
         [self A_OpenConnetion];
     }
     return self;
 }
+
 
 - (BOOL) A_ReopenInSharedGroup:(NSString *)group {
     NSURL *groupFolder = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:group];
     if (!groupFolder) {
         return NO;
     }
-    NSString *filePath = [[[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:group] URLByAppendingPathComponent:databaseFileName] absoluteString];
+    NSString *filePath = [[groupFolder URLByAppendingPathComponent:databaseIdentity.DatabaseIdentity] absoluteString];
     
-    filemanager = [[NSFileManager alloc] init];
+    filemanager = [NSFileManager defaultManager];
     
     if ([self A_IsOpened]) {
         [self A_CloseConnetion];
         
         // Copy original sqlite to shared group
         if ([filemanager fileExistsAtPath:filePath]) {
-            NSString  *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseFileName];
+            NSString  *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseIdentity.DatabaseIdentity];
             if ([filemanager fileExistsAtPath:defaultDBPath]) {
                 [filemanager copyItemAtPath:defaultDBPath toPath:filePath error:NULL];
             }
@@ -91,8 +150,7 @@
     filemanager = [NSFileManager defaultManager];
     NSString  *dbpath = [self A_DBPath];
     if (![filemanager fileExistsAtPath:dbpath]) {
-        
-        NSString  *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseFileName];
+        NSString  *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseIdentity.DatabaseIdentity];
         if ([filemanager fileExistsAtPath:defaultDBPath]) {
             [filemanager copyItemAtPath:defaultDBPath toPath:dbpath error:NULL];
         } else {
@@ -100,8 +158,20 @@
                 NSLog(@"Create file sql file [%@] failed", dbpath);
                 
                 // Create document folder
-                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                NSString *documentsDirectory = [paths lastObject];
+                NSString *documentsDirectory = @"";
+                switch (databaseIdentity.StoringType) {
+                    case A_SqliteStoringInDocumentFolder:
+                        documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject];
+                        break;
+                    case A_SqliteStoringInLibraryFolder:
+                        documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+                        break;
+                    case A_SqliteStoringInSharedGroup:
+                        documentsDirectory = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:databaseIdentity.DatabaseIdentity] path];
+                        break;
+                    default:
+                        break;
+                }
                 NSError *error = nil;
                 [filemanager createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:&error];
                 if (error) {
@@ -127,15 +197,22 @@
 
 - (NSString *) A_DBPath {
     NSString *documentsDirectory = @"";
-    if (!self.isStoringInDocumentFolder) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        documentsDirectory = [paths lastObject];
-    } else {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-        documentsDirectory = [paths lastObject];
+    
+    switch (databaseIdentity.StoringType) {
+        case A_SqliteStoringInDocumentFolder:
+            documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject];
+            break;
+        case A_SqliteStoringInLibraryFolder:
+            documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            break;
+        case A_SqliteStoringInSharedGroup:
+            documentsDirectory = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:databaseIdentity.SharedGroupName] path];
+            break;
+        default:
+            break;
     }
     
-    return [documentsDirectory stringByAppendingPathComponent:databaseFileName];
+    return [documentsDirectory stringByAppendingPathComponent:databaseIdentity.DatabaseIdentity];
 }
 
 #pragma mark - SQL Queries

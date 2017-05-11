@@ -7,17 +7,37 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "A_DataModel.h"
+
+@class A_DataModel;
+
+typedef enum : NSUInteger {
+    A_SqliteStoringInDocumentFolder,
+    A_SqliteStoringInLibraryFolder,
+    A_SqliteStoringInSharedGroup,
+} A_SqliteStoringType;
+
+
+@interface A_DataModelDBIdentity : NSObject
+
+@property (strong, nonatomic) NSString *DatabaseIdentity;
+@property (strong, nonatomic) NSString *SharedGroupName;
+@property (nonatomic) A_SqliteStoringType StoringType;
+
+- (instancetype)init;
+- (instancetype)initWithIdentity:(NSString *)databaseIdentity;
+- (instancetype)initWithIdentity:(NSString *)databaseIdentity storingType:(A_SqliteStoringType)storingType;
+- (instancetype)initWithIdentity:(NSString *)databaseIdentity group:(NSString *)group;
+
+@end
+
 
 @interface A_SqliteManager : NSObject
 
-@property (nonatomic) BOOL isStoringInDocumentFolder;
-
 + (A_SqliteManager *) A_Instance;
-+ (A_SqliteManager *) A_Instance: (NSString *)file;
++ (A_SqliteManager *) A_InstanceWithIdentity: (NSString *)Identity;
++ (A_SqliteManager *) A_Instance: (A_DataModelDBIdentity *)Identity;
 
-- (id) init;
-- (id) init: (NSString *)file;
+- (instancetype) init: (A_DataModelDBIdentity *)DBIdentity;
 
 /**
  * Reopen database in shared group folder, after that all data operations for this instace will go to shared group folder

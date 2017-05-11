@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "A_SqliteManager.h"
 
 @interface A_DataModel : NSObject<NSCoding>
-
 
 - (nonnull NSDictionary*)A_Serialize;
 + (nonnull NSObject*)A_Deserialize: (nonnull NSDictionary*)Array;
@@ -33,7 +33,7 @@
 + (void)A_SearchSqlite: (nullable NSString*)where withBlock:(nonnull void (^)(id _Nullable obj, NSArray *_Nullable result))finishBlock andArg:(nullable id)obj;
 
 #pragma mark - Override
-- (nonnull NSString *)nameOfDatabaseFile;
+- (nonnull A_DataModelDBIdentity *)databaseIdentity;
 
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder;

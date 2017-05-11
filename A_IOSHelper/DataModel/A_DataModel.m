@@ -10,7 +10,6 @@
 #import "A_Reflection.h"
 #import "A_JSONHelper.h"
 #import "A_PlistHelper.h"
-#import "A_SqliteManager.h"
 #import "A_TaskHelper.h"
 #import "NSObject+A_KVO_Extension.h"
 
@@ -124,12 +123,8 @@
 }
 
 - (A_SqliteManager *)__sqliteManager {
-    NSString *dbname = [self nameOfDatabaseFile];
-    if (dbname.length <= 0) {
-        return [A_SqliteManager A_Instance];
-    } else {
-        return [A_SqliteManager A_Instance:dbname];
-    }
+    A_DataModelDBIdentity *dbID = [self databaseIdentity];
+    return [A_SqliteManager A_Instance:dbID];
 }
 - (void)A_InsertToSqlite {
     A_SqliteManager *manager = [A_SqliteManager A_Instance];
@@ -141,10 +136,12 @@
     [manager A_Insert:self];
 }
 - (void)A_DeleteModelInSqlite {
-    [[self __sqliteManager] A_Delete:self];
+    NSNumber *result = [[self __sqliteManager] A_Delete:self];
+    NSLog(@"%@", result);
 }
 - (void)A_DeleteModelInSqliteWithKeys: (NSArray<NSString *> *)tableKeys {
-    [[self __sqliteManager] A_Delete:self AndKeys:tableKeys];
+    NSNumber *result = [[self __sqliteManager] A_Delete:self AndKeys:tableKeys];
+    NSLog(@"%@", result);
 }
 - (nonnull NSArray*)A_SearchSimilarModelsInSqlite {
     return [[self __sqliteManager] A_SearchSimilarModels:self];
@@ -179,7 +176,7 @@
     if (!obj) {
         obj = [NSNull null];
     }
-
+    
     id instance = [[[self class] alloc] init];
     A_SqliteManager *manager = nil;
     if ([obj isKindOfClass:[A_DataModel class]]) {
@@ -199,8 +196,8 @@
 }
 
 #pragma mark - Override
-- (NSString *)nameOfDatabaseFile {
-    return @"";
+- (A_DataModelDBIdentity *)databaseIdentity {
+    return [[A_DataModelDBIdentity alloc] init];
 }
 
 #pragma mark - NSCoding
@@ -213,14 +210,14 @@
     }
 }
 - (id)initWithCoder:(NSCoder *)decoder {
-	if (self = [self init]) {
+    if (self = [self init]) {
         NSArray *_keys = [A_Reflection A_PropertieNamesFromObject:self];
         
         for (NSString *key in _keys) {
             [self setValue:[decoder decodeObjectForKey:key] forKey:key];
         }
     }
-	return self;
+    return self;
 }
 
 #pragma mark -
