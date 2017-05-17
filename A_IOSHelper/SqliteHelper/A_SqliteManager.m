@@ -61,6 +61,19 @@
 
 @end
 
+@implementation A_SqliteQuery
+
++ (A_SqliteQuery *)createSqliteQuery:(NSString *)query andArgs:(NSArray *)args {
+    A_SqliteQuery *s = [[A_SqliteQuery alloc] init];
+    
+    [s setSqlQuery:query];
+    [s setArgs:args];
+    
+    return s;
+}
+
+@end
+
 @interface A_SqliteManager()
 
 @end
@@ -453,16 +466,16 @@
     return [self A_ExecuteQuery:_sql];
 }
 
-+ (NSString*) A_CreateInsertScript:(A_DataModel*) model {
++ (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model {
     return [self A_CreateInsertScript:model WithIgnore:nil AndTable:[A_SqliteManager A_GenerateTableName:model]];
 }
-+ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys {
++ (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys {
     return [self A_CreateInsertScript:model WithIgnore:keys AndTable:[A_SqliteManager A_GenerateTableName:model]];
 }
-+ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName {
++ (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName {
     return [self A_CreateInsertScript:model WithIgnore:nil AndTable:tableName];
 }
-+ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName {
++ (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName {
     NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray *_keys = [properties allKeys];
     
@@ -470,6 +483,7 @@
     BOOL _ignore = NO;
     NSString *_valuesStr = [[NSString alloc] init];
     NSString *_keysStr = [[NSString alloc] init];
+    NSMutableArray *_argsValue = [[NSMutableArray alloc] init];
     
     for (NSString *item in _keys) {
         _ignore = NO;
@@ -483,42 +497,46 @@
         
         if (_firstVal) {
             _keysStr = [_keysStr stringByAppendingFormat: @"`%@`", item];
-            _valuesStr = [_valuesStr stringByAppendingFormat: @"'%@'", [model valueForKey:item]];
+            _valuesStr = [_valuesStr stringByAppendingString:@"?"];
         } else {
             _keysStr = [_keysStr stringByAppendingFormat: @",`%@`", item];
-            _valuesStr = [_valuesStr stringByAppendingFormat: @",'%@'", [model valueForKey:item]];
+            _valuesStr = [_valuesStr stringByAppendingString:@",?"];
         }
+        [_argsValue addObject:[model valueForKey:item]];
+        
         _firstVal = NO;
     }
     
     NSString *_insterTableSql = [NSString stringWithFormat:@"INSERT INTO \"%@\" (%@) VALUES (%@)", tableName, _keysStr, _valuesStr];
     
-    return _insterTableSql;
+    A_SqliteQuery *query = [A_SqliteQuery createSqliteQuery:_insterTableSql andArgs:_argsValue];
+    return query;
 }
 
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName{
-    NSString *_sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys AndTable:tableName];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys AndTable:tableName];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model WithTable:(NSString*)tableName{
-    NSString *_sql = [A_SqliteManager A_CreateInsertScript:model WithTable:tableName];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateInsertScript:model WithTable:tableName];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys{
-    NSString *_sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateInsertScript:model WithIgnore:ignoreKeys];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 - (NSNumber*) A_Insert: (A_DataModel*) model{
-    NSString *_sql = [A_SqliteManager A_CreateInsertScript:model];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateInsertScript:model];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 
-+ (NSString*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
++ (A_SqliteQuery*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
     NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray *_keys = [properties allKeys];
     
     NSString *_valuesStr = [[NSString alloc] init];
     NSString *_keysStr = [[NSString alloc] init];
+    NSMutableArray *_argsValue = [[NSMutableArray alloc] init];
     
     BOOL _isKey = NO;
     for (NSString *item in _keys) {
@@ -528,10 +546,12 @@
             for (NSString *_keys in keys) {
                 if ([[item lowercaseString] isEqualToString:[_keys lowercaseString]]) {
                     if (_keysStr.length == 0) {
-                        _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+                        _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = ?", item];
                     } else {
-                        _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+                        _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = ?", item];
                     }
+                    [_argsValue addObject:[model valueForKey:item]];
+                    
                     _isKey = YES;
                     break;
                 }
@@ -539,42 +559,48 @@
         } else {
             // If keys not exist, put all to where
             if (_keysStr.length == 0) {
-                _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+                _keysStr = [_keysStr stringByAppendingFormat: @" `%@` = ?", item];
             } else {
-                _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+                _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = ?", item];
             }
+            [_argsValue addObject:[model valueForKey:item]];
         }
         
         if (!_isKey) {
             if (_valuesStr.length == 0) {
-                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = ?", item];
             } else {
-                _valuesStr = [_valuesStr stringByAppendingFormat: @", `%@` = '%@'", item, [model valueForKey:item]];
+                _valuesStr = [_valuesStr stringByAppendingFormat: @", `%@` = ?", item];
             }
+            
+            [_argsValue addObject:[model valueForKey:item]];
         }
     }
     
     NSString *_sql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@",tableName,_valuesStr, _keysStr];
-    return _sql;
+    
+    A_SqliteQuery *query = [A_SqliteQuery createSqliteQuery:_sql andArgs:_argsValue];
+    return query;
 }
-+ (NSString*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
++ (A_SqliteQuery*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
     return [self A_CreateUpdateScript:model WithTable:[A_SqliteManager A_GenerateTableName:model] AndKeys:keys];
 }
 
 - (NSNumber*) A_Update:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSString *_sql = [A_SqliteManager A_CreateUpdateScript:model WithTable:tableName AndKeys:keys];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateUpdateScript:model WithTable:tableName AndKeys:keys];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 - (NSNumber*) A_Update:(A_DataModel*) model AndKeys:(NSArray*)keys {
-    NSString *_sql = [A_SqliteManager A_CreateUpdateScript:model AndKeys:keys];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateUpdateScript:model AndKeys:keys];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 
-+ (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
++ (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
     NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray *_keys = [properties allKeys];
     
     NSString *_valuesStr = [[NSString alloc] init];
+    NSMutableArray *_argsValue = [[NSMutableArray alloc] init];
     
     BOOL _isKey = NO;
     for (NSString *item in _keys) {
@@ -591,42 +617,44 @@
         
         if (_isKey) {
             if (_valuesStr.length == 0) {
-                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = ?", item];
             } else {
-                _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = ?", item];
             }
+            [_argsValue addObject:[model valueForKey:item]];
         }
     }
     
     NSString *_sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@",tableName,_valuesStr];
     
-    return _sql;
+    A_SqliteQuery *query = [A_SqliteQuery createSqliteQuery:_sql andArgs:_argsValue];
+    return query;
 }
-+ (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName {
++ (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName {
     return [self A_CreateDeleteScript:model WithTable:tableName AndKeys:nil];
 }
-+ (NSString*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
++ (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys {
     return [self A_CreateDeleteScript:model WithTable:[A_SqliteManager A_GenerateTableName:model] AndKeys:keys];
 }
-+ (NSString*) A_CreateDeleteScript:(A_DataModel*) model {
++ (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model {
     return [self A_CreateDeleteScript:model WithTable:[A_SqliteManager A_GenerateTableName:model] AndKeys:nil];
 }
 
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSString *_sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName AndKeys:keys];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName AndKeys:keys];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName {
-    NSString *_sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateDeleteScript:model WithTable:tableName];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model AndKeys:(NSArray*)keys {
-    NSString *_sql = [A_SqliteManager A_CreateDeleteScript:model AndKeys:keys];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateDeleteScript:model AndKeys:keys];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 - (NSNumber*) A_Delete:(A_DataModel*) model {
-    NSString *_sql = [A_SqliteManager A_CreateDeleteScript:model];
-    return [self A_ExecuteQuery:_sql];
+    A_SqliteQuery *_sql = [A_SqliteManager A_CreateDeleteScript:model];
+    return [self A_ExecuteQuery:_sql.SqlQuery withArgs:_sql.Args];
 }
 
 - (NSArray*) A_SearchSimilarModels:(A_DataModel*) model {

@@ -16,6 +16,12 @@ typedef enum : NSUInteger {
     A_SqliteStoringInSharedGroup,
 } A_SqliteStoringType;
 
+@interface A_SqliteQuery : NSObject
+
+@property (strong, nonatomic) NSString *SqlQuery;
+@property (strong, nonatomic) NSArray  *Args;
+
+@end
 
 @interface A_DataModelDBIdentity : NSObject
 
@@ -82,26 +88,26 @@ typedef enum : NSUInteger {
 - (NSNumber*) A_CreateTable:(A_DataModel*) model AndKey:(NSString*)key;
 - (NSNumber*) A_CreateTable:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key;
 
-+ (NSString*) A_CreateInsertScript:(A_DataModel*) model;
-+ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys;
-+ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName;
-+ (NSString*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys AndTable:(NSString*)tableName;
++ (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model;
++ (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys;
++ (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model WithTable:(NSString*)tableName;
++ (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)keys AndTable:(NSString*)tableName;
 
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName;
 - (NSNumber*) A_Insert: (A_DataModel*) model WithTable:(NSString*)tableName;
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys;
 - (NSNumber*) A_Insert: (A_DataModel*) model;
 
-+ (NSString*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
-+ (NSString*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
++ (A_SqliteQuery*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
++ (A_SqliteQuery*) A_CreateUpdateScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
 
 - (NSNumber*) A_Update:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
 - (NSNumber*) A_Update:(A_DataModel*) model AndKeys:(NSArray*)keys;
 
-+ (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
-+ (NSString*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName;
-+ (NSString*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
-+ (NSString*) A_CreateDeleteScript:(A_DataModel*) model;
++ (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
++ (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName;
++ (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
++ (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model;
 
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName;
