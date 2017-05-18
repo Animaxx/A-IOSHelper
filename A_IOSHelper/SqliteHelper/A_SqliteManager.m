@@ -537,6 +537,7 @@
     NSString *_valuesStr = [[NSString alloc] init];
     NSString *_keysStr = [[NSString alloc] init];
     NSMutableArray *_argsValue = [[NSMutableArray alloc] init];
+    NSMutableArray *_keysValue = [[NSMutableArray alloc] init];
     
     BOOL _isKey = NO;
     for (NSString *item in _keys) {
@@ -550,7 +551,7 @@
                     } else {
                         _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = ?", item];
                     }
-                    [_argsValue addObject:[model valueForKey:item]];
+                    [_keysValue addObject:[model valueForKey:item]];
                     
                     _isKey = YES;
                     break;
@@ -563,7 +564,7 @@
             } else {
                 _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = ?", item];
             }
-            [_argsValue addObject:[model valueForKey:item]];
+            [_keysValue addObject:[model valueForKey:item]];
         }
         
         if (!_isKey) {
@@ -579,6 +580,7 @@
     
     NSString *_sql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE %@",tableName,_valuesStr, _keysStr];
     
+    [_argsValue addObjectsFromArray:_keysValue];
     A_SqliteQuery *query = [A_SqliteQuery createSqliteQuery:_sql andArgs:_argsValue];
     return query;
 }
