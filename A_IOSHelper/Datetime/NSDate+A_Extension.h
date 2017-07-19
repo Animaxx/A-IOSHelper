@@ -57,6 +57,11 @@
 - (BOOL)A_IsSameWeekWith:(NSDate *)day;
 - (BOOL)A_IsSameMonthWith:(NSDate *)day;
 
+
+/**
+ Format Date to String, Refer: 
+ http://unicode.org/reports/tr35/tr35-6.html#Date_Format_Patterns
+ */
 - (NSString *)A_ToString:(NSString *)format;
 - (NSString *)A_FormatByDate;
 - (NSString *)A_FormatByTime;

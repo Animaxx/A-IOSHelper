@@ -15,7 +15,7 @@
 @property (assign, nonatomic) NSObject *observedObject;
 @property (copy, nonatomic) NSString *key;
 @property (nonatomic) id param;
-@property (readwrite, nonatomic) void *block;
+@property (nonatomic, copy) void(^block)();
 
 - (void)removeObserver;
 + (A_Observer*) A_CreateObserver:(void (^)(id itself, NSDictionary *change, id param))block observedObject:(NSObject*)observedObject key:(NSString*)key option:(NSKeyValueObservingOptions)option param:(id)parm;
@@ -32,7 +32,7 @@ typedef id(^BindObserverBlock)(id value);
 @property (assign, nonatomic) NSString *fromKey;
 @property (assign, nonatomic) NSString *toKey;
 @property (weak, nonatomic) id target;
-@property (readwrite, copy) BindObserverBlock bindBlock;
+@property (nonatomic, copy) BindObserverBlock bindBlock;
 
 - (void)removeObserver;
 + (A_BindingObserver*) A_CreateObserver:(BindObserverBlock)block
@@ -193,7 +193,7 @@ bool _blockWithParam;
     [_observer setObservedObject:observedObject];
     [_observer setKey:key];
     [_observer setParam:parm];
-    [_observer setBlock:(__bridge void *)(block)];
+    [_observer setBlock:block];
     _blockWithParam = YES;
     
     [observedObject addObserver:_observer forKeyPath:key options:option context:nil];
@@ -204,7 +204,7 @@ bool _blockWithParam;
     [_observer setObservedObject:observedObject];
     [_observer setKey:key];
     [_observer setParam:nil];
-    [_observer setBlock:(__bridge void *)(block)];
+    [_observer setBlock:block];
     _blockWithParam = NO;
     
     [observedObject addObserver:_observer forKeyPath:key options:option context:nil];
