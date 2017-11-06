@@ -121,6 +121,17 @@
         return effectRows;
     }
 }
+- (BOOL)A_CompletedMissingFields {
+    A_SqliteManager *manager = [self __sqliteManager];
+    
+    if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
+        [manager A_CreateTable:self AndKey:tableKey];
+        return YES;
+    } else {
+        A_DataModel *instanceObj = [[[self class] alloc] init];
+        return [manager A_ExisitngFieldsWithModel:instanceObj];
+    }
+}
 
 - (A_SqliteManager *)__sqliteManager {
     A_DataModelDBIdentity *dbID = [self databaseIdentity];
@@ -199,7 +210,9 @@
 - (A_DataModelDBIdentity *)databaseIdentity {
     return [[A_DataModelDBIdentity alloc] init];
 }
-
+- (NSString *)tablePrimaryKey {
+    return @"id";
+}
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)encoder {

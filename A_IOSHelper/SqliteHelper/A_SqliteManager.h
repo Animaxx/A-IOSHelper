@@ -10,12 +10,18 @@
 
 @class A_DataModel;
 
+///////////////////////////
+/// A_SqliteStoringType ///
+///////////////////////////
 typedef enum : NSUInteger {
     A_SqliteStoringInDocumentFolder,
     A_SqliteStoringInLibraryFolder,
     A_SqliteStoringInSharedGroup,
 } A_SqliteStoringType;
 
+///////////////////////////
+////// A_SqliteQuery //////
+///////////////////////////
 @interface A_SqliteQuery : NSObject
 
 @property (strong, nonatomic) NSString *SqlQuery;
@@ -23,6 +29,9 @@ typedef enum : NSUInteger {
 
 @end
 
+/////////////////////////////
+/// A_DataModelDBIdentity ///
+/////////////////////////////
 @interface A_DataModelDBIdentity : NSObject
 
 @property (strong, nonatomic) NSString *DatabaseIdentity;
@@ -36,7 +45,9 @@ typedef enum : NSUInteger {
 
 @end
 
-
+///////////////////////
+/// A_SqliteManager ///
+///////////////////////
 @interface A_SqliteManager : NSObject
 
 + (A_SqliteManager *) A_Instance;
@@ -68,8 +79,8 @@ typedef enum : NSUInteger {
 - (void) A_ExecuteQuery :(NSString *) query withBlock:(void (^)(id obj, NSNumber *result))finishBlock andArg:(id)obj;
 - (void) A_ExecuteQuery :(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSNumber *result))finishBlock andArg:(id)obj;
 
-- (NSArray*) A_SearchDataset:(NSString *) query;
-- (NSArray*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params;
+- (NSArray<NSDictionary<NSString *, id> *>*) A_SearchDataset:(NSString *) query;
+- (NSArray<NSDictionary<NSString *, id> *>*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params;
 
 - (void) A_SearchDataset:(NSString *) query withBlock:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
 - (void) A_SearchDataset:(NSString *) query withParams:(NSArray*) params block:(void (^)(id obj, NSArray *result))finishBlock andArg:(id)obj;
@@ -124,5 +135,9 @@ typedef enum : NSUInteger {
 + (NSArray*) A_Mapping:(NSArray*) data ToClass:(Class)class;
 + (Boolean) A_TableColumnMarch:(A_DataModel*) model;
 + (NSString*) A_GenerateTableName: (A_DataModel*) model;
+
+- (NSArray<NSDictionary *> *) A_ExisitngFieldsWithModelClass:(Class)class;
+- (NSArray<NSDictionary *> *) A_ExisitngFieldsWithModel:(A_DataModel *) model;
+- (NSArray<NSDictionary *> *) A_ExisitngFieldsWithTable:(NSString *) tablename;
 
 @end

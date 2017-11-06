@@ -13,7 +13,8 @@
 #import "A_TaskHelper.h"
 #import "NSDate+A_Extension.h"
 #import "A_DataModel.h"
-
+#import "NSArray+A_Extension.h"
+#import "NSMutableArray+A_Extension.h"
 
 @implementation A_DataModelDBIdentity
 
@@ -228,7 +229,7 @@
     return [documentsDirectory stringByAppendingPathComponent:databaseIdentity.DatabaseIdentity];
 }
 
-#pragma mark - SQL Queries
+#pragma mark - Execute SQL Queries
 
 - (NSNumber *) A_ExecuteQuery:(NSString *) query {
     return [self A_ExecuteQuery:query withArgs:nil];
@@ -267,10 +268,10 @@
     }];
 }
 
-- (NSArray*) A_SearchDataset:(NSString *) query {
+- (NSArray<NSDictionary<NSString *, id> *>*) A_SearchDataset:(NSString *) query {
     return [self A_SearchDataset:query withParams:nil];
 }
-- (NSArray*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params {
+- (NSArray<NSDictionary<NSString *, id> *>*) A_SearchDataset:(NSString *) query withParams:(NSArray*) params {
     [sqlLock lock];
     [self _bindSQL:[query UTF8String] withArray:params];
     if (statement == NULL) {
@@ -302,8 +303,7 @@
     }];
 }
 
-
-- (NSDictionary*) _getRow {
+- (NSDictionary<NSString *, id> *) _getRow {
     int rc = sqlite3_step(statement);
     if (rc == SQLITE_DONE) {
         sqlite3_finalize(statement);
@@ -415,6 +415,7 @@
 
 #pragma mark - Data Model Methods
 
+
 + (NSString*) A_CreateTableScript:(A_DataModel*) model {
     return [self A_CreateTableScript:model WithTableName:[A_SqliteManager A_GenerateTableName:model] AndKey:nil];
 }
@@ -511,6 +512,68 @@
     
     A_SqliteQuery *query = [A_SqliteQuery createSqliteQuery:_insterTableSql andArgs:_argsValue];
     return query;
+}
+
+- (BOOL) A_CompletedMissingFields:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys {
+    NSString *_tableName = [A_SqliteManager A_GenerateTableName:model];
+    
+    // Get fields from database
+    NSArray<NSDictionary *> *fieldsInDB = [self A_ExisitngFieldsWithModel:model];
+    NSMutableArray<NSString *> *fieldsName = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *item in fieldsInDB) {
+        if ([item objectForKey:@"name"]) {
+            [fieldsName addObject:[item objectForKey:@"name"]];
+        }
+    }
+    
+    // Get fields from class
+    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSArray<NSString *> *keysInModel = [properties allKeys];
+    
+    NSMutableArray<NSString *> missingFields = [[NSMutableArray alloc] init];
+    
+    // Compare missing fields
+    BOOL _ignore = NO, _keyExising = NO;
+    for (NSString *item in keysInModel) {
+        _ignore = NO;
+        
+        for (NSString *_ignoreKey in ignoreKeys) {
+            if ([[item lowercaseString] isEqualToString:[_ignoreKey lowercaseString]]) {
+                _ignore = YES;
+                break;
+            }
+        }
+        if (_ignore) {
+            continue;
+        }
+        
+        _keyExising = NO;
+        for (NSString *_exisingKey in fieldsName) {
+            if ([[item lowercaseString] isEqualToString:[_ignoreKey lowercaseString]]) {
+                _keyExising = YES;
+                break
+            }
+        }
+        
+        if (_keyExising) {
+            [missingFields addObject:item];
+        }
+    }
+    
+    // If data any field is not existing then add them back
+    if ([missingFields count] > 0) {
+        NSString *_type;
+        for (NSString *item in missingFields) {
+            _type = [A_SqliteManager _nameOfType:[properties objectForKey:item]];
+            NSString *_addColum = [NSString stringWithFormat:@"ALTER TABLE %@ ADD COLUMN %@ %@", _tableName, item, _type];
+            [self A_ExecuteQuery:_addColum];
+        }
+        
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (NSNumber*) A_Insert: (A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName{
@@ -693,14 +756,16 @@
 }
 
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
-    NSString *_sql;
-    if (!query || query.length == 0)
-        _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
-    else
-        _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
+//    NSString *_sql;
+//    if (!query || query.length == 0)
+//        _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
+//    else
+//        _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
+//
+//    NSArray *_result = [self A_SearchDataset:_sql];
+//    return [A_SqliteManager A_Mapping:_result ToClass:class];
     
-    NSArray *_result = [self A_SearchDataset:_sql];
-    return [A_SqliteManager A_Mapping:_result ToClass:class];
+    return [self A_SearchModels:class Where:query WithTable:[A_SqliteManager A_GenerateTableNameWithModelClass:class]];
 }
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query{
     NSString *_className = NSStringFromClass(class);
@@ -708,8 +773,9 @@
     return [self A_SearchModels:class Where:query WithTable:[NSString stringWithFormat:@"A_%@_table",_className]];
 }
 
-#pragma mark - Utility Methods
 
+
+#pragma mark - Utility Methods
 - (id) _columnValue:(int) columnIndex {
     id o = nil;
     switch(sqlite3_column_type(statement, columnIndex)) {
@@ -786,14 +852,34 @@
     NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <SQLite Manager> \r\n Unknow Type: %@ \r\n -------- \r\n\r\n", type);
     return @"REAL";
 }
+
 + (Boolean) A_TableColumnMarch:(A_DataModel*) model {
     NSLog(@"TODO");
     return YES;
+}
+
+#pragma mark: - Gerneate table name from Model
++ (NSString*) A_GenerateTableNameWithModelClass: (Class)class {
+    NSString *_className = NSStringFromClass(class);
+    _className = [_className componentsSeparatedByString:@"."].lastObject;
+    return [NSString stringWithFormat:@"A_%@_table",_className];
 }
 + (NSString*) A_GenerateTableName: (A_DataModel*) model {
     NSString *_className = [A_Reflection A_GetClassNameFromObject:model];
     _className = [_className componentsSeparatedByString:@"."].lastObject;
     return [NSString stringWithFormat:@"A_%@_table",_className];
+}
+
+- (NSArray<NSDictionary *> *) A_ExisitngFieldsWithModelClass:(Class)class {
+    return [self A_ExisitngFieldsWithTable:[A_SqliteManager A_GenerateTableNameWithModelClass:class]];
+}
+- (NSArray<NSDictionary *> *) A_ExisitngFieldsWithModel:(A_DataModel *) model {
+    return [self A_ExisitngFieldsWithTable:[A_SqliteManager A_GenerateTableName:model]];
+}
+- (NSArray<NSDictionary *> *) A_ExisitngFieldsWithTable:(NSString *) tablename {
+    NSString *_query = [NSString stringWithFormat:@"PRAGMA table_info(%@);", tablename];
+    NSArray<NSDictionary *> *dataset = [self A_SearchDataset:_query];
+    return dataset;
 }
 
 

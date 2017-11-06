@@ -620,6 +620,7 @@
 					};
 					2E3A8D4D1AADEF4B00D3A833 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = YL2SUU3UYP;
 					};
 				};
 			};
@@ -864,6 +865,7 @@
 		2E3A8D571AADEF4B00D3A833 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = YL2SUU3UYP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -884,6 +886,7 @@
 		2E3A8D581AADEF4B00D3A833 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = YL2SUU3UYP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
