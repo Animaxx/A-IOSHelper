@@ -22,8 +22,10 @@
 + (nonnull NSArray*)A_GetFromPliste;
 + (void)A_ClearFromPlist;
 
-- (nonnull NSNumber *)A_SaveToSqliteWithKey: (nonnull NSString *)tableKey;
-- (void)A_InsertToSqlite;
+- (BOOL)A_CompletedMissingFieldsInSqlite;
+- (nonnull NSNumber *)A_SaveToSqlite;
+- (nonnull NSNumber *)A_InsertToSqlite;
+
 - (void)A_DeleteModelInSqlite;
 - (void)A_DeleteModelInSqliteWithKeys: (nonnull NSArray<NSString *> *)tableKeys;
 - (nonnull NSArray*)A_SearchSimilarModelsInSqlite;
@@ -34,6 +36,7 @@
 
 #pragma mark - Override
 - (nonnull A_DataModelDBIdentity *)databaseIdentity;
+- (nonnull NSString *)tablePrimaryKey;
 
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder;

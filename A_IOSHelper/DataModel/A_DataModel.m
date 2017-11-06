@@ -99,17 +99,32 @@
     [A_PlistHelper A_Save:_list toGroup:DATAMODEL_STORE_GROUP andKey:_objKey];
 }
 
-- (NSNumber *)A_SaveToSqliteWithKey: (NSString *)tableKey {
+- (A_SqliteManager *)__sqliteManager {
+    A_DataModelDBIdentity *dbID = [self databaseIdentity];
+    return [A_SqliteManager A_Instance:dbID];
+}
+- (BOOL)A_CompletedMissingFieldsInSqlite {
     A_SqliteManager *manager = [self __sqliteManager];
     
     if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
-        [manager A_CreateTable:self AndKey:tableKey];
+        [manager A_CreateTable:self AndKey:[self tablePrimaryKey]];
+        return YES;
+    } else {
+        A_DataModel *instanceObj = [[[self class] alloc] init];
+        return [manager A_ExisitngFieldsWithModel:instanceObj];
+    }
+}
+
+- (NSNumber *)A_SaveToSqlite {
+    A_SqliteManager *manager = [self __sqliteManager];
+    
+    if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
+        [manager A_CreateTable:self AndKey:[self tablePrimaryKey]];
     }
     
-    NSNumber *effectRows = [manager A_Update:self AndKeys:@[tableKey]];
+    NSNumber *effectRows = [manager A_Update:self AndKeys:@[[self tablePrimaryKey]]];
     if ([effectRows integerValue] <= 0) {
-        [manager A_Insert:self WithIgnore:@[tableKey]];
-        return [manager A_lastInsertId];
+        return [self A_InsertToSqlite];
     } else {
         id kv = [self valueForKeyPath:tableKey];
         if (kv) {
@@ -121,30 +136,18 @@
         return effectRows;
     }
 }
-- (BOOL)A_CompletedMissingFields {
-    A_SqliteManager *manager = [self __sqliteManager];
-    
-    if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
-        [manager A_CreateTable:self AndKey:tableKey];
-        return YES;
-    } else {
-        A_DataModel *instanceObj = [[[self class] alloc] init];
-        return [manager A_ExisitngFieldsWithModel:instanceObj];
-    }
-}
-
-- (A_SqliteManager *)__sqliteManager {
-    A_DataModelDBIdentity *dbID = [self databaseIdentity];
-    return [A_SqliteManager A_Instance:dbID];
-}
-- (void)A_InsertToSqlite {
+- (NSNumber *)A_InsertToSqlite {
     A_SqliteManager *manager = [A_SqliteManager A_Instance];
     
     if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
         [manager A_CreateTable:self];
     }
     
-    [manager A_Insert:self];
+    [manager A_Insert:self WithIgnore:@[[self tablePrimaryKey]]];
+    NSNumber *lastID = [manager A_lastInsertId];
+    
+    [self setValue:lastID forKeyPath:[self tablePrimaryKey]];
+    return lastID;
 }
 - (void)A_DeleteModelInSqlite {
     NSNumber *result = [[self __sqliteManager] A_Delete:self];
