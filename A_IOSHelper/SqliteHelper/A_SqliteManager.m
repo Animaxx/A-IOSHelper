@@ -756,21 +756,18 @@
 }
 
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query WithTable:(NSString*)tableName {
-//    NSString *_sql;
-//    if (!query || query.length == 0)
-//        _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
-//    else
-//        _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
-//
-//    NSArray *_result = [self A_SearchDataset:_sql];
-//    return [A_SqliteManager A_Mapping:_result ToClass:class];
-    
-    return [self A_SearchModels:class Where:query WithTable:[A_SqliteManager A_GenerateTableNameWithModelClass:class]];
+    NSString *_sql;
+    if (!query || query.length == 0)
+        _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
+    else
+        _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
+
+    NSArray *_result = [self A_SearchDataset:_sql];
+    return [A_SqliteManager A_Mapping:_result ToClass:class];
+
 }
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query{
-    NSString *_className = NSStringFromClass(class);
-    _className = [_className componentsSeparatedByString:@"."].lastObject;
-    return [self A_SearchModels:class Where:query WithTable:[NSString stringWithFormat:@"A_%@_table",_className]];
+    return [self A_SearchModels:class Where:query WithTable:[A_SqliteManager A_GenerateTableNameWithModelClass:class]];
 }
 
 
