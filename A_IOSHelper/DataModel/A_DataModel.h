@@ -37,6 +37,7 @@
 #pragma mark - Override
 - (nonnull A_DataModelDBIdentity *)databaseIdentity;
 - (nonnull NSString *)tablePrimaryKey;
+- (nonnull NSArray<NSString *> *)tableIgnoreFields;
 
 #pragma mark - NSCoding
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder;

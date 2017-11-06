@@ -120,6 +120,8 @@ typedef enum : NSUInteger {
 + (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model AndKeys:(NSArray*)keys;
 + (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model;
 
+- (BOOL) A_CompletedMissingFields:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys;
+
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys;
 - (NSNumber*) A_Delete:(A_DataModel*) model WithTable:(NSString*)tableName;
 - (NSNumber*) A_Delete:(A_DataModel*) model AndKeys:(NSArray*)keys;

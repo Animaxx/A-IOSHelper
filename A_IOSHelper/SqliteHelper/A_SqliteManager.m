@@ -531,7 +531,7 @@
     NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
     NSArray<NSString *> *keysInModel = [properties allKeys];
     
-    NSMutableArray<NSString *> missingFields = [[NSMutableArray alloc] init];
+    NSMutableArray<NSString *> *missingFields = [[NSMutableArray alloc] init];
     
     // Compare missing fields
     BOOL _ignore = NO, _keyExising = NO;
@@ -550,9 +550,9 @@
         
         _keyExising = NO;
         for (NSString *_exisingKey in fieldsName) {
-            if ([[item lowercaseString] isEqualToString:[_ignoreKey lowercaseString]]) {
+            if ([[item lowercaseString] isEqualToString:[_exisingKey lowercaseString]]) {
                 _keyExising = YES;
-                break
+                break;
             }
         }
         

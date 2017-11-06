@@ -103,6 +103,7 @@
     A_DataModelDBIdentity *dbID = [self databaseIdentity];
     return [A_SqliteManager A_Instance:dbID];
 }
+
 - (BOOL)A_CompletedMissingFieldsInSqlite {
     A_SqliteManager *manager = [self __sqliteManager];
     
@@ -111,10 +112,15 @@
         return YES;
     } else {
         A_DataModel *instanceObj = [[[self class] alloc] init];
-        return [manager A_ExisitngFieldsWithModel:instanceObj];
+        return [manager A_CompletedMissingFields:instanceObj WithIgnore:[self __gnereateIgnoreKeys]];
     }
 }
 
+- (NSArray<NSString *> *)__gnereateIgnoreKeys {
+    NSMutableArray *keys = [[NSMutableArray alloc] initWithArray:[self tableIgnoreFields]];
+    [keys addObject:[self tablePrimaryKey]];
+    return keys;
+}
 - (NSNumber *)A_SaveToSqlite {
     A_SqliteManager *manager = [self __sqliteManager];
     
@@ -126,7 +132,7 @@
     if ([effectRows integerValue] <= 0) {
         return [self A_InsertToSqlite];
     } else {
-        id kv = [self valueForKeyPath:tableKey];
+        id kv = [self valueForKeyPath:[self tablePrimaryKey]];
         if (kv) {
             if ([kv isKindOfClass:[NSNumber class]]) {
                 return (NSNumber*)kv;
@@ -143,7 +149,7 @@
         [manager A_CreateTable:self];
     }
     
-    [manager A_Insert:self WithIgnore:@[[self tablePrimaryKey]]];
+    [manager A_Insert:self WithIgnore:[self __gnereateIgnoreKeys]];
     NSNumber *lastID = [manager A_lastInsertId];
     
     [self setValue:lastID forKeyPath:[self tablePrimaryKey]];
@@ -216,6 +222,10 @@
 - (NSString *)tablePrimaryKey {
     return @"id";
 }
+- (NSArray<NSString *> *)tableIgnoreFields {
+    return @[];
+}
+
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
