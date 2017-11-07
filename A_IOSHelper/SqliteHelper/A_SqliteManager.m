@@ -514,7 +514,7 @@
     return query;
 }
 
-- (BOOL) A_CompletedMissingFields:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys {
+- (BOOL) A_CompleteMissingFields:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys {
     NSString *_tableName = [A_SqliteManager A_GenerateTableName:model];
     
     // Get fields from database
@@ -556,7 +556,7 @@
             }
         }
         
-        if (_keyExising) {
+        if (!_keyExising) {
             [missingFields addObject:item];
         }
     }

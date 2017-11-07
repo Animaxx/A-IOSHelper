@@ -104,15 +104,15 @@
     return [A_SqliteManager A_Instance:dbID];
 }
 
-- (BOOL)A_CompletedMissingFieldsInSqlite {
-    A_SqliteManager *manager = [self __sqliteManager];
++ (BOOL)A_CompleteMissingFieldsInSqlite {
+    A_DataModel *instanceObj = (A_DataModel *)[[self class] init];
+    A_SqliteManager *manager = [instanceObj __sqliteManager];
     
-    if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:self]]) {
-        [manager A_CreateTable:self AndKey:[self tablePrimaryKey]];
+    if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:instanceObj]]) {
+        [manager A_CreateTable:instanceObj AndKey:[instanceObj tablePrimaryKey]];
         return YES;
     } else {
-        A_DataModel *instanceObj = [[[self class] alloc] init];
-        return [manager A_CompletedMissingFields:instanceObj WithIgnore:[self __gnereateIgnoreKeys]];
+        return [manager A_CompleteMissingFields:instanceObj WithIgnore:[instanceObj __gnereateIgnoreKeys]];
     }
 }
 

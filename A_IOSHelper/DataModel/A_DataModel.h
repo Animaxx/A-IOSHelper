@@ -22,7 +22,7 @@
 + (nonnull NSArray*)A_GetFromPliste;
 + (void)A_ClearFromPlist;
 
-- (BOOL)A_CompletedMissingFieldsInSqlite;
++ (BOOL)A_CompleteMissingFieldsInSqlite;
 - (nonnull NSNumber *)A_SaveToSqlite;
 - (nonnull NSNumber *)A_InsertToSqlite;
 
