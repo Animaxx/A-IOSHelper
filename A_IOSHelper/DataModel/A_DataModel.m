@@ -105,7 +105,7 @@
 }
 
 + (BOOL)A_CompleteMissingFieldsInSqlite {
-    A_DataModel *instanceObj = (A_DataModel *)[[self class] init];
+    A_DataModel *instanceObj = (A_DataModel *)[[[self class] alloc] init];
     A_SqliteManager *manager = [instanceObj __sqliteManager];
     
     if (![manager A_TableExist:[A_SqliteManager A_GenerateTableName:instanceObj]]) {
