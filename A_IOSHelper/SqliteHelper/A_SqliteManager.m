@@ -808,10 +808,13 @@
             id obj = [[class alloc] init];
             for (NSString *key in dic) {
                 NSString *propertyType = [properties objectForKey:key];
-                if ([propertyType isEqualToString:@"NSDate"]) {
-                    [obj setValue:[NSDate A_ConvertStringToDate:[dic objectForKey:key]] forKey:key];
-                } else {
-                    [obj setValue:[dic objectForKey:key] forKey:key];
+                id val = [dic objectForKey:key];
+                if (val && [NSNull null] != val) {
+                    if ([propertyType isEqualToString:@"NSDate"]) {
+                        [obj setValue:[NSDate A_ConvertStringToDate:[dic objectForKey:key]] forKey:key];
+                    } else {
+                        [obj setValue:[dic objectForKey:key] forKey:key];
+                    }
                 }
             }
             [_array addObject:obj];
