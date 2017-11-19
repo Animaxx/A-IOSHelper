@@ -143,3 +143,4 @@ typedef enum : NSUInteger {
 - (NSArray<NSDictionary *> *) A_ExisitngFieldsWithTable:(NSString *) tablename;
 
 @end
+

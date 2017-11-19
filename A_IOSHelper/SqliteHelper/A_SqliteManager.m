@@ -423,7 +423,7 @@
     return [self A_CreateTableScript:model WithTableName:[A_SqliteManager A_GenerateTableName:model] AndKey:key];
 }
 + (NSString*) A_CreateTableScript:(A_DataModel*) model WithTableName:(NSString*)tableName AndKey:(NSString*)key{
-    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSDictionary *properties = [model propertiesReflection];
     
     NSString *_createTableSql = [NSString stringWithFormat:@"CREATE TABLE \"%@\" (", tableName];
     
@@ -477,7 +477,7 @@
     return [self A_CreateInsertScript:model WithIgnore:nil AndTable:tableName];
 }
 + (A_SqliteQuery*) A_CreateInsertScript:(A_DataModel*) model WithIgnore:(NSArray*)ignoreKeys AndTable:(NSString*)tableName {
-    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSDictionary *properties = [model propertiesReflection];
     NSArray *_keys = [properties allKeys];
     
     BOOL _firstVal = YES;
@@ -503,7 +503,7 @@
             _keysStr = [_keysStr stringByAppendingFormat: @",`%@`", item];
             _valuesStr = [_valuesStr stringByAppendingString:@",?"];
         }
-        [_argsValue addObject:[model valueForKey:item]];
+        [_argsValue addObject:[model modelDataForKey:item]];
         
         _firstVal = NO;
     }
@@ -528,7 +528,7 @@
     }
     
     // Get fields from class
-    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSDictionary *properties = [model propertiesReflection];
     NSArray<NSString *> *keysInModel = [properties allKeys];
     
     NSMutableArray<NSString *> *missingFields = [[NSMutableArray alloc] init];
@@ -594,7 +594,7 @@
 }
 
 + (A_SqliteQuery*) A_CreateUpdateScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSDictionary *properties = [model propertiesReflection];
     NSArray *_keys = [properties allKeys];
     
     NSString *_valuesStr = [[NSString alloc] init];
@@ -614,7 +614,7 @@
                     } else {
                         _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = ?", item];
                     }
-                    [_keysValue addObject:[model valueForKey:item]];
+                    [_keysValue addObject:[model modelDataForKey:item]];
                     
                     _isKey = YES;
                     break;
@@ -627,7 +627,7 @@
             } else {
                 _keysStr = [_keysStr stringByAppendingFormat: @" AND `%@` = ?", item];
             }
-            [_keysValue addObject:[model valueForKey:item]];
+            [_keysValue addObject:[model modelDataForKey:item]];
         }
         
         if (!_isKey) {
@@ -637,7 +637,7 @@
                 _valuesStr = [_valuesStr stringByAppendingFormat: @", `%@` = ?", item];
             }
             
-            [_argsValue addObject:[model valueForKey:item]];
+            [_argsValue addObject:[model modelDataForKey:item]];
         }
     }
     
@@ -661,7 +661,7 @@
 }
 
 + (A_SqliteQuery*) A_CreateDeleteScript:(A_DataModel*) model WithTable:(NSString*)tableName AndKeys:(NSArray*)keys {
-    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSDictionary *properties = [model propertiesReflection];
     NSArray *_keys = [properties allKeys];
     
     NSString *_valuesStr = [[NSString alloc] init];
@@ -686,7 +686,7 @@
             } else {
                 _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = ?", item];
             }
-            [_argsValue addObject:[model valueForKey:item]];
+            [_argsValue addObject:[model modelDataForKey:item]];
         }
     }
     
@@ -726,21 +726,21 @@
     return [self A_SearchSimilarModels:model WithTable:[A_SqliteManager A_GenerateTableName:model]];
 }
 - (NSArray*) A_SearchSimilarModels:(A_DataModel*) model WithTable:(NSString*)tableName {
-    NSDictionary *properties = [A_Reflection A_PropertiesFromObject:model];
+    NSDictionary *properties = [model propertiesReflection];
     NSArray *_keys = [properties allKeys];
     
     NSString *_valuesStr = [[NSString alloc] init];
     for (NSString *item in _keys) {
-        id _value = [model valueForKey:item];
+        id _value = [model modelDataForKey:item];
         
         if (_value && _value != nil && _value != NULL && _value != [NSNull null] &&
             ([_value isMemberOfClass:[NSNumber class]] && [NSNumber numberWithBool:0] != _value && [NSNumber numberWithChar:0] != _value &&[NSNumber numberWithDouble:0] != _value &&[NSNumber numberWithFloat:0] != _value &&[NSNumber numberWithInt:0] != _value &&[NSNumber numberWithInteger:0] != _value &&[NSNumber numberWithLong:0] != _value &&[NSNumber numberWithLongLong:0] != _value &&[NSNumber numberWithShort:0] != _value) &&
             ([_value isMemberOfClass:[NSString class]] && ![_value isEqualToString:@""])) {
             
             if (_valuesStr.length == 0) {
-                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = '%@'", item, [model valueForKey:item]];
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" `%@` = '%@'", item, [model modelDataForKey:item]];
             } else {
-                _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model valueForKey:item]];
+                _valuesStr = [_valuesStr stringByAppendingFormat: @" AND `%@` = '%@'", item, [model modelDataForKey:item]];
             }
         }
     }
@@ -761,10 +761,10 @@
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
     else
         _sql = [NSString stringWithFormat: @"SELECT * FROM %@ WHERE %@",tableName,query];
-
+    
     NSArray *_result = [self A_SearchDataset:_sql];
     return [A_SqliteManager A_Mapping:_result ToClass:class];
-
+    
 }
 - (NSArray*) A_SearchModels:(Class)class Where:(NSString*)query{
     return [self A_SearchModels:class Where:query WithTable:[A_SqliteManager A_GenerateTableNameWithModelClass:class]];
@@ -884,3 +884,4 @@
 
 
 @end
+

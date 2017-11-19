@@ -11,6 +11,8 @@
 
 @interface A_DataModel : NSObject<NSCoding>
 
+@property (assign, readonly) NSDictionary * _Nonnull propertiesReflection;
+
 - (nonnull NSDictionary*)A_Serialize;
 + (nonnull NSObject*)A_Deserialize: (nonnull NSDictionary*)Array;
 
@@ -34,6 +36,9 @@
 - (void)A_SearchSimilarModelsInSqliteWithBlock:(nonnull void (^)(id _Nullable obj, NSArray *_Nullable result))finishBlock andArg:(nullable id)obj;
 + (void)A_SearchSqlite: (nullable NSString*)where withBlock:(nonnull void (^)(id _Nullable obj, NSArray *_Nullable result))finishBlock andArg:(nullable id)obj;
 
+//- (NSDictionary *)propertiesReflection;
+- (nonnull id)modelDataForKey:(NSString *_Nonnull)key;
+
 #pragma mark - Override
 - (nonnull A_DataModelDBIdentity *)databaseIdentity;
 - (nonnull NSString *)tablePrimaryKey;
@@ -45,3 +50,4 @@
 #pragma mark -
 
 @end
+

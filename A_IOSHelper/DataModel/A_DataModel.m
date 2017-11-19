@@ -15,7 +15,15 @@
 
 #define DATAMODEL_STORE_GROUP @"A_DATAMODEL_GROUP"
 
-@implementation A_DataModel
+@interface A_DataModel()
+
+@end
+
+@implementation A_DataModel {
+    NSDictionary *_propertiesRef;
+}
+
+@dynamic propertiesReflection;
 
 - (NSDictionary*)A_Serialize {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -215,6 +223,27 @@
     }];
 }
 
+- (NSDictionary *)propertiesReflection {
+    if (_propertiesRef || [_propertiesRef count] == 0) {
+        _propertiesRef = [A_Reflection A_PropertiesFromObject:self];
+    }
+    return _propertiesRef;
+}
+
+- (id)modelDataForKey:(NSString *)key {
+    NSString *type = [self.propertiesReflection objectForKey:key];
+    id result = [self valueForKey:key];
+    
+    if ([type isEqualToString:@"BOOL"] ||
+        [type isEqualToString:@"bool"]) {
+        
+        result = [result boolValue] ? @(1) : @(0);
+    }
+    
+    return result;
+}
+
+
 #pragma mark - Override
 - (A_DataModelDBIdentity *)databaseIdentity {
     return [[A_DataModelDBIdentity alloc] init];
@@ -249,3 +278,4 @@
 #pragma mark -
 
 @end
+
