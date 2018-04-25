@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSMutableDictionary(A_Extension)
+@interface NSMutableDictionary<KType,VType> (A_Extension)
 
-- (void)A_Swap:(NSMutableDictionary*)dictionary;
+- (void)A_Swap:(NSMutableDictionary<KType,VType>*)dictionary;
 
 @end

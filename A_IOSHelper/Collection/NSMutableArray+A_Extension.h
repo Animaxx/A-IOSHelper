@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSMutableArray(A_Extension)
+@interface NSMutableArray<ObjectType> (A_Extension)
 
-- (void)A_Swap:(NSMutableArray*)array;
+- (void)A_Swap:(NSMutableArray<ObjectType> *)array;
 
 @end

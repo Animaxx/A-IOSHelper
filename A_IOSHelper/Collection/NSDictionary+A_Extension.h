@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDictionary (A_Extension)
+@interface NSDictionary<KType,VType> (A_Extension)
 
-- (NSArray*) A_ToArray;
-- (NSArray*) A_SortedKeys;
+- (NSArray<VType>*) A_ToArray;
+- (NSArray<KType>*) A_SortedKeys;
 - (NSData*) A_CovertToJSONData;
 - (NSString*) A_CovertToJSONString;
 
-- (id<NSCopying>)A_GetKey:(NSInteger)index;
-- (id)A_GetValue:(NSInteger)index;
+- (KType)A_GetKey:(NSInteger)index;
+- (VType)A_GetValue:(NSInteger)index;
 
 @end

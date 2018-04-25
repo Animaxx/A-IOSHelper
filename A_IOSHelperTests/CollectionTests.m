@@ -68,7 +68,7 @@
     XCTAssertEqual([_list2 objectAtIndex:2] , @"C");
 }
 - (void)testSkipTake {
-    NSArray *_list = @[@1,@2,@3,@4,@5,@6,@7,@8,@9,@10];
+    NSArray<NSNumber *> *_list = @[@1,@2,@3,@4,@5,@6,@7,@8,@9,@10];
     
     NSArray *test1 = [_list A_Skip:5];
     XCTAssertEqual([test1 objectAtIndex:0] , @6);

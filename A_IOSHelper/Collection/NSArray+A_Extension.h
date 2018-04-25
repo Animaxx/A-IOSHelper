@@ -8,27 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSArray (A_Extension)
+@interface NSArray<ObjectType> (A_Extension)
 
 - (NSDictionary*) A_CombineKeys: (NSArray*)keys;
 - (NSDictionary*) A_CombineValues: (NSArray*)values;
 - (NSData*) A_CovertToJSONData;
 - (NSString*) A_CovertToJSONString;
 
-- (NSDictionary*) A_GroupBy: (id<NSCopying> (^)(id x))block;
+- (NSDictionary*) A_GroupBy: (id<NSCopying> (^)(ObjectType x))block;
 
-- (NSArray*) A_Reverse;
-- (NSArray*) A_Take: (int)count;
-- (NSArray*) A_Skip: (int)count;
-- (NSArray*) A_Where: (bool (^)(id x))block;
-- (NSArray*) A_Extract: (id (^)(id x))block;
+- (NSArray<ObjectType>*) A_Reverse;
+- (NSArray<ObjectType>*) A_Take: (int)count;
+- (NSArray<ObjectType>*) A_Skip: (int)count;
+- (NSArray<ObjectType>*) A_Where: (bool (^)(ObjectType x))block;
+- (NSArray *) A_Extract: (id (^)(ObjectType x))block;
 
-- (void) A_Each: (void (^)(id x))block;
-- (BOOL) A_Any: (bool (^)(id x))block;
-- (id) A_FirstOrNil: (bool (^)(id x))block;
-- (id) A_LastOrNil: (bool (^)(id x))block;
+- (void) A_Each: (void (^)(ObjectType x))block;
+- (BOOL) A_Any: (bool (^)(ObjectType x))block;
+- (ObjectType) A_FirstOrNil: (bool (^)(ObjectType x))block;
+- (ObjectType) A_LastOrNil: (bool (^)(ObjectType x))block;
 
-- (NSArray *) A_First:(NSInteger)n block: (bool (^)(id x))block;
-- (NSArray *) A_Last:(NSInteger)n block: (bool (^)(id x))block;
+- (NSArray<ObjectType> *) A_First:(NSInteger)n block: (bool (^)(ObjectType x))block;
+- (NSArray<ObjectType> *) A_Last:(NSInteger)n block: (bool (^)(ObjectType x))block;
 
 @end
