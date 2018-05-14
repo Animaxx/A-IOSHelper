@@ -18,4 +18,7 @@
 - (KType)A_GetKey:(NSInteger)index;
 - (VType)A_GetValue:(NSInteger)index;
 
+- (id)A_Get:(id)key withDefault:(id)defvalue;
+- (id)A_GetValueDefaultEmptry:(id)key;
+
 @end

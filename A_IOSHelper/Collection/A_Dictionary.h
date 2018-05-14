@@ -10,15 +10,21 @@
 
 @interface A_Dictionary<__covariant KeyType,__covariant ObjectType> : NSMutableDictionary<KeyType, ObjectType>
 
-- (id)getKeyAtIndex:(NSInteger)index;
-- (id)objectAtIndex:(NSInteger)index;
+- (ObjectType)getKeyAtIndex:(NSInteger)index;
+- (ObjectType)objectAtIndex:(NSInteger)index;
 
 - (NSEnumerator *)reverseKeyEnumerator;
 - (void)orderBy:(NSComparator NS_NOESCAPE)comparator;
 
-- (void)insertObject:(id)anObject forKey:(id)aKey atIndex:(NSUInteger)anIndex;
-- (void)replaceObject:(id)anObject atIndex:(NSUInteger)anIndex;
+- (void)insertObject:(ObjectType)anObject forKey:(KeyType)aKey atIndex:(NSUInteger)anIndex;
+- (void)replaceObject:(ObjectType)anObject atIndex:(NSUInteger)anIndex;
 
-- (void)removeObjectAtIndex:(NSUInteger)index; 
+- (void)removeObjectAtIndex:(NSUInteger)index;
+
+- (KeyType)lastKey;
+- (KeyType)firstKey;
+
+- (ObjectType)lastObject;
+- (ObjectType)firstObject;
 
 @end

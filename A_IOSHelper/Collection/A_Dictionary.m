@@ -150,6 +150,37 @@
     return [NSString stringWithFormat:@"{%@\n}", desc];
 }
 
+- (id)lastKey {
+    if (self.count == 0) {
+        return nil;
+    } else {
+        return [_keys objectAtIndex:(self.count - 1)];
+    }
+}
+- (id)firstKey {
+    if (self.count == 0) {
+        return nil;
+    } else {
+        return [_keys objectAtIndex:0];
+    }
+}
+
+- (id)lastObject {
+    if (self.count == 0) {
+        return nil;
+    } else {
+        return [self objectAtIndex:(self.count - 1)];
+    }
+}
+- (id)firstObject {
+    if (self.count == 0) {
+        return nil;
+    } else {
+        return [self objectAtIndex:0];
+    }
+}
+
+
 //- (void)sort {
 ////    _keys = [NSMutableOrderedSet alloc] initWithArray:
 //

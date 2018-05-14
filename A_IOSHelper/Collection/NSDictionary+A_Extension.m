@@ -46,4 +46,11 @@
     return [self objectForKey:key];
 }
 
+- (id)A_Get:(id)key withDefault:(id)defvalue {
+    return [self objectForKey:key] ? [self objectForKey:key] : defvalue;
+}
+- (id)A_GetValueDefaultEmptry:(id)key{
+    return [self A_Get:key withDefault:nil];
+}
+
 @end
