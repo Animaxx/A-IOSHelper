@@ -12,11 +12,46 @@
 @implementation UIView (A_Extension)
 
 - (NSArray<UIView *> *) A_GetSubView:(bool (^)(UIView *x))block {
-    return [self.subviews A_Where:block];
+    return [self __find:[self subviews] children:block];
 }
 
 - (UIView *) A_GetFirstSubView:(bool (^)(UIView *x))block {
-    return [self.subviews A_FirstOrNil:block];
+    return [self __find:[self subviews] child:block];
+}
+
+- (UIView *)__find:(NSArray<UIView *>*)subviews child:(bool (^)(UIView *x))block {
+    UIView *element;
+    for (element in subviews) {
+        if (block(element)) {
+            return element;
+        }
+        
+        if ([[element subviews] count] > 0) {
+            UIView *itemElement = [self __find:[element subviews] child:block];
+            if (itemElement) {
+                return itemElement;
+            }
+        }
+    }
+    return nil;
+}
+- (NSMutableArray<UIView *> *)__find:(NSArray<UIView *>*)subviews children:(bool (^)(UIView *x))block {
+    NSMutableArray<UIView *> *views = [[NSMutableArray alloc] init];
+    
+    UIView *element;
+    for (element in subviews) {
+        if (block(element)) {
+            [views addObject:element];
+        }
+        
+        if ([[element subviews] count] > 0) {
+            NSMutableArray<UIView *> *itemElements = [self __find:[element subviews] children:block];
+            if (itemElements && [itemElements count] > 0) {
+                [views addObjectsFromArray:itemElements];
+            }
+        }
+    }
+    return views;
 }
 
 - (UIColor *) A_ExtractColor:(CGPoint)point {
