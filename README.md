@@ -1,6 +1,4 @@
 # A-IOSHelper [![Stories in Ready](https://badge.waffle.io/animaxx/a-ioshelper.svg?label=ready&title=Ready)](http://waffle.io/animaxx/a-ioshelper)
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/animaxx/a-ioshelper.svg?columns=all)](https://waffle.io/animaxx/a-ioshelper)
-
 [![codecov](https://codecov.io/gh/Animaxx/A-IOSHelper/branch/master/graph/badge.svg)](https://codecov.io/gh/Animaxx/A-IOSHelper) [![Build Status](https://travis-ci.org/Animaxx/A-IOSHelper.svg?branch=master)](https://travis-ci.org/Animaxx/A-IOSHelper) [![cocoapods](https://img.shields.io/cocoapods/v/A_IOSHelper.svg)](https://cocoapods.org/pods/A_IOSHelper)
 
 ===========
