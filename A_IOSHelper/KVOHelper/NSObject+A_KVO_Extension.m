@@ -80,7 +80,7 @@ static void *ABindCharKey = &ABindCharKey;
     return observations;
 }
 
--(void) A_AddObserver:(NSString*)key Param:(id)param block:(void (^)(id itself, NSDictionary *change, id param))block{
+-(void) A_AddObserver:(NSString *)key Param:(id)param block:(observerBlockWithParam)block{
     if (!key || key.length <= 0) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper> \r\n Cannot observe an empty key  \r\n -------- \r\n\r\n");
         return;
@@ -92,14 +92,17 @@ static void *ABindCharKey = &ABindCharKey;
                                                           option:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
                                                            param:param]];
 }
--(void) A_AddObserver:(NSString*)key block:(void (^)(id itself, NSDictionary *change))block {
+-(void) A_AddObserver:(NSString *)key block:(observerBlock)block {
     if (!key || key.length <= 0) {
         NSLog(@"\r\n -------- \r\n [MESSAGE FROM A IOS HELPER] \r\n <KVO Helper - Add Observer> \r\n Cannot observe an empty key  \r\n -------- \r\n\r\n");
         return;
     }
     
     [self A_registerDealloc];
-    [[self _getObservers] addObject:[A_Observer A_CreateObserver:block observedObject:self key:key option:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew]];
+    [[self _getObservers] addObject:[A_Observer A_CreateObserver:block
+                                                  observedObject:self
+                                                             key:key
+                                                          option:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew]];
 }
 
 -(void) A_RemoveObserver: (NSString*)key {

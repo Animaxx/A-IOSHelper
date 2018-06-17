@@ -10,8 +10,11 @@
 
 @interface NSObject (A_KVO_Extension)
 
--(void) A_AddObserver:(NSString *)key Param:(id)param block:(void (^)(id itself, NSDictionary *change, id param))block;
--(void) A_AddObserver:(NSString *)key block:(void (^)(id itself, NSDictionary *change))block;
+typedef void (^observerBlock) (id itself, NSDictionary *change);
+typedef void (^observerBlockWithParam) (id itself, NSDictionary *change, id param);
+
+-(void) A_AddObserver:(NSString *)key Param:(id)param block:(observerBlockWithParam)block;
+-(void) A_AddObserver:(NSString *)key block:(observerBlock)block;
 
 -(void) A_Bind:(NSString *)key To:(NSString *)to;
 -(void) A_Bind:(NSString *)key To:(NSString *)to Convert:(id (^)(id value))convertBlock;

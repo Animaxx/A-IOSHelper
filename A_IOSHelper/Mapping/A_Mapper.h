@@ -47,8 +47,8 @@ typedef _Nonnull id (^mapElementBlock) (_Nonnull id input);
 - (void)A_RemoveMapByName:(NSString *_Nonnull)from To:(NSString *_Nonnull)to;
 
 - (void)A_Convert:(_Nonnull id)from To:(_Nonnull id)to;
-- (_Nonnull id)A_Convert:(_Nonnull id)from ToClass:(_Nonnull Class)to;
-- (_Nonnull id)A_Convert:(_Nonnull id)from ToClassName:(NSString *_Nonnull)to;
+- (_Nullable id)A_Convert:(_Nonnull id)from ToClass:(_Nonnull Class)to;
+- (_Nullable id)A_Convert:(_Nonnull id)from ToClassName:(NSString *_Nonnull)to;
 
 - (NSArray *_Nonnull)A_ConvertArray:(NSArray *_Nonnull)from ToClass:(_Nonnull Class)toClass;
 - (NSArray *_Nonnull)A_ConvertArray:(NSArray *_Nonnull)from ToClassName:(NSString *_Nonnull)toClass;
