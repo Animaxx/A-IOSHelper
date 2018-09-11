@@ -33,7 +33,14 @@
 
 	for (int i= 0; i < count; i++) {
 		NSString *propertyName= [NSString stringWithUTF8String:property_getName (properties[i])];
-
+        if ([propertyName isEqualToString:@"superclass"]
+            || [propertyName isEqualToString:@"description"]
+            || [propertyName isEqualToString:@"debugDescription"]
+            || [propertyName isEqualToString:@"hash"]) {
+            
+            continue;
+        }
+        
 		const char *type= property_getAttributes (properties[i]);
 		NSArray *propertyAttributes= [[NSString stringWithUTF8String:type] componentsSeparatedByString:@","];
 		NSString *typeAttribute= [propertyAttributes objectAtIndex:0];

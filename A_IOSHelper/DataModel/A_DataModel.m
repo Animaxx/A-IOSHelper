@@ -240,6 +240,10 @@
         result = [result boolValue] ? @(1) : @(0);
     }
     
+    if (!result) {
+        result = @"";
+    }
+    
     return result;
 }
 
