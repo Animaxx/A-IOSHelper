@@ -9,6 +9,9 @@
 #import <objc/runtime.h>
 #import "UIControl+A_Extension.h"
 
+
+typedef void (^wrapperBlock) (id sender, id param);
+
 @interface A_BlockWrapper : NSObject
 
 @property (readwrite, nonatomic) void *block;

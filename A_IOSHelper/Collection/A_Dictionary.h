@@ -10,7 +10,7 @@
 
 @interface A_Dictionary<__covariant KeyType,__covariant ObjectType> : NSMutableDictionary<KeyType, ObjectType>
 
-- (ObjectType)getKeyAtIndex:(NSInteger)index;
+- (KeyType)getKeyAtIndex:(NSInteger)index;
 - (ObjectType)objectAtIndex:(NSInteger)index;
 
 - (NSEnumerator *)reverseKeyEnumerator;
