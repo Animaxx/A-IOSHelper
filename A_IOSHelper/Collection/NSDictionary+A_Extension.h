@@ -21,4 +21,5 @@
 - (id)A_Get:(id)key withDefault:(id)defvalue;
 - (id)A_GetValueDefaultEmptry:(id)key;
 
+- (id)A_ConvertToObject:(Class)targetClass;
 @end

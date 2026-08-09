@@ -22,4 +22,6 @@ typedef NS_ENUM (NSInteger, A_ExtraPropertPolicy) {
 -(void) A_SetProperty:(id)obj to:(id)key;
 -(id) A_GetProperty:(id)key;
 
+- (NSDictionary *)A_ConvertToDictionary;
+
 @end
